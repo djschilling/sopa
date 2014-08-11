@@ -3,18 +3,12 @@
  */
 public class GameField {
 
-    private Tile[][] field;
+    Tile[][] field;
     private PathState[][] pathStates;
     private int[] directionsX = new int[]{0, 1, 0, -1};
     private int[] directionsY = new int[]{1, 0, -1, 0};
 
     public GameField(int width, int height) {
-//        field = new Tile[][] {
-//                new Tile[]{new Tile(false, false, false, false, TileType.NONE), new Tile(false, true, true, false, TileType.NONE), new Tile(false, false, false, false, TileType.NONE), new Tile(false, true, true, false, TileType.NONE)},
-//                new Tile[]{new Tile(false, false, false, true, TileType.START), new Tile(false, true, true, true, TileType.PUZZLE), new Tile(false, true, true, false, TileType.PUZZLE), new Tile(false, false, false, false, TileType.NONE)},
-//                new Tile[]{new Tile(false, false, false, false, TileType.NONE), new Tile(true, false, false, false, TileType.PUZZLE), new Tile(true, true, false, false, TileType.PUZZLE), new Tile(false, false, false, false, TileType.NONE)},
-//                new Tile[]{new Tile(false, false, false, false, TileType.NONE), new Tile(false, false, false, false, TileType.NONE), new Tile(true, true, false, false, TileType.FINISH), new Tile(false, false, false, false, TileType.NONE)}
-//        };
         field = new Tile[width + 2][height + 2];
         initializeField();
         pathStates = new PathState[width + 2][height + 2];
