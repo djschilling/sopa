@@ -36,15 +36,19 @@ public class FieldCreator {
                 Tile currentTile = new Tile(characterTileHashMap.get(string[j].charAt(i)));
                 if(currentTile.getTileType() != TileType.NONE) {
                     if(i == 0) {
+                        checkInvalidTile(currentTile);
                         currentTile.setRight(true);
                     }
                     if(i == string[0].length()-1) {
+                        checkInvalidTile(currentTile);
                         currentTile.setLeft(true);
                     }
                     if(j == 0) {
+                        checkInvalidTile(currentTile);
                         currentTile.setBottom(true);
                     }
                     if(j == string.length-1) {
+                        checkInvalidTile(currentTile);
                         currentTile.setTop(true);
                     }
                 }
@@ -53,5 +57,11 @@ public class FieldCreator {
 
         }
         return field;
+    }
+
+    private void checkInvalidTile(Tile currentTile) {
+        if(currentTile.getTileType() == TileType.PUZZLE) {
+            throw new IllegalArgumentException("Just Finish, Start and None allowed in the borders");
+        }
     }
 }
