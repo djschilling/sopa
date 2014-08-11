@@ -14,6 +14,11 @@ public class GameField {
         pathStates = new PathState[width + 2][height + 2];
     }
 
+    public GameField(Tile[][] field) {
+        this.field = field;
+        pathStates = new PathState[field.length][field[0].length];
+    }
+
     private void initializeField() {
         field[0][0] = new Tile(false, false, false, false, TileType.NONE);
         field[1][0] = new Tile(false, true, true, false, TileType.NONE);
@@ -110,8 +115,8 @@ public class GameField {
 
     public void printBacktracking(){
         System.out.println("Backtracking Result :");
-        for (int i = 0; i < pathStates.length; i++){
-            for(int j = 0; j < pathStates[0].length; j++){
+        for (int i = 0; i < pathStates[0].length; i++){
+            for(int j = 0; j < pathStates.length; j++){
                 System.out.print(pathStates[j][i] + "\t");
             }
             System.out.println();
@@ -130,17 +135,26 @@ public class GameField {
     public void shiftLine(boolean horizontal, int row, int steps) {
         if(horizontal) {
             Tile line[] = new Tile[field.length-2];
-            for(int i = 0; i < field.length-2; i++) {
+            for(int i = 0; i < field.length - 2; i++) {
                 line[i] = field[i+1][row+1];
             }
             for(int i = 0; i < field.length-2; i++) {
-                int newPosition = (i+steps);
+                int newPosition = i + steps;
                 newPosition = shiftToPositive(newPosition,field.length-2);
                 newPosition = newPosition%(field.length-2);
                 field[newPosition+1][row+1] = line[i];
             }
-
-
+        } else {
+            Tile line[] = new Tile[field[0].length-2];
+            for(int i = 0; i < field[0].length-2; i++) {
+                line[i] = field[row+1][i+1];
+            }
+            for(int i = 0; i < field[0].length-2; i++) {
+                int newPosition = (i+steps);
+                newPosition = shiftToPositive(newPosition,field[0].length-2);
+                newPosition = newPosition%(field[0].length-2);
+                field[row+1][newPosition+1] = line[i];
+            }
         }
     }
 
@@ -154,7 +168,7 @@ public class GameField {
 
     private int shiftToPositive(int number, int steps) {
         int shifted = number;
-        while (shifted<0) {
+        while (shifted < 0) {
             shifted = shifted + steps;
         }
         return shifted;
