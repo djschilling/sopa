@@ -59,8 +59,8 @@ public class FieldCreatorTest {
         FieldCreator fieldCreator = new FieldCreator();
         Tile[][] generatedField = fieldCreator.fromString(new String[]{"nnnn", "nnin", "nsfn"});
         Tile[][] expectedField = new Tile[4][3];
-        expectedField[1][2] = new Tile(false, true, false, false, TileType.START);
-        expectedField[2][2] = new Tile(false, true, false, false, TileType.FINISH);
+        expectedField[1][2] = new Tile(true, false, false, false, TileType.START);
+        expectedField[2][2] = new Tile(true, false, false, false, TileType.FINISH);
         assertThat(generatedField[1][2], is(expectedField[1][2]));
         assertThat(generatedField[2][2], is(expectedField[2][2]));
     }
