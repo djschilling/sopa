@@ -30,8 +30,9 @@ public class FieldCreator {
         characterTileHashMap.put('m', new Tile(true,true,true,true,TileType.PUZZLE));
 
     }
-    public Tile[][] fromString(String[] string){
+    public GameField fromString(String[] string){
         Tile[][] field;
+        GameField gameField = new GameField();
         field = new Tile[string[0].length()][string.length];
         for (int i = 0; i<string[0].length(); i++) {
             for (int j = 0; j<string.length; j++) {
@@ -55,10 +56,15 @@ public class FieldCreator {
                     }
                 }
                 field[i][j] = currentTile;
+                if(currentTile.getTileType() == TileType.START) {
+                    gameField.setStartX(i);
+                    gameField.setStartY(j);
+                }
             }
 
         }
-        return field;
+        gameField.setField(field);
+        return gameField;
     }
 
     private void checkInvalidTile(Tile currentTile) {
