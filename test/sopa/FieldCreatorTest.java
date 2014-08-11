@@ -1,11 +1,7 @@
 package sopa;
 
-import sopa.FieldCreator;
-import sopa.Tile;
-import sopa.TileType;
-
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class FieldCreatorTest {
 
