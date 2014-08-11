@@ -1,3 +1,9 @@
+package sopa;
+
+import sopa.FieldCreator;
+import sopa.Tile;
+import sopa.TileType;
+
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 

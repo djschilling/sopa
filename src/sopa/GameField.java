@@ -1,3 +1,5 @@
+package sopa;
+
 /**
  * David Schilling - davejs92@gmail.com
  */
@@ -8,34 +10,10 @@ public class GameField {
     private int[] directionsX = new int[]{0, 1, 0, -1};
     private int[] directionsY = new int[]{1, 0, -1, 0};
 
-    public GameField(int width, int height) {
-        field = new Tile[width + 2][height + 2];
-        initializeField();
-        pathStates = new PathState[width + 2][height + 2];
-    }
 
     public GameField(Tile[][] field) {
         this.field = field;
         pathStates = new PathState[field.length][field[0].length];
-    }
-
-    private void initializeField() {
-        field[0][0] = new Tile(false, false, false, false, TileType.NONE);
-        field[1][0] = new Tile(false, true, true, false, TileType.NONE);
-        field[2][0] = new Tile(false, false, false, false, TileType.NONE);
-        field[3][0] = new Tile(false, true, true, false, TileType.NONE);
-        field[0][1] = new Tile(false, false, false, true, TileType.START);
-        field[1][1] = new Tile(false, true, true, true, TileType.PUZZLE);
-        field[2][1] = new Tile(false, true, true, false, TileType.PUZZLE);
-        field[3][1] = new Tile(false, false, false, false, TileType.NONE);
-        field[0][2] = new Tile(false, false, false, false, TileType.NONE);
-        field[1][2] = new Tile(true, false, false, false, TileType.PUZZLE);
-        field[2][2] = new Tile(true, true, false, false, TileType.PUZZLE);
-        field[3][2] = new Tile(false, false, false, false, TileType.NONE);
-        field[0][3] = new Tile(false, false, false, false, TileType.NONE);
-        field[1][3] = new Tile(false, false, false, false, TileType.NONE);
-        field[2][3] = new Tile(true, true, false, false, TileType.FINISH);
-        field[3][3] = new Tile(false, false, false, false, TileType.NONE);
     }
 
     public boolean solvedPuzzle() {
