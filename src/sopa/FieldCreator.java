@@ -6,7 +6,13 @@ import java.util.Map;
 /**
  * David Schilling - davejs92@gmail.com
  */
+
 public class FieldCreator {
+
+    private int[] directionsX = new int[]{0, 1, 0, -1};
+    private int[] directionsY = new int[]{1, 0, -1, 0};
+    private Tile[][] tiles;
+
     private Map<Character, Tile> characterTileHashMap;
     public FieldCreator() {
         characterTileHashMap = new HashMap<Character, Tile>();
@@ -71,5 +77,94 @@ public class FieldCreator {
         if(currentTile.getTileType() == TileType.PUZZLE) {
             throw new IllegalArgumentException("Just Finish, Start and None allowed in the borders");
         }
+    }
+
+    public GameField generateSolvedField(int width, int height) {
+        GameField gameField = new GameField();
+        int startX;
+        int startY;
+        int direction;
+        tiles = new Tile[width][height];
+        for(int i = 0; i< tiles.length; i++) {
+            for (int j = 0; j< tiles[i].length; j++) {
+                tiles[i][j] = new Tile(false,false,false,false,TileType.NONE);
+            }
+        }
+        Tile startTile;
+        switch ((int) (Math.random() * (4))) {
+            case 0:
+                startTile = new Tile(false,true,false,false,TileType.START);
+                startX = (int) (Math.random() * (width-2) +1);
+                startY = 0;
+                direction = 0;
+                tiles[startX][0] = startTile;
+                break;
+            case 1:
+                startTile = new Tile(true,false,false,false,TileType.START);
+                startX = (int) (Math.random() * (width-2) +1);
+                startY = height-1;
+                direction = 2;
+                tiles[startX][height-1] = startTile;
+                break;
+            case 2:
+                startTile = new Tile(false,false,false,true,TileType.START);
+                startX = 0;
+                startY = (int) (Math.random() * (height-2) +1);
+                direction = 1;
+                tiles[startX][startY] = startTile;
+                break;
+            case 3:
+                startTile = new Tile(false,false,true,false,TileType.START);
+                startX = width-1;
+                startY = (int) (Math.random() * (height-2) +1);
+                direction = 3;
+                tiles[startX][startY] = startTile;
+                break;
+            default:
+                throw new IllegalStateException("Wrong Random");
+        }
+        int x = startX;
+        int y = startY;
+        while ((x != 0 && x != width-1 && y != 0 && y != height-1)||(x == startX && y == startY )) {
+            if(Math.random()<0.7f && !(startX == x && startY == y )) {
+                direction = (int) (Math.random() *4);
+            }
+
+            int xNew = x + directionsX[direction];
+            int yNew = y + directionsY[direction];
+            while (tiles[xNew][yNew].getTileType() != TileType.NONE ) {
+                direction = (int) (Math.random() * (4) +0);
+                xNew = x + directionsX[direction];
+                yNew = y + directionsY[direction];
+            }
+            switch (direction) {
+                case 0:
+                    tiles[x][y].setBottom(true);
+                    tiles[xNew][yNew].setTop(true);
+                    break;
+                case 1:
+                    tiles[x][y].setRight(true);
+                    tiles[xNew][yNew].setLeft(true);
+                    break;
+                case 2:
+                    tiles[x][y].setTop(true);
+                    tiles[xNew][yNew].setBottom(true);
+                    break;
+                case 3:
+                    tiles[x][y].setLeft(true);
+                    tiles[xNew][yNew].setRight(true);
+                    break;
+                default:
+                    throw new IllegalStateException("Wrong Direction");
+            }
+            x = xNew;
+            y = yNew;
+            tiles[x][y].setTileType(TileType.PUZZLE);
+        }
+        tiles[x][y].setTileType(TileType.FINISH);
+        gameField.setStartX(startX);
+        gameField.setStartY(startY);
+        gameField.setField(tiles);
+        return gameField;
     }
 }
