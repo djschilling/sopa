@@ -50,7 +50,7 @@ public class GameEndService {
     }
 
     private boolean possibleTile(int x, int y, int xNew, int yNew, int direction) {
-        if (xNew >= 0 && xNew < field[0].length && yNew >= 0 && yNew < field.length) {
+        if (xNew >= 0 && xNew < field.length && yNew >= 0 && yNew < field[0].length) {
             Tile tileNew = field[xNew][yNew];
             Tile tile = field[x][y];
             if (tileNew.getTileType() != TileType.NONE && pathStates[xNew][yNew] == PathState.UNDEFINED) {
@@ -67,7 +67,7 @@ public class GameEndService {
                         return true;
                     }
                 } else {
-                    if (tile.isLeft() && tile.isRight()) {
+                    if (tile.isLeft() && tileNew.isRight()) {
                         return true;
                     }
                 }
