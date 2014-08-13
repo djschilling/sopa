@@ -17,6 +17,8 @@ public class Main {
         GameFieldService gameFieldService1 = new GameFieldService(randGameField);
         System.out.println(gameFieldService1.solvedPuzzle());
         gameFieldService1.printField();
+        gameFieldService1.printFieldWay();
+        gameFieldService1.printBacktracking();
 /*        int i = 113;
         while (!gameFieldService.solvedPuzzle()) {
             System.out.println("Noch nicht gelöst");

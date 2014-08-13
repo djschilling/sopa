@@ -31,6 +31,33 @@ public class GameFieldService {
             System.out.println();
         }
     }
+    public void printFieldWay(){
+        System.out.println("Field:");
+        for(int i = 0; i < gameField.getField()[0].length; i++){
+            for(int k = 0; k <3; k++) {
+                for(int j = 0; j < gameField.getField().length; j++){
+                    switch (k) {
+                        case 0:
+                            System.out.print("\t " + gameField.getField()[j][i].isTop() + "\t\t");
+                            break;
+                        case 1:
+                            System.out.print(gameField.getField()[j][i].isLeft() + " 0\t  " + gameField.getField()[j][i].isRight() +" ");
+                            break;
+                        case 2:
+                            System.out.print("\t " + gameField.getField()[j][i].isBottom() + "\t\t");
+
+                        default:
+                            break;
+                    }
+
+                }
+                System.out.println();
+               // System.out.print(gameField.getField()[j][i].getTileType() + "\t");
+            }
+            System.out.println();
+
+        }
+    }
 
     public void shiftLine(boolean horizontal, int row, int steps) {
         if(horizontal) {
