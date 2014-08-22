@@ -33,17 +33,18 @@ public class MainActivity extends SimpleBaseGameActivity {
                 "nooion",
                 "nnnfnn"
         }));
-        final Scene scene = new Scene();
+        Scene scene = new Scene();
 
-        int width = gameFieldService.getField().length;
-        int heigth = gameFieldService.getField()[0].length;
+        Tile[][] field = gameFieldService.getField();
+        int width = field.length;
+        int heigth = field[0].length;
         int spacePerTile = CAMERA_WIDTH / width;
         int tilePositionY = 0;
         for (int y = 0; y < heigth; y++) {
             int tilePositionX = 0;
             for (int x = 0; x < width; x++) {
-                if (gameFieldService.getField()[x][y].getTileType() != TileType.NONE) {
-                    TextureRegion pTextureRegion = regionMap.get(gameFieldService.getField()[x][y].getShortcut());
+                if (field[x][y].getTileType() != TileType.NONE) {
+                    TextureRegion pTextureRegion = regionMap.get(field[x][y].getShortcut());
                     Sprite tileSprite = new Sprite(tilePositionX, tilePositionY, spacePerTile, spacePerTile, pTextureRegion, getVertexBufferObjectManager());
                     scene.attachChild(tileSprite);
                 }
