@@ -102,4 +102,8 @@ public class Tile {
         return result;
     }
 
+    public void setShortcut(char shortcut) {
+        this.shortcut = shortcut;
+    }
+
 }

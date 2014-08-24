@@ -27,13 +27,14 @@ public class MainActivity extends SimpleBaseGameActivity {
     protected Scene onCreateScene() {
         fieldCreator = new FieldCreator();
 
-        gameFieldService = new GameFieldService(fieldCreator.fromString(new String[]{"nnnnnn",
+     /*   gameFieldService = new GameFieldService(fieldCreator.fromString(new String[]{"nnnnnn",
                 "noooon",
                 "noouas",
                 "nooion",
                 "nooion",
                 "nnnfnn"
-        }));
+        }));*/
+        gameFieldService = new GameFieldService(fieldCreator.generateSolvedField(6,6));
         Scene scene = new Scene();
 
         Tile[][] field = gameFieldService.getField();
@@ -44,7 +45,7 @@ public class MainActivity extends SimpleBaseGameActivity {
         for (int y = 0; y < heigth; y++) {
             int tilePositionX = 0;
             for (int x = 0; x < width; x++) {
-                if (field[x][y].getTileType() != TileType.NONE) {
+                if (field[x][y].getShortcut() != 'n') {
                     TextureRegion pTextureRegion = regionMap.get(field[x][y].getShortcut());
                     Sprite tileSprite = new Sprite(tilePositionX, tilePositionY, spacePerTile, spacePerTile, pTextureRegion, getVertexBufferObjectManager());
                     scene.attachChild(tileSprite);
