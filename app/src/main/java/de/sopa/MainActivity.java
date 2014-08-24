@@ -2,7 +2,6 @@ package de.sopa;
 
 import android.graphics.Point;
 import android.view.Display;
-import java.util.Map;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
@@ -11,6 +10,8 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
+
+import java.util.Map;
 
 
 public class MainActivity extends SimpleBaseGameActivity {
@@ -59,7 +60,11 @@ public class MainActivity extends SimpleBaseGameActivity {
     public EngineOptions onCreateEngineOptions() {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
+        if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB_MR2) {
+        size.set(display.getWidth(), display.getHeight());
+            } else {
         display.getSize(size);
+        }
         CAMERA_WIDTH = size.x;
         CAMERA_HEIGHT = size.y;
         final Camera camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
