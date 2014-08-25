@@ -14,7 +14,7 @@ public class FieldCreator {
     private Tile[][] tiles;
 
     private Map<Character, Tile> characterTileHashMap;
-    private Map<Tile, Tile> tileTileShortcutHashMap;
+    private Map<Tile, Character> tileShortcutHashMap;
     public FieldCreator() {
         characterTileHashMap = new HashMap<>();
         characterTileHashMap.put('s', new Tile(false,false,false,false,TileType.START, 's'));
@@ -37,24 +37,24 @@ public class FieldCreator {
         characterTileHashMap.put('k', new Tile(true,true,true,false,TileType.PUZZLE, 'k'));
         characterTileHashMap.put('m', new Tile(true,true,true,true,TileType.PUZZLE, 'm'));
 
-        tileTileShortcutHashMap = new HashMap<>();
-        tileTileShortcutHashMap.put(new Tile(false,false,false,false,TileType.NONE, 'n'),new Tile(false,false,false,false,TileType.NONE, 'n'));
-        tileTileShortcutHashMap.put(new Tile(false,false,false,false,TileType.PUZZLE, 'o'),new Tile(false,false,false,false,TileType.PUZZLE, 'o'));
-        tileTileShortcutHashMap.put(new Tile(true,false,false,false,TileType.PUZZLE, 'n'),new Tile(true,false,false,false,TileType.PUZZLE, 't'));
-        tileTileShortcutHashMap.put(new Tile(false,true,false,false,TileType.PUZZLE, 'n'),new Tile(false,true,false,false,TileType.PUZZLE, 'b'));
-        tileTileShortcutHashMap.put(new Tile(false,false,false,true,TileType.PUZZLE, 'n'),new Tile(false,false,false,true,TileType.PUZZLE, 'r'));
-        tileTileShortcutHashMap.put(new Tile(false,false,true,false,TileType.PUZZLE, 'n'),new Tile(false,false,true,false,TileType.PUZZLE, 'l'));
-        tileTileShortcutHashMap.put(new Tile(false,false,true,true,TileType.PUZZLE, 'n'),new Tile(false,false,true,true,TileType.PUZZLE, 'a'));
-        tileTileShortcutHashMap.put(new Tile(false,true,false,true,TileType.PUZZLE, 'n'),new Tile(false,true,false,true,TileType.PUZZLE, 'u'));
-        tileTileShortcutHashMap.put(new Tile(false,true,true,false,TileType.PUZZLE, 'n'),new Tile(false,true,true,false,TileType.PUZZLE, 'c'));
-        tileTileShortcutHashMap.put(new Tile(false,true,true,true,TileType.PUZZLE, 'n'),new Tile(false,true,true,true,TileType.PUZZLE, 'd'));
-        tileTileShortcutHashMap.put(new Tile(true,false,false,true,TileType.PUZZLE, 'n'),new Tile(true,false,false,true,TileType.PUZZLE, 'e'));
-        tileTileShortcutHashMap.put(new Tile(true,false,true,false,TileType.PUZZLE, 'n'),new Tile(true,false,true,false,TileType.PUZZLE, 'g'));
-        tileTileShortcutHashMap.put(new Tile(true,false,true,true,TileType.PUZZLE, 'n'),new Tile(true,false,true,true,TileType.PUZZLE, 'h'));
-        tileTileShortcutHashMap.put(new Tile(true,true,false,false,TileType.PUZZLE, 'n'),new Tile(true,true,false,false,TileType.PUZZLE, 'i'));
-        tileTileShortcutHashMap.put(new Tile(true,true,false,true,TileType.PUZZLE, 'n'),new Tile(true,true,false,true,TileType.PUZZLE, 'j'));
-        tileTileShortcutHashMap.put(new Tile(true,true,true,false,TileType.PUZZLE, 'n'),new Tile(true,true,true,false,TileType.PUZZLE, 'k'));
-        tileTileShortcutHashMap.put(new Tile(true,true,true,true,TileType.PUZZLE, 'n'), new Tile(true,true,true,true,TileType.PUZZLE, 'm'));
+        tileShortcutHashMap = new HashMap<>();
+        tileShortcutHashMap.put(new Tile(false, false, false, false, TileType.NONE, 'n'),'n');
+        tileShortcutHashMap.put(new Tile(false, false, false, false, TileType.PUZZLE, 'o'),'o');
+        tileShortcutHashMap.put(new Tile(true, false, false, false, TileType.PUZZLE, 'n'), 't');
+        tileShortcutHashMap.put(new Tile(false, true, false, false, TileType.PUZZLE, 'n'), 'b');
+        tileShortcutHashMap.put(new Tile(false, false, false, true, TileType.PUZZLE, 'n'), 'r');
+        tileShortcutHashMap.put(new Tile(false, false, true, false, TileType.PUZZLE, 'n'), 'l');
+        tileShortcutHashMap.put(new Tile(false, false, true, true, TileType.PUZZLE, 'n'), 'a');
+        tileShortcutHashMap.put(new Tile(false, true, false, true, TileType.PUZZLE, 'n'), 'u');
+        tileShortcutHashMap.put(new Tile(false, true, true, false, TileType.PUZZLE, 'n'), 'c');
+        tileShortcutHashMap.put(new Tile(false, true, true, true, TileType.PUZZLE, 'n'), 'd');
+        tileShortcutHashMap.put(new Tile(true, false, false, true, TileType.PUZZLE, 'n'), 'e');
+        tileShortcutHashMap.put(new Tile(true, false, true, false, TileType.PUZZLE, 'n'), 'g');
+        tileShortcutHashMap.put(new Tile(true, false, true, true, TileType.PUZZLE, 'n'), 'h');
+        tileShortcutHashMap.put(new Tile(true, true, false, false, TileType.PUZZLE, 'n'), 'i');
+        tileShortcutHashMap.put(new Tile(true, true, false, true, TileType.PUZZLE, 'n'), 'j');
+        tileShortcutHashMap.put(new Tile(true, true, true, false, TileType.PUZZLE, 'n'), 'k');
+        tileShortcutHashMap.put(new Tile(true, true, true, true, TileType.PUZZLE, 'n'), 'm');
 
 
     }
@@ -109,23 +109,23 @@ public class FieldCreator {
         tiles = new Tile[width][height];
         for(int i = 1; i< width-1; i++) {
             for (int j = 1; j< height-1; j++) {
-                tiles[i][j] = characterTileHashMap.get('o');
+                tiles[i][j] = new Tile(false,false,false,false,TileType.PUZZLE,'o');
             }
         }
         for(int i = 0; i< width; i++) {
-            tiles[i][0] = characterTileHashMap.get('n');
+            tiles[i][0] = new Tile(false,false,false,false,TileType.NONE,'n');
         }
 
         for(int i = 0; i< width; i++) {
-            tiles[i][height-1] = characterTileHashMap.get('n');
+            tiles[i][height-1] = new Tile(false,false,false,false,TileType.NONE,'n');
         }
 
         for(int i = 0; i< height; i++) {
-            tiles[0][i] = characterTileHashMap.get('n');
+            tiles[0][i] = new Tile(false,false,false,false,TileType.NONE,'n');
         }
 
         for(int i = 0; i< height; i++) {
-            tiles[width-1][i] = characterTileHashMap.get('n');
+            tiles[width-1][i] = new Tile(false,false,false,false,TileType.NONE,'n');
         }
         Tile startTile;
         switch ((int) (Math.random() * (4))) {
@@ -197,7 +197,13 @@ public class FieldCreator {
             x = xNew;
             y = yNew;
             tiles[x][y].setTileType(TileType.PUZZLE);
-            tiles[x][y] = tileTileShortcutHashMap.get(tiles[x][y]);
+            tiles[x][y].setShortcut(tileShortcutHashMap.get(tiles[x][y]));
+
+        }
+        for(int i = 1; i< width-1; i++) {
+            for (int j = 1; j< height-1; j++) {
+                tiles[i][j].setShortcut(tileShortcutHashMap.get(tiles[i][j]));
+            }
         }
         tiles[x][y].setTileType(TileType.FINISH);
         tiles[x][y].setShortcut('f');
