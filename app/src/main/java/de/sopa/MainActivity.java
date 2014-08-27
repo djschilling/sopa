@@ -26,8 +26,6 @@ public class MainActivity extends SimpleBaseGameActivity {
 
     private static int CAMERA_HEIGHT;
     private static int CAMERA_WIDTH;
-    private GameFieldService gameFieldService;
-    private FieldCreator fieldCreator;
     private Map<Character, TextureRegion> regionMap;
     private GestureDetector gestureDetector;
     private GameServiceImpl gameService;
@@ -43,8 +41,6 @@ public class MainActivity extends SimpleBaseGameActivity {
 
     @Override
     protected Scene onCreateScene() {
-        fieldCreator = new FieldCreator();
-        gameFieldService = new GameFieldService();
         GameScene scene = new GameScene(regionMap, getVertexBufferObjectManager(), CAMERA_WIDTH);
         scene.setSubject(gameService);
         gameService.attach(scene);
