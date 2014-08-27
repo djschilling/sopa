@@ -1,4 +1,8 @@
-package de.sopa;
+package de.sopa.model;
+
+import de.sopa.PathState;
+import de.sopa.Tile;
+import de.sopa.TileType;
 
 /**
  * David Schilling - davejs92@gmail.com

@@ -1,4 +1,8 @@
-package de.sopa;
+package de.sopa.model;
+
+import de.sopa.Tile;
+import de.sopa.model.GameEndService;
+import de.sopa.model.GameField;
 
 /**
  * David Schilling - davejs92@gmail.com

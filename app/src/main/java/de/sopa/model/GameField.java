@@ -1,4 +1,6 @@
-package de.sopa;
+package de.sopa.model;
+
+import de.sopa.Tile;
 
 /**
  * Created by raphael on 11.08.14.

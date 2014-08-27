@@ -1,5 +1,7 @@
-package de.sopa;
+package de.sopa.model;
 
+import de.sopa.Tile;
+import de.sopa.TileType;
 import java.lang.Character;import java.lang.IllegalArgumentException;import java.lang.IllegalStateException;import java.lang.Math;import java.lang.String;import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +22,7 @@ public class FieldCreator {
     private Map<Tile, Character> tileShortcutHashMap;
     public FieldCreator() {
         characterTileHashMap = new HashMap<>();
-        characterTileHashMap.put('s', new Tile(false,false,false,false,TileType.START, 's'));
+        characterTileHashMap.put('s', new Tile(false,false,false,false, TileType.START, 's'));
         characterTileHashMap.put('f', new Tile(false,false,false,false,TileType.FINISH, 'f'));
         characterTileHashMap.put('n', new Tile(false,false,false,false,TileType.NONE, 'n'));
         characterTileHashMap.put('o', new Tile(false,false,false,false,TileType.PUZZLE, 'o'));

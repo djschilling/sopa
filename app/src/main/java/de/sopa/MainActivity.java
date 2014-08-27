@@ -1,13 +1,20 @@
 package de.sopa;
 
 import android.graphics.Point;
+import android.os.Bundle;
 import android.view.Display;
+import android.view.GestureDetector;
+import de.sopa.model.FieldCreator;
+import de.sopa.model.GameField;
+import de.sopa.model.GameFieldService;
+import de.sopa.model.GameService;
+import de.sopa.model.GameServiceImpl;
+import de.sopa.observer.GameScene;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 
@@ -22,17 +29,27 @@ public class MainActivity extends SimpleBaseGameActivity {
     private GameFieldService gameFieldService;
     private FieldCreator fieldCreator;
     private Map<Character, TextureRegion> regionMap;
+    private GestureDetector gestureDetector;
+    private GameServiceImpl gameService;
+
+    @Override
+    protected void onCreate(Bundle pSavedInstanceState) {
+        super.onCreate(pSavedInstanceState);
+        gestureDetector = new GestureDetector(new SwipeGestureDetector());
+        gameService = new GameServiceImpl();
+
+    }
 
     @Override
     protected Scene onCreateScene() {
         fieldCreator = new FieldCreator();
         gameFieldService = new GameFieldService();
-        GameScene scene = new GameScene(regionMap, getVertexBufferObjectManager());
-        GameField gameField = fieldCreator.generateSolvedField(6,6);
-        GameFieldDestroyer gameFieldDestroyer = new GameFieldDestroyer();
-        gameFieldDestroyer.destroyField(gameField,3,5,2);
-        scene.setSolved(gameFieldService.solvedPuzzle(gameField));
-        scene.addTiles(gameField.getField(), CAMERA_WIDTH);
+        GameScene scene = new GameScene(regionMap, getVertexBufferObjectManager(), CAMERA_WIDTH);
+        scene.setSubject(gameService);
+        gameService.attach(scene);
+        gameService.notifyAllObserver();
+        TouchListener touchListener = new TouchListener(gestureDetector);
+        scene.setOnSceneTouchListener(touchListener);
         return scene;
     }
 

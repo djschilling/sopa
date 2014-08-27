@@ -1,5 +1,8 @@
-package de.sopa;
+package de.sopa.observer;
 
+
+import de.sopa.Tile;
+import de.sopa.model.GameService;
 import java.util.Map;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
@@ -9,17 +12,21 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 /**
  * David Schilling - davejs92@gmail.com
  */
-public class GameScene extends Scene {
+public class GameScene extends Scene implements Observer {
 
     private final Map<Character, TextureRegion> regionMap;
     private final VertexBufferObjectManager vertexBufferObjectManager;
+    private final int spaceHorizontal;
+    private GameService gameService;
 
-    public GameScene(Map<Character, TextureRegion> regionMap, VertexBufferObjectManager vertexBufferObjectManager) {
+    public GameScene(Map<Character, TextureRegion> regionMap, VertexBufferObjectManager vertexBufferObjectManager, int spaceHorizontal) {
         this.regionMap = regionMap;
         this.vertexBufferObjectManager = vertexBufferObjectManager;
+        this.spaceHorizontal = spaceHorizontal;
     }
 
-    public void addTiles(Tile[][] field, int spaceHorizontal) {
+    public void addTiles() {
+        Tile[][] field = gameService.getGameField().getField();
         int width = field.length;
         int heigth = field[0].length;
         int spacePerTile = spaceHorizontal / width;
@@ -38,13 +45,24 @@ public class GameScene extends Scene {
         }
     }
 
+
     public void setSolved(boolean solved) {
         Sprite solvedSprite;
-        if(solved) {
-            solvedSprite = new Sprite(0,0,50,50,regionMap.get('s'), vertexBufferObjectManager);
-        }else {
-            solvedSprite = new Sprite(0,0,50,50,regionMap.get('i'), vertexBufferObjectManager);
+        if (solved) {
+            solvedSprite = new Sprite(0, 0, 50, 50, regionMap.get('s'), vertexBufferObjectManager);
+        } else {
+            solvedSprite = new Sprite(0, 0, 50, 50, regionMap.get('i'), vertexBufferObjectManager);
         }
         attachChild(solvedSprite);
+    }
+
+    @Override
+    public void update() {
+        addTiles();
+    }
+
+    @Override
+    public void setSubject(GameService gameService) {
+        this.gameService = gameService;
     }
 }
