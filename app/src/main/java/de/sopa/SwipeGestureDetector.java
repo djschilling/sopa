@@ -10,7 +10,7 @@ import static android.view.GestureDetector.SimpleOnGestureListener;
  */
 public class SwipeGestureDetector extends SimpleOnGestureListener {
 
-    private static final float SWIPE_MIN_DISTANCE = 50;
+    private static final float SWIPE_MIN_DISTANCE = 25;
 
     private final GameService gameService;
     private final int startX;

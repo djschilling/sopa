@@ -107,6 +107,7 @@ public class FieldCreator {
     }
 
     public GameField generateSolvedField(int width, int height) {
+        int number = 0;
         GameField gameField = new GameField();
         int startX;
         int startY;
@@ -168,13 +169,19 @@ public class FieldCreator {
         int x = startX;
         int y = startY;
         while ((x != 0 && x != width-1 && y != 0 && y != height-1)||(x == startX && y == startY )) {
+            number++;
             if(Math.random()<0.7f && !(startX == x && startY == y )) {
                 direction = (int) (Math.random() *4);
             }
 
             int xNew = x + directionsX[direction];
             int yNew = y + directionsY[direction];
+            boolean directions[] = new boolean[]{false,false,false,false};
             while (tiles[xNew][yNew].getTileType() != UNDEFINED && tiles[xNew][yNew].getShortcut() != 'n' ) {
+                if (directions[0]&&directions[1]&&directions[2]&&directions[3]) {
+                   return generateSolvedField(width, height);
+                }
+                directions[direction] = true;
                 direction = (int) (Math.random() * (4) +0);
                 xNew = x + directionsX[direction];
                 yNew = y + directionsY[direction];
@@ -215,6 +222,13 @@ public class FieldCreator {
         gameField.setStartX(startX);
         gameField.setStartY(startY);
         gameField.setField(tiles);
+        if(number>(width-2)*(height-2)/3) {
         return gameField;
+        } else {
+            return generateSolvedField(width, height);
+        }
+
     }
+
 }
+
