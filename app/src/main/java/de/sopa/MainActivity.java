@@ -29,6 +29,9 @@ public class MainActivity extends SimpleBaseGameActivity {
         gameFieldService = new GameFieldService();
         GameScene scene = new GameScene(regionMap, getVertexBufferObjectManager());
         GameField gameField = fieldCreator.generateSolvedField(6,6);
+        GameFieldDestroyer gameFieldDestroyer = new GameFieldDestroyer();
+        gameFieldDestroyer.destroyField(gameField,3,5,2);
+        scene.setSolved(gameFieldService.solvedPuzzle(gameField));
         scene.addTiles(gameField.getField(), CAMERA_WIDTH);
         return scene;
     }

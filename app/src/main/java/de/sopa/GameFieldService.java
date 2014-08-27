@@ -62,6 +62,7 @@ public class GameFieldService {
             Tile line[] = new Tile[gameField.getField().length-2];
             for(int i = 0; i < gameField.getField().length - 2; i++) {
                 line[i] = gameField.getField()[i+1][row+1];
+                gameField.getField()[i+1][row+1] = null;
             }
             for(int i = 0; i < gameField.getField().length-2; i++) {
                 int newPosition = i + steps;
@@ -73,6 +74,7 @@ public class GameFieldService {
             Tile line[] = new Tile[gameField.getField()[0].length-2];
             for(int i = 0; i < gameField.getField()[0].length-2; i++) {
                 line[i] = gameField.getField()[row+1][i+1];
+                gameField.getField()[row+1][i+1] = null;
             }
             for(int i = 0; i < gameField.getField()[0].length-2; i++) {
                 int newPosition = (i+steps);

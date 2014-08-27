@@ -37,4 +37,14 @@ public class GameScene extends Scene {
             tilePositionY += spacePerTile;
         }
     }
+
+    public void setSolved(boolean solved) {
+        Sprite solvedSprite;
+        if(solved) {
+            solvedSprite = new Sprite(0,0,50,50,regionMap.get('s'), vertexBufferObjectManager);
+        }else {
+            solvedSprite = new Sprite(0,0,50,50,regionMap.get('i'), vertexBufferObjectManager);
+        }
+        attachChild(solvedSprite);
+    }
 }
