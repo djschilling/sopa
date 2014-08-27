@@ -28,25 +28,9 @@ public class MainActivity extends SimpleBaseGameActivity {
         fieldCreator = new FieldCreator();
 
         gameFieldService = new GameFieldService(fieldCreator.generateSolvedField(6,6));
-        Scene scene = new Scene();
+        GameScene scene = new GameScene(regionMap, getVertexBufferObjectManager());
+        scene.addTiles(gameFieldService.getField(), CAMERA_WIDTH);
 
-        Tile[][] field = gameFieldService.getField();
-        int width = field.length;
-        int heigth = field[0].length;
-        int spacePerTile = CAMERA_WIDTH / width;
-        int tilePositionY = 0;
-        for (int y = 0; y < heigth; y++) {
-            int tilePositionX = 0;
-            for (int x = 0; x < width; x++) {
-                if (field[x][y].getShortcut() != 'n') {
-                    TextureRegion pTextureRegion = regionMap.get(field[x][y].getShortcut());
-                    Sprite tileSprite = new Sprite(tilePositionX, tilePositionY, spacePerTile, spacePerTile, pTextureRegion, getVertexBufferObjectManager());
-                    scene.attachChild(tileSprite);
-                }
-                tilePositionX += spacePerTile;
-            }
-            tilePositionY += spacePerTile;
-        }
         return scene;
     }
 
