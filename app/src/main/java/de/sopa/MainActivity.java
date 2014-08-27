@@ -26,11 +26,10 @@ public class MainActivity extends SimpleBaseGameActivity {
     @Override
     protected Scene onCreateScene() {
         fieldCreator = new FieldCreator();
-
-        gameFieldService = new GameFieldService(fieldCreator.generateSolvedField(6,6));
+        gameFieldService = new GameFieldService();
         GameScene scene = new GameScene(regionMap, getVertexBufferObjectManager());
-        scene.addTiles(gameFieldService.getField(), CAMERA_WIDTH);
-
+        GameField gameField = fieldCreator.generateSolvedField(6,6);
+        scene.addTiles(gameField.getField(), CAMERA_WIDTH);
         return scene;
     }
 

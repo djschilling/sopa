@@ -5,15 +5,13 @@ package de.sopa;
  */
 public class GameFieldService {
 
-    private GameField gameField;
     private GameEndService gameEndService;
 
-    public GameFieldService(GameField gameField) {
-        this.gameField = gameField;
-        gameEndService = new GameEndService(gameField.getField().length, gameField.getField()[0].length);
+    public GameFieldService() {
+        gameEndService = new GameEndService();
     }
 
-    public boolean solvedPuzzle() {
+    public boolean solvedPuzzle(GameField gameField) {
         return gameEndService.solvedPuzzle(gameField.getStartX(), gameField.getStartY(), gameField.getField().length, gameField.getField()[0].length, gameField.getField());
     }
 
@@ -22,7 +20,7 @@ public class GameFieldService {
     public void printBacktracking() {
         gameEndService.printBacktracking();
     }
-    public void printField(){
+    public void printField(GameField gameField){
         System.out.println("Field:");
         for(int i = 0; i < gameField.getField()[0].length; i++){
             for(int j = 0; j < gameField.getField().length; j++){
@@ -31,7 +29,7 @@ public class GameFieldService {
             System.out.println();
         }
     }
-    public void printFieldWay(){
+    public void printFieldWay(GameField gameField){
         System.out.println("Field:");
         for(int i = 0; i < gameField.getField()[0].length; i++){
             for(int k = 0; k <3; k++) {
@@ -59,7 +57,7 @@ public class GameFieldService {
         }
     }
 
-    public void shiftLine(boolean horizontal, int row, int steps) {
+    public void shiftLine(GameField gameField, boolean horizontal, int row, int steps) {
         if(horizontal) {
             Tile line[] = new Tile[gameField.getField().length-2];
             for(int i = 0; i < gameField.getField().length - 2; i++) {
@@ -83,14 +81,6 @@ public class GameFieldService {
                 gameField.getField()[row+1][newPosition+1] = line[i];
             }
         }
-    }
-
-    public void setField(Tile[][] field) {
-        gameField.setField(field);
-    }
-
-    public Tile[][] getField() {
-        return gameField.getField();
     }
 
     private int shiftToPositive(int number, int steps) {

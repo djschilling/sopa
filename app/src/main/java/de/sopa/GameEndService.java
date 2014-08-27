@@ -10,11 +10,9 @@ public class GameEndService {
     private int[] directionsY = new int[]{1, 0, -1, 0};
     private Tile[][] field;
 
-    public GameEndService(int width, int heigth) {
-        pathStates = new PathState[width][heigth];
-    }
 
     private void initializePathStates(int width, int heigth) {
+        pathStates = new PathState[width][heigth];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < heigth; j++) {
                 pathStates[i][j] = PathState.UNDEFINED;
