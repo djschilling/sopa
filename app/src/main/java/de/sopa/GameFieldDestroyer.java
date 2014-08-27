@@ -1,6 +1,10 @@
 package de.sopa;
 
 
+import de.sopa.model.GameEndService;
+import de.sopa.model.GameField;
+import de.sopa.model.GameFieldService;
+
 public class GameFieldDestroyer {
     public GameField destroyField(GameField gameField, int minShiftCount, int maxShiftCount, int maxValue) {
         GameFieldService gameFieldService = new GameFieldService();
