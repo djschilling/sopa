@@ -10,9 +10,9 @@ public class GameFieldDestroyer {
             boolean horizontal=(Math.random()>0.5f);
             int row;
             if(horizontal) {
-                row = (int) (Math.random()*(gameField.getField()[0].length-1));
+                row = (int) (Math.random()*(gameField.getField()[0].length-2));
             } else {
-                row = (int) (Math.random()*(gameField.getField().length-1));
+                row = (int) (Math.random()*(gameField.getField().length-2));
             }
             gameFieldService.shiftLine(gameField,horizontal,row,(int) (Math.random()*(maxValue+1)));
         }
