@@ -1,5 +1,6 @@
 package de.sopa.model;
 
+import de.sopa.GameFieldDestroyer;
 import de.sopa.observer.Observer;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ public class GameServiceImpl implements GameService {
         gameFieldService = new GameFieldService();
         fieldCreator = new FieldCreator();
         gameField = fieldCreator.generateSolvedField(6, 6);
+        new GameFieldDestroyer().destroyField(gameField, 3, 5, 3);
 
     }
 
@@ -28,8 +30,9 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public void shiftLine(GameField gameField, boolean horizontal, int row, int steps) {
+    public void shiftLine(boolean horizontal, int row, int steps) {
         gameFieldService.shiftLine(gameField, horizontal, row, steps);
+        notifyAllObserver();
     }
 
     @Override

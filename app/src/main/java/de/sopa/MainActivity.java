@@ -35,8 +35,9 @@ public class MainActivity extends SimpleBaseGameActivity {
     @Override
     protected void onCreate(Bundle pSavedInstanceState) {
         super.onCreate(pSavedInstanceState);
-        gestureDetector = new GestureDetector(new SwipeGestureDetector());
         gameService = new GameServiceImpl();
+        int widthPerTile = CAMERA_WIDTH / gameService.getGameField().getField().length;
+        gestureDetector = new GestureDetector(new SwipeGestureDetector(gameService, widthPerTile, widthPerTile, widthPerTile));
 
     }
 

@@ -9,7 +9,7 @@ public interface GameService {
 
     boolean solvedPuzzle();
 
-    void shiftLine(GameField gameField, boolean horizontal, int row, int steps);
+    void shiftLine(boolean horizontal, int row, int steps);
 
     GameField getGameField();
 

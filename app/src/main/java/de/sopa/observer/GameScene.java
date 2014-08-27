@@ -26,6 +26,7 @@ public class GameScene extends Scene implements Observer {
     }
 
     public void addTiles() {
+        this.clearChildScene();
         Tile[][] field = gameService.getGameField().getField();
         int width = field.length;
         int heigth = field[0].length;
@@ -43,6 +44,8 @@ public class GameScene extends Scene implements Observer {
             }
             tilePositionY += spacePerTile;
         }
+        setSolved(gameService.solvedPuzzle());
+
     }
 
 
