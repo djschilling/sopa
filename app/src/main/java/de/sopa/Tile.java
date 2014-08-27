@@ -76,6 +76,11 @@ public class Tile {
         return shortcut;
     }
 
+
+    public void setShortcut(char shortcut) {
+        this.shortcut = shortcut;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,6 +91,7 @@ public class Tile {
         if (bottom != tile.bottom) return false;
         if (left != tile.left) return false;
         if (right != tile.right) return false;
+        if (shortcut != tile.shortcut) return false;
         if (top != tile.top) return false;
         if (tileType != tile.tileType) return false;
 
@@ -99,11 +105,7 @@ public class Tile {
         result = 31 * result + (left ? 1 : 0);
         result = 31 * result + (right ? 1 : 0);
         result = 31 * result + (tileType != null ? tileType.hashCode() : 0);
+        result = 31 * result + (int) shortcut;
         return result;
     }
-
-    public void setShortcut(char shortcut) {
-        this.shortcut = shortcut;
-    }
-
 }

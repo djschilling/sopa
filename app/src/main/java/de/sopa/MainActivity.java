@@ -27,13 +27,6 @@ public class MainActivity extends SimpleBaseGameActivity {
     protected Scene onCreateScene() {
         fieldCreator = new FieldCreator();
 
-     /*   gameFieldService = new GameFieldService(fieldCreator.fromString(new String[]{"nnnnnn",
-                "noooon",
-                "noouas",
-                "nooion",
-                "nooion",
-                "nnnfnn"
-        }));*/
         gameFieldService = new GameFieldService(fieldCreator.generateSolvedField(6,6));
         Scene scene = new Scene();
 

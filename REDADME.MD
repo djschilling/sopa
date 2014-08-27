@@ -2,7 +2,6 @@ Start         = s
 Finish        = f
 None          = n
 None(Puzzle)  = o
-None Undefined= p
             r = r
         l     = l
         l   r = a

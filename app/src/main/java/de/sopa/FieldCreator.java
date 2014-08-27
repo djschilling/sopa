@@ -3,6 +3,9 @@ package de.sopa;
 import java.lang.Character;import java.lang.IllegalArgumentException;import java.lang.IllegalStateException;import java.lang.Math;import java.lang.String;import java.util.HashMap;
 import java.util.Map;
 
+import static de.sopa.TileType.PUZZLE;
+import static de.sopa.TileType.UNDEFINED;
+
 /**
  * David Schilling - davejs92@gmail.com
  */
@@ -38,23 +41,23 @@ public class FieldCreator {
         characterTileHashMap.put('m', new Tile(true,true,true,true,TileType.PUZZLE, 'm'));
 
         tileShortcutHashMap = new HashMap<>();
-        tileShortcutHashMap.put(new Tile(false, false, false, false, TileType.NONE, 'n'),'n');
+        tileShortcutHashMap.put(new Tile(false, false, false, false, TileType.NONE, 'o'),'n');
         tileShortcutHashMap.put(new Tile(false, false, false, false, TileType.PUZZLE, 'o'),'o');
-        tileShortcutHashMap.put(new Tile(true, false, false, false, TileType.PUZZLE, 'n'), 't');
-        tileShortcutHashMap.put(new Tile(false, true, false, false, TileType.PUZZLE, 'n'), 'b');
-        tileShortcutHashMap.put(new Tile(false, false, false, true, TileType.PUZZLE, 'n'), 'r');
-        tileShortcutHashMap.put(new Tile(false, false, true, false, TileType.PUZZLE, 'n'), 'l');
-        tileShortcutHashMap.put(new Tile(false, false, true, true, TileType.PUZZLE, 'n'), 'a');
-        tileShortcutHashMap.put(new Tile(false, true, false, true, TileType.PUZZLE, 'n'), 'u');
-        tileShortcutHashMap.put(new Tile(false, true, true, false, TileType.PUZZLE, 'n'), 'c');
-        tileShortcutHashMap.put(new Tile(false, true, true, true, TileType.PUZZLE, 'n'), 'd');
-        tileShortcutHashMap.put(new Tile(true, false, false, true, TileType.PUZZLE, 'n'), 'e');
-        tileShortcutHashMap.put(new Tile(true, false, true, false, TileType.PUZZLE, 'n'), 'g');
-        tileShortcutHashMap.put(new Tile(true, false, true, true, TileType.PUZZLE, 'n'), 'h');
-        tileShortcutHashMap.put(new Tile(true, true, false, false, TileType.PUZZLE, 'n'), 'i');
-        tileShortcutHashMap.put(new Tile(true, true, false, true, TileType.PUZZLE, 'n'), 'j');
-        tileShortcutHashMap.put(new Tile(true, true, true, false, TileType.PUZZLE, 'n'), 'k');
-        tileShortcutHashMap.put(new Tile(true, true, true, true, TileType.PUZZLE, 'n'), 'm');
+        tileShortcutHashMap.put(new Tile(true, false, false, false, TileType.PUZZLE, 'o'), 't');
+        tileShortcutHashMap.put(new Tile(false, true, false, false, TileType.PUZZLE, 'o'), 'b');
+        tileShortcutHashMap.put(new Tile(false, false, false, true, TileType.PUZZLE, 'o'), 'r');
+        tileShortcutHashMap.put(new Tile(false, false, true, false, TileType.PUZZLE, 'o'), 'l');
+        tileShortcutHashMap.put(new Tile(false, false, true, true, TileType.PUZZLE, 'o'), 'a');
+        tileShortcutHashMap.put(new Tile(false, true, false, true, TileType.PUZZLE, 'o'), 'u');
+        tileShortcutHashMap.put(new Tile(false, true, true, false, TileType.PUZZLE, 'o'), 'c');
+        tileShortcutHashMap.put(new Tile(false, true, true, true, TileType.PUZZLE, 'o'), 'd');
+        tileShortcutHashMap.put(new Tile(true, false, false, true, TileType.PUZZLE, 'o'), 'e');
+        tileShortcutHashMap.put(new Tile(true, false, true, false, TileType.PUZZLE, 'o'), 'g');
+        tileShortcutHashMap.put(new Tile(true, false, true, true, TileType.PUZZLE, 'o'), 'h');
+        tileShortcutHashMap.put(new Tile(true, true, false, false, TileType.PUZZLE, 'o'), 'i');
+        tileShortcutHashMap.put(new Tile(true, true, false, true, TileType.PUZZLE, 'o'), 'j');
+        tileShortcutHashMap.put(new Tile(true, true, true, false, TileType.PUZZLE, 'o'), 'k');
+        tileShortcutHashMap.put(new Tile(true, true, true, true, TileType.PUZZLE, 'o'), 'm');
 
 
     }
@@ -109,7 +112,7 @@ public class FieldCreator {
         tiles = new Tile[width][height];
         for(int i = 1; i< width-1; i++) {
             for (int j = 1; j< height-1; j++) {
-                tiles[i][j] = new Tile(false,false,false,false,TileType.PUZZLE,'o');
+                tiles[i][j] = new Tile(false,false,false,false, UNDEFINED,'o');
             }
         }
         for(int i = 0; i< width; i++) {
@@ -169,7 +172,7 @@ public class FieldCreator {
 
             int xNew = x + directionsX[direction];
             int yNew = y + directionsY[direction];
-            while (tiles[xNew][yNew].getShortcut() != 'o' && tiles[xNew][yNew].getShortcut() != 'n' ) {
+            while (tiles[xNew][yNew].getTileType() != UNDEFINED && tiles[xNew][yNew].getShortcut() != 'n' ) {
                 direction = (int) (Math.random() * (4) +0);
                 xNew = x + directionsX[direction];
                 yNew = y + directionsY[direction];
@@ -197,11 +200,11 @@ public class FieldCreator {
             x = xNew;
             y = yNew;
             tiles[x][y].setTileType(TileType.PUZZLE);
-            tiles[x][y].setShortcut(tileShortcutHashMap.get(tiles[x][y]));
 
         }
         for(int i = 1; i< width-1; i++) {
             for (int j = 1; j< height-1; j++) {
+                tiles[i][j].setTileType(PUZZLE);
                 tiles[i][j].setShortcut(tileShortcutHashMap.get(tiles[i][j]));
             }
         }
