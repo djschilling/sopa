@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.TextureManager;
+import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.bitmap.BitmapTexture;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.texture.region.TextureRegionFactory;
@@ -25,14 +26,17 @@ public class TileResourceLoader {
         this.assetManager = assetManager;
     }
 
-    public TextureRegion getTexture(final String path){
+    public TextureRegion getTexture(final String path) {
+        return getTexture(path, TextureOptions.DEFAULT);
+    }
+    public TextureRegion getTexture(final String path, TextureOptions textureOptions){
         try {
             ITexture texture = new BitmapTexture(textureManager, new IInputStreamOpener() {
                 @Override
                 public InputStream open() throws IOException {
                     return assetManager.open(path);
                 }
-            });
+            }, textureOptions);
             texture.load();
             return TextureRegionFactory.extractFromTexture(texture);
         } catch (IOException e) {

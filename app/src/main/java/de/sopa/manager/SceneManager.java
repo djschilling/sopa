@@ -6,6 +6,8 @@ import de.sopa.scene.LoadingScene;
 import de.sopa.scene.MainMenuScene;
 import de.sopa.scene.SplashScene;
 import org.andengine.engine.Engine;
+import org.andengine.engine.handler.timer.ITimerCallback;
+import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.ui.IGameInterface;
 
 /**
@@ -87,29 +89,51 @@ public class SceneManager {
         splashScene = null;
     }
 
-    public void createMenuScene(SceneType fromScene) {
+    public void createMenuScene() {
         ResourcesManager.getInstance().loadMenuResources();
         menuScene = new MainMenuScene();
+        ResourcesManager.getInstance().loadLoadingResources();
         loadingScene = new LoadingScene();
         setScene(menuScene);
-        if (fromScene == SceneType.SCENE_SPLASH) {
-            disposeSplashScene();
-        }
-        if(fromScene == SceneType.SCENE_GAME) {
-            disposeGameScene();
-        }
+        disposeSplashScene();
     }
 
+    public void loadMenuScene(final Engine mEngine)
+    {
+        setScene(loadingScene);
+        disposeGameScene();
+        ResourcesManager.getInstance().unloadGameTextures();
+        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback()
+        {
+            public void onTimePassed(final TimerHandler pTimerHandler)
+            {
+                mEngine.unregisterUpdateHandler(pTimerHandler);
+                ResourcesManager.getInstance().loadMenuResources();
+                setScene(menuScene);
+            }
+        }));
+    }
+
+
     private void disposeGameScene() {
-        ResourcesManager.getInstance().unloadGameScreen();
         gameScene.disposeScene();
         gameScene = null;
     }
 
-    public void loadGameScene() {
-        ResourcesManager.getInstance().loadGameResources();
-        gameScene = new GameScene();
-        setScene(gameScene);
+    public void loadGameScene(final Engine mEngine) {
+        setScene(loadingScene);
+        ResourcesManager.getInstance().unloadMenuTextures();
+        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback()
+        {
+            public void onTimePassed(final TimerHandler pTimerHandler)
+            {
+                mEngine.unregisterUpdateHandler(pTimerHandler);
+                ResourcesManager.getInstance().loadGameResources();
+                gameScene = new GameScene();
+                setScene(gameScene);
+            }
+        }));
+
     }
 
 }

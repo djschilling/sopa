@@ -14,7 +14,7 @@ import org.andengine.util.color.Color;
 public class MainMenuScene extends BaseScene implements MenuScene.IOnMenuItemClickListener {
     private MenuScene menuChildScene;
     private final int MENU_PLAY = 0;
-    private final int MENU_OPTIONS = 1;
+    private final int MENU_LEVEL_MODE = 1;
 
     @Override
     public void createScene() {
@@ -38,16 +38,17 @@ public class MainMenuScene extends BaseScene implements MenuScene.IOnMenuItemCli
     }
 
     private void createBackground() {
-        setBackground(new Background(Color.GREEN));
+        setBackground(new Background(Color.WHITE));
     }
 
     private void createMenuChildScene() {
         menuChildScene = new MenuScene(camera);
-        menuChildScene.setPosition(200, 240);
 
         final IMenuItem playMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_PLAY, resourcesManager.play_region, vbom), 1.2f, 1);
+        final IMenuItem levelModeItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_LEVEL_MODE, resourcesManager.level_mode_region, vbom), 1.2f, 1);
 
         menuChildScene.addMenuItem(playMenuItem);
+        menuChildScene.addMenuItem(levelModeItem);
 
         menuChildScene.buildAnimations();
         menuChildScene.setBackgroundEnabled(false);
@@ -61,8 +62,8 @@ public class MainMenuScene extends BaseScene implements MenuScene.IOnMenuItemCli
     public boolean onMenuItemClicked(MenuScene pMenuScene, IMenuItem pMenuItem, float pMenuItemLocalX, float pMenuItemLocalY) {
         switch (pMenuItem.getID()) {
             case MENU_PLAY:
-                SceneManager.getInstance().loadGameScene();
-            case MENU_OPTIONS:
+                SceneManager.getInstance().loadGameScene(engine);
+            case MENU_LEVEL_MODE:
                 return true;
             default:
                 return false;

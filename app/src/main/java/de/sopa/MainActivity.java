@@ -19,7 +19,7 @@ import org.andengine.ui.activity.BaseGameActivity;
 public class MainActivity extends BaseGameActivity {
 
 
-    private static int CAMERA_HEIGHT;
+    public static int CAMERA_HEIGHT;
     public static int CAMERA_WIDTH;
     private Camera camera;
 
@@ -38,8 +38,6 @@ public class MainActivity extends BaseGameActivity {
         camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
         return new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED,
                 new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera);
-
-
     }
 
     @Override
@@ -63,10 +61,10 @@ public class MainActivity extends BaseGameActivity {
 
     @Override
     public void onPopulateScene(Scene pScene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws Exception {
-        mEngine.registerUpdateHandler(new TimerHandler(2f, new ITimerCallback() {
+        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
-                SceneManager.getInstance().createMenuScene(SceneManager.SceneType.SCENE_SPLASH);
+                SceneManager.getInstance().createMenuScene();
             }
         }));
         pOnPopulateSceneCallback.onPopulateSceneFinished();
