@@ -1,6 +1,5 @@
 package de.sopa;
 
-import android.app.Activity;
 import android.view.GestureDetector;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
@@ -19,7 +18,7 @@ public class TouchListener implements IOnSceneTouchListener {
 
     @Override
     public boolean onSceneTouchEvent(Scene pScene, final TouchEvent pSceneTouchEvent) {
-        gestureDetector.onTouchEvent(pSceneTouchEvent.getMotionEvent());
-        return true;
+        return gestureDetector.onTouchEvent(pSceneTouchEvent.getMotionEvent());
+
     }
 }

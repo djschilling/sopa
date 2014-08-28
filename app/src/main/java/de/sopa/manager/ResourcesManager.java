@@ -67,10 +67,6 @@ public class ResourcesManager {
         getInstance().tileResourceLoader = tileResourceLoader;
     }
 
-    //---------------------------------------------
-    // GETTERS AND SETTERS
-    //---------------------------------------------
-
     public static ResourcesManager getInstance() {
         return INSTANCE;
     }
