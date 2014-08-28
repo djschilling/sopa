@@ -1,13 +1,11 @@
 package de.sopa;
 
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.view.Display;
-import android.view.GestureDetector;
 import android.view.KeyEvent;
 import de.sopa.manager.ResourcesManager;
 import de.sopa.manager.SceneManager;
-import de.sopa.model.GameServiceImpl;
-import java.util.Map;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -15,7 +13,6 @@ import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
-import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.ui.activity.BaseGameActivity;
 
 
@@ -42,6 +39,7 @@ public class MainActivity extends BaseGameActivity {
         return new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED,
                 new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera);
 
+
     }
 
     @Override
@@ -54,7 +52,13 @@ public class MainActivity extends BaseGameActivity {
     @Override
     public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) throws Exception {
         SceneManager.getInstance().createSplashScene(pOnCreateSceneCallback);
-
+        SharedPreferences settings = getPreferences(0);
+        int count = settings.getInt("count",0);
+        count++;
+        System.out.println(count);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt("count", count);
+        editor.commit();
     }
 
     @Override

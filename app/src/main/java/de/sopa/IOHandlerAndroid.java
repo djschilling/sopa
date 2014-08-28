@@ -17,7 +17,7 @@ public class IOHandlerAndroid implements IOHandler {
     }
     @Override
     public void writeToFile(String filename, String[] strings) throws IOException {
-        FileOutputStream fileOutputStream =  context.openFileOutput(filename, Context.MODE_WORLD_READABLE);
+        FileOutputStream fileOutputStream =  context.openFileOutput(filename, Context.MODE_PRIVATE);
         for (int i = 0; i<strings.length; i++) {
             String string = strings[i];
             fileOutputStream.write((string).getBytes());
