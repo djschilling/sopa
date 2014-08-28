@@ -20,7 +20,7 @@ import org.andengine.util.color.Color;
 /**
  * David Schilling - davejs92@gmail.com
  */
-public class GameScene extends BaseScene implements Observer{
+public class GameScene extends BaseScene implements Observer {
 
     private GameService gameService;
     private GestureDetector gestureDetector;
@@ -49,6 +49,9 @@ public class GameScene extends BaseScene implements Observer{
             }
             tilePositionY += spacePerTile;
         }
+        tileGroup.attachChild(new Sprite(spacePerTile, spacePerTile, spacePerTile * (width - 2),
+                spacePerTile * (width - 2), resourcesManager.tilesBorderRegion, vbom));
+
         setSolved(gameService.solvedPuzzle());
 
     }
