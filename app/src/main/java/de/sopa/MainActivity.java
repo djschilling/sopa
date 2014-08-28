@@ -2,12 +2,9 @@ package de.sopa;
 
 import android.graphics.Point;
 import android.view.Display;
-import android.view.GestureDetector;
 import android.view.KeyEvent;
 import de.sopa.manager.ResourcesManager;
 import de.sopa.manager.SceneManager;
-import de.sopa.model.GameServiceImpl;
-import java.util.Map;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -15,14 +12,13 @@ import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
-import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.ui.activity.BaseGameActivity;
 
 
 public class MainActivity extends BaseGameActivity {
 
 
-    private static int CAMERA_HEIGHT;
+    public static int CAMERA_HEIGHT;
     public static int CAMERA_WIDTH;
     private Camera camera;
 
@@ -41,7 +37,6 @@ public class MainActivity extends BaseGameActivity {
         camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
         return new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED,
                 new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera);
-
     }
 
     @Override
@@ -62,7 +57,7 @@ public class MainActivity extends BaseGameActivity {
         mEngine.registerUpdateHandler(new TimerHandler(2f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
-                SceneManager.getInstance().createMenuScene(SceneManager.SceneType.SCENE_SPLASH);
+                SceneManager.getInstance().createMenuScene();
             }
         }));
         pOnPopulateSceneCallback.onPopulateSceneFinished();

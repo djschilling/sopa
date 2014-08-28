@@ -93,7 +93,7 @@ public class GameScene extends BaseScene implements Observer {
 
     @Override
     public void onBackKeyPressed() {
-        SceneManager.getInstance().createMenuScene(SceneManager.SceneType.SCENE_GAME);
+        SceneManager.getInstance().loadMenuScene(engine);
     }
 
     @Override

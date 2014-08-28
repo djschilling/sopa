@@ -35,17 +35,15 @@ public class ResourcesManager {
     public Map<Character, TextureRegion> regionTileMap;
     private BuildableBitmapTextureAtlas menuTextureAtlas;
     private TileResourceLoader tileResourceLoader;
+    public ITextureRegion loadingScreenBackgroundRegion;
 
 
     public void loadMenuResources() {
         loadMenuGraphics();
-        loadMenuAudio();
     }
 
     public void loadGameResources() {
         loadGameGraphics();
-        loadGameFonts();
-        loadGameAudio();
     }
 
     private void loadMenuGraphics() {
@@ -62,22 +60,12 @@ public class ResourcesManager {
             Debug.e(e);
         }
     }
-
-
-    private void loadMenuAudio() {
-
-    }
-
     private void loadGameGraphics() {
         regionTileMap = this.tileResourceLoader.getTileTextures();
     }
 
-    private void loadGameFonts() {
-
-    }
-
-    private void loadGameAudio() {
-
+    public void loadLoadingResources() {
+        loadingScreenBackgroundRegion = tileResourceLoader.getTexture("screens/LoadingScreen.png");
     }
 
     public void loadSplashScreen() {
@@ -107,10 +95,14 @@ public class ResourcesManager {
         return INSTANCE;
     }
 
-    public void unloadGameScreen() {
+    public void unloadGameTextures() {
         for (TextureRegion textureRegion : regionTileMap.values()) {
             textureRegion.getTexture().unload();
         }
         regionTileMap = null;
+    }
+
+    public void unloadMenuTextures() {
+
     }
 }
