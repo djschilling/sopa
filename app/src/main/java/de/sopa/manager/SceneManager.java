@@ -123,7 +123,7 @@ public class SceneManager {
     public void loadGameScene(final Engine mEngine) {
         setScene(loadingScene);
         ResourcesManager.getInstance().unloadMenuTextures();
-        mEngine.registerUpdateHandler(new TimerHandler(2f, new ITimerCallback()
+        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback()
         {
             public void onTimePassed(final TimerHandler pTimerHandler)
             {

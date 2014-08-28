@@ -36,6 +36,7 @@ public class ResourcesManager {
     private BuildableBitmapTextureAtlas menuTextureAtlas;
     private TileResourceLoader tileResourceLoader;
     public ITextureRegion loadingScreenBackgroundRegion;
+    public ITextureRegion level_mode_region;
 
 
     public void loadMenuResources() {
@@ -48,7 +49,8 @@ public class ResourcesManager {
 
     private void loadMenuGraphics() {
         menuTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
-        play_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "splash/splash.png");
+        play_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "screens/JustPlayA.png");
+        level_mode_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "screens/LevelModeA.png");
 
         try
         {

@@ -54,7 +54,7 @@ public class MainActivity extends BaseGameActivity {
 
     @Override
     public void onPopulateScene(Scene pScene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws Exception {
-        mEngine.registerUpdateHandler(new TimerHandler(2f, new ITimerCallback() {
+        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
                 SceneManager.getInstance().createMenuScene();
