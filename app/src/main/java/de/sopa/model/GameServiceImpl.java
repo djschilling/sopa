@@ -1,6 +1,5 @@
 package de.sopa.model;
 
-import de.sopa.GameFieldDestroyer;
 import de.sopa.observer.Observer;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.List;
 public class GameServiceImpl implements GameService {
 
     private final GameFieldService gameFieldService;
-    private final FieldCreator fieldCreator;
+    private final FieldHandler fieldCreator;
     private GameField gameField;
     private List<Observer> observers;
     private boolean solvedPuzzle;
@@ -19,7 +18,7 @@ public class GameServiceImpl implements GameService {
     public GameServiceImpl() {
         observers = new ArrayList<>();
         gameFieldService = new GameFieldService();
-        fieldCreator = new FieldCreator();
+        fieldCreator = new FieldHandler();
         solvedPuzzle = false;
     }
 
