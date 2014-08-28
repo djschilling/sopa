@@ -37,6 +37,7 @@ public class ResourcesManager {
     private TileResourceLoader tileResourceLoader;
     public ITextureRegion loadingScreenBackgroundRegion;
     public ITextureRegion level_mode_region;
+    public ITextureRegion gameBackgroundRegion;
 
 
     public void loadMenuResources() {
@@ -64,6 +65,7 @@ public class ResourcesManager {
     }
     private void loadGameGraphics() {
         regionTileMap = this.tileResourceLoader.getTileTextures();
+        gameBackgroundRegion = tileResourceLoader.getTexture("screens/stonebackoground.png");
     }
 
     public void loadLoadingResources() {

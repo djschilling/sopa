@@ -13,6 +13,7 @@ import de.sopa.model.GameServiceImpl;
 import de.sopa.observer.Observer;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TextureRegion;
 
 /**
@@ -26,7 +27,6 @@ public class GameScene extends BaseScene implements Observer {
 
 
     public void addTiles() {
-        this.clearChildScene();
         Tile[][] field = gameService.getGameField().getField();
         int width = field.length;
         int heigth = field[0].length;
@@ -71,7 +71,15 @@ public class GameScene extends BaseScene implements Observer {
     @Override
     public void createScene() {
         initializeLogic();
+        this.clearChildScene();
+        addBackground();
         addTiles();
+    }
+
+    private void addBackground() {
+        ITextureRegion gameBackgroundRegion = ResourcesManager.getInstance().gameBackgroundRegion;
+
+        attachChild(new Sprite(0, 0, MainActivity.CAMERA_WIDTH, MainActivity.CAMERA_HEIGHT, gameBackgroundRegion, vbom));
     }
 
     private void initializeLogic() {
