@@ -13,6 +13,8 @@ public interface GameService {
 
     GameField getGameField();
 
+    void startGame();
+
     void attach(Observer observer);
 
     void detach(Observer observer);
