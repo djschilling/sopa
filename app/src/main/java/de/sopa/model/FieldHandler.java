@@ -12,7 +12,7 @@ import static de.sopa.TileType.UNDEFINED;
  * David Schilling - davejs92@gmail.com
  */
 
-public class FieldCreator {
+public class FieldHandler {
 
     private int[] directionsX = new int[]{0, 1, 0, -1};
     private int[] directionsY = new int[]{1, 0, -1, 0};
@@ -20,7 +20,7 @@ public class FieldCreator {
 
     private Map<Character, Tile> characterTileHashMap;
     private Map<Tile, Character> tileShortcutHashMap;
-    public FieldCreator() {
+    public FieldHandler() {
         characterTileHashMap = new HashMap<>();
         characterTileHashMap.put('s', new Tile(false,false,false,false, TileType.START, 's'));
         characterTileHashMap.put('f', new Tile(false,false,false,false,TileType.FINISH, 'f'));
@@ -227,6 +227,20 @@ public class FieldCreator {
         } else {
             return generateSolvedField(width, height);
         }
+
+    }
+
+    public String[] fromGameField(GameField gameField) {
+        Tile tiles[][] = gameField.getField();
+        String level[] = new String[tiles[0].length];
+        for(int y = 0; y < tiles[0].length; y++) {
+            level[y]= new String();
+            for(int x = 0; x < tiles.length; x++) {
+                level[y]= level[y] + String.valueOf(tiles[x][y].getShortcut());
+            }
+        }
+
+        return level;
 
     }
 

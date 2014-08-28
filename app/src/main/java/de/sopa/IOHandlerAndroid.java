@@ -7,15 +7,33 @@ import android.content.Context;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 
 
-public class FileArrayProvider {
+public class IOHandlerAndroid implements IOHandler {
 
-    public String[] readLines(String filename, Context context) throws IOException {
+    private Context context;
+    public IOHandlerAndroid(Context context) {
+        this.context = context;
+    }
+    @Override
+    public void writeToFile(String filename, String[] strings) throws IOException {
+        FileOutputStream fileOutputStream =  context.openFileOutput(filename, Context.MODE_WORLD_READABLE);
+        for (int i = 0; i<strings.length; i++) {
+            String string = strings[i];
+            fileOutputStream.write((string).getBytes());
+            if(i < strings.length-1) {
+                fileOutputStream.write('\n');
+            }
+        }
+        fileOutputStream.close();
+
+    }
+
+    @Override
+    public String[] readFromFile(String filename) {
         ArrayList<String> levelStrings = new ArrayList<>();
         try {
-            FileInputStream fileInputStream = context.openFileInput("kuchen.test");
+            FileInputStream fileInputStream = context.openFileInput(filename);
             int content;
             int line = 0;
             levelStrings.add(0,new String());
@@ -37,19 +55,4 @@ public class FileArrayProvider {
         }
         return levelStrings.toArray(new String[levelStrings.size()]);
     }
-    public void writeLines(String filename, Context context, String[] strings) throws IOException {
-
-        FileOutputStream fileOutputStream =  context.openFileOutput(filename, Context.MODE_PRIVATE);
-        for (int i = 0; i<strings.length; i++) {
-            String string = strings[i];
-            fileOutputStream.write((string).getBytes());
-            if(i < strings.length-1) {
-                fileOutputStream.write('\n');
-            }
-        }
-        fileOutputStream.close();
-
-    }
-
-
 }
