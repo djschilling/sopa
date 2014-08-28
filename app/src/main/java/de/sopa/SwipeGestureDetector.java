@@ -51,9 +51,4 @@ public class SwipeGestureDetector extends SimpleOnGestureListener {
         return true;
     }
 
-    @Override
-    public boolean onSingleTapUp(MotionEvent e) {
-        System.out.println("single tab");
-        return true;
-    }
 }
