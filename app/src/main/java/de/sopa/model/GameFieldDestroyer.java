@@ -1,4 +1,4 @@
-package de.sopa;
+package de.sopa.model;
 
 
 import de.sopa.model.GameEndService;
