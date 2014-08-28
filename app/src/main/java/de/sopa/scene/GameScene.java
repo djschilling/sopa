@@ -6,16 +6,16 @@ import de.sopa.MainActivity;
 import de.sopa.SwipeGestureDetector;
 import de.sopa.Tile;
 import de.sopa.TouchListener;
-import de.sopa.manager.ResourcesManager;
 import de.sopa.manager.SceneManager;
 import de.sopa.model.GameService;
 import de.sopa.model.GameServiceImpl;
 import de.sopa.observer.Observer;
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.Scene;
+import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
-import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TextureRegion;
+import org.andengine.util.color.Color;
 
 /**
  * David Schilling - davejs92@gmail.com
@@ -81,7 +81,6 @@ public class GameScene extends BaseScene implements Observer{
     public void createScene() {
         initializeLogic();
         addBackground();
-        Tile[][] field = gameService.getGameField().getField();
         tileGroup = new Entity();
         attachChild(tileGroup);
         addTiles();
@@ -89,9 +88,7 @@ public class GameScene extends BaseScene implements Observer{
 
 
     private void addBackground() {
-        ITextureRegion gameBackgroundRegion = ResourcesManager.getInstance().gameBackgroundRegion;
-
-        attachChild(new Sprite(0, 0, MainActivity.CAMERA_WIDTH, MainActivity.CAMERA_HEIGHT, gameBackgroundRegion, vbom));
+        setBackground(new Background(Color.BLACK));
     }
 
     private void initializeLogic() {
