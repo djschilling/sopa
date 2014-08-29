@@ -19,46 +19,60 @@ public class ResourcesManager {
     public MainActivity activity;
     public Camera camera;
     public VertexBufferObjectManager vbom;
+
+    private TileResourceLoader tileResourceLoader;
+
     public ITextureRegion splash_region;
 
+    public ITextureRegion level_mode_region;
     public ITextureRegion play_region;
 
-    public Map<Character, TextureRegion> regionTileMap;
-    private TileResourceLoader tileResourceLoader;
     public ITextureRegion loadingScreenBackgroundRegion;
-    public ITextureRegion level_mode_region;
+
+    public Map<Character, TextureRegion> regionTileMap;
     public ITextureRegion tilesBorderRegion;
     public ITextureRegion saveButtonRegion;
 
 
-    public void loadMenuResources() {
-        loadMenuGraphics();
+
+    public void loadSplashSceneResources() {
+        splash_region = tileResourceLoader.getTexture("scenes/splash/splash.png");
+    }
+    public void loadMenuSceneResources() {
+        loadMenuSceneGraphics();
     }
 
-    public void loadGameResources() {
-        loadGameGraphics();
+    public void loadLoadingSceneResources() {
+        loadingScreenBackgroundRegion = tileResourceLoader.getTexture("scenes/loading/LoadingScreen.png");
     }
 
-    private void loadMenuGraphics() {
-        play_region = tileResourceLoader.getTexture("screens/JustPlay.png");
-        level_mode_region = tileResourceLoader.getTexture("screens/LevelMode.png");
+    public void loadGameSceneResources() {
+        loadGameSceneGraphics();
     }
-    private void loadGameGraphics() {
+
+    private void loadMenuSceneGraphics() {
+        play_region = tileResourceLoader.getTexture("scenes/menu/JustPlay.png");
+        level_mode_region = tileResourceLoader.getTexture("scenes/menu/LevelMode.png");
+    }
+    private void loadGameSceneGraphics() {
         regionTileMap = this.tileResourceLoader.getTileTextures();
-        tilesBorderRegion = tileResourceLoader.getTexture("tiles/borders.png");
-        saveButtonRegion = tileResourceLoader.getTexture("screens/save.png");
+        tilesBorderRegion = tileResourceLoader.getTexture("scenes/game/borders.png");
+        saveButtonRegion = tileResourceLoader.getTexture("scenes/game/save.png");
     }
 
-    public void loadLoadingResources() {
-        loadingScreenBackgroundRegion = tileResourceLoader.getTexture("screens/LoadingScreen.png");
-    }
-
-    public void loadSplashScreen() {
-        splash_region = tileResourceLoader.getTexture("splash/splash.png");
-    }
-
-    public void unloadSplashScreen() {
+    public void unloadSplashSceneResources() {
         splash_region = null;
+    }
+
+    public void unloadGameSceneResources(){
+        unloadGameSceneTextures();
+    }
+
+    public void unloadGameSceneTextures() {
+        for (TextureRegion textureRegion : regionTileMap.values()) {
+            textureRegion.getTexture().unload();
+        }
+        regionTileMap = null;
     }
 
     public static void prepareManager(Engine engine, MainActivity activity, Camera camera, VertexBufferObjectManager vbom, TileResourceLoader tileResourceLoader) {
@@ -71,16 +85,5 @@ public class ResourcesManager {
 
     public static ResourcesManager getInstance() {
         return INSTANCE;
-    }
-
-    public void unloadGameTextures() {
-        for (TextureRegion textureRegion : regionTileMap.values()) {
-            textureRegion.getTexture().unload();
-        }
-        regionTileMap = null;
-    }
-
-    public void unloadMenuTextures() {
-
     }
 }

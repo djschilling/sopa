@@ -1,6 +1,6 @@
 package de.sopa;
 
-import de.sopa.helper.MySimpleOnGestureListener;
+import de.sopa.scene.MySimpleOnGestureListener;
 import de.sopa.model.GameService;
 import org.andengine.input.touch.TouchEvent;
 

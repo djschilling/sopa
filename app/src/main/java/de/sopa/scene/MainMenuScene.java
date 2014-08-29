@@ -49,15 +49,11 @@ public class MainMenuScene extends BaseScene  {
                 return true;
             }
         };
-        playItemSprite.setScaleCenter(0, 0);
-        playItemSprite.setScale(0.4f);
         playItemSprite.setPosition(MainActivity.CAMERA_WIDTH / 2 - playItemSprite.getWidthScaled() /2, MainActivity.CAMERA_HEIGHT / 2 - playItemSprite.getHeightScaled());
         attachChild(playItemSprite);
         registerTouchArea(playItemSprite);
         Sprite levelItemSprite = new Sprite(0, 0, resourcesManager.level_mode_region, vbom);
 
-        levelItemSprite.setScaleCenter(0, 0);
-        levelItemSprite.setScale(0.4f);
         levelItemSprite.setPosition(MainActivity.CAMERA_WIDTH / 2 - levelItemSprite.getWidthScaled() /2, MainActivity.CAMERA_HEIGHT / 2);
         attachChild(levelItemSprite);
         registerTouchArea(levelItemSprite);

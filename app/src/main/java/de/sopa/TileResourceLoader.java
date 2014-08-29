@@ -47,24 +47,24 @@ public class TileResourceLoader {
 
     public Map<Character, TextureRegion> getTileTextures() {
         Map<Character, TextureRegion> regionMap = new HashMap<>();
-        regionMap.put('s', getTexture("tiles/s.png"));
-        regionMap.put('f', getTexture("tiles/f.png"));
-        regionMap.put('o', getTexture("tiles/o.png"));
-        regionMap.put('r', getTexture("tiles/r.png"));
-        regionMap.put('l', getTexture("tiles/l.png"));
-        regionMap.put('a', getTexture("tiles/a.png"));
-        regionMap.put('b', getTexture("tiles/b.png"));
-        regionMap.put('u', getTexture("tiles/u.png"));
-        regionMap.put('c', getTexture("tiles/c.png"));
-        regionMap.put('d', getTexture("tiles/d.png"));
-        regionMap.put('t', getTexture("tiles/t.png"));
-        regionMap.put('e', getTexture("tiles/e.png"));
-        regionMap.put('g', getTexture("tiles/g.png"));
-        regionMap.put('h', getTexture("tiles/h.png"));
-        regionMap.put('i', getTexture("tiles/i.png"));
-        regionMap.put('j', getTexture("tiles/j.png"));
-        regionMap.put('k', getTexture("tiles/k.png"));
-        regionMap.put('m', getTexture("tiles/m.png"));
+        regionMap.put('s', getTexture("scenes/game/s.png"));
+        regionMap.put('f', getTexture("scenes/game/f.png"));
+        regionMap.put('o', getTexture("scenes/game/o.png"));
+        regionMap.put('r', getTexture("scenes/game/r.png"));
+        regionMap.put('l', getTexture("scenes/game/l.png"));
+        regionMap.put('a', getTexture("scenes/game/a.png"));
+        regionMap.put('b', getTexture("scenes/game/b.png"));
+        regionMap.put('u', getTexture("scenes/game/u.png"));
+        regionMap.put('c', getTexture("scenes/game/c.png"));
+        regionMap.put('d', getTexture("scenes/game/d.png"));
+        regionMap.put('t', getTexture("scenes/game/t.png"));
+        regionMap.put('e', getTexture("scenes/game/e.png"));
+        regionMap.put('g', getTexture("scenes/game/g.png"));
+        regionMap.put('h', getTexture("scenes/game/h.png"));
+        regionMap.put('i', getTexture("scenes/game/i.png"));
+        regionMap.put('j', getTexture("scenes/game/j.png"));
+        regionMap.put('k', getTexture("scenes/game/k.png"));
+        regionMap.put('m', getTexture("scenes/game/m.png"));
         return regionMap;
     }
 }
