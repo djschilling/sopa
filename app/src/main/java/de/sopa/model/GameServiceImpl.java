@@ -47,6 +47,12 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
+    public void startGame(GameField gameField) {
+        this.gameField = gameField;
+        solvedPuzzle = gameFieldService.solvedPuzzle(gameField);
+    }
+
+    @Override
     public void attach(Observer observer) {
         observers.add(observer);
     }

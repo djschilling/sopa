@@ -15,6 +15,8 @@ public interface GameService {
 
     void startGame();
 
+    void startGame(GameField gameField);
+
     void attach(Observer observer);
 
     void detach(Observer observer);

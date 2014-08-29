@@ -4,6 +4,8 @@ package de.sopa;
  * @author David Schilling - davejs92@gmail.com
  */
 import android.content.Context;
+import android.os.Environment;
+import android.util.Log;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ public class IOHandlerAndroid implements IOHandler {
     private Context context;
     public IOHandlerAndroid(Context context) {
         this.context = context;
+        Log.i("WRITE", String.valueOf(isExternalStorageWritable()));
     }
     @Override
     public void writeToFile(String filename, String[] strings) throws IOException {
@@ -55,4 +58,12 @@ public class IOHandlerAndroid implements IOHandler {
         }
         return levelStrings.toArray(new String[levelStrings.size()]);
     }
+    private boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -29,6 +29,7 @@ public class ResourcesManager {
     public ITextureRegion level_mode_region;
     public ITextureRegion gameBackgroundRegion;
     public ITextureRegion tilesBorderRegion;
+    public ITextureRegion saveButtonRegion;
 
 
     public void loadMenuResources() {
@@ -47,6 +48,7 @@ public class ResourcesManager {
         regionTileMap = this.tileResourceLoader.getTileTextures();
         gameBackgroundRegion = tileResourceLoader.getTexture("screens/stonebackoground.png");
         tilesBorderRegion = tileResourceLoader.getTexture("tiles/borders.png");
+        saveButtonRegion = tileResourceLoader.getTexture("screens/save.png");
     }
 
     public void loadLoadingResources() {

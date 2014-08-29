@@ -1,12 +1,17 @@
 package de.sopa.scene;
 
 
+import android.content.Context;
 import android.view.GestureDetector;
+import android.widget.Toast;
 import de.sopa.MainActivity;
 import de.sopa.SwipeGestureDetector;
 import de.sopa.Tile;
 import de.sopa.TouchListener;
+import de.sopa.manager.ResourcesManager;
 import de.sopa.manager.SceneManager;
+import de.sopa.model.FieldHandler;
+import de.sopa.model.GameFieldHandler;
 import de.sopa.model.GameService;
 import de.sopa.model.GameServiceImpl;
 import de.sopa.observer.Observer;
@@ -14,8 +19,11 @@ import org.andengine.entity.Entity;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.util.color.Color;
+
+import java.io.IOException;
 
 /**
  * David Schilling - davejs92@gmail.com
@@ -26,6 +34,8 @@ public class GameScene extends BaseScene implements Observer {
     private GestureDetector gestureDetector;
     private Sprite solvedSprite;
     private Entity tileGroup;
+    private GameFieldHandler gameFieldHandler;
+
 
 
     public void addTiles() {
@@ -87,6 +97,27 @@ public class GameScene extends BaseScene implements Observer {
         tileGroup = new Entity();
         attachChild(tileGroup);
         addTiles();
+        gameFieldHandler = new GameFieldHandler();
+        addButtons();
+    }
+
+    private void addButtons() {
+        Sprite sprite = new Sprite(0,MainActivity.CAMERA_HEIGHT*0.8f,resourcesManager.saveButtonRegion,vbom) {
+            @Override
+            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                if(pSceneTouchEvent.isActionUp()){
+                    try {
+                        gameFieldHandler.saveGameField(gameService.getGameField());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return true;
+            }
+        };
+        registerTouchArea(sprite);
+        setTouchAreaBindingOnActionDownEnabled(true);
+        attachChild(sprite);
     }
 
 

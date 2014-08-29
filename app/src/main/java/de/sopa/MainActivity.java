@@ -1,9 +1,11 @@
 package de.sopa;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.view.Display;
 import android.view.KeyEvent;
+import android.widget.Toast;
 import de.sopa.manager.ResourcesManager;
 import de.sopa.manager.SceneManager;
 import org.andengine.engine.camera.Camera;
@@ -14,6 +16,8 @@ import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
 import org.andengine.ui.activity.BaseGameActivity;
+
+import java.io.File;
 
 
 public class MainActivity extends BaseGameActivity {
@@ -50,13 +54,9 @@ public class MainActivity extends BaseGameActivity {
     @Override
     public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) throws Exception {
         SceneManager.getInstance().createSplashScene(pOnCreateSceneCallback);
-        SharedPreferences settings = getPreferences(0);
-        int count = settings.getInt("count",0);
-        count++;
-        System.out.println(count);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putInt("count", count);
-        editor.commit();
+
+
+
     }
 
     @Override
