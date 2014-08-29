@@ -1,18 +1,15 @@
 package de.sopa;
 
 import android.util.Log;
-import de.sopa.manager.ResourcesManager;
 import de.sopa.model.GameService;
-import org.andengine.entity.scene.Scene;
-import org.andengine.entity.sprite.Sprite;
+import de.sopa.scene.GameScene;
 import org.andengine.input.touch.detector.HoldDetector;
 
 /**
  * @author David Schilling - davejs92@gmail.com
  */
 public class MyHoldDetector implements HoldDetector.IHoldDetectorListener {
-    private Sprite[][] tiles;
-    private GameService gameService;
+    private final GameService gameService;
     private float moveStartX;
     private float moveStartY;
     private boolean vertical;
@@ -21,15 +18,15 @@ public class MyHoldDetector implements HoldDetector.IHoldDetectorListener {
     private int startY;
     private int widthPerTile;
     private int row;
+    private GameScene gameScene;
 
-    public MyHoldDetector(Scene scene, Sprite[][] tiles, GameService gameService,int startX, int startY, int widthPerTile) {
-
-        this.tiles = tiles;
-        this.gameService = gameService;
+    public MyHoldDetector(int startX, int startY, int widthPerTile, GameScene gameScene, GameService gameService) {
+        this.gameScene = gameScene;
         vertical = horizontal = false;
         this.startX = startX;
         this.startY = startY;
         this.widthPerTile = widthPerTile;
+        this.gameService = gameService;
     }
 
     @Override
@@ -42,28 +39,73 @@ public class MyHoldDetector implements HoldDetector.IHoldDetectorListener {
     @Override
     public void onHold(HoldDetector pHoldDetector, long pHoldTimeMilliseconds, int pPointerID, float pHoldX, float pHoldY) {
         if(!horizontal&&!vertical) {
-            if(Math.abs(moveStartX - pHoldX)> ResourcesManager.getInstance().activity.CAMERA_WIDTH/20) {
+            if(Math.abs(moveStartX - pHoldX)> MainActivity.CAMERA_WIDTH/100) {
                 horizontal = true;
-                row = (int) ((pHoldY - startY) / widthPerTile);
+                row = (int) ((moveStartY - startY) / widthPerTile);
             }
-            if(Math.abs(moveStartY - pHoldY)> ResourcesManager.getInstance().activity.CAMERA_HEIGHT/20) {
+            if(Math.abs(moveStartY - pHoldY)> MainActivity.CAMERA_WIDTH/100) {
                 vertical = true;
-                row = (int) (pHoldX - startX) / widthPerTile;
+                row = (int) (moveStartX - startX) / widthPerTile;
             }
         } else {
             if(horizontal) {
-                Log.i("xVerschiebung", String.valueOf(pHoldX - moveStartX + " : an Reihe: " + row));
+                float moveSize = pHoldX - moveStartX;
+                if(moveSize > widthPerTile) {
+                    gameService.shiftLine(true, row, 1);
+                    moveStartX = pHoldX;
+                    gameScene.moveTiles(true, row, 0, true);
+                } else if(moveSize < (0 - widthPerTile )) {
+                    gameService.shiftLine(true, row, -1);
+                    moveStartX = pHoldX;
+                    gameScene.moveTiles(true, row, 0, true);
+                } else {
+                    gameScene.moveTiles(true, row, moveSize, false);
+                }
+
 
             } else {
-                Log.i("yVerschiebung", String.valueOf(pHoldY - moveStartY + " : an Reihe:" + row));
+                float moveSize = pHoldY - moveStartY;
+                if(moveSize > widthPerTile) {
+                    gameService.shiftLine(false, row, 1);
+                    moveStartY = pHoldY;
+                    gameScene.moveTiles(false, row, 0, true);
+                } else if(moveSize < (0 - widthPerTile )) {
+                    gameService.shiftLine(false, row, -1);
+                    moveStartY = pHoldY;
+                    gameScene.moveTiles(false, row, 0, true);
+                } else {
+                    gameScene.moveTiles(false, row, moveSize, false);
+                }
 
 
             }
         }
+
     }
+
 
     @Override
     public void onHoldFinished(HoldDetector pHoldDetector, long pHoldTimeMilliseconds, int pPointerID, float pHoldX, float pHoldY) {
+        if(horizontal) {
+            float moveSize = pHoldX - moveStartX;
+            if(moveSize > widthPerTile * 0.5f) {
+                gameService.shiftLine(true, row, 1);
+            } else if(moveSize < (-0.5) * widthPerTile) {
+                gameService.shiftLine(true, row, -1);
+            } else {
+                gameService.notifyAllObserver();
+            }
+        } else if(vertical) {
+            float moveSize = pHoldY - moveStartY;
+            if(moveSize > widthPerTile * 0.5f) {
+                gameService.shiftLine(false, row, 1);
+            } else if(moveSize < (-0.5) * widthPerTile) {
+                gameService.shiftLine(false, row, -1);
+            } else {
+                gameService.notifyAllObserver();
+            }
+
+        }
         horizontal = vertical = false;
     }
 }
