@@ -14,6 +14,9 @@ import static de.sopa.manager.ResourcesManager.getInstance;
 public class MySimpleOnGestureListener extends GestureDetector.SimpleOnGestureListener {
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        if(e1 == null) {
+            return true;
+        }
         return onFlingTouchEvent(convertMotionToTouchEvent(e1), convertMotionToTouchEvent(e2), velocityX, velocityY);
     }
 

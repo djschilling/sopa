@@ -38,8 +38,8 @@ public class MainActivity extends BaseGameActivity {
         }
         SCREEN_WIDTH = size.x;
         SCREEN_HEIGHT = size.y;
-        CAMERA_WIDTH = 480;
-        CAMERA_HEIGHT = 800;
+        CAMERA_WIDTH = 1080;
+        CAMERA_HEIGHT = 1920;
         FACTOR_WIDTH = SCREEN_WIDTH / CAMERA_WIDTH;
         FACTOR_HEIGHT = SCREEN_HEIGHT / CAMERA_HEIGHT;
         camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
