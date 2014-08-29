@@ -32,6 +32,9 @@ public class GameScene extends BaseScene implements Observer {
     private GameFieldHandler gameFieldHandler;
     private TileSprite[][] tileSprites;
     private ContinuousHoldDetector continuousHoldDetector;
+    private int spacePerTile;
+    private Sprite doubledTile;
+    private Sprite doubledTileCopy;
 
 
     public void addTiles() {
@@ -39,7 +42,7 @@ public class GameScene extends BaseScene implements Observer {
         Tile[][] field = gameService.getGameField().getField();
         int width = field.length;
         int heigth = field[0].length;
-        int spacePerTile = MainActivity.CAMERA_WIDTH / width;
+        spacePerTile = MainActivity.CAMERA_WIDTH / width;
         int tilesSceneStartY = getTileSceneStartY(spacePerTile);
         tileGroup.setPosition(0, tilesSceneStartY);
         int tilePositionY = 0;
@@ -87,6 +90,11 @@ public class GameScene extends BaseScene implements Observer {
                 if(moveOver) {
                     tileSprite.setStartX(toX);
                 }
+                if(tileSprite.getStartX()<spacePerTile) {
+                    doubledTile = tileSprite;
+                }else if(tileSprite.getStartX()>spacePerTile*(gameService.getGameField().getField().length-1)) {
+                    doubledTile = tileSprite;
+                }
             }
         } else {
             if(row > tileSprites[0].length -2){
@@ -99,11 +107,15 @@ public class GameScene extends BaseScene implements Observer {
                 tileSprite.setY(toY);
                 if(moveOver) {
                     tileSprite.setStartY(toY);
+                if(tileSprite.getStartY()<getTileSceneStartY(spacePerTile)+spacePerTile) {
+                    doubledTile = tileSprite;
+                }else if(tileSprite.getStartY()>spacePerTile*(gameService.getGameField().getField().length-1)+getTileSceneStartY(spacePerTile)) {
+                        doubledTile = tileSprite;
+                        }
+                    }
                 }
-
             }
-        }
-    }
+}
 
 
     public void setSolved(boolean solved) {
