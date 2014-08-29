@@ -61,6 +61,9 @@ public class GameFieldService {
     }
 
     public void shiftLine(GameField gameField, boolean horizontal, int row, int steps) {
+        if (row < 0) {
+            return;
+        }
         if (horizontal) {
             if (row < gameField.getField().length - 2) {
                 Tile line[] = new Tile[gameField.getField().length - 2];

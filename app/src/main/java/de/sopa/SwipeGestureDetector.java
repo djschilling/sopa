@@ -1,7 +1,5 @@
 package de.sopa;
 
-import android.util.Log;
-import android.view.MotionEvent;
 import de.sopa.helper.MySimpleOnGestureListener;
 import de.sopa.model.GameService;
 import org.andengine.input.touch.TouchEvent;
@@ -50,13 +48,6 @@ public class SwipeGestureDetector extends MySimpleOnGestureListener {
                 return true;
             }
         }
-        return true;
-    }
-
-    @Override
-    public boolean onSingleTapConfirmed(MotionEvent e) {
-        Log.i("singletabx", String.valueOf(e.getX()));
-        Log.i("singletaby", String.valueOf(e.getY()));
         return true;
     }
 }

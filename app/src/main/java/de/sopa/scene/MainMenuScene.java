@@ -1,17 +1,17 @@
 package de.sopa.scene;
 
+import de.sopa.MainActivity;
 import de.sopa.manager.SceneManager;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.scene.menu.MenuScene;
-import org.andengine.entity.scene.menu.item.IMenuItem;
-import org.andengine.entity.scene.menu.item.SpriteMenuItem;
-import org.andengine.entity.scene.menu.item.decorator.ScaleMenuItemDecorator;
+import org.andengine.entity.sprite.Sprite;
+import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.color.Color;
 
 /**
  * David Schilling - davejs92@gmail.com
  */
-public class MainMenuScene extends BaseScene implements MenuScene.IOnMenuItemClickListener {
+public class MainMenuScene extends BaseScene  {
     private MenuScene menuChildScene;
     private final int MENU_PLAY = 0;
     private final int MENU_LEVEL_MODE = 1;
@@ -42,31 +42,24 @@ public class MainMenuScene extends BaseScene implements MenuScene.IOnMenuItemCli
     }
 
     private void createMenuChildScene() {
-        menuChildScene = new MenuScene(camera);
-
-        final IMenuItem playMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_PLAY, resourcesManager.play_region, vbom), 1.2f, 1);
-        final IMenuItem levelModeItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_LEVEL_MODE, resourcesManager.level_mode_region, vbom), 1.2f, 1);
-
-        menuChildScene.addMenuItem(playMenuItem);
-        menuChildScene.addMenuItem(levelModeItem);
-
-        menuChildScene.buildAnimations();
-        menuChildScene.setBackgroundEnabled(false);
-
-        menuChildScene.setOnMenuItemClickListener(this);
-
-        setChildScene(menuChildScene);
-    }
-
-    @Override
-    public boolean onMenuItemClicked(MenuScene pMenuScene, IMenuItem pMenuItem, float pMenuItemLocalX, float pMenuItemLocalY) {
-        switch (pMenuItem.getID()) {
-            case MENU_PLAY:
+        Sprite playItemSprite = new Sprite(0, 0, resourcesManager.play_region, vbom) {
+            @Override
+            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 SceneManager.getInstance().loadGameScene(engine);
-            case MENU_LEVEL_MODE:
                 return true;
-            default:
-                return false;
-        }
+            }
+        };
+        playItemSprite.setScaleCenter(0, 0);
+        playItemSprite.setScale(0.4f);
+        playItemSprite.setPosition(MainActivity.CAMERA_WIDTH / 2 - playItemSprite.getWidthScaled() /2, MainActivity.CAMERA_HEIGHT / 2 - playItemSprite.getHeightScaled());
+        attachChild(playItemSprite);
+        registerTouchArea(playItemSprite);
+        Sprite levelItemSprite = new Sprite(0, 0, resourcesManager.level_mode_region, vbom);
+
+        levelItemSprite.setScaleCenter(0, 0);
+        levelItemSprite.setScale(0.4f);
+        levelItemSprite.setPosition(MainActivity.CAMERA_WIDTH / 2 - levelItemSprite.getWidthScaled() /2, MainActivity.CAMERA_HEIGHT / 2);
+        attachChild(levelItemSprite);
+        registerTouchArea(levelItemSprite);
     }
 }
