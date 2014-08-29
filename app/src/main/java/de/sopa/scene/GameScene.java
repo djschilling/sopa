@@ -1,7 +1,6 @@
 package de.sopa.scene;
 
 
-import android.view.GestureDetector;
 import de.sopa.MainActivity;
 import de.sopa.MyHoldDetector;
 import de.sopa.Tile;
@@ -26,7 +25,6 @@ import org.andengine.util.color.Color;
 public class GameScene extends BaseScene implements Observer {
 
     private GameService gameService;
-    private GestureDetector gestureDetector;
     private Sprite solvedSprite;
     private Entity tileGroup;
     private GameFieldHandler gameFieldHandler;

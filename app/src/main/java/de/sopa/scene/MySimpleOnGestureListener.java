@@ -1,11 +1,10 @@
-package de.sopa.helper;
+package de.sopa.scene;
 
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import de.sopa.MainActivity;
+import de.sopa.manager.ResourcesManager;
 import org.andengine.input.touch.TouchEvent;
 
-import static de.sopa.MainActivity.SCREEN_HEIGHT;
 import static de.sopa.manager.ResourcesManager.getInstance;
 
 /**
@@ -28,7 +27,7 @@ public class MySimpleOnGestureListener extends GestureDetector.SimpleOnGestureLi
     private TouchEvent convertMotionToTouchEvent(MotionEvent motionEvent){
         int i = (motionEvent.getAction() & MotionEvent.ACTION_POINTER_INDEX_MASK) >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
         TouchEvent touchEvent = TouchEvent.obtain(motionEvent.getX(), motionEvent.getY(), motionEvent.getAction(), i, MotionEvent.obtain(motionEvent));
-        getInstance().camera.convertSurfaceToSceneTouchEvent(touchEvent, MainActivity.SCREEN_WIDTH, SCREEN_HEIGHT);
+        getInstance().camera.convertSurfaceToSceneTouchEvent(touchEvent, ResourcesManager.getInstance().engine.getSurfaceWidth(), ResourcesManager.getInstance().engine.getSurfaceHeight());
         return touchEvent;
     }
 
