@@ -7,7 +7,7 @@ import java.io.IOException;
  * @author David Schilling - davejs92@gmail.com
  */
 public interface IOHandler {
-    public void writeToFile(String filename, String[] strings) throws IOException;
+    public void writeToFile(String filename, String[] strings, int fileCreationMode) throws IOException;
 
-    public String[] readFromFile(String filename);
+    public String[] readFromPrivateFile(String filename) throws IOException;
 }

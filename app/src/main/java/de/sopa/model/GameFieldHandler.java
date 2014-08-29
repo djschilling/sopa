@@ -4,9 +4,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import de.sopa.IOHandler;
 import de.sopa.IOHandlerAndroid;
-import de.sopa.MainActivity;
 import de.sopa.manager.ResourcesManager;
-import de.sopa.manager.SceneManager;
 
 import java.io.IOException;
 
@@ -22,7 +20,7 @@ public class GameFieldHandler {
     }
 
     public GameField getGameField(int id) {
-        return fieldHandler.fromString(ioHandler.readFromFile(id + ".lv"));
+        return fieldHandler.fromString(ioHandler.readFromPrivateFile(id + ".lv"));
     }
 
     public int saveGameField(GameField gameField) throws IOException {
