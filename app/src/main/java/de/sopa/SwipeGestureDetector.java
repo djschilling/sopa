@@ -1,14 +1,15 @@
 package de.sopa;
 
+import android.util.Log;
 import android.view.MotionEvent;
+import de.sopa.helper.MySimpleOnGestureListener;
 import de.sopa.model.GameService;
-
-import static android.view.GestureDetector.SimpleOnGestureListener;
+import org.andengine.input.touch.TouchEvent;
 
 /**
  * David Schilling - davejs92@gmail.com
  */
-public class SwipeGestureDetector extends SimpleOnGestureListener {
+public class SwipeGestureDetector extends MySimpleOnGestureListener {
 
     private static final float SWIPE_MIN_DISTANCE = 25;
 
@@ -25,30 +26,37 @@ public class SwipeGestureDetector extends SimpleOnGestureListener {
     }
 
     @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+    public boolean onFlingTouchEvent(TouchEvent e1, TouchEvent e2, float velocityX, float velocityY) {
         if (Math.abs(velocityX) > Math.abs(velocityY)) {
+            int row = (int) ((e1.getY() - startY) / widthPerTile);
             if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE) {
                 System.out.println("Left");
-                gameService.shiftLine(true, (int)(e1.getY() - startY) / widthPerTile, -1);
+                gameService.shiftLine(true, row, -1);
                 return true;
             } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE) {
-                gameService.shiftLine(true, (int)(e1.getY() - startY) / widthPerTile, 1);
+                gameService.shiftLine(true, row, 1);
                 System.out.println("Right");
                 return true;
             }
-            // Vertical
         } else {
+            int column = (int) (e1.getX() - startX) / widthPerTile;
             if (e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE) {
                 System.out.println("Top");
-                gameService.shiftLine(false, (int)(e1.getX() - startX) / widthPerTile, -1);
+                gameService.shiftLine(false, column, -1);
                 return true;
             } else if (e2.getY() - e1.getY() > SWIPE_MIN_DISTANCE) {
                 System.out.println("Down");
-                gameService.shiftLine(false, (int)(e1.getX() - startX) / widthPerTile, 1);
+                gameService.shiftLine(false, column, 1);
                 return true;
             }
         }
         return true;
     }
 
+    @Override
+    public boolean onSingleTapConfirmed(MotionEvent e) {
+        Log.i("singletabx", String.valueOf(e.getX()));
+        Log.i("singletaby", String.valueOf(e.getY()));
+        return true;
+    }
 }

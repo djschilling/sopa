@@ -1,20 +1,17 @@
 package de.sopa.scene;
 
 
-import android.content.Context;
 import android.view.GestureDetector;
-import android.widget.Toast;
 import de.sopa.MainActivity;
 import de.sopa.SwipeGestureDetector;
 import de.sopa.Tile;
 import de.sopa.TouchListener;
-import de.sopa.manager.ResourcesManager;
 import de.sopa.manager.SceneManager;
-import de.sopa.model.FieldHandler;
 import de.sopa.model.GameFieldHandler;
 import de.sopa.model.GameService;
 import de.sopa.model.GameServiceImpl;
 import de.sopa.observer.Observer;
+import java.io.IOException;
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
@@ -22,8 +19,6 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.util.color.Color;
-
-import java.io.IOException;
 
 /**
  * David Schilling - davejs92@gmail.com
@@ -131,6 +126,7 @@ public class GameScene extends BaseScene implements Observer {
         gameService.attach(this);
         final int widthPerTile = MainActivity.CAMERA_WIDTH / gameService.getGameField().getField().length;
         final Scene scene = this;
+
         //TODO: this should be done better
         activity.runOnUiThread(new Runnable() {
             @Override

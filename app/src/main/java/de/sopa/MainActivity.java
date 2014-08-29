@@ -1,11 +1,8 @@
 package de.sopa;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.view.Display;
 import android.view.KeyEvent;
-import android.widget.Toast;
 import de.sopa.manager.ResourcesManager;
 import de.sopa.manager.SceneManager;
 import org.andengine.engine.camera.Camera;
@@ -17,15 +14,17 @@ import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
 import org.andengine.ui.activity.BaseGameActivity;
 
-import java.io.File;
-
 
 public class MainActivity extends BaseGameActivity {
 
 
     public static int CAMERA_HEIGHT;
     public static int CAMERA_WIDTH;
+    public static int SCREEN_HEIGHT;
+    public static int SCREEN_WIDTH;
     private Camera camera;
+    public static int FACTOR_WIDTH;
+    public static int FACTOR_HEIGHT;
 
 
     @Override
@@ -37,8 +36,12 @@ public class MainActivity extends BaseGameActivity {
         } else {
             display.getSize(size);
         }
-        CAMERA_WIDTH = size.x;
-        CAMERA_HEIGHT = size.y;
+        SCREEN_WIDTH = size.x;
+        SCREEN_HEIGHT = size.y;
+        CAMERA_WIDTH = 480;
+        CAMERA_HEIGHT = 800;
+        FACTOR_WIDTH = SCREEN_WIDTH / CAMERA_WIDTH;
+        FACTOR_HEIGHT = SCREEN_HEIGHT / CAMERA_HEIGHT;
         camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
         return new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED,
                 new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera);

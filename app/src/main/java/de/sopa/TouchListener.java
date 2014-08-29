@@ -19,6 +19,7 @@ public class TouchListener implements IOnSceneTouchListener {
     @Override
     public boolean onSceneTouchEvent(Scene pScene, final TouchEvent pSceneTouchEvent) {
         return gestureDetector.onTouchEvent(pSceneTouchEvent.getMotionEvent());
-
     }
+
+
 }
