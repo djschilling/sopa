@@ -10,12 +10,12 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 /**
  * David Schilling - davejs92@gmail.com
+ *
+ * This abstract scene should always be used when creating new scenes.
+ *
+ * It holds resources which are often needed in scenes.
  */
 public abstract class BaseScene extends Scene {
-
-    //---------------------------------------------
-    // VARIABLES
-    //---------------------------------------------
 
     protected Engine engine;
     protected Activity activity;
@@ -23,12 +23,7 @@ public abstract class BaseScene extends Scene {
     protected VertexBufferObjectManager vbom;
     protected Camera camera;
 
-    //---------------------------------------------
-    // CONSTRUCTOR
-    //---------------------------------------------
-
-    public BaseScene()
-    {
+    public BaseScene() {
         this.resourcesManager = ResourcesManager.getInstance();
         this.engine = resourcesManager.engine;
         this.activity = resourcesManager.activity;
@@ -37,14 +32,20 @@ public abstract class BaseScene extends Scene {
         createScene();
     }
 
-    //---------------------------------------------
-    // ABSTRACTION
-    //---------------------------------------------
-
+    /**
+     * Called when scene is created.
+     */
     public abstract void createScene();
 
+    /**
+     * Called when Android Back Button is pressed.
+     */
     public abstract void onBackKeyPressed();
 
+    /**
+     *
+     * @return the type of the scene.
+     */
     public abstract SceneManager.SceneType getSceneType();
 
     public abstract void disposeScene();

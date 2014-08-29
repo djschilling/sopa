@@ -3,7 +3,6 @@ package de.sopa.scene;
 import de.sopa.MainActivity;
 import de.sopa.manager.SceneManager;
 import org.andengine.entity.scene.background.Background;
-import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.color.Color;
@@ -12,9 +11,6 @@ import org.andengine.util.color.Color;
  * David Schilling - davejs92@gmail.com
  */
 public class MainMenuScene extends BaseScene  {
-    private MenuScene menuChildScene;
-    private final int MENU_PLAY = 0;
-    private final int MENU_LEVEL_MODE = 1;
 
     @Override
     public void createScene() {
