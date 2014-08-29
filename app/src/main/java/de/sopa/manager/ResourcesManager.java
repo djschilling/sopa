@@ -40,8 +40,8 @@ public class ResourcesManager {
     }
 
     private void loadMenuGraphics() {
-        play_region = tileResourceLoader.getTexture("screens/JustPlayA.png");
-        level_mode_region = tileResourceLoader.getTexture("screens/LevelModeA.png");
+        play_region = tileResourceLoader.getTexture("screens/JustPlay.png");
+        level_mode_region = tileResourceLoader.getTexture("screens/LevelMode.png");
     }
     private void loadGameGraphics() {
         regionTileMap = this.tileResourceLoader.getTileTextures();

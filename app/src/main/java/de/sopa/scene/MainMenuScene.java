@@ -38,7 +38,7 @@ public class MainMenuScene extends BaseScene implements MenuScene.IOnMenuItemCli
     }
 
     private void createBackground() {
-        setBackground(new Background(Color.WHITE));
+        setBackground(new Background(Color.BLACK));
     }
 
     private void createMenuChildScene() {
