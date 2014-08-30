@@ -9,6 +9,8 @@ import org.andengine.input.touch.detector.HoldDetector;
  */
 public class MyHoldDetector implements HoldDetector.IHoldDetectorListener {
     private final GameService gameService;
+    private final float cameraWidth;
+    private final GameScene gameScene;
     private float moveStartX;
     private float moveStartY;
     private boolean vertical;
@@ -17,15 +19,15 @@ public class MyHoldDetector implements HoldDetector.IHoldDetectorListener {
     private float startY;
     private float widthPerTile;
     private int row;
-    private GameScene gameScene;
 
-    public MyHoldDetector(float startX, float startY, float widthPerTile, GameScene gameScene, GameService gameService) {
+    public MyHoldDetector(float startX, float startY, float widthPerTile, GameScene gameScene, GameService gameService, float cameraWidth) {
         this.gameScene = gameScene;
         vertical = horizontal = false;
         this.startX = startX;
         this.startY = startY;
         this.widthPerTile = widthPerTile;
         this.gameService = gameService;
+        this.cameraWidth = cameraWidth;
     }
 
     @Override
@@ -38,11 +40,11 @@ public class MyHoldDetector implements HoldDetector.IHoldDetectorListener {
     @Override
     public void onHold(HoldDetector pHoldDetector, long pHoldTimeMilliseconds, int pPointerID, float pHoldX, float pHoldY) {
         if(!horizontal&&!vertical) {
-            if(Math.abs(moveStartX - pHoldX)> gameScene.camera.getWidth() / 100) {
+            if(Math.abs(moveStartX - pHoldX)> cameraWidth / 100) {
                 horizontal = true;
                 row = (int) ((moveStartY - startY) / widthPerTile);
             }
-            if(Math.abs(moveStartY - pHoldY)> gameScene.camera.getWidth() / 100) {
+            if(Math.abs(moveStartY - pHoldY)> cameraWidth / 100) {
                 vertical = true;
                 row = (int) ((moveStartX - startX) / widthPerTile);
             }

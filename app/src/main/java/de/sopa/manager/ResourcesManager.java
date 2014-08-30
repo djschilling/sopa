@@ -116,6 +116,8 @@ public class ResourcesManager {
         tilesBorderRegion = null;
         saveButtonRegion.getTexture().unload();
         saveButtonRegion = null;
+        scoreFont.getTexture().unload();
+        scoreFont = null;
     }
 
     public static void prepareManager(Engine engine, MainActivity activity, Camera camera, VertexBufferObjectManager vbom, ResourceLoader resourceLoader, SceneService sceneService) {
