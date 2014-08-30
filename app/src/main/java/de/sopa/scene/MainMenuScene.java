@@ -1,6 +1,5 @@
 package de.sopa.scene;
 
-import de.sopa.MainActivity;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
@@ -40,7 +39,7 @@ public class MainMenuScene extends BaseScene  {
                 return true;
             }
         };
-        playItemSprite.setPosition(MainActivity.CAMERA_WIDTH / 2 - playItemSprite.getWidthScaled() /2, MainActivity.CAMERA_HEIGHT / 2 - playItemSprite.getHeightScaled());
+        playItemSprite.setPosition(camera.getWidth() / 2 - playItemSprite.getWidthScaled() /2, camera.getHeight() / 2 - playItemSprite.getHeightScaled());
         attachChild(playItemSprite);
         registerTouchArea(playItemSprite);
         Sprite levelItemSprite = new Sprite(0, 0, resourcesManager.level_mode_region, vbom){
@@ -54,7 +53,7 @@ public class MainMenuScene extends BaseScene  {
         };
 
 
-        levelItemSprite.setPosition(MainActivity.CAMERA_WIDTH / 2 - levelItemSprite.getWidthScaled() /2, MainActivity.CAMERA_HEIGHT / 2);
+        levelItemSprite.setPosition(camera.getWidth() / 2 - levelItemSprite.getWidthScaled() /2, camera.getHeight() / 2);
         attachChild(levelItemSprite);
         registerTouchArea(levelItemSprite);
     }

@@ -1,7 +1,6 @@
 package de.sopa.scene;
 
 import android.util.Log;
-import de.sopa.MainActivity;
 import de.sopa.model.GameService;
 import org.andengine.input.touch.detector.HoldDetector;
 
@@ -39,11 +38,11 @@ public class MyHoldDetector implements HoldDetector.IHoldDetectorListener {
     @Override
     public void onHold(HoldDetector pHoldDetector, long pHoldTimeMilliseconds, int pPointerID, float pHoldX, float pHoldY) {
         if(!horizontal&&!vertical) {
-            if(Math.abs(moveStartX - pHoldX)> MainActivity.CAMERA_WIDTH/100) {
+            if(Math.abs(moveStartX - pHoldX)> gameScene.camera.getWidth() / 100) {
                 horizontal = true;
                 row = (int) ((moveStartY - startY) / widthPerTile);
             }
-            if(Math.abs(moveStartY - pHoldY)> MainActivity.CAMERA_WIDTH/100) {
+            if(Math.abs(moveStartY - pHoldY)> gameScene.camera.getWidth() / 100) {
                 vertical = true;
                 row = (int) ((moveStartX - startX) / widthPerTile);
             }

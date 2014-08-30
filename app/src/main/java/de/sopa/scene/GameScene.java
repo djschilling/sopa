@@ -2,9 +2,14 @@ package de.sopa.scene;
 
 
 import android.util.Log;
-import de.sopa.MainActivity;
-import de.sopa.model.*;
+import de.sopa.model.GameField;
+import de.sopa.model.GameFieldHandler;
+import de.sopa.model.GameService;
+import de.sopa.model.GameServiceImpl;
+import de.sopa.model.Tile;
+import de.sopa.model.TileType;
 import de.sopa.observer.Observer;
+import java.io.IOException;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.Entity;
@@ -14,8 +19,6 @@ import org.andengine.input.touch.TouchEvent;
 import org.andengine.input.touch.detector.ContinuousHoldDetector;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.util.color.Color;
-
-import java.io.IOException;
 
 /**
  * David Schilling - davejs92@gmail.com
@@ -29,7 +32,7 @@ public class GameScene extends BaseScene implements Observer {
     private GameFieldHandler gameFieldHandler;
     private TileSprite[][] tileSprites;
     private ContinuousHoldDetector continuousHoldDetector;
-    private int spacePerTile;
+    private float spacePerTile;
     private GameField gameField;
 
     public GameScene(Object o) {
@@ -41,7 +44,7 @@ public class GameScene extends BaseScene implements Observer {
         Tile[][] field = gameService.getGameField().getField();
         int width = field.length;
         int heigth = field[0].length;
-        spacePerTile = MainActivity.CAMERA_WIDTH / width;
+        spacePerTile = camera.getWidth() / width;
         float tilesSceneStartY = getTileSceneStartY(spacePerTile);
         tileGroup.setPosition(0, tilesSceneStartY);
         int tilePositionY = 0;

@@ -1,6 +1,5 @@
 package de.sopa.scene;
 
-import de.sopa.MainActivity;
 import de.sopa.manager.ResourcesManager;
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.scene.background.Background;
@@ -14,9 +13,9 @@ import org.andengine.util.color.Color;
 public class LoadingScene extends BaseScene {
     @Override
     public void createScene(Object o) {
-        int foo = (MainActivity.CAMERA_HEIGHT - MainActivity.CAMERA_WIDTH) / 2;
+        float spriteSTartY = (camera.getHeight() - camera.getWidth()) / 2;
         setBackground(new Background(Color.WHITE));
-        this.attachChild(new Sprite(0, foo, MainActivity.CAMERA_WIDTH, MainActivity.CAMERA_WIDTH, ResourcesManager.getInstance().loadingScreenBackgroundRegion, vbom){
+        this.attachChild(new Sprite(0, spriteSTartY, camera.getWidth(), camera.getWidth(), ResourcesManager.getInstance().loadingScreenBackgroundRegion, vbom){
             @Override
             protected void preDraw(GLState pGLState, Camera pCamera) {
                 super.preDraw(pGLState, pCamera);
