@@ -5,7 +5,6 @@ import de.sopa.model.GameField;
 import de.sopa.model.GameFieldHandler;
 import de.sopa.model.GameService;
 import de.sopa.model.GameServiceImpl;
-import de.sopa.model.Tile;
 import de.sopa.observer.Observer;
 import java.io.IOException;
 import org.andengine.engine.handler.timer.ITimerCallback;
@@ -39,6 +38,7 @@ public class GameScene extends BaseScene implements Observer {
     @Override
     public void createScene(Object o) {
         initializeLogic(o);
+        calculateSpacePerTile(gameService.getGameField().getField().length);
         addBackground();
         addTiles();
         addSolvedIcon();
@@ -52,30 +52,33 @@ public class GameScene extends BaseScene implements Observer {
 
     @Override
     public void update() {
-        addTiles();
+        updateTiles();
         setSolved(gameService.solvedPuzzle());
         scoreText.setText(String.valueOf(gameService.getGameField().getMovesCount()));
     }
 
 
     private void addTiles() {
-        detachChild(gameFieldView);
-        Tile[][] field = gameService.getGameField().getField();
-        int width = field.length;
-        spacePerTile = camera.getWidth() / width;
-        float tilesSceneStartY = getTileSceneStartY(spacePerTile);
+        float tilesSceneStartY = getTileSceneStartY();
         gameFieldView = new GameFieldView(0, tilesSceneStartY, spacePerTile,
-                gameService.getGameField().getField(), resourcesManager.regionTileMap, vbom, resourcesManager.tilesBorderRegion);
+                gameService, resourcesManager.regionTileMap, vbom, resourcesManager.tilesBorderRegion);
+        gameFieldView.addTiles();
         attachChild(gameFieldView);
 
     }
-
-    private float getTileSceneStartY(float spacePerTile) {
-        return (camera.getHeight() - (spacePerTile * gameService.getGameField().getField().length)) / 2;
+    private void updateTiles() {
+        detachChild(gameFieldView);
+        gameFieldView.addTiles();
+        attachChild(gameFieldView);
     }
 
-    public void moveTiles(boolean horizontal, int row, float moveSize, boolean moveOver) {
-        gameFieldView.moveTiles(horizontal, row, moveSize, moveOver);
+
+    private void calculateSpacePerTile(int width) {
+        spacePerTile = camera.getWidth() / width;
+    }
+
+    private float getTileSceneStartY() {
+        return (camera.getHeight() - (spacePerTile * gameService.getGameField().getField().length)) / 2;
     }
 
 
@@ -96,7 +99,7 @@ public class GameScene extends BaseScene implements Observer {
 
     private void registerTouchHandler() {
         final float widthPerTile = camera.getWidth() / gameService.getGameField().getField().length;
-        MyHoldDetector myHoldDetector = new MyHoldDetector(widthPerTile, getTileSceneStartY(widthPerTile) + widthPerTile, widthPerTile, this, gameService, camera.getWidth());
+        MyHoldDetector myHoldDetector = new MyHoldDetector(widthPerTile, getTileSceneStartY() + widthPerTile, widthPerTile, gameFieldView, gameService, camera.getWidth());
         continuousHoldDetector = new ContinuousHoldDetector(0, 100, 0.01f, myHoldDetector);
         registerUpdateHandler(continuousHoldDetector);
         setOnSceneTouchListener(continuousHoldDetector);

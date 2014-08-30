@@ -10,7 +10,7 @@ import org.andengine.input.touch.detector.HoldDetector;
 public class MyHoldDetector implements HoldDetector.IHoldDetectorListener {
     private final GameService gameService;
     private final float cameraWidth;
-    private final GameScene gameScene;
+    private final GameFieldView gameFieldView;
     private float moveStartX;
     private float moveStartY;
     private boolean vertical;
@@ -20,8 +20,8 @@ public class MyHoldDetector implements HoldDetector.IHoldDetectorListener {
     private float widthPerTile;
     private int row;
 
-    public MyHoldDetector(float startX, float startY, float widthPerTile, GameScene gameScene, GameService gameService, float cameraWidth) {
-        this.gameScene = gameScene;
+    public MyHoldDetector(float startX, float startY, float widthPerTile, GameFieldView gameFieldView, GameService gameService, float cameraWidth) {
+        this.gameFieldView = gameFieldView;
         vertical = horizontal = false;
         this.startX = startX;
         this.startY = startY;
@@ -54,13 +54,13 @@ public class MyHoldDetector implements HoldDetector.IHoldDetectorListener {
                 if(moveSize > widthPerTile) {
                     gameService.shiftLine(true, row, 1);
                     moveStartX = pHoldX;
-                    gameScene.moveTiles(true, row, 0, true);
+                    gameFieldView.moveTiles(true, row, 0, true);
                 } else if(moveSize < (0 - widthPerTile )) {
                     gameService.shiftLine(true, row, -1);
                     moveStartX = pHoldX;
-                    gameScene.moveTiles(true, row, 0, true);
+                    gameFieldView.moveTiles(true, row, 0, true);
                 } else {
-                    gameScene.moveTiles(true, row, moveSize, false);
+                    gameFieldView.moveTiles(true, row, moveSize, false);
                 }
 
 
@@ -69,13 +69,13 @@ public class MyHoldDetector implements HoldDetector.IHoldDetectorListener {
                 if(moveSize > widthPerTile) {
                     gameService.shiftLine(false, row, 1);
                     moveStartY = pHoldY;
-                    gameScene.moveTiles(false, row, 0, true);
+                    gameFieldView.moveTiles(false, row, 0, true);
                 } else if(moveSize < (0 - widthPerTile )) {
                     gameService.shiftLine(false, row, -1);
                     moveStartY = pHoldY;
-                    gameScene.moveTiles(false, row, 0, true);
+                    gameFieldView.moveTiles(false, row, 0, true);
                 } else {
-                    gameScene.moveTiles(false, row, moveSize, false);
+                    gameFieldView.moveTiles(false, row, moveSize, false);
                 }
 
 

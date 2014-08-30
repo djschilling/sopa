@@ -1,5 +1,6 @@
 package de.sopa.scene;
 
+import de.sopa.model.GameService;
 import de.sopa.model.Tile;
 import de.sopa.model.TileType;
 import java.util.Map;
@@ -13,24 +14,25 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  * David Schilling - davejs92@gmail.com
  */
 public class GameFieldView extends Entity {
-    private final Tile[][] field;
+    private final GameService gameService;
     private final float spacePerTile;
     private final Map<Character, TextureRegion> tileRegionMap;
     private final VertexBufferObjectManager vbom;
     private final ITextureRegion tilesBorderRegion;
     private TileSprite[][] tileSprites;
 
-    public GameFieldView(float pX, float pY, float spacePerTile, Tile[][] field, Map<Character, TextureRegion> regionMap, VertexBufferObjectManager vbom, ITextureRegion tilesBorderRegion) {
+    public GameFieldView(float pX, float pY, float spacePerTile, GameService gameService, Map<Character, TextureRegion> regionMap, VertexBufferObjectManager vbom, ITextureRegion tilesBorderRegion) {
         super(pX, pY);
-        this.field = field;
+        this.gameService = gameService;
         this.spacePerTile = spacePerTile;
         this.tileRegionMap = regionMap;
         this.vbom = vbom;
         this.tilesBorderRegion = tilesBorderRegion;
-        initializeTiles();
     }
 
-    private void initializeTiles() {
+    public void addTiles() {
+        detachChildren();
+        Tile[][] field = gameService.getGameField().getField();
         int width = field.length;
         int heigth = field[0].length;
         tileSprites = new TileSprite[width][heigth];
