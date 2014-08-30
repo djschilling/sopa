@@ -16,7 +16,7 @@ public class GameFieldHandler {
     private IOHandler ioHandler;
     private FieldHandler fieldHandler;
     public GameFieldHandler() {
-        ioHandler = new IOHandlerAndroid(ResourcesManager.getInstance().activity.getApplicationContext());
+        ioHandler = new IOHandlerAndroid();
         fieldHandler = new FieldHandler();
     }
 

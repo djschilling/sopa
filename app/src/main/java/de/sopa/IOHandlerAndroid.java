@@ -7,6 +7,7 @@ package de.sopa;
 import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
+import de.sopa.manager.ResourcesManager;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,10 +17,10 @@ import java.util.List;
 
 public class IOHandlerAndroid implements IOHandler {
 
-    private Context context;
+    private final Context context;
 
-    public IOHandlerAndroid(Context context) {
-        this.context = context;
+    public IOHandlerAndroid() {
+        this.context = ResourcesManager.getInstance().activity.getApplicationContext();
         Log.i("WRITE", String.valueOf(isExternalStorageWritable()));
     }
 

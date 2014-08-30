@@ -2,12 +2,12 @@ package de.sopa.scene;
 
 
 import de.sopa.MainActivity;
-import de.sopa.model.Tile;
-import de.sopa.model.TileType;
 import de.sopa.manager.SceneManager;
 import de.sopa.model.GameFieldHandler;
 import de.sopa.model.GameService;
 import de.sopa.model.GameServiceImpl;
+import de.sopa.model.Tile;
+import de.sopa.model.TileType;
 import de.sopa.observer.Observer;
 import java.io.IOException;
 import org.andengine.entity.Entity;
@@ -51,7 +51,7 @@ public class GameScene extends BaseScene implements Observer {
                     TextureRegion pTextureRegion = resourcesManager.regionTileMap.get(field[x][y].getShortcut());
                     TileSprite tileSprite = new TileSprite(tilePositionX, tilePositionY, spacePerTile, spacePerTile, pTextureRegion, vbom);
                     tileGroup.attachChild(tileSprite);
-                    if(field[x][y].getTileType() == TileType.PUZZLE) {
+                    if (field[x][y].getTileType() == TileType.PUZZLE) {
                         tileSprites[x][y] = tileSprite;
                     }
                 }
@@ -71,30 +71,30 @@ public class GameScene extends BaseScene implements Observer {
     }
 
     public void moveTiles(boolean horizontal, int row, float moveSize, boolean moveOver) {
-        if(row < 0){
+        if (row < 0) {
             return;
         }
 
         row++;
         if (horizontal) {
-            if(row > tileSprites.length -2){
+            if (row > tileSprites.length - 2) {
                 return;
             }
             for (int x = 1; x < tileSprites.length - 1; x++) {
                 TileSprite tileSprite = tileSprites[x][row];
                 float toX = tileSprite.getStartX() + moveSize;
                 tileSprite.setX(toX);
-                if(moveOver) {
+                if (moveOver) {
                     tileSprite.setStartX(toX);
                 }
-                if(tileSprite.getStartX()<spacePerTile) {
+                if (tileSprite.getStartX() < spacePerTile) {
                     doubledTile = tileSprite;
-                }else if(tileSprite.getStartX()>spacePerTile*(gameService.getGameField().getField().length-1)) {
+                } else if (tileSprite.getStartX() > spacePerTile * (gameService.getGameField().getField().length - 1)) {
                     doubledTile = tileSprite;
                 }
             }
         } else {
-            if(row > tileSprites[0].length -2){
+            if (row > tileSprites[0].length - 2) {
                 return;
             }
 
@@ -102,17 +102,17 @@ public class GameScene extends BaseScene implements Observer {
                 TileSprite tileSprite = tileSprites[row][y];
                 float toY = tileSprite.getStartY() + moveSize;
                 tileSprite.setY(toY);
-                if(moveOver) {
+                if (moveOver) {
                     tileSprite.setStartY(toY);
-                if(tileSprite.getStartY()<getTileSceneStartY(spacePerTile)+spacePerTile) {
-                    doubledTile = tileSprite;
-                }else if(tileSprite.getStartY()>spacePerTile*(gameService.getGameField().getField().length-1)+getTileSceneStartY(spacePerTile)) {
+                    if (tileSprite.getStartY() < getTileSceneStartY(spacePerTile) + spacePerTile) {
                         doubledTile = tileSprite;
-                        }
+                    } else if (tileSprite.getStartY() > spacePerTile * (gameService.getGameField().getField().length - 1) + getTileSceneStartY(spacePerTile)) {
+                        doubledTile = tileSprite;
                     }
                 }
             }
-}
+        }
+    }
 
 
     public void setSolved(boolean solved) {
@@ -146,10 +146,10 @@ public class GameScene extends BaseScene implements Observer {
     }
 
     private void addButtons() {
-        Sprite sprite = new Sprite(0,MainActivity.CAMERA_HEIGHT*0.8f,resourcesManager.saveButtonRegion,vbom) {
+        Sprite sprite = new Sprite(0, camera.getHeight() * 0.8f, resourcesManager.saveButtonRegion, vbom) {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                if(pSceneTouchEvent.isActionUp()){
+                if (pSceneTouchEvent.isActionUp()) {
                     try {
                         gameFieldHandler.saveGameField(gameService.getGameField());
                     } catch (IOException e) {
