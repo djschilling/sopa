@@ -47,8 +47,9 @@ public class LevelChoiceScene extends BaseScene {
                     currentScreen++;
                     entityToFollow.registerEntityModifier(new MoveXModifier(0.5f, entityToFollow.getX(), currentScreen * camera.getWidth() + camera.getWidth() / 2));
                     if(currentScreen == screenCount -1) {
-                        leftArrow.setVisible(true);
+                        rightArrow.setVisible(false);
                     }
+                    leftArrow.setVisible(true);
                 }
             }
         });
