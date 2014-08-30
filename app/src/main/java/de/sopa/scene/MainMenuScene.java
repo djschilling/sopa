@@ -1,7 +1,6 @@
 package de.sopa.scene;
 
 import de.sopa.MainActivity;
-import de.sopa.manager.SceneManager;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
@@ -23,10 +22,6 @@ public class MainMenuScene extends BaseScene  {
         System.exit(0);
     }
 
-    @Override
-    public SceneManager.SceneType getSceneType() {
-        return SceneManager.SceneType.SCENE_MENU;
-    }
 
     @Override
     public void disposeScene() {
@@ -41,7 +36,7 @@ public class MainMenuScene extends BaseScene  {
         Sprite playItemSprite = new Sprite(0, 0, resourcesManager.play_region, vbom) {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                SceneManager.getInstance().loadGameScene(engine);
+                sceneService.loadGameScene();
                 return true;
             }
         };
@@ -51,7 +46,7 @@ public class MainMenuScene extends BaseScene  {
         Sprite levelItemSprite = new Sprite(0, 0, resourcesManager.level_mode_region, vbom){
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                SceneManager.getInstance().loadLevelChoiceScene(engine);
+                sceneService.loadLevelChoiceScene();
                 return true;
             }
 

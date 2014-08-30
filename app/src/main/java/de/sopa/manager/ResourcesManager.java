@@ -13,6 +13,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  */
 public class ResourcesManager {
     private static final ResourcesManager INSTANCE = new ResourcesManager();
+    public SceneService sceneService;
 
     public Engine engine;
     public MainActivity activity;
@@ -32,7 +33,6 @@ public class ResourcesManager {
     public ITextureRegion tilesBorderRegion;
     public ITextureRegion saveButtonRegion;
     public ITextureRegion levelChoiceRegion;
-
 
     public void loadSplashSceneResources() {
         splash_region = tileResourceLoader.getTexture("scenes/splash/splash.png");
@@ -100,12 +100,13 @@ public class ResourcesManager {
         saveButtonRegion = null;
     }
 
-    public static void prepareManager(Engine engine, MainActivity activity, Camera camera, VertexBufferObjectManager vbom, TileResourceLoader tileResourceLoader) {
+    public static void prepareManager(Engine engine, MainActivity activity, Camera camera, VertexBufferObjectManager vbom, TileResourceLoader tileResourceLoader, SceneService sceneService) {
         getInstance().engine = engine;
         getInstance().activity = activity;
         getInstance().camera = camera;
         getInstance().vbom = vbom;
         getInstance().tileResourceLoader = tileResourceLoader;
+        getInstance().sceneService = sceneService;
     }
 
     public static ResourcesManager getInstance() {

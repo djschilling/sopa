@@ -2,7 +2,7 @@ package de.sopa.scene;
 
 import android.app.Activity;
 import de.sopa.manager.ResourcesManager;
-import de.sopa.manager.SceneManager;
+import de.sopa.manager.SceneService;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.scene.Scene;
@@ -17,6 +17,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  */
 public abstract class BaseScene extends Scene {
 
+    protected final SceneService sceneService;
     protected Engine engine;
     protected Activity activity;
     protected ResourcesManager resourcesManager;
@@ -29,6 +30,7 @@ public abstract class BaseScene extends Scene {
         this.activity = resourcesManager.activity;
         this.vbom = resourcesManager.vbom;
         this.camera = resourcesManager.camera;
+        this.sceneService = resourcesManager.sceneService;
         createScene(o);
     }
     public BaseScene() {
@@ -47,11 +49,6 @@ public abstract class BaseScene extends Scene {
      */
     public abstract void onBackKeyPressed();
 
-    /**
-     *
-     * @return the type of the scene.
-     */
-    public abstract SceneManager.SceneType getSceneType();
 
     public abstract void disposeScene();
 }

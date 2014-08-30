@@ -1,9 +1,9 @@
 package de.sopa.scene;
 
+
 import de.sopa.IOHandler;
 import de.sopa.LevelFileHandler;
 import de.sopa.manager.ResourcesManager;
-import de.sopa.manager.SceneManager;
 import de.sopa.model.GameFieldHandler;
 import org.andengine.input.touch.TouchEvent;
 
@@ -17,7 +17,7 @@ public class LevelChoiceScene extends BaseScene {
     @Override
     public void createScene(Object o) {
         IOHandler ioHandler = new LevelFileHandler();
-        String[] strings = ioHandler.getAvailableLevels();
+        final String[] strings = ioHandler.getAvailableLevels();
         final GameFieldHandler gameFieldHandler = new GameFieldHandler();
         float widthPerLevel = getWidhtPerTile();
         float heightPerLevel = getHeightPerTile();
@@ -26,7 +26,7 @@ public class LevelChoiceScene extends BaseScene {
                     getLevelSpriteY(heightPerLevel, levelIndex), widthPerLevel, heightPerLevel, ResourcesManager.getInstance().levelChoiceRegion, vbom, strings[levelIndex]) {
                 @Override
                 public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                    SceneManager.getInstance().loadGameSceneFromLevelChoiceScene(engine, gameFieldHandler.getGameField(this.getFilename()));
+                    sceneService.loadGameSceneFromLevelChoiceScene(gameFieldHandler.getGameField(this.getFilename()));
                     return true;
                 }
             };
@@ -54,13 +54,9 @@ public class LevelChoiceScene extends BaseScene {
 
     @Override
     public void onBackKeyPressed() {
-        SceneManager.getInstance().loadMenuSceneFromLevelChoiceScene(engine);
+        sceneService.loadMenuSceneFromLevelChoiceScene();
     }
 
-    @Override
-    public SceneManager.SceneType getSceneType() {
-        return SceneManager.SceneType.SCENE_CHOICE;
-    }
 
     @Override
     public void disposeScene() {

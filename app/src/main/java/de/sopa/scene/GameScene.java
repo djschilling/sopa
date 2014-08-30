@@ -3,9 +3,14 @@ package de.sopa.scene;
 
 import android.util.Log;
 import de.sopa.MainActivity;
-import de.sopa.manager.SceneManager;
-import de.sopa.model.*;
+import de.sopa.model.GameField;
+import de.sopa.model.GameFieldHandler;
+import de.sopa.model.GameService;
+import de.sopa.model.GameServiceImpl;
+import de.sopa.model.Tile;
+import de.sopa.model.TileType;
 import de.sopa.observer.Observer;
+import java.io.IOException;
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
@@ -13,8 +18,6 @@ import org.andengine.input.touch.TouchEvent;
 import org.andengine.input.touch.detector.ContinuousHoldDetector;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.util.color.Color;
-
-import java.io.IOException;
 
 /**
  * David Schilling - davejs92@gmail.com
@@ -198,12 +201,7 @@ public class GameScene extends BaseScene implements Observer {
 
     @Override
     public void onBackKeyPressed() {
-        SceneManager.getInstance().loadMenuSceneFromGameScene(engine);
-    }
-
-    @Override
-    public SceneManager.SceneType getSceneType() {
-        return SceneManager.SceneType.SCENE_GAME;
+        sceneService.loadMenuSceneFromGameScene();
     }
 
     @Override

@@ -2,7 +2,7 @@ package de.sopa;
 
 import android.view.KeyEvent;
 import de.sopa.manager.ResourcesManager;
-import de.sopa.manager.SceneManager;
+import de.sopa.manager.SceneServiceImpl;
 import de.sopa.manager.TileResourceLoader;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.timer.ITimerCallback;
@@ -32,17 +32,14 @@ public class MainActivity extends BaseGameActivity {
 
     @Override
     public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws Exception {
-        ResourcesManager.prepareManager(mEngine, this, camera, getVertexBufferObjectManager(), new TileResourceLoader(getTextureManager(), getAssets()));
+        ResourcesManager.prepareManager(mEngine, this, camera, getVertexBufferObjectManager(), new TileResourceLoader(getTextureManager(), getAssets()), new SceneServiceImpl(mEngine));
         pOnCreateResourcesCallback.onCreateResourcesFinished();
-
     }
+
 
     @Override
     public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) throws Exception {
-        SceneManager.getInstance().createSplashScene(pOnCreateSceneCallback);
-
-
-
+        ResourcesManager.getInstance().sceneService.createSplashScene(pOnCreateSceneCallback);
     }
 
     @Override
@@ -50,7 +47,7 @@ public class MainActivity extends BaseGameActivity {
         mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
-                SceneManager.getInstance().createMenuScene();
+                ResourcesManager.getInstance().sceneService.createMenuScene();
             }
         }));
         pOnPopulateSceneCallback.onPopulateSceneFinished();
@@ -59,7 +56,7 @@ public class MainActivity extends BaseGameActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            SceneManager.getInstance().getCurrentScene().onBackKeyPressed();
+            ResourcesManager.getInstance().sceneService.getCurrentScene().onBackKeyPressed();
         }
         return false;
     }

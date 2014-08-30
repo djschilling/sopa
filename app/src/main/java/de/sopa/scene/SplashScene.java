@@ -1,6 +1,5 @@
 package de.sopa.scene;
 
-import de.sopa.manager.SceneManager;
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.util.GLState;
@@ -29,11 +28,6 @@ public class SplashScene extends BaseScene {
     @Override
     public void onBackKeyPressed() {
 
-    }
-
-    @Override
-    public SceneManager.SceneType getSceneType() {
-        return SceneManager.SceneType.SCENE_SPLASH;
     }
 
     @Override

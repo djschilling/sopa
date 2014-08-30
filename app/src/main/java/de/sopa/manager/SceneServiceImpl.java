@@ -1,7 +1,13 @@
 package de.sopa.manager;
 
+
 import de.sopa.model.GameField;
-import de.sopa.scene.*;
+import de.sopa.scene.BaseScene;
+import de.sopa.scene.GameScene;
+import de.sopa.scene.LevelChoiceScene;
+import de.sopa.scene.LoadingScene;
+import de.sopa.scene.MainMenuScene;
+import de.sopa.scene.SplashScene;
 import org.andengine.engine.Engine;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -10,7 +16,7 @@ import org.andengine.ui.IGameInterface;
 /**
  * David Schilling - davejs92@gmail.com
  */
-public class SceneManager {
+public class SceneServiceImpl implements SceneService {
 
     private BaseScene splashScene;
     private BaseScene menuScene;
@@ -18,59 +24,26 @@ public class SceneManager {
     private BaseScene loadingScene;
     private BaseScene choiceScene;
 
-    private static final SceneManager INSTANCE = new SceneManager();
-
-
     private BaseScene currentScene;
 
     private Engine engine;
 
-    private SceneManager() {
-        engine = ResourcesManager.getInstance().engine;
+    public SceneServiceImpl(Engine engine) {
+        this.engine = engine;
     }
 
-    public enum SceneType {
-        SCENE_SPLASH,
-        SCENE_MENU,
-        SCENE_GAME,
-        SCENE_LOADING,
-        SCENE_CHOICE
-    }
-
-    public void setScene(BaseScene scene) {
+    private void setScene(BaseScene scene) {
         engine.setScene(scene);
         currentScene = scene;
     }
 
-    public void setScene(SceneType sceneType) {
-        switch (sceneType) {
-            case SCENE_MENU:
-                setScene(menuScene);
-                break;
-            case SCENE_GAME:
-                setScene(gameScene);
-                break;
-            case SCENE_SPLASH:
-                setScene(splashScene);
-                break;
-            case SCENE_LOADING:
-                setScene(loadingScene);
-                break;
-            case SCENE_CHOICE:
-                setScene(choiceScene);
-            default:
-                break;
-        }
-    }
 
-    public static SceneManager getInstance() {
-        return INSTANCE;
-    }
-
+    @Override
     public BaseScene getCurrentScene() {
         return currentScene;
     }
 
+    @Override
     public void createSplashScene(IGameInterface.OnCreateSceneCallback pOnCreateSceneCallback) {
         ResourcesManager.getInstance().loadSplashSceneResources();
         splashScene = new SplashScene();
@@ -84,6 +57,7 @@ public class SceneManager {
         splashScene = null;
     }
 
+    @Override
     public void createMenuScene() {
         ResourcesManager.getInstance().loadMenuSceneResources();
         menuScene = new MainMenuScene();
@@ -93,12 +67,14 @@ public class SceneManager {
         disposeSplashScene();
     }
 
-    public void loadMenuSceneFromGameScene(final Engine mEngine) {
+    @Override
+    public void loadMenuSceneFromGameScene() {
         setScene(loadingScene);
         disposeGameScene();
-        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            @Override
             public void onTimePassed(final TimerHandler pTimerHandler) {
-                mEngine.unregisterUpdateHandler(pTimerHandler);
+                engine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().loadMenuSceneResources();
                 menuScene = new MainMenuScene();
                 setScene(menuScene);
@@ -106,42 +82,46 @@ public class SceneManager {
         }));
     }
 
-    public void loadMenuSceneFromLevelChoiceScene(final Engine mEngine) {
+    @Override
+    public void loadMenuSceneFromLevelChoiceScene() {
         setScene(loadingScene);
         disposeLevelChoiceScene();
-        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            @Override
             public void onTimePassed(final TimerHandler pTimerHandler) {
-                mEngine.unregisterUpdateHandler(pTimerHandler);
+                engine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().loadMenuSceneResources();
                 menuScene = new MainMenuScene();
                 setScene(menuScene);
             }
         }));
     }
+
     private void disposeGameScene() {
         ResourcesManager.getInstance().unloadGameSceneResources();
         gameScene.disposeScene();
         gameScene = null;
     }
 
-    public void loadGameScene(final Engine mEngine) {
+    @Override
+    public void loadGameScene() {
         setScene(loadingScene);
         disposeMenuScene();
-        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
-                mEngine.unregisterUpdateHandler(pTimerHandler);
+                engine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().loadGameSceneResources();
                 gameScene = new GameScene(null);
                 setScene(gameScene);
             }
         }));
     }
-    public void loadGameSceneFromLevelChoiceScene(final Engine mEngine, final GameField gameField) {
+    public void loadGameSceneFromLevelChoiceScene(final GameField gameField) {
         setScene(loadingScene);
         disposeLevelChoiceScene();
-        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
-                mEngine.unregisterUpdateHandler(pTimerHandler);
+                engine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().loadGameSceneResources();
                 gameScene = new GameScene(gameField);
                 setScene(gameScene);
@@ -156,22 +136,24 @@ public class SceneManager {
         menuScene.disposeScene();
         menuScene = null;
     }
-    public void loadLevelChoiceScene(final Engine mEngine) {
+@Override
+    public void loadLevelChoiceScene() {
         setScene(loadingScene);
         disposeMenuScene();
-        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            @Override
             public void onTimePassed(final TimerHandler pTimerHandler) {
-                mEngine.unregisterUpdateHandler(pTimerHandler);
+                engine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().loadLevelChoiceSceneResources();
                 choiceScene = new LevelChoiceScene();
                 setScene(choiceScene);
             }
         }));
     }
+
     private void disposeLevelChoiceScene() {
         ResourcesManager.getInstance().unloadLevelChoiceSceneResources();
         choiceScene.disposeScene();
         choiceScene = null;
     }
-
 }

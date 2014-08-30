@@ -2,7 +2,6 @@ package de.sopa.scene;
 
 import de.sopa.MainActivity;
 import de.sopa.manager.ResourcesManager;
-import de.sopa.manager.SceneManager;
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
@@ -28,11 +27,6 @@ public class LoadingScene extends BaseScene {
 
     @Override
     public void onBackKeyPressed() {
-    }
-
-    @Override
-    public SceneManager.SceneType getSceneType() {
-        return SceneManager.SceneType.SCENE_LOADING;
     }
 
     @Override
