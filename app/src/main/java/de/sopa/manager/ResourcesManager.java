@@ -50,10 +50,14 @@ public class ResourcesManager {
         loadGameSceneGraphics();
     }
 
+    public void loadLevelChoiceSceneResources() {
+
+    }
     private void loadMenuSceneGraphics() {
         play_region = tileResourceLoader.getTexture("scenes/menu/JustPlay.png");
         level_mode_region = tileResourceLoader.getTexture("scenes/menu/LevelMode.png");
     }
+
     private void loadGameSceneGraphics() {
         regionTileMap = this.tileResourceLoader.getTileTextures();
         tilesBorderRegion = tileResourceLoader.getTexture("scenes/game/borders.png");
@@ -64,10 +68,14 @@ public class ResourcesManager {
         splash_region.getTexture().unload();
         splash_region = null;
     }
-
     public void unloadGameSceneResources(){
         unloadGameSceneTextures();
     }
+
+    public void unloadLevelChoiceSceneResources() {
+    }
+
+
     public void unloadMenuSceneResources(){
         unloadMenuSceneTextures();
     }
@@ -78,7 +86,6 @@ public class ResourcesManager {
         level_mode_region = null;
         play_region = null;
     }
-
 
     private void unloadGameSceneTextures() {
         for (TextureRegion textureRegion : regionTileMap.values()) {

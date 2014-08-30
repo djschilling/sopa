@@ -48,7 +48,14 @@ public class MainMenuScene extends BaseScene  {
         playItemSprite.setPosition(MainActivity.CAMERA_WIDTH / 2 - playItemSprite.getWidthScaled() /2, MainActivity.CAMERA_HEIGHT / 2 - playItemSprite.getHeightScaled());
         attachChild(playItemSprite);
         registerTouchArea(playItemSprite);
-        Sprite levelItemSprite = new Sprite(0, 0, resourcesManager.level_mode_region, vbom);
+        Sprite levelItemSprite = new Sprite(0, 0, resourcesManager.level_mode_region, vbom){
+            @Override
+            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                SceneManager.getInstance().loadLevelChoiceScene(engine);
+                return true;
+            }
+        };
+
 
         levelItemSprite.setPosition(MainActivity.CAMERA_WIDTH / 2 - levelItemSprite.getWidthScaled() /2, MainActivity.CAMERA_HEIGHT / 2);
         attachChild(levelItemSprite);

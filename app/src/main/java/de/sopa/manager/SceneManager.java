@@ -1,10 +1,6 @@
 package de.sopa.manager;
 
-import de.sopa.scene.BaseScene;
-import de.sopa.scene.GameScene;
-import de.sopa.scene.LoadingScene;
-import de.sopa.scene.MainMenuScene;
-import de.sopa.scene.SplashScene;
+import de.sopa.scene.*;
 import org.andengine.engine.Engine;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -19,6 +15,7 @@ public class SceneManager {
     private BaseScene menuScene;
     private BaseScene gameScene;
     private BaseScene loadingScene;
+    private BaseScene choiceScene;
 
     private static final SceneManager INSTANCE = new SceneManager();
 
@@ -36,6 +33,7 @@ public class SceneManager {
         SCENE_MENU,
         SCENE_GAME,
         SCENE_LOADING,
+        SCENE_CHOICE
     }
 
     public void setScene(BaseScene scene) {
@@ -57,6 +55,8 @@ public class SceneManager {
             case SCENE_LOADING:
                 setScene(loadingScene);
                 break;
+            case SCENE_CHOICE:
+                setScene(choiceScene);
             default:
                 break;
         }
@@ -92,7 +92,7 @@ public class SceneManager {
         disposeSplashScene();
     }
 
-    public void loadMenuScene(final Engine mEngine) {
+    public void loadMenuSceneFromGameScene(final Engine mEngine) {
         setScene(loadingScene);
         disposeGameScene();
         mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
@@ -105,6 +105,18 @@ public class SceneManager {
         }));
     }
 
+    public void loadMenuSceneFromLevelChoiceScene(final Engine mEngine) {
+        setScene(loadingScene);
+        disposeLevelChoiceScene();
+        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                mEngine.unregisterUpdateHandler(pTimerHandler);
+                ResourcesManager.getInstance().loadMenuSceneResources();
+                menuScene = new MainMenuScene();
+                setScene(menuScene);
+            }
+        }));
+    }
     private void disposeGameScene() {
         ResourcesManager.getInstance().unloadGameSceneResources();
         gameScene.disposeScene();
@@ -129,4 +141,22 @@ public class SceneManager {
         menuScene.disposeScene();
         menuScene = null;
     }
+    public void loadLevelChoiceScene(final Engine mEngine) {
+        setScene(loadingScene);
+        disposeMenuScene();
+        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                mEngine.unregisterUpdateHandler(pTimerHandler);
+                ResourcesManager.getInstance().loadLevelChoiceSceneResources();
+                choiceScene = new LevelChoiceScene();
+                setScene(choiceScene);
+            }
+        }));
+    }
+    private void disposeLevelChoiceScene() {
+        ResourcesManager.getInstance().unloadLevelChoiceSceneResources();
+        choiceScene.disposeScene();
+        choiceScene = null;
+    }
+
 }
