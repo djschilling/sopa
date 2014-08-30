@@ -1,0 +1,3 @@
+[submodule "AndEngine"]
+	path = AndEngine
+	url = git@github.com:pongo710/AndEngine.git
