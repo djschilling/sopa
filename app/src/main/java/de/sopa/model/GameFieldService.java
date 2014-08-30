@@ -1,7 +1,5 @@
 package de.sopa.model;
 
-import de.sopa.Tile;
-
 /**
  * David Schilling - davejs92@gmail.com
  */

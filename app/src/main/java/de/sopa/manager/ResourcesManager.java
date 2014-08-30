@@ -1,7 +1,6 @@
 package de.sopa.manager;
 
 import de.sopa.MainActivity;
-import de.sopa.TileResourceLoader;
 import java.util.Map;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;

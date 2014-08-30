@@ -1,12 +1,10 @@
 package de.sopa.model;
 
-import de.sopa.Tile;
-import de.sopa.TileType;
 import java.lang.Character;import java.lang.IllegalArgumentException;import java.lang.IllegalStateException;import java.lang.Math;import java.lang.String;import java.util.HashMap;
 import java.util.Map;
 
-import static de.sopa.TileType.PUZZLE;
-import static de.sopa.TileType.UNDEFINED;
+import static de.sopa.model.TileType.PUZZLE;
+import static de.sopa.model.TileType.UNDEFINED;
 
 /**
  * David Schilling - davejs92@gmail.com

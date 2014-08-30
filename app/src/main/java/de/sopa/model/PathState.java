@@ -1,4 +1,4 @@
-package de.sopa;
+package de.sopa.model;
 
 /**
  * David Schilling - davejs92@gmail.com

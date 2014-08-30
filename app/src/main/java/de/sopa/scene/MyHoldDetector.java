@@ -1,8 +1,8 @@
-package de.sopa;
+package de.sopa.scene;
 
 import android.util.Log;
+import de.sopa.MainActivity;
 import de.sopa.model.GameService;
-import de.sopa.scene.GameScene;
 import org.andengine.input.touch.detector.HoldDetector;
 
 /**

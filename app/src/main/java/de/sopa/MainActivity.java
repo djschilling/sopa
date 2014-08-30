@@ -3,6 +3,7 @@ package de.sopa;
 import android.view.KeyEvent;
 import de.sopa.manager.ResourcesManager;
 import de.sopa.manager.SceneManager;
+import de.sopa.manager.TileResourceLoader;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;

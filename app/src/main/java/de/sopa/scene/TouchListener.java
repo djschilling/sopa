@@ -1,4 +1,4 @@
-package de.sopa;
+package de.sopa.scene;
 
 import android.view.GestureDetector;
 import org.andengine.entity.scene.IOnSceneTouchListener;

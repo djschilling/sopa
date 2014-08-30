@@ -1,4 +1,4 @@
-package de.sopa;
+package de.sopa.manager;
 
 import android.content.res.AssetManager;
 import java.io.IOException;

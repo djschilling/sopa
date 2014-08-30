@@ -2,9 +2,8 @@ package de.sopa.scene;
 
 
 import de.sopa.MainActivity;
-import de.sopa.MyHoldDetector;
-import de.sopa.Tile;
-import de.sopa.TileType;
+import de.sopa.model.Tile;
+import de.sopa.model.TileType;
 import de.sopa.manager.SceneManager;
 import de.sopa.model.GameFieldHandler;
 import de.sopa.model.GameService;
