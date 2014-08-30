@@ -61,18 +61,34 @@ public class ResourcesManager {
     }
 
     public void unloadSplashSceneResources() {
+        splash_region.getTexture().unload();
         splash_region = null;
     }
 
     public void unloadGameSceneResources(){
         unloadGameSceneTextures();
     }
+    public void unloadMenuSceneResources(){
+        unloadMenuSceneTextures();
+    }
 
-    public void unloadGameSceneTextures() {
+    private void unloadMenuSceneTextures() {
+        level_mode_region.getTexture().unload();
+        play_region.getTexture().unload();
+        level_mode_region = null;
+        play_region = null;
+    }
+
+
+    private void unloadGameSceneTextures() {
         for (TextureRegion textureRegion : regionTileMap.values()) {
             textureRegion.getTexture().unload();
         }
         regionTileMap = null;
+        tilesBorderRegion.getTexture().unload();
+        tilesBorderRegion = null;
+        saveButtonRegion.getTexture().unload();
+        saveButtonRegion = null;
     }
 
     public static void prepareManager(Engine engine, MainActivity activity, Camera camera, VertexBufferObjectManager vbom, TileResourceLoader tileResourceLoader) {

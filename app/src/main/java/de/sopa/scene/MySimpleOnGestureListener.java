@@ -19,7 +19,6 @@ public class MySimpleOnGestureListener extends GestureDetector.SimpleOnGestureLi
         return onFlingTouchEvent(convertMotionToTouchEvent(e1), convertMotionToTouchEvent(e2), velocityX, velocityY);
     }
 
-
     public boolean onFlingTouchEvent(TouchEvent e1, TouchEvent e2, float velocityX, float velocityY) {
         return false;
     }
@@ -30,5 +29,4 @@ public class MySimpleOnGestureListener extends GestureDetector.SimpleOnGestureLi
         getInstance().camera.convertSurfaceToSceneTouchEvent(touchEvent, ResourcesManager.getInstance().engine.getSurfaceWidth(), ResourcesManager.getInstance().engine.getSurfaceHeight());
         return touchEvent;
     }
-
 }

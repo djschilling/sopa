@@ -28,7 +28,6 @@ public class LoadingScene extends BaseScene {
 
     @Override
     public void onBackKeyPressed() {
-
     }
 
     @Override
@@ -38,6 +37,5 @@ public class LoadingScene extends BaseScene {
 
     @Override
     public void disposeScene() {
-
     }
 }
