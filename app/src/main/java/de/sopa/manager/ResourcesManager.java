@@ -4,6 +4,8 @@ import de.sopa.MainActivity;
 import java.util.Map;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
+import org.andengine.opengl.font.IFont;
+import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
@@ -20,7 +22,7 @@ public class ResourcesManager {
     public Camera camera;
     public VertexBufferObjectManager vbom;
 
-    private TileResourceLoader tileResourceLoader;
+    private ResourceLoader resourceLoader;
 
     public ITextureRegion splash_region;
 
@@ -36,36 +38,40 @@ public class ResourcesManager {
     public ITextureRegion levelChoiceArrowRightRegion;
     public ITextureRegion levelChoiceArrowLeftRegion;
 
+    public IFont scoreFont;
+
     public void loadSplashSceneResources() {
-        splash_region = tileResourceLoader.getTexture("scenes/splash/splash.png");
+        splash_region = resourceLoader.getTexture("scenes/splash/splash.png");
     }
     public void loadMenuSceneResources() {
         loadMenuSceneGraphics();
     }
 
     public void loadLoadingSceneResources() {
-        loadingScreenBackgroundRegion = tileResourceLoader.getTexture("scenes/loading/LoadingScreen.png");
+        loadingScreenBackgroundRegion = resourceLoader.getTexture("scenes/loading/LoadingScreen.png");
     }
 
     public void loadGameSceneResources() {
         loadGameSceneGraphics();
+        scoreFont = resourceLoader.getFont("Impact.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA);
+
     }
 
     public void loadLevelChoiceSceneResources() {
-        levelChoiceRegion = tileResourceLoader.getTexture("scenes/levelChoice/Level.png");
-        levelChoiceArrowLeftRegion = tileResourceLoader.getTexture("scenes/levelChoice/ArrowLeft.png");
-        levelChoiceArrowRightRegion = tileResourceLoader.getTexture("scenes/levelChoice/ArrowRight.png");
+        levelChoiceRegion = resourceLoader.getTexture("scenes/levelChoice/Level.png");
+        levelChoiceArrowLeftRegion = resourceLoader.getTexture("scenes/levelChoice/ArrowLeft.png");
+        levelChoiceArrowRightRegion = resourceLoader.getTexture("scenes/levelChoice/ArrowRight.png");
 
     }
     private void loadMenuSceneGraphics() {
-        play_region = tileResourceLoader.getTexture("scenes/menu/JustPlay.png");
-        level_mode_region = tileResourceLoader.getTexture("scenes/menu/LevelMode.png");
+        play_region = resourceLoader.getTexture("scenes/menu/JustPlay.png");
+        level_mode_region = resourceLoader.getTexture("scenes/menu/LevelMode.png");
     }
 
     private void loadGameSceneGraphics() {
-        regionTileMap = this.tileResourceLoader.getTileTextures();
-        tilesBorderRegion = tileResourceLoader.getTexture("scenes/game/borders.png");
-        saveButtonRegion = tileResourceLoader.getTexture("scenes/game/save.png");
+        regionTileMap = this.resourceLoader.getTileTextures();
+        tilesBorderRegion = resourceLoader.getTexture("scenes/game/borders.png");
+        saveButtonRegion = resourceLoader.getTexture("scenes/game/save.png");
     }
 
     public void unloadSplashSceneResources() {
@@ -108,12 +114,12 @@ public class ResourcesManager {
         saveButtonRegion = null;
     }
 
-    public static void prepareManager(Engine engine, MainActivity activity, Camera camera, VertexBufferObjectManager vbom, TileResourceLoader tileResourceLoader, SceneService sceneService) {
+    public static void prepareManager(Engine engine, MainActivity activity, Camera camera, VertexBufferObjectManager vbom, ResourceLoader resourceLoader, SceneService sceneService) {
         getInstance().engine = engine;
         getInstance().activity = activity;
         getInstance().camera = camera;
         getInstance().vbom = vbom;
-        getInstance().tileResourceLoader = tileResourceLoader;
+        getInstance().resourceLoader = resourceLoader;
         getInstance().sceneService = sceneService;
     }
 

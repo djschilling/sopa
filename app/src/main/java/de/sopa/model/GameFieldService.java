@@ -75,6 +75,7 @@ public class GameFieldService {
                     newPosition = newPosition % (gameField.getField().length - 2);
                     gameField.getField()[newPosition + 1][row + 1] = line[i];
                 }
+                gameField.increaseMovesCounter();
             }
         } else {
             if (row < gameField.getField()[0].length - 2) {
@@ -89,6 +90,7 @@ public class GameFieldService {
                     newPosition = newPosition % (gameField.getField()[0].length - 2);
                     gameField.getField()[row + 1][newPosition + 1] = line[i];
                 }
+                gameField.increaseMovesCounter ();
             }
         }
     }

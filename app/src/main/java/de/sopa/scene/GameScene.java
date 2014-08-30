@@ -1,7 +1,6 @@
 package de.sopa.scene;
 
 
-import android.util.Log;
 import de.sopa.model.GameField;
 import de.sopa.model.GameFieldHandler;
 import de.sopa.model.GameService;
@@ -15,6 +14,7 @@ import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.input.touch.detector.ContinuousHoldDetector;
 import org.andengine.opengl.texture.region.TextureRegion;
@@ -34,6 +34,7 @@ public class GameScene extends BaseScene implements Observer {
     private ContinuousHoldDetector continuousHoldDetector;
     private float spacePerTile;
     private GameField gameField;
+    private Text scoreText;
 
     public GameScene(Object o) {
         super(o);
@@ -115,11 +116,9 @@ public class GameScene extends BaseScene implements Observer {
 
     public void setSolved(boolean solved) {
         if (solved) {
-            Log.i("Solved", "Solved");
             solvedSprite.setVisible(true);
             unsolvedSprite.setVisible(false);
         } else {
-            Log.i("Solved", "False");
             unsolvedSprite.setVisible(true);
             solvedSprite.setVisible(false);
         }
@@ -130,6 +129,7 @@ public class GameScene extends BaseScene implements Observer {
     @Override
     public void update() {
         addTiles();
+        scoreText.setText(String.valueOf(gameService.getGameField().getMovesCount()));
     }
 
     @Override
@@ -151,6 +151,8 @@ public class GameScene extends BaseScene implements Observer {
         addTiles();
         gameFieldHandler = new GameFieldHandler();
         addButtons();
+        scoreText = new Text(camera.getWidth() * 0.7f, camera.getHeight() * 0.01f, resourcesManager.scoreFont,String.valueOf(gameService.getGameField().getMovesCount()),4,vbom);
+        attachChild(scoreText);
     }
 
 
@@ -198,6 +200,7 @@ public class GameScene extends BaseScene implements Observer {
         continuousHoldDetector = new ContinuousHoldDetector(0, 100, 0.01f, myHoldDetector);
         registerUpdateHandler(continuousHoldDetector);
         setOnSceneTouchListener(continuousHoldDetector);
+        gameService.getGameField().resetMovesCounter();
     }
 
     @Override

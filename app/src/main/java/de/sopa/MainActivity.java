@@ -4,7 +4,7 @@ import android.view.KeyEvent;
 import de.sopa.manager.ResourcesManager;
 import de.sopa.manager.SceneService;
 import de.sopa.manager.SceneServiceImpl;
-import de.sopa.manager.TileResourceLoader;
+import de.sopa.manager.ResourceLoader;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -31,7 +31,7 @@ public class MainActivity extends BaseGameActivity {
 
     @Override
     public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws Exception {
-        ResourcesManager.prepareManager(mEngine, this, camera, getVertexBufferObjectManager(), new TileResourceLoader(getTextureManager(), getAssets()), new SceneServiceImpl(mEngine));
+        ResourcesManager.prepareManager(mEngine, this, camera, getVertexBufferObjectManager(), new ResourceLoader(getTextureManager(), getAssets()), new SceneServiceImpl(mEngine));
         pOnCreateResourcesCallback.onCreateResourcesFinished();
     }
 

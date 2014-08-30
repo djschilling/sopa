@@ -7,6 +7,11 @@ public class GameField {
     private Tile[][] field;
     private int startX;
     private int startY;
+    private int movesCounter;
+
+    public GameField() {
+        this.movesCounter = 0;
+    }
 
     public void setField(Tile[][] field) {
         this.field = field;
@@ -30,5 +35,15 @@ public class GameField {
 
     public int getStartY() {
         return startY;
+    }
+
+    public void increaseMovesCounter() { movesCounter++; }
+
+    public int getMovesCount() {
+        return movesCounter;
+    }
+
+    public void resetMovesCounter() {
+        movesCounter = 0;
     }
 }

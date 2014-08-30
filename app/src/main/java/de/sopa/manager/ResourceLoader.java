@@ -1,13 +1,17 @@
 package de.sopa.manager;
 
 import android.content.res.AssetManager;
+import android.graphics.Color;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import org.andengine.opengl.font.FontFactory;
+import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.texture.TextureOptions;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.bitmap.BitmapTexture;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.texture.region.TextureRegionFactory;
@@ -16,12 +20,12 @@ import org.andengine.util.adt.io.in.IInputStreamOpener;
 /**
  * David Schilling - davejs92@gmail.com
  */
-public class TileResourceLoader {
+public class ResourceLoader {
 
     private final TextureManager textureManager;
     private final AssetManager assetManager;
 
-    public TileResourceLoader(TextureManager textureManager, AssetManager assetManager) {
+    public ResourceLoader(TextureManager textureManager, AssetManager assetManager) {
         this.textureManager = textureManager;
         this.assetManager = assetManager;
     }
@@ -29,7 +33,8 @@ public class TileResourceLoader {
     public TextureRegion getTexture(final String path) {
         return getTexture(path, TextureOptions.DEFAULT);
     }
-    public TextureRegion getTexture(final String path, TextureOptions textureOptions){
+
+    public TextureRegion getTexture(final String path, TextureOptions textureOptions) {
         try {
             ITexture texture = new BitmapTexture(textureManager, new IInputStreamOpener() {
                 @Override
@@ -66,5 +71,14 @@ public class TileResourceLoader {
         regionMap.put('k', getTexture("scenes/game/k.png"));
         regionMap.put('m', getTexture("scenes/game/m.png"));
         return regionMap;
+    }
+
+    public IFont getFont(final String name, TextureOptions textureOptions) {
+        FontFactory.setAssetBasePath("fonts/");
+        final ITexture mainFontTexture = new BitmapTextureAtlas(textureManager, 512, 512, textureOptions);
+        IFont font = FontFactory.createStrokeFromAsset(ResourcesManager.getInstance().activity.getFontManager(),
+                mainFontTexture, ResourcesManager.getInstance().activity.getAssets(), name, 200, true, Color.WHITE, 2, Color.RED);
+        font.load();
+        return font;
     }
 }
