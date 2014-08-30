@@ -5,13 +5,15 @@ import de.sopa.IOHandler;
 import de.sopa.LevelFileHandler;
 import de.sopa.manager.ResourcesManager;
 import de.sopa.model.GameFieldHandler;
+import org.andengine.engine.handler.timer.ITimerCallback;
+import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.input.touch.TouchEvent;
 
 /**
  * @author Raphael Schilling
  */
 public class LevelChoiceScene extends BaseScene {
-    private static final int COLUMNS = 4;
+    private static final int COLUMNS = 3;
     private static final int ROWS = 4;
 
     @Override
@@ -23,7 +25,7 @@ public class LevelChoiceScene extends BaseScene {
         float heightPerLevel = getHeightPerTile();
         for (int levelIndex = 0; levelIndex < strings.length; levelIndex++) {
             ChoiceLevelSprite sprite = new ChoiceLevelSprite(getLevelSpriteX(widthPerLevel, levelIndex),
-                    getLevelSpriteY(heightPerLevel, levelIndex), widthPerLevel, heightPerLevel, ResourcesManager.getInstance().levelChoiceRegion, vbom, strings[levelIndex]) {
+                    getLevelSpriteY(widthPerLevel, levelIndex), widthPerLevel, widthPerLevel, ResourcesManager.getInstance().levelChoiceRegion, vbom, strings[levelIndex]) {
                 @Override
                 public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                     sceneService.loadGameSceneFromLevelChoiceScene(gameFieldHandler.getGameField(this.getFilename()));
@@ -37,7 +39,7 @@ public class LevelChoiceScene extends BaseScene {
     }
 
     private float getHeightPerTile() {
-        return (camera.getHeight() / ROWS);
+        return ((camera.getHeight() / ROWS));
     }
 
     private float getWidhtPerTile() {
@@ -45,7 +47,7 @@ public class LevelChoiceScene extends BaseScene {
     }
 
     private float getLevelSpriteY(float heightPerLevel, int levelIndex) {
-        return levelIndex / COLUMNS * heightPerLevel;
+        return (int) (levelIndex / COLUMNS) * heightPerLevel;
     }
 
     private float getLevelSpriteX(float widthPerLevel, int i) {
@@ -60,6 +62,12 @@ public class LevelChoiceScene extends BaseScene {
 
     @Override
     public void disposeScene() {
-        this.detachChildren();
+        final LevelChoiceScene levelChoiceScene = this;
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                levelChoiceScene.detachChildren();
+            }
+        }));
     }
 }

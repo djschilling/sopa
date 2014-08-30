@@ -46,7 +46,8 @@ public class MainMenuScene extends BaseScene  {
         Sprite levelItemSprite = new Sprite(0, 0, resourcesManager.level_mode_region, vbom){
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                sceneService.loadLevelChoiceScene();
+
+                sceneService.loadLevelChoiceSceneFromMenuScene();
                 return true;
             }
 

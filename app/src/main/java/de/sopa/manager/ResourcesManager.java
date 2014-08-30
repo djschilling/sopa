@@ -50,7 +50,7 @@ public class ResourcesManager {
     }
 
     public void loadLevelChoiceSceneResources() {
-        levelChoiceRegion = tileResourceLoader.getTexture("scenes/loading/LoadingScreen.png");
+        levelChoiceRegion = tileResourceLoader.getTexture("scenes/levelChoice/Level.png");
 
     }
     private void loadMenuSceneGraphics() {

@@ -128,16 +128,13 @@ public class SceneServiceImpl implements SceneService {
             }
         }));
     }
-
-
-
     private void disposeMenuScene() {
         ResourcesManager.getInstance().unloadMenuSceneResources();
         menuScene.disposeScene();
         menuScene = null;
     }
-@Override
-    public void loadLevelChoiceScene() {
+
+    public void loadLevelChoiceSceneFromMenuScene() {
         setScene(loadingScene);
         disposeMenuScene();
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
@@ -155,5 +152,18 @@ public class SceneServiceImpl implements SceneService {
         ResourcesManager.getInstance().unloadLevelChoiceSceneResources();
         choiceScene.disposeScene();
         choiceScene = null;
+    }
+
+    public void loadLevelChoiceSceneFromGameScene() {
+        setScene(loadingScene);
+        disposeGameScene();
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                ResourcesManager.getInstance().loadLevelChoiceSceneResources();
+                choiceScene = new LevelChoiceScene();
+                setScene(choiceScene);
+            }
+        }));
     }
 }

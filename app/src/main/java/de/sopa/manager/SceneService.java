@@ -15,13 +15,15 @@ public interface SceneService {
 
     void createMenuScene();
 
-    public void loadMenuSceneFromGameScene();
+    void loadMenuSceneFromGameScene();
 
-    public void loadMenuSceneFromLevelChoiceScene();
+    void loadMenuSceneFromLevelChoiceScene();
 
-    public void loadGameScene();
+    void loadGameScene();
 
-    public void loadLevelChoiceScene();
+    void loadLevelChoiceSceneFromMenuScene();
+
+    void loadLevelChoiceSceneFromGameScene();
 
     void loadGameSceneFromLevelChoiceScene(final GameField gameField);
 }

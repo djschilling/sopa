@@ -3,14 +3,10 @@ package de.sopa.scene;
 
 import android.util.Log;
 import de.sopa.MainActivity;
-import de.sopa.model.GameField;
-import de.sopa.model.GameFieldHandler;
-import de.sopa.model.GameService;
-import de.sopa.model.GameServiceImpl;
-import de.sopa.model.Tile;
-import de.sopa.model.TileType;
+import de.sopa.model.*;
 import de.sopa.observer.Observer;
-import java.io.IOException;
+import org.andengine.engine.handler.timer.ITimerCallback;
+import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
@@ -18,6 +14,8 @@ import org.andengine.input.touch.TouchEvent;
 import org.andengine.input.touch.detector.ContinuousHoldDetector;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.util.color.Color;
+
+import java.io.IOException;
 
 /**
  * David Schilling - davejs92@gmail.com
@@ -201,11 +199,23 @@ public class GameScene extends BaseScene implements Observer {
 
     @Override
     public void onBackKeyPressed() {
-        sceneService.loadMenuSceneFromGameScene();
+        if(gameField != null && gameField instanceof GameField) {
+            sceneService.loadLevelChoiceSceneFromGameScene();
+        } else {
+            sceneService.loadMenuSceneFromGameScene();
+
+        }
     }
 
     @Override
     public void disposeScene() {
-        //TODO: remove scene and children
+        final  GameScene gameScene = this;
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                gameScene.tileGroup.detachChildren();
+                gameScene.detachChildren();
+            }
+        }));
     }
 }
