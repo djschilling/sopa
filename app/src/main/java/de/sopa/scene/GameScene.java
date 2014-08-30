@@ -1,15 +1,11 @@
 package de.sopa.scene;
 
 
+import android.util.Log;
 import de.sopa.MainActivity;
 import de.sopa.manager.SceneManager;
-import de.sopa.model.GameFieldHandler;
-import de.sopa.model.GameService;
-import de.sopa.model.GameServiceImpl;
-import de.sopa.model.Tile;
-import de.sopa.model.TileType;
+import de.sopa.model.*;
 import de.sopa.observer.Observer;
-import java.io.IOException;
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
@@ -18,6 +14,8 @@ import org.andengine.input.touch.detector.ContinuousHoldDetector;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.util.color.Color;
 
+import java.io.IOException;
+
 /**
  * David Schilling - davejs92@gmail.com
  */
@@ -25,14 +23,17 @@ public class GameScene extends BaseScene implements Observer {
 
     private GameService gameService;
     private Sprite solvedSprite;
+    private Sprite unsolvedSprite;
     private Entity tileGroup;
     private GameFieldHandler gameFieldHandler;
     private TileSprite[][] tileSprites;
     private ContinuousHoldDetector continuousHoldDetector;
     private int spacePerTile;
-    private Sprite doubledTile;
-    private Sprite doubledTileCopy;
+    private GameField gameField;
 
+    public GameScene(Object o) {
+        super(o);
+    }
 
     public void addTiles() {
         tileGroup.detachChildren();
@@ -87,11 +88,7 @@ public class GameScene extends BaseScene implements Observer {
                 if (moveOver) {
                     tileSprite.setStartX(toX);
                 }
-                if (tileSprite.getStartX() < spacePerTile) {
-                    doubledTile = tileSprite;
-                } else if (tileSprite.getStartX() > spacePerTile * (gameService.getGameField().getField().length - 1)) {
-                    doubledTile = tileSprite;
-                }
+
             }
         } else {
             if (row > tileSprites[0].length - 2) {
@@ -104,24 +101,26 @@ public class GameScene extends BaseScene implements Observer {
                 tileSprite.setY(toY);
                 if (moveOver) {
                     tileSprite.setStartY(toY);
-                    if (tileSprite.getStartY() < getTileSceneStartY(spacePerTile) + spacePerTile) {
-                        doubledTile = tileSprite;
-                    } else if (tileSprite.getStartY() > spacePerTile * (gameService.getGameField().getField().length - 1) + getTileSceneStartY(spacePerTile)) {
-                        doubledTile = tileSprite;
-                    }
+
                 }
             }
         }
+
     }
 
 
     public void setSolved(boolean solved) {
         if (solved) {
-            solvedSprite = new Sprite(0, 0, 50, 50, resourcesManager.regionTileMap.get('s'), vbom);
+            Log.i("Solved", "Solved");
+            solvedSprite.setVisible(true);
+            unsolvedSprite.setVisible(false);
         } else {
-            solvedSprite = new Sprite(0, 0, 50, 50, resourcesManager.regionTileMap.get('i'), vbom);
+            Log.i("Solved", "False");
+            unsolvedSprite.setVisible(true);
+            solvedSprite.setVisible(false);
         }
-        attachChild(solvedSprite);
+
+
     }
 
     @Override
@@ -135,14 +134,27 @@ public class GameScene extends BaseScene implements Observer {
     }
 
     @Override
-    public void createScene() {
+    public void createScene(Object o) {
+        if(o!=null && o instanceof GameField) {
+            this.gameField = (GameField)o;
+
+        }
         initializeLogic();
         addBackground();
+        addSolvedIcon();
         tileGroup = new Entity();
         attachChild(tileGroup);
         addTiles();
         gameFieldHandler = new GameFieldHandler();
         addButtons();
+    }
+
+
+    private void addSolvedIcon() {
+        solvedSprite = new Sprite(0, 0, 50, 50, resourcesManager.regionTileMap.get('s'), vbom);
+        unsolvedSprite = new Sprite(0, 0, 50, 50, resourcesManager.regionTileMap.get('i'), vbom);
+        attachChild(solvedSprite);
+        attachChild(unsolvedSprite);
     }
 
     private void addButtons() {
@@ -171,7 +183,11 @@ public class GameScene extends BaseScene implements Observer {
 
     private void initializeLogic() {
         gameService = new GameServiceImpl();
-        gameService.startGame();
+        if(gameField == null) {
+            gameService.startGame();
+        } else {
+            gameService.startGame(gameField);
+        }
         gameService.attach(this);
         final int widthPerTile = MainActivity.CAMERA_WIDTH / gameService.getGameField().getField().length;
         MyHoldDetector myHoldDetector = new MyHoldDetector(widthPerTile, getTileSceneStartY(widthPerTile) + widthPerTile, widthPerTile, this, gameService);

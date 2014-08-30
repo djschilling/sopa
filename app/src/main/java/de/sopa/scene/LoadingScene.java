@@ -14,7 +14,7 @@ import org.andengine.util.color.Color;
  */
 public class LoadingScene extends BaseScene {
     @Override
-    public void createScene() {
+    public void createScene(Object o) {
         int foo = (MainActivity.CAMERA_HEIGHT - MainActivity.CAMERA_WIDTH) / 2;
         setBackground(new Background(Color.WHITE));
         this.attachChild(new Sprite(0, foo, MainActivity.CAMERA_WIDTH, MainActivity.CAMERA_WIDTH, ResourcesManager.getInstance().loadingScreenBackgroundRegion, vbom){

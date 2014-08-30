@@ -1,5 +1,6 @@
 package de.sopa.manager;
 
+import de.sopa.model.GameField;
 import de.sopa.scene.*;
 import org.andengine.engine.Engine;
 import org.andengine.engine.handler.timer.ITimerCallback;
@@ -130,11 +131,25 @@ public class SceneManager {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().loadGameSceneResources();
-                gameScene = new GameScene();
+                gameScene = new GameScene(null);
                 setScene(gameScene);
             }
         }));
     }
+    public void loadGameSceneFromLevelChoiceScene(final Engine mEngine, final GameField gameField) {
+        setScene(loadingScene);
+        disposeLevelChoiceScene();
+        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                mEngine.unregisterUpdateHandler(pTimerHandler);
+                ResourcesManager.getInstance().loadGameSceneResources();
+                gameScene = new GameScene(gameField);
+                setScene(gameScene);
+            }
+        }));
+    }
+
+
 
     private void disposeMenuScene() {
         ResourcesManager.getInstance().unloadMenuSceneResources();

@@ -31,7 +31,7 @@ public class ResourcesManager {
     public Map<Character, TextureRegion> regionTileMap;
     public ITextureRegion tilesBorderRegion;
     public ITextureRegion saveButtonRegion;
-
+    public ITextureRegion levelChoiceRegion;
 
 
     public void loadSplashSceneResources() {
@@ -50,6 +50,7 @@ public class ResourcesManager {
     }
 
     public void loadLevelChoiceSceneResources() {
+        levelChoiceRegion = tileResourceLoader.getTexture("scenes/loading/LoadingScreen.png");
 
     }
     private void loadMenuSceneGraphics() {
@@ -72,6 +73,8 @@ public class ResourcesManager {
     }
 
     public void unloadLevelChoiceSceneResources() {
+        levelChoiceRegion.getTexture().unload();
+        levelChoiceRegion = null;
     }
 
 

@@ -13,7 +13,7 @@ import org.andengine.util.color.Color;
 public class MainMenuScene extends BaseScene  {
 
     @Override
-    public void createScene() {
+    public void createScene(Object o) {
         createBackground();
         createMenuChildScene();
     }
@@ -54,6 +54,7 @@ public class MainMenuScene extends BaseScene  {
                 SceneManager.getInstance().loadLevelChoiceScene(engine);
                 return true;
             }
+
         };
 
 

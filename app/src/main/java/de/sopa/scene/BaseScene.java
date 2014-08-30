@@ -23,19 +23,24 @@ public abstract class BaseScene extends Scene {
     protected VertexBufferObjectManager vbom;
     protected Camera camera;
 
-    public BaseScene() {
+    public BaseScene(Object o) {
         this.resourcesManager = ResourcesManager.getInstance();
         this.engine = resourcesManager.engine;
         this.activity = resourcesManager.activity;
         this.vbom = resourcesManager.vbom;
         this.camera = resourcesManager.camera;
-        createScene();
+        createScene(o);
     }
+    public BaseScene() {
+        this(null);
+    }
+
 
     /**
      * Called when scene is created.
+     * @param o
      */
-    public abstract void createScene();
+    public abstract void createScene(Object o);
 
     /**
      * Called when Android Back Button is pressed.
