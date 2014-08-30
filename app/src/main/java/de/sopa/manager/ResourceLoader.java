@@ -1,12 +1,12 @@
 package de.sopa.manager;
 
 import android.content.res.AssetManager;
-import android.graphics.Color;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import org.andengine.opengl.font.FontFactory;
+import org.andengine.opengl.font.FontManager;
 import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.TextureManager;
@@ -24,10 +24,12 @@ public class ResourceLoader {
 
     private final TextureManager textureManager;
     private final AssetManager assetManager;
+    private final FontManager fontManager;
 
-    public ResourceLoader(TextureManager textureManager, AssetManager assetManager) {
+    public ResourceLoader(TextureManager textureManager, AssetManager assetManager, FontManager fontManager) {
         this.textureManager = textureManager;
         this.assetManager = assetManager;
+        this.fontManager = fontManager;
     }
 
     public TextureRegion getTexture(final String path) {
@@ -76,8 +78,8 @@ public class ResourceLoader {
     public IFont getFont(final String name, TextureOptions textureOptions, float size, int color, float strokeWidth, int strokeColor) {
         FontFactory.setAssetBasePath("fonts/");
         final ITexture mainFontTexture = new BitmapTextureAtlas(textureManager, 512, 512, textureOptions);
-        IFont font = FontFactory.createStrokeFromAsset(ResourcesManager.getInstance().activity.getFontManager(),
-        mainFontTexture, ResourcesManager.getInstance().activity.getAssets(), name, size , true, color, strokeWidth, strokeColor);
+        IFont font = FontFactory.createStrokeFromAsset(fontManager,
+        mainFontTexture, assetManager, name, size , true, color, strokeWidth, strokeColor);
         font.load();
         return font;
     }

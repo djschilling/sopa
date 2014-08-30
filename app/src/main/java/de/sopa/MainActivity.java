@@ -31,7 +31,7 @@ public class MainActivity extends BaseGameActivity {
 
     @Override
     public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws Exception {
-        ResourcesManager.prepareManager(mEngine, this, camera, getVertexBufferObjectManager(), new ResourceLoader(getTextureManager(), getAssets()), new SceneServiceImpl(mEngine));
+        ResourcesManager.prepareManager(mEngine, this, camera, getVertexBufferObjectManager(), new ResourceLoader(getTextureManager(), getAssets(), getFontManager()), new SceneServiceImpl(mEngine));
         pOnCreateResourcesCallback.onCreateResourcesFinished();
     }
 
