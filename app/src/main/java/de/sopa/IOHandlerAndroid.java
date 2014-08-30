@@ -25,7 +25,8 @@ public class IOHandlerAndroid implements IOHandler {
 
     @Override
     public void writeToFile(String filename, String[] strings, int fileCreationMode) throws IOException {
-        FileOutputStream fileOutputStream = context.openFileOutput(filename, fileCreationMode);
+        FileOutputStream fileOutputStream = new FileOutputStream("/sdcard/sopa" + filename);
+        //FileOutputStream fileOutputStream = context.openFileOutput(filename, fileCreationMode);
         for (int i = 0; i < strings.length; i++) {
             String string = strings[i];
             fileOutputStream.write((string).getBytes());
@@ -39,7 +40,8 @@ public class IOHandlerAndroid implements IOHandler {
     @Override
     public String[] readFromPrivateFile(String filename) throws IOException {
         List<String> lines = new ArrayList<>();
-        FileInputStream fileInputStream = context.openFileInput(filename);
+        FileInputStream fileInputStream = new FileInputStream("/sdcard/sopa" + filename);
+        //FileInputStream fileInputStream = context.openFileInput(filename);
         int content;
         StringBuilder lineContent = new StringBuilder();
         while ((content = fileInputStream.read()) != -1) {
