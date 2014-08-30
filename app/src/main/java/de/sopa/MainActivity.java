@@ -2,6 +2,7 @@ package de.sopa;
 
 import android.view.KeyEvent;
 import de.sopa.manager.ResourcesManager;
+import de.sopa.manager.SceneService;
 import de.sopa.manager.SceneServiceImpl;
 import de.sopa.manager.TileResourceLoader;
 import org.andengine.engine.camera.Camera;
@@ -16,15 +17,13 @@ import org.andengine.ui.activity.BaseGameActivity;
 
 public class MainActivity extends BaseGameActivity {
 
+    private static final float CAMERA_WIDTH = 1080;
+    private static final float CAMERA_HEIGHT = 1920;
 
-    public static int CAMERA_HEIGHT;
-    public static int CAMERA_WIDTH;
     private Camera camera;
 
     @Override
     public EngineOptions onCreateEngineOptions() {
-        CAMERA_WIDTH = 1080;
-        CAMERA_HEIGHT = 1920;
         camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
         return new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED,
                 new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera);
@@ -39,7 +38,9 @@ public class MainActivity extends BaseGameActivity {
 
     @Override
     public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) throws Exception {
-        ResourcesManager.getInstance().sceneService.createSplashScene(pOnCreateSceneCallback);
+        SceneService sceneService = ResourcesManager.getInstance().sceneService;
+        sceneService.createSplashScene();
+        pOnCreateSceneCallback.onCreateSceneFinished(sceneService.getCurrentScene());
     }
 
     @Override

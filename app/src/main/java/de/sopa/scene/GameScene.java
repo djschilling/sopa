@@ -42,7 +42,7 @@ public class GameScene extends BaseScene implements Observer {
         int width = field.length;
         int heigth = field[0].length;
         spacePerTile = MainActivity.CAMERA_WIDTH / width;
-        int tilesSceneStartY = getTileSceneStartY(spacePerTile);
+        float tilesSceneStartY = getTileSceneStartY(spacePerTile);
         tileGroup.setPosition(0, tilesSceneStartY);
         int tilePositionY = 0;
         tileSprites = new TileSprite[width][heigth];
@@ -68,8 +68,8 @@ public class GameScene extends BaseScene implements Observer {
 
     }
 
-    protected int getTileSceneStartY(int spacePerTile) {
-        return (MainActivity.CAMERA_HEIGHT - (spacePerTile * gameService.getGameField().getField().length)) / 2;
+    protected float getTileSceneStartY(float spacePerTile) {
+        return (camera.getHeight() - (spacePerTile * gameService.getGameField().getField().length)) / 2;
     }
 
     public void moveTiles(boolean horizontal, int row, float moveSize, boolean moveOver) {
@@ -190,7 +190,7 @@ public class GameScene extends BaseScene implements Observer {
             gameService.startGame(gameField);
         }
         gameService.attach(this);
-        final int widthPerTile = MainActivity.CAMERA_WIDTH / gameService.getGameField().getField().length;
+        final float widthPerTile = camera.getWidth() / gameService.getGameField().getField().length;
         MyHoldDetector myHoldDetector = new MyHoldDetector(widthPerTile, getTileSceneStartY(widthPerTile) + widthPerTile, widthPerTile, this, gameService);
         continuousHoldDetector = new ContinuousHoldDetector(0, 100, 0.01f, myHoldDetector);
         registerUpdateHandler(continuousHoldDetector);

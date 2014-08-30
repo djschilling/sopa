@@ -14,13 +14,13 @@ public class MyHoldDetector implements HoldDetector.IHoldDetectorListener {
     private float moveStartY;
     private boolean vertical;
     private boolean horizontal;
-    private int startX;
-    private int startY;
-    private int widthPerTile;
+    private float startX;
+    private float startY;
+    private float widthPerTile;
     private int row;
     private GameScene gameScene;
 
-    public MyHoldDetector(int startX, int startY, int widthPerTile, GameScene gameScene, GameService gameService) {
+    public MyHoldDetector(float startX, float startY, float widthPerTile, GameScene gameScene, GameService gameService) {
         this.gameScene = gameScene;
         vertical = horizontal = false;
         this.startX = startX;
@@ -45,7 +45,7 @@ public class MyHoldDetector implements HoldDetector.IHoldDetectorListener {
             }
             if(Math.abs(moveStartY - pHoldY)> MainActivity.CAMERA_WIDTH/100) {
                 vertical = true;
-                row = (int) (moveStartX - startX) / widthPerTile;
+                row = (int) ((moveStartX - startX) / widthPerTile);
             }
         } else {
             if(horizontal) {

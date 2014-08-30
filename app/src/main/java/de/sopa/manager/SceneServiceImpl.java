@@ -11,7 +11,6 @@ import de.sopa.scene.SplashScene;
 import org.andengine.engine.Engine;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
-import org.andengine.ui.IGameInterface;
 
 /**
  * David Schilling - davejs92@gmail.com
@@ -44,11 +43,10 @@ public class SceneServiceImpl implements SceneService {
     }
 
     @Override
-    public void createSplashScene(IGameInterface.OnCreateSceneCallback pOnCreateSceneCallback) {
+    public void createSplashScene() {
         ResourcesManager.getInstance().loadSplashSceneResources();
         splashScene = new SplashScene();
         currentScene = splashScene;
-        pOnCreateSceneCallback.onCreateSceneFinished(splashScene);
     }
 
     private void disposeSplashScene() {
