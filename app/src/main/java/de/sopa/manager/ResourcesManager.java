@@ -43,7 +43,7 @@ public class ResourcesManager {
     public IFont levelChoiceFont;
 
     public void loadSplashSceneResources() {
-        splash_region = resourceLoader.getTexture("scenes/splash/splash.png");
+        splash_region = resourceLoader.getTexture("scenes/splash/CouchStudio.png");
     }
     public void loadMenuSceneResources() {
         loadMenuSceneGraphics();
