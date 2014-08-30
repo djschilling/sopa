@@ -18,7 +18,6 @@ import org.andengine.input.touch.TouchEvent;
  */
 public class LevelChoiceScene extends BaseScene {
     private static final int COLUMNS = 3;
-    private static final int ROWS = 4;
     private int currentScreen;
     private int screenCount;
     private Sprite leftArrow;
