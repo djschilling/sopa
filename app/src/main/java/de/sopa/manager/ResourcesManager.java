@@ -33,6 +33,8 @@ public class ResourcesManager {
     public ITextureRegion tilesBorderRegion;
     public ITextureRegion saveButtonRegion;
     public ITextureRegion levelChoiceRegion;
+    public ITextureRegion levelChoiceArrowRightRegion;
+    public ITextureRegion levelChoiceArrowLeftRegion;
 
     public void loadSplashSceneResources() {
         splash_region = tileResourceLoader.getTexture("scenes/splash/splash.png");
@@ -51,6 +53,8 @@ public class ResourcesManager {
 
     public void loadLevelChoiceSceneResources() {
         levelChoiceRegion = tileResourceLoader.getTexture("scenes/levelChoice/Level.png");
+        levelChoiceArrowLeftRegion = tileResourceLoader.getTexture("scenes/levelChoice/ArrowLeft.png");
+        levelChoiceArrowRightRegion = tileResourceLoader.getTexture("scenes/levelChoice/ArrowRight.png");
 
     }
     private void loadMenuSceneGraphics() {
@@ -74,7 +78,11 @@ public class ResourcesManager {
 
     public void unloadLevelChoiceSceneResources() {
         levelChoiceRegion.getTexture().unload();
+        levelChoiceArrowLeftRegion.getTexture().unload();
+        levelChoiceArrowRightRegion.getTexture().unload();
         levelChoiceRegion = null;
+        levelChoiceArrowRightRegion = null;
+        levelChoiceArrowLeftRegion = null;
     }
 
 

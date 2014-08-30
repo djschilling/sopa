@@ -115,8 +115,8 @@ public class SceneServiceImpl implements SceneService {
         }));
     }
     public void loadGameSceneFromLevelChoiceScene(final GameField gameField) {
-        setScene(loadingScene);
         disposeLevelChoiceScene();
+        setScene(loadingScene);
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
