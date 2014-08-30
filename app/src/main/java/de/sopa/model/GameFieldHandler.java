@@ -1,5 +1,6 @@
 package de.sopa.model;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 import de.sopa.IOHandler;
@@ -20,7 +21,11 @@ public class GameFieldHandler {
     }
 
     public GameField getGameField(int id) {
-        return fieldHandler.fromString(ioHandler.readFromPrivateFile(id + ".lv"));
+        try {
+            return fieldHandler.fromString(ioHandler.readFromPrivateFile(id + ".lv"));
+        } catch (IOException e) {
+            throw new LevelNotFoundException("Not possible to read GameFiled from " + id + ".lv", e);
+        }
     }
 
     public int saveGameField(GameField gameField) throws IOException {
@@ -31,7 +36,7 @@ public class GameFieldHandler {
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt("count", count);
         editor.commit();
-        ioHandler.writeToFile(count + ".lv", fieldHandler.fromGameField(gameField));
+        ioHandler.writeToFile(count + ".lv", fieldHandler.fromGameField(gameField), Context.MODE_PRIVATE);
         return count;
     }
 
