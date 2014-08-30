@@ -11,6 +11,7 @@ import org.andengine.entity.Entity;
 import org.andengine.entity.modifier.MoveXModifier;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
 
 /**
@@ -33,37 +34,36 @@ public class LevelChoiceScene extends BaseScene {
         screenCount = (availableLevels.length / 12) + 1;
         currentScreen = 0;
         addChangeLevelButtons();
-        entityToFollow = new Entity(camera.getWidth()/2, camera.getHeight()/2);
+        entityToFollow = new Entity(camera.getWidth() / 2, camera.getHeight() / 2);
         attachChild(entityToFollow);
         camera.setChaseEntity(entityToFollow);
-
     }
 
     private void addChangeLevelButtons() {
-        rightArrow = new ButtonSprite(camera.getWidth() * 0.93f - LEVEL_SELECT_ICON_WIDTH, camera.getHeight() * 0.8f, resourcesManager.levelChoiceArrowRightRegion, vbom, new ButtonSprite.OnClickListener(){
+        rightArrow = new ButtonSprite(camera.getWidth() * 0.93f - LEVEL_SELECT_ICON_WIDTH, camera.getHeight() * 0.8f, resourcesManager.levelChoiceArrowRightRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                if(currentScreen < screenCount - 1) {
+                if (currentScreen < screenCount - 1) {
                     currentScreen++;
                     entityToFollow.registerEntityModifier(new MoveXModifier(0.5f, entityToFollow.getX(), currentScreen * camera.getWidth() + camera.getWidth() / 2));
-                    if(currentScreen == screenCount -1) {
-                        rightArrow.setVisible(false);
+                    if (currentScreen == screenCount - 1) {
+                        leftArrow.setVisible(true);
                     }
                     leftArrow.setVisible(true);
                 }
             }
         });
-        leftArrow = new ButtonSprite(camera.getWidth() * 0.07f, camera.getHeight() * 0.8f, resourcesManager.levelChoiceArrowLeftRegion, vbom, new ButtonSprite.OnClickListener(){
+        leftArrow = new ButtonSprite(camera.getWidth() * 0.07f, camera.getHeight() * 0.8f, resourcesManager.levelChoiceArrowLeftRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                    if (currentScreen > 0) {
-                        currentScreen--;
-                        entityToFollow.registerEntityModifier(new MoveXModifier(0.5f, entityToFollow.getX(), currentScreen * camera.getWidth() + camera.getWidth() / 2));
-                        if (currentScreen == 0) {
-                            leftArrow.setVisible(false);
-                        }
-                        rightArrow.setVisible(true);
+                if (currentScreen > 0) {
+                    currentScreen--;
+                    entityToFollow.registerEntityModifier(new MoveXModifier(0.5f, entityToFollow.getX(), currentScreen * camera.getWidth() + camera.getWidth() / 2));
+                    if (currentScreen == 0) {
+                        leftArrow.setVisible(false);
                     }
+                    rightArrow.setVisible(true);
+                }
             }
         });
 
@@ -86,6 +86,7 @@ public class LevelChoiceScene extends BaseScene {
     private void addLevelChooseTiles(final String[] strings, float widthPerLevel) {
         final GameFieldHandler gameFieldHandler = new GameFieldHandler();
         for (int levelIndex = 0; levelIndex < strings.length; levelIndex++) {
+
             ChoiceLevelSprite sprite = new ChoiceLevelSprite(getLevelSpriteX(widthPerLevel, levelIndex),
                     getLevelSpriteY(widthPerLevel, levelIndex), widthPerLevel, widthPerLevel, ResourcesManager.getInstance().levelChoiceRegion, vbom, strings[levelIndex]) {
                 @Override
@@ -99,6 +100,18 @@ public class LevelChoiceScene extends BaseScene {
             };
             registerTouchArea(sprite);
             attachChild(sprite);
+            int fontOffset;
+            if ((levelIndex + 1) > 99) {
+                fontOffset = 105;
+            } else if ((levelIndex + 1) > 9) {
+                fontOffset = 120;
+            } else {
+                fontOffset = 150;
+            }
+            attachChild(new Text(getLevelSpriteX(widthPerLevel, levelIndex) + fontOffset, getLevelSpriteY(widthPerLevel, levelIndex) + 110,
+                    resourcesManager.levelChoiceFont, String.valueOf(levelIndex + 1), vbom));
+
+
         }
     }
 

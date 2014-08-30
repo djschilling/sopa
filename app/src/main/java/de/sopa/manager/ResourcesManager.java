@@ -1,5 +1,6 @@
 package de.sopa.manager;
 
+import android.graphics.Color;
 import de.sopa.MainActivity;
 import java.util.Map;
 import org.andengine.engine.Engine;
@@ -39,6 +40,7 @@ public class ResourcesManager {
     public ITextureRegion levelChoiceArrowLeftRegion;
 
     public IFont scoreFont;
+    public IFont levelChoiceFont;
 
     public void loadSplashSceneResources() {
         splash_region = resourceLoader.getTexture("scenes/splash/splash.png");
@@ -53,7 +55,7 @@ public class ResourcesManager {
 
     public void loadGameSceneResources() {
         loadGameSceneGraphics();
-        scoreFont = resourceLoader.getFont("Impact.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA);
+        scoreFont = resourceLoader.getFont("Impact.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 200, Color.WHITE, 2, Color.RED);
 
     }
 
@@ -61,6 +63,8 @@ public class ResourcesManager {
         levelChoiceRegion = resourceLoader.getTexture("scenes/levelChoice/Level.png");
         levelChoiceArrowLeftRegion = resourceLoader.getTexture("scenes/levelChoice/ArrowLeft.png");
         levelChoiceArrowRightRegion = resourceLoader.getTexture("scenes/levelChoice/ArrowRight.png");
+        levelChoiceFont = resourceLoader.getFont("Impact.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 110, 0xFFca540f, 2, Color.RED);
+
 
     }
     private void loadMenuSceneGraphics() {

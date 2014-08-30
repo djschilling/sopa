@@ -73,11 +73,11 @@ public class ResourceLoader {
         return regionMap;
     }
 
-    public IFont getFont(final String name, TextureOptions textureOptions) {
+    public IFont getFont(final String name, TextureOptions textureOptions, float size, int color, float strokeWidth, int strokeColor) {
         FontFactory.setAssetBasePath("fonts/");
         final ITexture mainFontTexture = new BitmapTextureAtlas(textureManager, 512, 512, textureOptions);
         IFont font = FontFactory.createStrokeFromAsset(ResourcesManager.getInstance().activity.getFontManager(),
-                mainFontTexture, ResourcesManager.getInstance().activity.getAssets(), name, 200, true, Color.WHITE, 2, Color.RED);
+        mainFontTexture, ResourcesManager.getInstance().activity.getAssets(), name, size , true, color, strokeWidth, strokeColor);
         font.load();
         return font;
     }
