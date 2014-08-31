@@ -4,7 +4,6 @@ package de.sopa.model;
 public class GameFieldDestroyer {
     public Level destroyField(Level level, int minShiftCount, int maxShiftCount) {
         GameFieldService gameFieldService = new GameFieldService();
-        GameEndService gameEndService = new GameEndService();
         int shiftCount = (int) (Math.random() * (maxShiftCount - minShiftCount + 1) + minShiftCount);
         for (int i = 0; i < shiftCount; i++) {
             int row;
@@ -22,9 +21,10 @@ public class GameFieldDestroyer {
                 } else {
                     value= -1;
                 }
-            } while (gameFieldService.shiftLine(level, horizontal, row,-1));
+            } while (gameFieldService.shiftLine(level, horizontal, row,value));
 
         }
+        level.setMinimumMovesToSolve(shiftCount);
         return level;
     }
 }
