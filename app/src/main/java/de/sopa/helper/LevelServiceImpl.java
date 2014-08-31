@@ -51,12 +51,11 @@ public class LevelServiceImpl implements LevelService {
     }
 
     @Override
-    public Integer saveLevel(Level level) {
+    public Integer createLevel(Level level) {
         try {
-            if(level.getId() != null) {
-                return levelHandler.updateGameField(level, level.getId());
-            }
-            return levelHandler.saveGameField(level);
+            Integer saveGameFieldId = levelHandler.saveGameField(level);
+            levelInfoDataSource.createLevelInfo(new LevelInfo(saveGameFieldId, true, -1));
+            return saveGameFieldId;
         } catch (IOException e) {
             throw new LevelServiceException("could not save level", e);
         }

@@ -47,7 +47,7 @@ public interface LevelService {
      *
      * @return the id of the saved {@link de.sopa.model.Level}
      */
-    Integer saveLevel(Level level);
+    Integer createLevel(Level level);
 
     void updateLevelInfos();
 }
