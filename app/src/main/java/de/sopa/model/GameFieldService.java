@@ -58,14 +58,18 @@ public class GameFieldService {
         }
     }
 
-    public void shiftLine(Level level, boolean horizontal, int row, int steps) {
+    public boolean shiftLine(Level level, boolean horizontal, int row, int steps) {
         if (row < 0) {
-            return;
+            return false;
         }
         if (horizontal) {
             if (row < level.getField().length - 2) {
+                boolean shiftRelevant = false;
                 Tile line[] = new Tile[level.getField().length - 2];
                 for (int i = 0; i < level.getField().length - 2; i++) {
+                    if(level.getField()[i + 1][row + 1].getShortcut()!= 'o') {
+                        shiftRelevant = true;
+                    }
                     line[i] = level.getField()[i + 1][row + 1];
                     level.getField()[i + 1][row + 1] = null;
                 }
@@ -75,14 +79,23 @@ public class GameFieldService {
                     newPosition = newPosition % (level.getField().length - 2);
                     level.getField()[newPosition + 1][row + 1] = line[i];
                 }
-                level.increaseMovesCounter();
+                if(shiftRelevant == true) {
+                    level.increaseMovesCounter();
+                    return true;
+                } else {
+                    return false;
+                }
             }
         } else {
             if (row < level.getField()[0].length - 2) {
+                boolean shiftRelevant = false;
                 Tile line[] = new Tile[level.getField()[0].length - 2];
                 for (int i = 0; i < level.getField()[0].length - 2; i++) {
                     line[i] = level.getField()[row + 1][i + 1];
                     level.getField()[row + 1][i + 1] = null;
+                    if(line[i].getShortcut() != 'o') {
+                        shiftRelevant = true;
+                    }
                 }
                 for (int i = 0; i < level.getField()[0].length - 2; i++) {
                     int newPosition = (i + steps);
@@ -90,9 +103,15 @@ public class GameFieldService {
                     newPosition = newPosition % (level.getField()[0].length - 2);
                     level.getField()[row + 1][newPosition + 1] = line[i];
                 }
-                level.increaseMovesCounter ();
+                if(shiftRelevant == true) {
+                    level.increaseMovesCounter();
+                    return true;
+                } else {
+                    return false;
+                }
             }
         }
+        return false;
     }
 
     private int shiftToPositive(int number, int steps) {

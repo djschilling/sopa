@@ -42,7 +42,7 @@ public class GameServiceImpl implements GameService {
     @Override
     public void startGame() {
         level = fieldCreator.generateSolvedField(6, 6);
-        new GameFieldDestroyer().destroyField(level, 3, 5, 3);
+        new GameFieldDestroyer().destroyField(level, 3, 5);
         solvedPuzzle = gameFieldService.solvedPuzzle(level);
         level.resetMovesCounter();
     }
