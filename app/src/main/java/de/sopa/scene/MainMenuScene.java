@@ -1,9 +1,17 @@
 package de.sopa.scene;
 
+import de.sopa.manager.ResourcesManager;
+import org.andengine.engine.handler.timer.ITimerCallback;
+import org.andengine.engine.handler.timer.TimerHandler;
+import org.andengine.entity.modifier.MoveXModifier;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.color.Color;
+import org.andengine.util.modifier.ease.EaseBackOut;
+import org.andengine.util.modifier.ease.EaseBounceOut;
+import org.andengine.util.modifier.ease.EaseElasticOut;
+import org.andengine.util.modifier.ease.EaseExponentialOut;
 
 /**
  * David Schilling - davejs92@gmail.com
@@ -32,17 +40,18 @@ public class MainMenuScene extends BaseScene  {
     }
 
     private void createMenuChildScene() {
-        Sprite playItemSprite = new Sprite(0, 0, resourcesManager.play_region, vbom) {
+        final Sprite playItemSprite = new Sprite(0, 0, resourcesManager.play_region, vbom) {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 sceneService.loadGameScene();
                 return true;
             }
         };
-        playItemSprite.setPosition(camera.getWidth() / 2 - playItemSprite.getWidthScaled() /2, camera.getHeight() / 2 - playItemSprite.getHeightScaled());
+
+                playItemSprite.setPosition(camera.getWidth() / 2 - playItemSprite.getWidthScaled() /2, camera.getHeight() / 2 - playItemSprite.getHeightScaled());
         attachChild(playItemSprite);
         registerTouchArea(playItemSprite);
-        Sprite levelItemSprite = new Sprite(0, 0, resourcesManager.level_mode_region, vbom){
+        final Sprite levelItemSprite = new Sprite(0, 0, resourcesManager.level_mode_region, vbom){
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 
@@ -51,6 +60,14 @@ public class MainMenuScene extends BaseScene  {
             }
 
         };
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                levelItemSprite.registerEntityModifier(new MoveXModifier(1f, 1080, 0));
+                playItemSprite.registerEntityModifier(new MoveXModifier(1f,-1080,0));
+            }
+        }));
+
 
 
         levelItemSprite.setPosition(camera.getWidth() / 2 - levelItemSprite.getWidthScaled() /2, camera.getHeight() / 2);
