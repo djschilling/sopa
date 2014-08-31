@@ -3,7 +3,9 @@ package de.sopa.helper;
 import de.sopa.model.Level;
 import de.sopa.model.Tile;
 import de.sopa.model.TileType;
-import java.lang.Character;import java.lang.IllegalArgumentException;import java.lang.IllegalStateException;import java.lang.Math;import java.lang.String;import java.util.HashMap;
+import java.lang.Character;import java.lang.IllegalArgumentException;import java.lang.IllegalStateException;import java.lang.Math;import java.lang.String;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import static de.sopa.model.TileType.PUZZLE;
@@ -67,6 +69,31 @@ public class LevelCreator {
     public Level fromString(String[] string){
         Tile[][] field;
         Level level = new Level();
+        int indexOfProperties = 0;
+        for (; string[indexOfProperties].charAt(0) != '#'; indexOfProperties++) {
+            switch (indexOfProperties) {
+                case 0:
+                    level.setId(Integer.parseInt(string[0]));
+                    break;
+                case 1:
+                    level.setMinimumMovesToSolve(Integer.parseInt(string[1]));
+                    break;
+                default:
+                    break;
+            }
+        }
+        ArrayList<String> stringsForField = new ArrayList<>();
+        for(int i = indexOfProperties + 1; i<string.length; i++) {
+            stringsForField.add(i - indexOfProperties -1,string[i]);
+        }
+
+        field = getTiles(stringsForField.toArray(new String[stringsForField.size()]), level);
+        level.setField(field);
+        return level;
+    }
+
+    private Tile[][] getTiles(String[] string, Level level) {
+        Tile[][] field;
         field = new Tile[string[0].length()][string.length];
         for (int i = 0; i<string[0].length(); i++) {
             for (int j = 0; j<string.length; j++) {
@@ -97,8 +124,7 @@ public class LevelCreator {
             }
 
         }
-        level.setField(field);
-        return level;
+        return field;
     }
 
     private void checkInvalidTile(Tile currentTile) {
@@ -233,16 +259,21 @@ public class LevelCreator {
 
     public String[] fromGameField(Level gameField) {
         Tile tiles[][] = gameField.getField();
-        String level[] = new String[tiles[0].length];
+        int indexOfProperties = 0;
+        if(gameField.getId() == null) {
+            gameField.setId(-1);
+        }
+        String level[] = new String[tiles[0].length+3];
+        level[0]  = String.valueOf(gameField.getId());
+        level[1]  = String.valueOf(gameField.getMinimumMovesToSolve());
+        level[2] = "#";
         for(int y = 0; y < tiles[0].length; y++) {
-            level[y]= new String();
+            level[y + 3]= new String();
             for(int x = 0; x < tiles.length; x++) {
-                level[y]= level[y] + String.valueOf(tiles[x][y].getShortcut());
+                level[y + 3]= level[y + 3] + String.valueOf(tiles[x][y].getShortcut());
             }
         }
-
         return level;
-
     }
 
 }
