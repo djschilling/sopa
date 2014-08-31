@@ -94,6 +94,8 @@ public class GameScene extends BaseScene implements Observer {
     private void addScoreText() {
         scoreText = new Text(camera.getWidth() * 0.7f, camera.getHeight() * 0.01f, resourcesManager.scoreFont, String.valueOf(gameService.getLevel().getMovesCount()), 4, vbom);
         attachChild(scoreText);
+        Text minimumMovesScore = new Text(0,camera.getHeight() * 0.01f,resourcesManager.scoreFont, String.valueOf(gameService.getLevel().getMinimumMovesToSolve()),vbom);
+        attachChild(minimumMovesScore);
     }
 
     private void registerTouchHandler() {
