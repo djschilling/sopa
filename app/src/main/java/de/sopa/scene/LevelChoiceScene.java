@@ -92,7 +92,7 @@ public class LevelChoiceScene extends BaseScene {
                     getLevelSpriteY(widthPerLevel, levelIndex), ResourcesManager.getInstance().levelChoiceRegion, vbom, new ButtonSprite.OnClickListener() {
                 @Override
                 public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                        sceneService.loadGameSceneFromLevelChoiceScene(gameFieldHandler.getGameField(strings[finalLevelIndex]));
+                        sceneService.loadGameSceneFromLevelChoiceScene(gameFieldHandler.getLevel(strings[finalLevelIndex]));
                     }
 
                 }

@@ -1,15 +1,15 @@
 package de.sopa.model;
 
-/**
- * Created by raphael on 11.08.14.
- */
-public class GameField {
+public class Level {
+
+    private Integer id;
     private Tile[][] field;
     private int startX;
     private int startY;
     private int movesCounter;
+    private LevelInfo levelInfo;
 
-    public GameField() {
+    public Level() {
         this.movesCounter = 0;
     }
 
@@ -45,5 +45,21 @@ public class GameField {
 
     public void resetMovesCounter() {
         movesCounter = 0;
+    }
+
+    public LevelInfo getLevelInfo() {
+        return levelInfo;
+    }
+
+    public void setLevelInfo(LevelInfo levelInfo) {
+        this.levelInfo = levelInfo;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

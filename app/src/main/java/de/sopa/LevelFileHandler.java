@@ -77,6 +77,18 @@ public class LevelFileHandler implements IOHandler {
         }
         return strings;
     }
+    @Override
+    public Integer[] getAvailableLevelIds() {
+        File folder = new File(LEVEL_FOLDER);
+        File[] fileArray = folder.listFiles();
+        Integer[] levelIds = new Integer[fileArray.length];
+        for(int i = 0; i < fileArray.length; i++) {
+            String name = fileArray[i].getName();
+            String[] parts = name.split("\\.");
+            levelIds[i] = Integer.parseInt(parts[0]);
+        }
+        return levelIds;
+    }
 
     private boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();

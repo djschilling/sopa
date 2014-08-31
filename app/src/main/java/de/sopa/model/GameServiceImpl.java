@@ -11,7 +11,7 @@ public class GameServiceImpl implements GameService {
 
     private final GameFieldService gameFieldService;
     private final FieldHandler fieldCreator;
-    private GameField gameField;
+    private Level level;
     private List<Observer> observers;
     private boolean solvedPuzzle;
 
@@ -29,28 +29,28 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public void shiftLine(boolean horizontal, int row, int steps) {
-        gameFieldService.shiftLine(gameField, horizontal, row, steps);
-        solvedPuzzle = gameFieldService.solvedPuzzle(gameField);
+        gameFieldService.shiftLine(level, horizontal, row, steps);
+        solvedPuzzle = gameFieldService.solvedPuzzle(level);
         notifyAllObserver();
     }
 
     @Override
-    public GameField getGameField() {
-        return gameField;
+    public Level getLevel() {
+        return level;
     }
 
     @Override
     public void startGame() {
-        gameField = fieldCreator.generateSolvedField(6, 6);
-        new GameFieldDestroyer().destroyField(gameField, 3, 5, 3);
-        solvedPuzzle = gameFieldService.solvedPuzzle(gameField);
-        gameField.resetMovesCounter();
+        level = fieldCreator.generateSolvedField(6, 6);
+        new GameFieldDestroyer().destroyField(level, 3, 5, 3);
+        solvedPuzzle = gameFieldService.solvedPuzzle(level);
+        level.resetMovesCounter();
     }
 
     @Override
-    public void startGame(GameField gameField) {
-        this.gameField = gameField;
-        solvedPuzzle = gameFieldService.solvedPuzzle(gameField);
+    public void startGame(Level level) {
+        this.level = level;
+        solvedPuzzle = gameFieldService.solvedPuzzle(level);
     }
 
     @Override

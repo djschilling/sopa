@@ -61,9 +61,9 @@ public class FieldHandler {
 
 
     }
-    public GameField fromString(String[] string){
+    public Level fromString(String[] string){
         Tile[][] field;
-        GameField gameField = new GameField();
+        Level level = new Level();
         field = new Tile[string[0].length()][string.length];
         for (int i = 0; i<string[0].length(); i++) {
             for (int j = 0; j<string.length; j++) {
@@ -88,14 +88,14 @@ public class FieldHandler {
                 }
                 field[i][j] = currentTile;
                 if(currentTile.getTileType() == TileType.START) {
-                    gameField.setStartX(i);
-                    gameField.setStartY(j);
+                    level.setStartX(i);
+                    level.setStartY(j);
                 }
             }
 
         }
-        gameField.setField(field);
-        return gameField;
+        level.setField(field);
+        return level;
     }
 
     private void checkInvalidTile(Tile currentTile) {
@@ -104,9 +104,9 @@ public class FieldHandler {
         }
     }
 
-    public GameField generateSolvedField(int width, int height) {
+    public Level generateSolvedField(int width, int height) {
         int number = 0;
-        GameField gameField = new GameField();
+        Level level = new Level();
         int startX;
         int startY;
         int direction;
@@ -217,18 +217,18 @@ public class FieldHandler {
         }
         tiles[x][y].setTileType(TileType.FINISH);
         tiles[x][y].setShortcut('f');
-        gameField.setStartX(startX);
-        gameField.setStartY(startY);
-        gameField.setField(tiles);
+        level.setStartX(startX);
+        level.setStartY(startY);
+        level.setField(tiles);
         if(number>(width-2)*(height-2)/3) {
-        return gameField;
+        return level;
         } else {
             return generateSolvedField(width, height);
         }
 
     }
 
-    public String[] fromGameField(GameField gameField) {
+    public String[] fromGameField(Level gameField) {
         Tile tiles[][] = gameField.getField();
         String level[] = new String[tiles[0].length];
         for(int y = 0; y < tiles[0].length; y++) {

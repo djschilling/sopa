@@ -11,8 +11,8 @@ public class GameFieldService {
         gameEndService = new GameEndService();
     }
 
-    public boolean solvedPuzzle(GameField gameField) {
-        return gameEndService.solvedPuzzle(gameField.getStartX(), gameField.getStartY(), gameField.getField().length, gameField.getField()[0].length, gameField.getField());
+    public boolean solvedPuzzle(Level level) {
+        return gameEndService.solvedPuzzle(level.getStartX(), level.getStartY(), level.getField().length, level.getField()[0].length, level.getField());
     }
 
 
@@ -20,30 +20,30 @@ public class GameFieldService {
         gameEndService.printBacktracking();
     }
 
-    public void printField(GameField gameField) {
+    public void printField(Level level) {
         System.out.println("Field:");
-        for (int i = 0; i < gameField.getField()[0].length; i++) {
-            for (int j = 0; j < gameField.getField().length; j++) {
-                System.out.print(gameField.getField()[j][i].getTileType() + "\t");
+        for (int i = 0; i < level.getField()[0].length; i++) {
+            for (int j = 0; j < level.getField().length; j++) {
+                System.out.print(level.getField()[j][i].getTileType() + "\t");
             }
             System.out.println();
         }
     }
 
-    public void printFieldWay(GameField gameField) {
+    public void printFieldWay(Level level) {
         System.out.println("Field:");
-        for (int i = 0; i < gameField.getField()[0].length; i++) {
+        for (int i = 0; i < level.getField()[0].length; i++) {
             for (int k = 0; k < 3; k++) {
-                for (int j = 0; j < gameField.getField().length; j++) {
+                for (int j = 0; j < level.getField().length; j++) {
                     switch (k) {
                         case 0:
-                            System.out.print("\t " + gameField.getField()[j][i].isTop() + "\t\t");
+                            System.out.print("\t " + level.getField()[j][i].isTop() + "\t\t");
                             break;
                         case 1:
-                            System.out.print(gameField.getField()[j][i].isLeft() + " 0\t  " + gameField.getField()[j][i].isRight() + " ");
+                            System.out.print(level.getField()[j][i].isLeft() + " 0\t  " + level.getField()[j][i].isRight() + " ");
                             break;
                         case 2:
-                            System.out.print("\t " + gameField.getField()[j][i].isBottom() + "\t\t");
+                            System.out.print("\t " + level.getField()[j][i].isBottom() + "\t\t");
 
                         default:
                             break;
@@ -58,39 +58,39 @@ public class GameFieldService {
         }
     }
 
-    public void shiftLine(GameField gameField, boolean horizontal, int row, int steps) {
+    public void shiftLine(Level level, boolean horizontal, int row, int steps) {
         if (row < 0) {
             return;
         }
         if (horizontal) {
-            if (row < gameField.getField().length - 2) {
-                Tile line[] = new Tile[gameField.getField().length - 2];
-                for (int i = 0; i < gameField.getField().length - 2; i++) {
-                    line[i] = gameField.getField()[i + 1][row + 1];
-                    gameField.getField()[i + 1][row + 1] = null;
+            if (row < level.getField().length - 2) {
+                Tile line[] = new Tile[level.getField().length - 2];
+                for (int i = 0; i < level.getField().length - 2; i++) {
+                    line[i] = level.getField()[i + 1][row + 1];
+                    level.getField()[i + 1][row + 1] = null;
                 }
-                for (int i = 0; i < gameField.getField().length - 2; i++) {
+                for (int i = 0; i < level.getField().length - 2; i++) {
                     int newPosition = i + steps;
-                    newPosition = shiftToPositive(newPosition, gameField.getField().length - 2);
-                    newPosition = newPosition % (gameField.getField().length - 2);
-                    gameField.getField()[newPosition + 1][row + 1] = line[i];
+                    newPosition = shiftToPositive(newPosition, level.getField().length - 2);
+                    newPosition = newPosition % (level.getField().length - 2);
+                    level.getField()[newPosition + 1][row + 1] = line[i];
                 }
-                gameField.increaseMovesCounter();
+                level.increaseMovesCounter();
             }
         } else {
-            if (row < gameField.getField()[0].length - 2) {
-                Tile line[] = new Tile[gameField.getField()[0].length - 2];
-                for (int i = 0; i < gameField.getField()[0].length - 2; i++) {
-                    line[i] = gameField.getField()[row + 1][i + 1];
-                    gameField.getField()[row + 1][i + 1] = null;
+            if (row < level.getField()[0].length - 2) {
+                Tile line[] = new Tile[level.getField()[0].length - 2];
+                for (int i = 0; i < level.getField()[0].length - 2; i++) {
+                    line[i] = level.getField()[row + 1][i + 1];
+                    level.getField()[row + 1][i + 1] = null;
                 }
-                for (int i = 0; i < gameField.getField()[0].length - 2; i++) {
+                for (int i = 0; i < level.getField()[0].length - 2; i++) {
                     int newPosition = (i + steps);
-                    newPosition = shiftToPositive(newPosition, gameField.getField()[0].length - 2);
-                    newPosition = newPosition % (gameField.getField()[0].length - 2);
-                    gameField.getField()[row + 1][newPosition + 1] = line[i];
+                    newPosition = shiftToPositive(newPosition, level.getField()[0].length - 2);
+                    newPosition = newPosition % (level.getField()[0].length - 2);
+                    level.getField()[row + 1][newPosition + 1] = line[i];
                 }
-                gameField.increaseMovesCounter ();
+                level.increaseMovesCounter ();
             }
         }
     }

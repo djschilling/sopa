@@ -1,6 +1,6 @@
 package de.sopa.manager;
 
-import de.sopa.model.GameField;
+import de.sopa.model.Level;
 import de.sopa.scene.BaseScene;
 
 /**
@@ -24,7 +24,6 @@ public interface SceneService {
 
     void loadLevelChoiceSceneFromGameScene();
 
-    void loadGameSceneFromLevelChoiceScene(final GameField gameField);
-
     void loadScoreScreen();
+    void loadGameSceneFromLevelChoiceScene(final Level level);
 }

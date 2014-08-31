@@ -32,7 +32,7 @@ public class GameFieldView extends Entity {
 
     public void addTiles() {
         detachChildren();
-        Tile[][] field = gameService.getGameField().getField();
+        Tile[][] field = gameService.getLevel().getField();
         int width = field.length;
         int heigth = field[0].length;
         tileSprites = new TileSprite[width][heigth];

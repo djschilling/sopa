@@ -1,7 +1,7 @@
 package de.sopa.scene;
 
 
-import de.sopa.model.GameField;
+import de.sopa.model.Level;
 import de.sopa.model.GameFieldHandler;
 import de.sopa.model.GameService;
 import de.sopa.model.GameServiceImpl;
@@ -29,7 +29,7 @@ public class GameScene extends BaseScene implements Observer {
     private float spacePerTile;
     private Text scoreText;
     private GameFieldView gameFieldView;
-    private GameField gameField;
+    private Level level;
 
     public GameScene(Object o) {
         super(o);
@@ -38,7 +38,7 @@ public class GameScene extends BaseScene implements Observer {
     @Override
     public void createScene(Object o) {
         initializeLogic(o);
-        calculateSpacePerTile(gameService.getGameField().getField().length);
+        calculateSpacePerTile(gameService.getLevel().getField().length);
         addBackground();
         addTiles();
         addSolvedIcon();
@@ -54,7 +54,7 @@ public class GameScene extends BaseScene implements Observer {
     public void update() {
         updateTiles();
         setSolved(gameService.solvedPuzzle());
-        scoreText.setText(String.valueOf(gameService.getGameField().getMovesCount()));
+        scoreText.setText(String.valueOf(gameService.getLevel().getMovesCount()));
     }
 
 
@@ -78,7 +78,7 @@ public class GameScene extends BaseScene implements Observer {
     }
 
     private float getTileSceneStartY() {
-        return (camera.getHeight() - (spacePerTile * gameService.getGameField().getField().length)) / 2;
+        return (camera.getHeight() - (spacePerTile * gameService.getLevel().getField().length)) / 2;
     }
 
 
@@ -93,12 +93,12 @@ public class GameScene extends BaseScene implements Observer {
     }
 
     private void addScoreText() {
-        scoreText = new Text(camera.getWidth() * 0.7f, camera.getHeight() * 0.01f, resourcesManager.scoreFont,String.valueOf(gameService.getGameField().getMovesCount()),4,vbom);
+        scoreText = new Text(camera.getWidth() * 0.7f, camera.getHeight() * 0.01f, resourcesManager.scoreFont,String.valueOf(gameService.getLevel().getMovesCount()),4,vbom);
         attachChild(scoreText);
     }
 
     private void registerTouchHandler() {
-        final float widthPerTile = camera.getWidth() / gameService.getGameField().getField().length;
+        final float widthPerTile = camera.getWidth() / gameService.getLevel().getField().length;
         MyHoldDetector myHoldDetector = new MyHoldDetector(widthPerTile, getTileSceneStartY() + widthPerTile, widthPerTile, gameFieldView, gameService, camera.getWidth());
         continuousHoldDetector = new ContinuousHoldDetector(0, 100, 0.01f, myHoldDetector);
         registerUpdateHandler(continuousHoldDetector);
@@ -119,7 +119,7 @@ public class GameScene extends BaseScene implements Observer {
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 if (pSceneTouchEvent.isActionUp()) {
                     try {
-                        gameFieldHandler.saveGameField(gameService.getGameField());
+                        gameFieldHandler.saveGameField(gameService.getLevel());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -138,21 +138,21 @@ public class GameScene extends BaseScene implements Observer {
     }
 
     private void initializeLogic(Object o) {
-        if (o != null && o instanceof GameField) {
-            gameField = (GameField) o;
+        if (o != null && o instanceof Level) {
+            level = (Level) o;
         }
 
         gameService = new GameServiceImpl();
-        if (gameField == null) {
+        if (level == null) {
             gameService.startGame();
         } else {
-            gameService.startGame(gameField);
+            gameService.startGame(level);
         }
     }
 
     @Override
     public void onBackKeyPressed() {
-        if(gameField != null && gameField instanceof GameField) {
+        if(level != null && level instanceof Level) {
             sceneService.loadLevelChoiceSceneFromGameScene();
         } else {
             sceneService.loadMenuSceneFromGameScene();

@@ -11,11 +11,11 @@ public interface GameService {
 
     void shiftLine(boolean horizontal, int row, int steps);
 
-    GameField getGameField();
+    Level getLevel();
 
     void startGame();
 
-    void startGame(GameField gameField);
+    void startGame(Level level);
 
     void attach(Observer observer);
 
