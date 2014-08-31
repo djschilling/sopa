@@ -13,6 +13,7 @@ import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
+import org.andengine.util.modifier.ease.EaseQuartInOut;
 
 /**
  * @author Raphael Schilling
@@ -45,7 +46,7 @@ public class LevelChoiceScene extends BaseScene {
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 if (currentScreen < screenCount - 1) {
                     currentScreen++;
-                    entityToFollow.registerEntityModifier(new MoveXModifier(0.5f, entityToFollow.getX(), currentScreen * camera.getWidth() + camera.getWidth() / 2));
+                    entityToFollow.registerEntityModifier(new MoveXModifier(0.5f, entityToFollow.getX(), currentScreen * camera.getWidth() + camera.getWidth() / 2, EaseQuartInOut.getInstance()));
                     if (currentScreen == screenCount - 1) {
                         rightArrow.setVisible(false);
                     }
@@ -58,7 +59,7 @@ public class LevelChoiceScene extends BaseScene {
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 if (currentScreen > 0) {
                     currentScreen--;
-                    entityToFollow.registerEntityModifier(new MoveXModifier(0.5f, entityToFollow.getX(), currentScreen * camera.getWidth() + camera.getWidth() / 2));
+                    entityToFollow.registerEntityModifier(new MoveXModifier(0.5f, entityToFollow.getX(), currentScreen * camera.getWidth() + camera.getWidth() / 2, EaseQuartInOut.getInstance()));
                     if (currentScreen == 0) {
                         leftArrow.setVisible(false);
                     }

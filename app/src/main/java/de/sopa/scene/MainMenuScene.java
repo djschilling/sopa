@@ -5,6 +5,7 @@ import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.modifier.MoveXModifier;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.color.Color;
@@ -40,26 +41,22 @@ public class MainMenuScene extends BaseScene  {
     }
 
     private void createMenuChildScene() {
-        final Sprite playItemSprite = new Sprite(0, 0, resourcesManager.play_region, vbom) {
+        final ButtonSprite playItemSprite = new ButtonSprite(0, 0, resourcesManager.play_region, vbom, new ButtonSprite.OnClickListener() {
             @Override
-            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+            public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 sceneService.loadGameScene();
-                return true;
             }
-        };
+        });
 
                 playItemSprite.setPosition(camera.getWidth() / 2 - playItemSprite.getWidthScaled() /2, camera.getHeight() / 2 - playItemSprite.getHeightScaled());
         attachChild(playItemSprite);
         registerTouchArea(playItemSprite);
-        final Sprite levelItemSprite = new Sprite(0, 0, resourcesManager.level_mode_region, vbom){
+        final Sprite levelItemSprite = new ButtonSprite(0, 0, resourcesManager.level_mode_region, vbom, new ButtonSprite.OnClickListener() {
             @Override
-            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-
+            public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 sceneService.loadLevelChoiceSceneFromMenuScene();
-                return true;
             }
-
-        };
+        });
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
