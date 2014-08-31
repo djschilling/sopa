@@ -24,7 +24,6 @@ public class LevelInfoDataSource {
 
     public LevelInfoDataSource (Context context) {
         dbHelper = new MySQLiteHelper(context);
-        database = dbHelper.getWritableDatabase();
     }
 
     public void open() {

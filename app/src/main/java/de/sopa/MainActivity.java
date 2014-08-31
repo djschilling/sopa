@@ -24,6 +24,7 @@ public class MainActivity extends BaseGameActivity {
     private static final float CAMERA_HEIGHT = 1920;
 
     private Camera camera;
+    private LevelInfoDataSource levelInfoDataSource;
 
     @Override
     public EngineOptions onCreateEngineOptions() {
@@ -34,9 +35,11 @@ public class MainActivity extends BaseGameActivity {
 
     @Override
     public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws Exception {
+        levelInfoDataSource = new LevelInfoDataSource(this);
+        levelInfoDataSource.open();
         ResourcesManager.prepareManager(mEngine, this, camera, getVertexBufferObjectManager(),
                 new ResourceLoader(getTextureManager(), getAssets(), getFontManager()), new SceneServiceImpl(mEngine),
-                new LevelServiceImpl(new LevelFileService(this), new LevelInfoDataSource(this)));
+                new LevelServiceImpl(new LevelFileService(this), levelInfoDataSource));
         pOnCreateResourcesCallback.onCreateResourcesFinished();
     }
 
@@ -71,5 +74,17 @@ public class MainActivity extends BaseGameActivity {
     protected void onDestroy() {
         super.onDestroy();
         System.exit(0);
+    }
+
+    @Override
+    public synchronized void onResumeGame() {
+        levelInfoDataSource.open();
+        super.onResumeGame();
+    }
+
+    @Override
+    public synchronized void onPauseGame() {
+        levelInfoDataSource.close();
+        super.onPauseGame();
     }
 }
