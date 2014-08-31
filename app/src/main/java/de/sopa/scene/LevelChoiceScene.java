@@ -1,9 +1,12 @@
 package de.sopa.scene;
 
 
-import de.sopa.LevelFileHandler;
-import de.sopa.manager.ResourcesManager;
-import de.sopa.model.GameFieldHandler;
+import de.sopa.LevelFileService;
+import de.sopa.database.LevelInfoDataSource;
+import de.sopa.model.LevelInfo;
+import de.sopa.model.LevelService;
+import de.sopa.model.LevelServiceImpl;
+import java.util.List;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -12,7 +15,7 @@ import org.andengine.entity.modifier.MoveXModifier;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
-import org.andengine.input.touch.TouchEvent;
+import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.util.modifier.ease.EaseQuartInOut;
 
 /**
@@ -29,10 +32,12 @@ public class LevelChoiceScene extends BaseScene {
 
     @Override
     public void createScene(Object o) {
-        final String[] availableLevels = getAvailableLevels();
+        LevelService levelService = new LevelServiceImpl(new LevelFileService(resourcesManager.activity), new LevelInfoDataSource(resourcesManager.activity));
+        levelService.updateLevelInfos();
+        List<LevelInfo> levelInfos = levelService.getLevelInfos();
         final float widthPerLevel = getWidhtPerTile();
-        addLevelChooseTiles(availableLevels, widthPerLevel);
-        screenCount = (availableLevels.length / 12) + 1;
+        addLevelChooseTiles(levelInfos, widthPerLevel);
+        screenCount = (levelInfos.size() / 12) + 1;
         currentScreen = 0;
         addChangeLevelButtons();
         entityToFollow = new Entity(camera.getWidth() / 2, camera.getHeight() / 2);
@@ -80,26 +85,29 @@ public class LevelChoiceScene extends BaseScene {
         camera.setHUD(arrowHud);
     }
 
-    private String[] getAvailableLevels() {
-        return new LevelFileHandler().getAvailableLevels();
-    }
 
-    private void addLevelChooseTiles(final String[] strings, float widthPerLevel) {
-        final GameFieldHandler gameFieldHandler = new GameFieldHandler();
-        for (int levelIndex = 0; levelIndex < strings.length; levelIndex++) {
+    private void addLevelChooseTiles(final List<LevelInfo> levelInfos, float widthPerLevel) {
+        final LevelFileService levelFileService = new LevelFileService(resourcesManager.activity);
+        for (int levelIndex = 0; levelIndex < levelInfos.size(); levelIndex++) {
 
             final int finalLevelIndex = levelIndex;
+            ITextureRegion iTextureRegion = null;
+            if (levelInfos.get(finalLevelIndex).isLocked()) {
+                iTextureRegion = resourcesManager.levelChoiceRegionSW;
+            } else {
+                iTextureRegion = resourcesManager.levelChoiceRegion;
+            }
             final ChoiceLevelSprite sprite = new ChoiceLevelSprite(getLevelSpriteX(widthPerLevel, levelIndex),
-                    getLevelSpriteY(widthPerLevel, levelIndex), ResourcesManager.getInstance().levelChoiceRegion, vbom, new ButtonSprite.OnClickListener() {
+                    getLevelSpriteY(widthPerLevel, levelIndex), iTextureRegion, vbom, new ButtonSprite.OnClickListener() {
                 @Override
                 public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                        sceneService.loadGameSceneFromLevelChoiceScene(gameFieldHandler.getLevel(strings[finalLevelIndex]));
-                    }
-
+                    sceneService.loadGameSceneFromLevelChoiceScene(levelFileService.getLevel(levelInfos.get(finalLevelIndex).getLevelId()));
                 }
+
+            }
             );
 
-            sprite.setScaleCenter(0,0);
+            sprite.setScaleCenter(0, 0);
             sprite.setWidth(widthPerLevel);
             sprite.setHeight(widthPerLevel);
             registerTouchArea(sprite);

@@ -1,5 +1,6 @@
 package de.sopa.model;
 
+import de.sopa.LevelFileService;
 import de.sopa.database.LevelInfoDataSource;
 import java.io.IOException;
 import java.util.List;
@@ -9,11 +10,10 @@ import java.util.List;
  */
 public class LevelServiceImpl implements LevelService {
 
-    private static final String LEVEL_BASE_PATH = "/sdcard/sopa/levels/";
-    private final GameFieldHandler levelHandler;
+    private final LevelFileService levelHandler;
     private final LevelInfoDataSource levelInfoDataSource;
 
-    public LevelServiceImpl(GameFieldHandler levelHandler, LevelInfoDataSource levelInfoDataSource) {
+    public LevelServiceImpl(LevelFileService levelHandler, LevelInfoDataSource levelInfoDataSource) {
         this.levelHandler = levelHandler;
         this.levelInfoDataSource = levelInfoDataSource;
     }
@@ -25,7 +25,7 @@ public class LevelServiceImpl implements LevelService {
 
     @Override
     public Level getLevelById(Integer id) {
-        Level level = levelHandler.getLevel(LEVEL_BASE_PATH + id + ".lv");
+        Level level = levelHandler.getLevel(id);
         level.setId(id);
         return updateLevelWithLevelInfo(level);
 

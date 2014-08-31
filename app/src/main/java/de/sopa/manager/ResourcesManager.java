@@ -42,6 +42,7 @@ public class ResourcesManager {
     public ITextureRegion starRegion;
     public TextureRegion starSWRegion;
     public TextureRegion backToChoiceRegion;
+    public TextureRegion levelChoiceRegionSW;
     public TextureRegion nextLevelRegion;
 
     public IFont scoreFont;
@@ -68,6 +69,7 @@ public class ResourcesManager {
 
     public void loadLevelChoiceSceneResources() {
         levelChoiceRegion = resourceLoader.getTexture("scenes/levelChoice/Level.png");
+        levelChoiceRegionSW = resourceLoader.getTexture("scenes/levelChoice/LevelSW.png");
         levelChoiceRegionLocked = resourceLoader.getTexture("scenes/levelChoice/LevelSW.png");
         levelChoiceArrowLeftRegion = resourceLoader.getTexture("scenes/levelChoice/ArrowLeft.png");
         levelChoiceArrowRightRegion = resourceLoader.getTexture("scenes/levelChoice/ArrowRight.png");

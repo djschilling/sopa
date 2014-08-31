@@ -2,7 +2,7 @@ package de.sopa.scene;
 
 
 import de.sopa.model.Level;
-import de.sopa.model.GameFieldHandler;
+import de.sopa.LevelFileService;
 import de.sopa.model.GameService;
 import de.sopa.model.GameServiceImpl;
 import de.sopa.observer.Observer;
@@ -24,7 +24,7 @@ public class GameScene extends BaseScene implements Observer {
     private GameService gameService;
     private Sprite solvedSprite;
     private Sprite unsolvedSprite;
-    private GameFieldHandler gameFieldHandler;
+    private LevelFileService levelFileService;
     private ContinuousHoldDetector continuousHoldDetector;
     private float spacePerTile;
     private Text scoreText;
@@ -47,7 +47,7 @@ public class GameScene extends BaseScene implements Observer {
         addScoreText();
         registerTouchHandler();
         gameService.attach(this);
-        gameFieldHandler = new GameFieldHandler();
+        levelFileService = new LevelFileService(resourcesManager.activity);
     }
 
     @Override
@@ -119,7 +119,7 @@ public class GameScene extends BaseScene implements Observer {
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 if (pSceneTouchEvent.isActionUp()) {
                     try {
-                        gameFieldHandler.saveGameField(gameService.getLevel());
+                        levelFileService.saveGameField(gameService.getLevel());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

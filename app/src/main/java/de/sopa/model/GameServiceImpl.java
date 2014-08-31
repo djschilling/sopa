@@ -10,7 +10,7 @@ import java.util.List;
 public class GameServiceImpl implements GameService {
 
     private final GameFieldService gameFieldService;
-    private final FieldHandler fieldCreator;
+    private final levelCreator fieldCreator;
     private Level level;
     private List<Observer> observers;
     private boolean solvedPuzzle;
@@ -18,7 +18,7 @@ public class GameServiceImpl implements GameService {
     public GameServiceImpl() {
         observers = new ArrayList<>();
         gameFieldService = new GameFieldService();
-        fieldCreator = new FieldHandler();
+        fieldCreator = new levelCreator();
         solvedPuzzle = false;
     }
 
