@@ -8,6 +8,7 @@ public class Level {
     private int startY;
     private int movesCounter;
     private LevelInfo levelInfo;
+    private int minimumMovesToSolve;
 
     public Level() {
         this.movesCounter = 0;
@@ -15,6 +16,10 @@ public class Level {
 
     public void setField(Tile[][] field) {
         this.field = field;
+    }
+
+    public int getMinimumMovesToSolve() {
+        return minimumMovesToSolve;
     }
 
     public void setStartX(int startX) {
@@ -61,5 +66,9 @@ public class Level {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public void setMinimumMovesToSolve(int minimumMovesToSolve) {
+        this.minimumMovesToSolve = minimumMovesToSolve;
     }
 }
