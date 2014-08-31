@@ -87,17 +87,20 @@ public class LevelChoiceScene extends BaseScene {
         final GameFieldHandler gameFieldHandler = new GameFieldHandler();
         for (int levelIndex = 0; levelIndex < strings.length; levelIndex++) {
 
-            ChoiceLevelSprite sprite = new ChoiceLevelSprite(getLevelSpriteX(widthPerLevel, levelIndex),
-                    getLevelSpriteY(widthPerLevel, levelIndex), widthPerLevel, widthPerLevel, ResourcesManager.getInstance().levelChoiceRegion, vbom, strings[levelIndex]) {
+            final int finalLevelIndex = levelIndex;
+            final ChoiceLevelSprite sprite = new ChoiceLevelSprite(getLevelSpriteX(widthPerLevel, levelIndex),
+                    getLevelSpriteY(widthPerLevel, levelIndex), ResourcesManager.getInstance().levelChoiceRegion, vbom, new ButtonSprite.OnClickListener() {
                 @Override
-                public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                    if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
-                        sceneService.loadGameSceneFromLevelChoiceScene(gameFieldHandler.getGameField(this.getFilename()));
-                        return true;
+                public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                        sceneService.loadGameSceneFromLevelChoiceScene(gameFieldHandler.getGameField(strings[finalLevelIndex]));
                     }
-                    return false;
+
                 }
-            };
+            );
+
+            sprite.setScaleCenter(0,0);
+            sprite.setWidth(widthPerLevel);
+            sprite.setHeight(widthPerLevel);
             registerTouchArea(sprite);
             attachChild(sprite);
             int fontOffset;
