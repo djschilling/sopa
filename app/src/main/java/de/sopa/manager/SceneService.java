@@ -25,4 +25,6 @@ public interface SceneService {
     void loadLevelChoiceSceneFromGameScene();
 
     void loadGameSceneFromLevelChoiceScene(final GameField gameField);
+
+    void loadScoreScreen();
 }

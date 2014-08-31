@@ -38,9 +38,15 @@ public class ResourcesManager {
     public ITextureRegion levelChoiceRegion;
     public ITextureRegion levelChoiceArrowRightRegion;
     public ITextureRegion levelChoiceArrowLeftRegion;
+    public TextureRegion levelChoiceRegionLocked;
+    public ITextureRegion starRegion;
+    public TextureRegion starSWRegion;
+    public TextureRegion backToChoiceRegion;
+    public TextureRegion nextLevelRegion;
 
     public IFont scoreFont;
     public IFont levelChoiceFont;
+    public IFont scoreCompleteFont;
 
     public void loadSplashSceneResources() {
         splash_region = resourceLoader.getTexture("scenes/splash/CouchStudio.png");
@@ -61,12 +67,19 @@ public class ResourcesManager {
 
     public void loadLevelChoiceSceneResources() {
         levelChoiceRegion = resourceLoader.getTexture("scenes/levelChoice/Level.png");
+        levelChoiceRegionLocked = resourceLoader.getTexture("scenes/levelChoice/LevelSW.png");
         levelChoiceArrowLeftRegion = resourceLoader.getTexture("scenes/levelChoice/ArrowLeft.png");
         levelChoiceArrowRightRegion = resourceLoader.getTexture("scenes/levelChoice/ArrowRight.png");
         levelChoiceFont = resourceLoader.getFont("Impact.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 110, 0xFFca540f, 2, Color.RED);
-
-
     }
+    public void loadScoreSceneResources() {
+        scoreCompleteFont = resourceLoader.getFont("Impact.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 220, Color.WHITE, 0, 0x00000000);
+        starRegion =  resourceLoader.getTexture("scenes/score/star.png");
+        starSWRegion =  resourceLoader.getTexture("scenes/score/starSW.png");
+        nextLevelRegion = resourceLoader.getTexture("scenes/score/NextLevel.png");
+        backToChoiceRegion = resourceLoader.getTexture("scenes/score/LevelChoice.png");
+    }
+
     private void loadMenuSceneGraphics() {
         play_region = resourceLoader.getTexture("scenes/menu/JustPlay.png");
         level_mode_region = resourceLoader.getTexture("scenes/menu/LevelMode.png");

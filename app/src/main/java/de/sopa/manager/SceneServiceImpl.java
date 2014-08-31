@@ -2,12 +2,7 @@ package de.sopa.manager;
 
 
 import de.sopa.model.GameField;
-import de.sopa.scene.BaseScene;
-import de.sopa.scene.GameScene;
-import de.sopa.scene.LevelChoiceScene;
-import de.sopa.scene.LoadingScene;
-import de.sopa.scene.MainMenuScene;
-import de.sopa.scene.SplashScene;
+import de.sopa.scene.*;
 import org.andengine.engine.Engine;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -22,6 +17,7 @@ public class SceneServiceImpl implements SceneService {
     private BaseScene gameScene;
     private BaseScene loadingScene;
     private BaseScene choiceScene;
+    private BaseScene scoreScreen;
 
     private BaseScene currentScene;
 
@@ -123,6 +119,17 @@ public class SceneServiceImpl implements SceneService {
                 ResourcesManager.getInstance().loadGameSceneResources();
                 gameScene = new GameScene(gameField);
                 setScene(gameScene);
+            }
+        }));
+    }
+
+    public void loadScoreScreen() {
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                ResourcesManager.getInstance().loadScoreSceneResources();
+                scoreScreen = new ScoreScreen();
+                setScene(scoreScreen);
             }
         }));
     }
