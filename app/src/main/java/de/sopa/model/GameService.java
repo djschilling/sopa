@@ -13,8 +13,6 @@ public interface GameService {
 
     Level getLevel();
 
-    void startGame();
-
     void startGame(Level level);
 
     void attach(Observer observer);

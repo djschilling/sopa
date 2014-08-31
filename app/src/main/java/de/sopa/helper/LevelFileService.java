@@ -1,12 +1,10 @@
-package de.sopa;
+package de.sopa.helper;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 import de.sopa.manager.ResourcesManager;
-import de.sopa.model.levelCreator;
 import de.sopa.model.Level;
-import de.sopa.model.LevelServiceException;
 import java.io.IOException;
 
 /**
@@ -14,12 +12,12 @@ import java.io.IOException;
  */
 public class LevelFileService {
     private final FileHandler fileHandler;
-    private levelCreator levelCreator;
+    private LevelCreator LevelCreator;
     private static final String LEVEL_BASE_PATH = "/sdcard/sopa/levels/";
     private final static String LEVEL_COUNT = "LEVEL_COUNT";
 
     public LevelFileService(Context context) {
-        levelCreator = new levelCreator();
+        LevelCreator = new LevelCreator();
         this.fileHandler = new FileHandler(context);
     }
 
@@ -27,7 +25,7 @@ public class LevelFileService {
         String levelFilename = null;
         try {
             levelFilename = LEVEL_BASE_PATH + id + ".lv";
-            return levelCreator.fromString(fileHandler.readFromFile(levelFilename));
+            return LevelCreator.fromString(fileHandler.readFromFile(levelFilename));
         } catch (IOException e) {
             throw new LevelServiceException("Not possible to read GameFiled from " + levelFilename, e);
         }
@@ -38,7 +36,7 @@ public class LevelFileService {
         Integer count = settings.getInt(LEVEL_COUNT, 0);
         count++;
         String levelFilename = LEVEL_BASE_PATH + count + ".lv";
-        fileHandler.writeToFile(levelFilename, levelCreator.fromGameField(level));
+        fileHandler.writeToFile(levelFilename, LevelCreator.fromGameField(level));
         Log.i("Level saved as ", levelFilename);
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(LEVEL_COUNT, count);
@@ -47,7 +45,7 @@ public class LevelFileService {
     }
     public Integer updateGameField(Level level, Integer id) throws IOException {
         String levelFilename = LEVEL_BASE_PATH + id + ".lv";
-        fileHandler.writeToFile(levelFilename, levelCreator.fromGameField(level));
+        fileHandler.writeToFile(levelFilename, LevelCreator.fromGameField(level));
         Log.i("Level updated as ", String.valueOf(id + ".lv"));
         return id;
     }

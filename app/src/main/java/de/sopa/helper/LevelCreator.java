@@ -1,5 +1,8 @@
-package de.sopa.model;
+package de.sopa.helper;
 
+import de.sopa.model.Level;
+import de.sopa.model.Tile;
+import de.sopa.model.TileType;
 import java.lang.Character;import java.lang.IllegalArgumentException;import java.lang.IllegalStateException;import java.lang.Math;import java.lang.String;import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +13,7 @@ import static de.sopa.model.TileType.UNDEFINED;
  * David Schilling - davejs92@gmail.com
  */
 
-public class levelCreator {
+public class LevelCreator {
 
     private int[] directionsX = new int[]{0, 1, 0, -1};
     private int[] directionsY = new int[]{1, 0, -1, 0};
@@ -18,7 +21,7 @@ public class levelCreator {
 
     private Map<Character, Tile> characterTileHashMap;
     private Map<Tile, Character> tileShortcutHashMap;
-    public levelCreator() {
+    public LevelCreator() {
         characterTileHashMap = new HashMap<>();
         characterTileHashMap.put('s', new Tile(false,false,false,false, TileType.START, 's'));
         characterTileHashMap.put('f', new Tile(false,false,false,false,TileType.FINISH, 'f'));

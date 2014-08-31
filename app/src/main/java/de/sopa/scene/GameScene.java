@@ -1,10 +1,12 @@
 package de.sopa.scene;
 
 
-import de.sopa.model.Level;
-import de.sopa.LevelFileService;
+import de.sopa.helper.LevelCreator;
+import de.sopa.helper.LevelFileService;
+import de.sopa.model.GameFieldDestroyer;
 import de.sopa.model.GameService;
 import de.sopa.model.GameServiceImpl;
+import de.sopa.model.Level;
 import de.sopa.observer.Observer;
 import java.io.IOException;
 import org.andengine.engine.handler.timer.ITimerCallback;
@@ -66,6 +68,7 @@ public class GameScene extends BaseScene implements Observer {
         attachChild(gameFieldView);
 
     }
+
     private void updateTiles() {
         detachChild(gameFieldView);
         gameFieldView.addTiles();
@@ -93,7 +96,7 @@ public class GameScene extends BaseScene implements Observer {
     }
 
     private void addScoreText() {
-        scoreText = new Text(camera.getWidth() * 0.7f, camera.getHeight() * 0.01f, resourcesManager.scoreFont,String.valueOf(gameService.getLevel().getMovesCount()),4,vbom);
+        scoreText = new Text(camera.getWidth() * 0.7f, camera.getHeight() * 0.01f, resourcesManager.scoreFont, String.valueOf(gameService.getLevel().getMovesCount()), 4, vbom);
         attachChild(scoreText);
     }
 
@@ -141,18 +144,21 @@ public class GameScene extends BaseScene implements Observer {
         if (o != null && o instanceof Level) {
             level = (Level) o;
         }
-
         gameService = new GameServiceImpl();
         if (level == null) {
-            gameService.startGame();
+            level = new LevelCreator().generateSolvedField(6, 6);
+            new GameFieldDestroyer().destroyField(level, 3, 5);
+            gameService.startGame(level);
+            level = null;
         } else {
             gameService.startGame(level);
         }
+
     }
 
     @Override
     public void onBackKeyPressed() {
-        if(level != null && level instanceof Level) {
+        if (level != null && level instanceof Level) {
             sceneService.loadLevelChoiceSceneFromGameScene();
         } else {
             sceneService.loadMenuSceneFromGameScene();
@@ -162,7 +168,7 @@ public class GameScene extends BaseScene implements Observer {
 
     @Override
     public void disposeScene() {
-        final  GameScene gameScene = this;
+        final GameScene gameScene = this;
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);

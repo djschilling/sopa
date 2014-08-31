@@ -1,7 +1,8 @@
-package de.sopa.model;
+package de.sopa.helper;
 
-import de.sopa.LevelFileService;
 import de.sopa.database.LevelInfoDataSource;
+import de.sopa.model.Level;
+import de.sopa.model.LevelInfo;
 import java.io.IOException;
 import java.util.List;
 

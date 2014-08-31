@@ -1,11 +1,11 @@
 package de.sopa.scene;
 
 
-import de.sopa.LevelFileService;
+import de.sopa.helper.LevelFileService;
 import de.sopa.database.LevelInfoDataSource;
 import de.sopa.model.LevelInfo;
-import de.sopa.model.LevelService;
-import de.sopa.model.LevelServiceImpl;
+import de.sopa.helper.LevelService;
+import de.sopa.helper.LevelServiceImpl;
 import java.util.List;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.handler.timer.ITimerCallback;

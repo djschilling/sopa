@@ -1,5 +1,7 @@
-package de.sopa.model;
+package de.sopa.helper;
 
+import de.sopa.model.Level;
+import de.sopa.model.LevelInfo;
 import java.util.List;
 
 /**

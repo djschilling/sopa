@@ -1,4 +1,4 @@
-package de.sopa.model;
+package de.sopa.helper;
 
 /**
  * @author Raphael Schilling

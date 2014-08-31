@@ -10,7 +10,6 @@ import java.util.List;
 public class GameServiceImpl implements GameService {
 
     private final GameFieldService gameFieldService;
-    private final levelCreator fieldCreator;
     private Level level;
     private List<Observer> observers;
     private boolean solvedPuzzle;
@@ -18,7 +17,6 @@ public class GameServiceImpl implements GameService {
     public GameServiceImpl() {
         observers = new ArrayList<>();
         gameFieldService = new GameFieldService();
-        fieldCreator = new levelCreator();
         solvedPuzzle = false;
     }
 
@@ -40,17 +38,10 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public void startGame() {
-        level = fieldCreator.generateSolvedField(6, 6);
-        new GameFieldDestroyer().destroyField(level, 3, 5);
-        solvedPuzzle = gameFieldService.solvedPuzzle(level);
-        level.resetMovesCounter();
-    }
-
-    @Override
     public void startGame(Level level) {
         this.level = level;
         solvedPuzzle = gameFieldService.solvedPuzzle(level);
+        level.resetMovesCounter();
     }
 
     @Override
