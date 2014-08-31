@@ -1,6 +1,9 @@
 package de.sopa;
 
 import android.view.KeyEvent;
+import de.sopa.database.LevelInfoDataSource;
+import de.sopa.helper.LevelFileService;
+import de.sopa.helper.LevelServiceImpl;
 import de.sopa.manager.ResourcesManager;
 import de.sopa.manager.SceneService;
 import de.sopa.manager.SceneServiceImpl;
@@ -31,7 +34,9 @@ public class MainActivity extends BaseGameActivity {
 
     @Override
     public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws Exception {
-        ResourcesManager.prepareManager(mEngine, this, camera, getVertexBufferObjectManager(), new ResourceLoader(getTextureManager(), getAssets(), getFontManager()), new SceneServiceImpl(mEngine));
+        ResourcesManager.prepareManager(mEngine, this, camera, getVertexBufferObjectManager(),
+                new ResourceLoader(getTextureManager(), getAssets(), getFontManager()), new SceneServiceImpl(mEngine),
+                new LevelServiceImpl(new LevelFileService(this), new LevelInfoDataSource(this)));
         pOnCreateResourcesCallback.onCreateResourcesFinished();
     }
 

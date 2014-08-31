@@ -2,10 +2,7 @@ package de.sopa.scene;
 
 
 import de.sopa.helper.LevelFileService;
-import de.sopa.database.LevelInfoDataSource;
 import de.sopa.model.LevelInfo;
-import de.sopa.helper.LevelService;
-import de.sopa.helper.LevelServiceImpl;
 import java.util.List;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.handler.timer.ITimerCallback;
@@ -29,23 +26,61 @@ public class LevelChoiceScene extends BaseScene {
     private Sprite rightArrow;
     private Entity entityToFollow;
     private static final int LEVEL_SELECT_ICON_WIDTH = 300;
+    private List<LevelInfo> levelInfos;
+    private float widthPerLevel;
 
     @Override
     public void createScene(Object o) {
-        LevelService levelService = new LevelServiceImpl(new LevelFileService(resourcesManager.activity), new LevelInfoDataSource(resourcesManager.activity));
-        levelService.updateLevelInfos();
-        List<LevelInfo> levelInfos = levelService.getLevelInfos();
-        final float widthPerLevel = getWidhtPerTile();
+        levelInfos = levelService.getLevelInfos();
+        widthPerLevel =  (camera.getWidth() / COLUMNS);
         addLevelChooseTiles(levelInfos, widthPerLevel);
-        screenCount = (levelInfos.size() / 12) + 1;
-        currentScreen = 0;
         addChangeLevelButtons();
-        entityToFollow = new Entity(camera.getWidth() / 2, camera.getHeight() / 2);
-        attachChild(entityToFollow);
-        camera.setChaseEntity(entityToFollow);
     }
 
+    private void addLevelChooseTiles(final List<LevelInfo> levelInfos, float widthPerLevel) {
+        final LevelFileService levelFileService = new LevelFileService(resourcesManager.activity);
+        for (int levelIndex = 0; levelIndex < levelInfos.size(); levelIndex++) {
+
+            final int finalLevelIndex = levelIndex;
+            ITextureRegion iTextureRegion = null;
+            if (levelInfos.get(finalLevelIndex).isLocked()) {
+                iTextureRegion = resourcesManager.levelChoiceRegionSW;
+            } else {
+                iTextureRegion = resourcesManager.levelChoiceRegion;
+            }
+            final ChoiceLevelSprite choiceLevelSprite = new ChoiceLevelSprite(getLevelSpriteX(widthPerLevel, levelIndex),
+                    getLevelSpriteY(widthPerLevel, levelIndex), iTextureRegion, vbom, new ButtonSprite.OnClickListener() {
+                @Override
+                public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                    sceneService.loadGameSceneFromLevelChoiceScene(levelFileService.getLevel(levelInfos.get(finalLevelIndex).getLevelId()));
+                }
+
+            }
+            );
+
+            choiceLevelSprite.setWidth(widthPerLevel);
+            choiceLevelSprite.setHeight(widthPerLevel);
+            registerTouchArea(choiceLevelSprite);
+            attachChild(choiceLevelSprite);
+            int fontOffset;
+            if ((levelIndex + 1) > 99) {
+                fontOffset = 105;
+            } else if ((levelIndex + 1) > 9) {
+                fontOffset = 120;
+            } else {
+                fontOffset = 150;
+            }
+            attachChild(new Text(getLevelSpriteX(widthPerLevel, levelIndex) + fontOffset, getLevelSpriteY(widthPerLevel, levelIndex) + 110,
+                    resourcesManager.levelChoiceFont, String.valueOf(levelIndex + 1), vbom));
+
+
+        }
+    }
+
+
     private void addChangeLevelButtons() {
+        screenCount = (levelInfos.size() / 12) + 1;
+        currentScreen = 0;
         rightArrow = new ButtonSprite(camera.getWidth() * 0.93f - LEVEL_SELECT_ICON_WIDTH, camera.getHeight() * 0.8f, resourcesManager.levelChoiceArrowRightRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
@@ -83,52 +118,9 @@ public class LevelChoiceScene extends BaseScene {
         arrowHud.registerTouchArea(leftArrow);
         arrowHud.registerTouchArea(rightArrow);
         camera.setHUD(arrowHud);
-    }
-
-
-    private void addLevelChooseTiles(final List<LevelInfo> levelInfos, float widthPerLevel) {
-        final LevelFileService levelFileService = new LevelFileService(resourcesManager.activity);
-        for (int levelIndex = 0; levelIndex < levelInfos.size(); levelIndex++) {
-
-            final int finalLevelIndex = levelIndex;
-            ITextureRegion iTextureRegion = null;
-            if (levelInfos.get(finalLevelIndex).isLocked()) {
-                iTextureRegion = resourcesManager.levelChoiceRegionSW;
-            } else {
-                iTextureRegion = resourcesManager.levelChoiceRegion;
-            }
-            final ChoiceLevelSprite sprite = new ChoiceLevelSprite(getLevelSpriteX(widthPerLevel, levelIndex),
-                    getLevelSpriteY(widthPerLevel, levelIndex), iTextureRegion, vbom, new ButtonSprite.OnClickListener() {
-                @Override
-                public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                    sceneService.loadGameSceneFromLevelChoiceScene(levelFileService.getLevel(levelInfos.get(finalLevelIndex).getLevelId()));
-                }
-
-            }
-            );
-
-            sprite.setScaleCenter(0, 0);
-            sprite.setWidth(widthPerLevel);
-            sprite.setHeight(widthPerLevel);
-            registerTouchArea(sprite);
-            attachChild(sprite);
-            int fontOffset;
-            if ((levelIndex + 1) > 99) {
-                fontOffset = 105;
-            } else if ((levelIndex + 1) > 9) {
-                fontOffset = 120;
-            } else {
-                fontOffset = 150;
-            }
-            attachChild(new Text(getLevelSpriteX(widthPerLevel, levelIndex) + fontOffset, getLevelSpriteY(widthPerLevel, levelIndex) + 110,
-                    resourcesManager.levelChoiceFont, String.valueOf(levelIndex + 1), vbom));
-
-
-        }
-    }
-
-    private float getWidhtPerTile() {
-        return (camera.getWidth() / COLUMNS);
+        entityToFollow = new Entity(camera.getWidth() / 2, camera.getHeight() / 2);
+        attachChild(entityToFollow);
+        camera.setChaseEntity(entityToFollow);
     }
 
     private float getLevelSpriteY(float heightPerLevel, int levelIndex) {

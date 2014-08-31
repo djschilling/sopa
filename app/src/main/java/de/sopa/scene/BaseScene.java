@@ -1,6 +1,7 @@
 package de.sopa.scene;
 
 import android.app.Activity;
+import de.sopa.helper.LevelService;
 import de.sopa.manager.ResourcesManager;
 import de.sopa.manager.SceneService;
 import org.andengine.engine.Engine;
@@ -18,6 +19,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 public abstract class BaseScene extends Scene {
 
     protected final SceneService sceneService;
+    protected final LevelService levelService;
     protected Engine engine;
     protected Activity activity;
     protected ResourcesManager resourcesManager;
@@ -31,6 +33,7 @@ public abstract class BaseScene extends Scene {
         this.vbom = resourcesManager.vbom;
         this.camera = resourcesManager.camera;
         this.sceneService = resourcesManager.sceneService;
+        this.levelService = resourcesManager.levelService;
         createScene(o);
     }
     public BaseScene() {

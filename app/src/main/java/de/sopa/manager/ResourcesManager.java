@@ -2,6 +2,7 @@ package de.sopa.manager;
 
 import android.graphics.Color;
 import de.sopa.MainActivity;
+import de.sopa.helper.LevelService;
 import java.util.Map;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
@@ -49,6 +50,7 @@ public class ResourcesManager {
     public IFont levelChoiceFont;
     public IFont scoreCompleteFont;
     public IFont levelChoiceSWFont;
+    public LevelService levelService;
 
     public void loadSplashSceneResources() {
         splash_region = resourceLoader.getTexture("scenes/splash/CouchStudio.png");
@@ -137,13 +139,14 @@ public class ResourcesManager {
         scoreFont = null;
     }
 
-    public static void prepareManager(Engine engine, MainActivity activity, Camera camera, VertexBufferObjectManager vbom, ResourceLoader resourceLoader, SceneService sceneService) {
+    public static void prepareManager(Engine engine, MainActivity activity, Camera camera, VertexBufferObjectManager vbom, ResourceLoader resourceLoader, SceneService sceneService, LevelService levelService) {
         getInstance().engine = engine;
         getInstance().activity = activity;
         getInstance().camera = camera;
         getInstance().vbom = vbom;
         getInstance().resourceLoader = resourceLoader;
         getInstance().sceneService = sceneService;
+        getInstance().levelService = levelService;
     }
 
     public static ResourcesManager getInstance() {

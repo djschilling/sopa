@@ -117,7 +117,7 @@ public class GameScene extends BaseScene implements Observer {
     }
 
     private void addButtons() {
-        Sprite sprite = new Sprite(0, camera.getHeight() * 0.8f, resourcesManager.saveButtonRegion, vbom) {
+        Sprite saveLevelButton = new Sprite(0, camera.getHeight() * 0.8f, resourcesManager.saveButtonRegion, vbom) {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 if (pSceneTouchEvent.isActionUp()) {
@@ -130,9 +130,9 @@ public class GameScene extends BaseScene implements Observer {
                 return true;
             }
         };
-        registerTouchArea(sprite);
+        registerTouchArea(saveLevelButton);
         setTouchAreaBindingOnActionDownEnabled(true);
-        attachChild(sprite);
+        attachChild(saveLevelButton);
     }
 
 
