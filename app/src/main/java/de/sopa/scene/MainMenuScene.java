@@ -1,18 +1,13 @@
 package de.sopa.scene;
 
-import de.sopa.manager.ResourcesManager;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.modifier.MoveXModifier;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.Sprite;
-import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.color.Color;
-import org.andengine.util.modifier.ease.EaseBackOut;
-import org.andengine.util.modifier.ease.EaseBounceOut;
-import org.andengine.util.modifier.ease.EaseElasticOut;
-import org.andengine.util.modifier.ease.EaseExponentialOut;
+import org.andengine.util.system.SystemUtils;
 
 /**
  * David Schilling - davejs92@gmail.com
@@ -23,6 +18,10 @@ public class MainMenuScene extends BaseScene  {
     public void createScene(Object o) {
         createBackground();
         createMenuChildScene();
+        if(resourcesManager.musicIsPlaying == false){
+            resourcesManager.menuMusic.play();
+            resourcesManager.musicIsPlaying = true;
+        }
     }
 
     @Override
@@ -33,7 +32,6 @@ public class MainMenuScene extends BaseScene  {
 
     @Override
     public void disposeScene() {
-
     }
 
     private void createBackground() {

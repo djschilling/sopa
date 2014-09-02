@@ -46,6 +46,8 @@ public class GameScene extends BaseScene implements Observer {
         addScoreText();
         registerTouchHandler();
         gameService.attach(this);
+        resourcesManager.menuMusic.stop();
+        resourcesManager.musicIsPlaying = false;
     }
 
     @Override

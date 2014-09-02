@@ -3,7 +3,12 @@ package de.sopa.manager;
 import android.graphics.Color;
 import de.sopa.MainActivity;
 import de.sopa.helper.LevelService;
+
+import java.io.IOException;
 import java.util.Map;
+
+import org.andengine.audio.music.Music;
+import org.andengine.audio.music.MusicFactory;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
 import org.andengine.opengl.font.IFont;
@@ -52,11 +57,20 @@ public class ResourcesManager {
     public IFont levelChoiceSWFont;
     public LevelService levelService;
 
+    public Music menuMusic;
+
+    public boolean musicIsPlaying = false;
+
     public void loadSplashSceneResources() {
         splash_region = resourceLoader.getTexture("scenes/splash/CouchStudio.png");
     }
     public void loadMenuSceneResources() {
         loadMenuSceneGraphics();
+        try {
+            menuMusic = MusicFactory.createMusicFromAsset(engine.getMusicManager(), activity, "scenes/menu/Menu_Theme.mp3");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void loadLoadingSceneResources() {

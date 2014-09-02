@@ -29,8 +29,12 @@ public class MainActivity extends BaseGameActivity {
     @Override
     public EngineOptions onCreateEngineOptions() {
         camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-        return new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED,
-                new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera);
+        EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED,
+         new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera);
+         engineOptions.getAudioOptions().setNeedsMusic(true);
+
+        return engineOptions;
+
     }
 
     @Override
