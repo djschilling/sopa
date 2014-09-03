@@ -259,7 +259,6 @@ public class LevelCreator {
 
     public String[] fromGameField(Level gameField) {
         Tile tiles[][] = gameField.getField();
-        int indexOfProperties = 0;
         if(gameField.getId() == null) {
             gameField.setId(-1);
         }

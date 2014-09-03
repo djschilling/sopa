@@ -1,11 +1,9 @@
 package de.sopa.scene;
 
 
+import de.sopa.database.LevelInfoTable;
 import de.sopa.helper.LevelCreator;
-import de.sopa.model.GameFieldDestroyer;
-import de.sopa.model.GameService;
-import de.sopa.model.GameServiceImpl;
-import de.sopa.model.Level;
+import de.sopa.model.*;
 import de.sopa.observer.Observer;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -53,6 +51,11 @@ public class GameScene extends BaseScene implements Observer {
     @Override
     public void update() {
         updateTiles();
+        if(gameService.solvedPuzzle() == true)
+        {
+            sceneService.loadScoreScreen(gameService.getLevel());
+            gameService.getLevel().getLevelInfo().setLocked(false);
+        }
         setSolved(gameService.solvedPuzzle());
         scoreText.setText(String.valueOf(gameService.getLevel().getMovesCount()));
     }

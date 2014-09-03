@@ -16,6 +16,8 @@ public interface SceneService {
 
     void loadMenuSceneFromGameScene();
 
+    void loadMenuSceneFromScoreScene();
+
     void loadMenuSceneFromLevelChoiceScene();
 
     void loadGameScene();
@@ -24,6 +26,10 @@ public interface SceneService {
 
     void loadLevelChoiceSceneFromGameScene();
 
-    void loadScoreScreen();
+    void loadScoreScreen(final Level level);
     void loadGameSceneFromLevelChoiceScene(final Level level);
+
+    void loadLevelChoiceSceneFromScoreScene();
+
+    void loadGameSceneFromScoreScene(Level level);
 }

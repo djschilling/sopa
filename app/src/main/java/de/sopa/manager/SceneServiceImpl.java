@@ -83,6 +83,21 @@ public class SceneServiceImpl implements SceneService {
     }
 
     @Override
+    public void loadMenuSceneFromScoreScene() {
+        setScene(loadingScene);
+        disposeScoreScreen();
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            @Override
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                ResourcesManager.getInstance().loadMenuSceneResources();
+                menuScene = new MainMenuScene();
+                setScene(menuScene);
+            }
+        }));
+    }
+
+    @Override
     public void loadMenuSceneFromLevelChoiceScene() {
         setScene(loadingScene);
         disposeLevelChoiceScene();
@@ -129,22 +144,23 @@ public class SceneServiceImpl implements SceneService {
         }));
     }
 
-    public void loadScoreScreen() {
+
+    public void loadScoreScreen(final Level level) {
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().loadScoreSceneResources();
-                scoreScreen = new ScoreScreen();
+                scoreScreen = new ScoreScreen(level);
                 setScene(scoreScreen);
             }
         }));
     }
+
     private void disposeMenuScene() {
         ResourcesManager.getInstance().unloadMenuSceneResources();
         menuScene.disposeScene();
         menuScene = null;
     }
-
     public void loadLevelChoiceSceneFromMenuScene() {
         setScene(loadingScene);
         disposeMenuScene();
@@ -155,6 +171,35 @@ public class SceneServiceImpl implements SceneService {
                 ResourcesManager.getInstance().loadLevelChoiceSceneResources();
                 choiceScene = new LevelChoiceScene();
                 setScene(choiceScene);
+            }
+        }));
+    }
+
+    @Override
+    public void loadLevelChoiceSceneFromScoreScene() {
+        setScene(loadingScene);
+        disposeScoreScreen();
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            @Override
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                ResourcesManager.getInstance().loadLevelChoiceSceneResources();
+                choiceScene = new LevelChoiceScene();
+                setScene(choiceScene);
+            }
+        }));
+    }
+
+    @Override
+    public void loadGameSceneFromScoreScene(final Level level) {
+        disposeScoreScreen();
+        setScene(loadingScene);
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                ResourcesManager.getInstance().loadGameSceneResources();
+                gameScene = new GameScene(level);
+                setScene(gameScene);
             }
         }));
     }
@@ -176,5 +221,9 @@ public class SceneServiceImpl implements SceneService {
                 setScene(choiceScene);
             }
         }));
+    }
+
+    private void disposeScoreScreen() {
+    //TODO:Dispose Score Screen
     }
 }

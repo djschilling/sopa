@@ -36,6 +36,9 @@ public class LevelFileService {
         SharedPreferences settings = ResourcesManager.getInstance().activity.getPreferences(0);
         Integer count = settings.getInt(LEVEL_COUNT, 0);
         count++;
+        if (level.getId() == null || level.getId() == -1) {
+            level.setId(count);
+        }
         String levelFilename = LEVEL_BASE_PATH + count + ".lv";
         fileHandler.writeToFile(levelFilename, LevelCreator.fromGameField(level));
         Log.i("Level saved as ", levelFilename);
@@ -44,12 +47,14 @@ public class LevelFileService {
         editor.commit();
         return count;
     }
+
     public Integer updateGameField(Level level, Integer id) throws IOException {
         String levelFilename = LEVEL_BASE_PATH + id + ".lv";
         fileHandler.writeToFile(levelFilename, LevelCreator.fromGameField(level));
         Log.i("Level updated as ", String.valueOf(id + ".lv"));
         return id;
     }
+
     public Integer[] getAvailableLevelIds() {
         String[] filenamesInFolder = fileHandler.getFilenamesInFolder(LEVEL_BASE_PATH);
         Integer[] levelIds = new Integer[filenamesInFolder.length];
