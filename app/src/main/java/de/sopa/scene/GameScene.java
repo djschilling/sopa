@@ -53,6 +53,7 @@ public abstract class GameScene extends BaseScene implements Observer {
         scoreText.setText(String.valueOf(gameService.getLevel().getMovesCount()));
         if (gameService.solvedPuzzle()) {
             onSolvedGame();
+            gameService.detach(this);
         }
     }
 

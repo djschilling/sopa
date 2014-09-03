@@ -22,26 +22,30 @@ public class ScoreScreen extends BaseScene {
         final LevelFileService levelFileService = new LevelFileService(resourcesManager.activity);
 
         attachChild(new Text((float) (camera.getWidth() * 0.14), (float) (camera.getHeight() * 0.17), resourcesManager.scoreCompleteFont, "     Level\nComplete", vbom));
-        attachChild(new Sprite(0 , (float) (camera.getHeight() * 0.55), 400, 400, resourcesManager.starRegion, vbom));
+        attachChild(new Sprite(0, (float) (camera.getHeight() * 0.55), 400, 400, resourcesManager.starRegion, vbom));
         attachChild(new Sprite((float) (camera.getWidth() * 0.64), (float) (camera.getHeight() * 0.55), 400, 400, resourcesManager.starSWRegion, vbom));
         attachChild(new Sprite((float) (camera.getWidth() / 2 - 200), (float) (camera.getHeight() * 0.6), 400, 400, resourcesManager.starRegion, vbom));
-        ButtonSprite choiceLevelButton = new ButtonSprite(0, (float) (camera.getHeight() - 400),resourcesManager.backToChoiceRegion,vbom, new ButtonSprite.OnClickListener() {
+        ButtonSprite choiceLevelButton = new ButtonSprite(0, (float) (camera.getHeight() - 400), resourcesManager.backToChoiceRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 sceneService.loadLevelChoiceSceneFromScoreScene();
             }
         });
-        ButtonSprite nextLevelButton = new ButtonSprite((float) (camera.getWidth() * 0.64), (float) (camera.getHeight() - 400),resourcesManager.nextLevelRegion,vbom, new ButtonSprite.OnClickListener() {
+        ButtonSprite nextLevelButton = new ButtonSprite((float) (camera.getWidth() * 0.64), (float) (camera.getHeight() - 400), resourcesManager.nextLevelRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                //TODO:Load GameScene over DB
-                sceneService.loadGameSceneFromScoreScene(levelFileService.getLevel(level.getId() + 1));
+                int nextLevelId = level.getId() + 1;
+                if (nextLevelId > levelService.getLevelCount()) {
+                    sceneService.loadLevelChoiceSceneFromScoreScene();
+                } else {
+                    sceneService.loadGameSceneFromScoreScene(levelService.getLevelById(nextLevelId));
+                }
             }
         });
         registerTouchArea(choiceLevelButton);
         registerTouchArea(nextLevelButton);
         attachChild(choiceLevelButton);
-        attachChild(new ButtonSprite((float) (camera.getWidth() / 2 - 200), (float) (camera.getHeight() - 400),resourcesManager.backToChoiceRegion,vbom));
+        attachChild(new ButtonSprite((float) (camera.getWidth() / 2 - 200), (float) (camera.getHeight() - 400), resourcesManager.backToChoiceRegion, vbom));
         attachChild(nextLevelButton);
     }
 
