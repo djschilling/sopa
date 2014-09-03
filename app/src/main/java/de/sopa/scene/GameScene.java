@@ -1,9 +1,9 @@
 package de.sopa.scene;
 
 
-import de.sopa.database.LevelInfoTable;
-import de.sopa.helper.LevelCreator;
-import de.sopa.model.*;
+import de.sopa.model.GameService;
+import de.sopa.model.GameServiceImpl;
+import de.sopa.model.Level;
 import de.sopa.observer.Observer;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -17,9 +17,9 @@ import org.andengine.util.color.Color;
 /**
  * David Schilling - davejs92@gmail.com
  */
-public class GameScene extends BaseScene implements Observer {
+public abstract class GameScene extends BaseScene implements Observer {
 
-    private GameService gameService;
+    protected GameService gameService;
     private Sprite solvedSprite;
     private Sprite unsolvedSprite;
     private ContinuousHoldDetector continuousHoldDetector;
@@ -39,7 +39,6 @@ public class GameScene extends BaseScene implements Observer {
         addBackground();
         addTiles();
         addSolvedIcon();
-        setSolved(gameService.solvedPuzzle());
         addButtons();
         addScoreText();
         registerTouchHandler();
@@ -51,12 +50,9 @@ public class GameScene extends BaseScene implements Observer {
     @Override
     public void update() {
         updateTiles();
-        if(gameService.solvedPuzzle() == true)
-        {
-            sceneService.loadScoreScreen(gameService.getLevel());
-            gameService.getLevel().getLevelInfo().setLocked(false);
+        if (gameService.solvedPuzzle()) {
+            onSolvedGame();
         }
-        setSolved(gameService.solvedPuzzle());
         scoreText.setText(String.valueOf(gameService.getLevel().getMovesCount()));
     }
 
@@ -85,21 +81,10 @@ public class GameScene extends BaseScene implements Observer {
         return (camera.getHeight() - (spacePerTile * gameService.getLevel().getField().length)) / 2;
     }
 
-
-    private void setSolved(boolean solved) {
-        if (solved) {
-            solvedSprite.setVisible(true);
-            unsolvedSprite.setVisible(false);
-        } else {
-            unsolvedSprite.setVisible(true);
-            solvedSprite.setVisible(false);
-        }
-    }
-
     private void addScoreText() {
         scoreText = new Text(camera.getWidth() * 0.7f, camera.getHeight() * 0.01f, resourcesManager.scoreFont, String.valueOf(gameService.getLevel().getMovesCount()), 4, vbom);
         attachChild(scoreText);
-        Text minimumMovesScore = new Text(0,camera.getHeight() * 0.01f,resourcesManager.scoreFont, String.valueOf(gameService.getLevel().getMinimumMovesToSolve()),vbom);
+        Text minimumMovesScore = new Text(0, camera.getHeight() * 0.01f, resourcesManager.scoreFont, String.valueOf(gameService.getLevel().getMinimumMovesToSolve()), vbom);
         attachChild(minimumMovesScore);
     }
 
@@ -144,26 +129,12 @@ public class GameScene extends BaseScene implements Observer {
             level = (Level) o;
         }
         gameService = new GameServiceImpl();
-        if (level == null) {
-            level = new LevelCreator().generateSolvedField(6, 6);
-            new GameFieldDestroyer().destroyField(level, 3, 5);
-            gameService.startGame(level);
-            level = null;
-        } else {
-            gameService.startGame(level);
-        }
+        gameService.startGame(level);
 
     }
 
     @Override
-    public void onBackKeyPressed() {
-        if (level != null && level instanceof Level) {
-            sceneService.loadLevelChoiceSceneFromGameScene();
-        } else {
-            sceneService.loadMenuSceneFromGameScene();
-
-        }
-    }
+    public abstract void onBackKeyPressed();
 
     @Override
     public void disposeScene() {
@@ -175,4 +146,9 @@ public class GameScene extends BaseScene implements Observer {
             }
         }));
     }
+
+    /**
+     * is called when the game is solved
+     */
+    public abstract void onSolvedGame();
 }

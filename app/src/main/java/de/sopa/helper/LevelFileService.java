@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import de.sopa.manager.ResourcesManager;
 import de.sopa.model.Level;
-
 import java.io.IOException;
 
 /**
@@ -36,9 +35,7 @@ public class LevelFileService {
         SharedPreferences settings = ResourcesManager.getInstance().activity.getPreferences(0);
         Integer count = settings.getInt(LEVEL_COUNT, 0);
         count++;
-        if (level.getId() == null || level.getId() == -1) {
-            level.setId(count);
-        }
+        level.setId(count);
         String levelFilename = LEVEL_BASE_PATH + count + ".lv";
         fileHandler.writeToFile(levelFilename, LevelCreator.fromGameField(level));
         Log.i("Level saved as ", levelFilename);

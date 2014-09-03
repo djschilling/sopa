@@ -83,15 +83,18 @@ public class LevelInfoDataSource {
     }
 
     public LevelInfo getLevelInfoById(Integer id) {
-        Cursor cursor = database.query(TABLE_LEVEL_INFO, allColumns, COLUMN_ID + " = " + id, null, null, null, null);
-
+        Cursor cursor = database.query(TABLE_LEVEL_INFO, allColumns, COLUMN_ID + " = ?", new String[]{String.valueOf(id)}, null, null, null);
+        cursor.moveToFirst();
         LevelInfo levelInfo = cursorToLevelInfo(cursor);
         cursor.close();
         return levelInfo;
     }
 
     private LevelInfo cursorToLevelInfo(Cursor cursor) {
-        LevelInfo levelInfo = new LevelInfo(cursor.getInt(0), cursor.getInt(1) != 0, cursor.getInt(2));
+        int anInt = cursor.getInt(0);
+        boolean locked = cursor.getInt(1) != 0;
+        int anInt1 = cursor.getInt(2);
+        LevelInfo levelInfo = new LevelInfo(anInt, locked, anInt1);
         return levelInfo;
     }
 }

@@ -1,7 +1,6 @@
 package de.sopa.scene;
 
 
-import de.sopa.helper.LevelFileService;
 import de.sopa.model.LevelInfo;
 import java.util.List;
 import org.andengine.engine.camera.hud.HUD;
@@ -42,7 +41,6 @@ public class LevelChoiceScene extends BaseScene {
     }
 
     private void addLevelChooseTiles(final List<LevelInfo> levelInfos, float widthPerLevel) {
-        final LevelFileService levelFileService = new LevelFileService(resourcesManager.activity);
         for (int levelIndex = 0; levelIndex < levelInfos.size(); levelIndex++) {
 
             final int finalLevelIndex = levelIndex;
@@ -56,7 +54,7 @@ public class LevelChoiceScene extends BaseScene {
                     getLevelSpriteY(widthPerLevel, levelIndex), iTextureRegion, vbom, new ButtonSprite.OnClickListener() {
                 @Override
                 public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                    sceneService.loadGameSceneFromLevelChoiceScene(levelFileService.getLevel(levelInfos.get(finalLevelIndex).getLevelId()));
+                    sceneService.loadGameSceneFromLevelChoiceScene(levelService.getLevelById(levelInfos.get(finalLevelIndex).getLevelId()));
                 }
 
             }

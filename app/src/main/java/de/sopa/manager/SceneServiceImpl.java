@@ -1,10 +1,13 @@
 package de.sopa.manager;
 
 
+import de.sopa.helper.LevelCreator;
+import de.sopa.model.GameFieldDestroyer;
 import de.sopa.model.Level;
 import de.sopa.scene.BaseScene;
-import de.sopa.scene.GameScene;
+import de.sopa.scene.JustPlayGameScene;
 import de.sopa.scene.LevelChoiceScene;
+import de.sopa.scene.LevelModeGameScene;
 import de.sopa.scene.LoadingScene;
 import de.sopa.scene.MainMenuScene;
 import de.sopa.scene.ScoreScreen;
@@ -119,14 +122,16 @@ public class SceneServiceImpl implements SceneService {
     }
 
     @Override
-    public void loadGameScene() {
+    public void loadGameSceneFromMainMenuScene() {
         setScene(loadingScene);
         disposeMenuScene();
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().loadGameSceneResources();
-                gameScene = new GameScene(null);
+                Level level = new LevelCreator().generateSolvedField(6, 6);
+                new GameFieldDestroyer().destroyField(level, 3, 5);
+                gameScene = new JustPlayGameScene(level);
                 setScene(gameScene);
             }
         }));
@@ -138,7 +143,7 @@ public class SceneServiceImpl implements SceneService {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().loadGameSceneResources();
-                gameScene = new GameScene(level);
+                gameScene = new LevelModeGameScene(level);
                 setScene(gameScene);
             }
         }));
@@ -198,7 +203,7 @@ public class SceneServiceImpl implements SceneService {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().loadGameSceneResources();
-                gameScene = new GameScene(level);
+                gameScene = new LevelModeGameScene(level);
                 setScene(gameScene);
             }
         }));

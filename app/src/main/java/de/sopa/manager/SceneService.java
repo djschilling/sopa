@@ -20,7 +20,7 @@ public interface SceneService {
 
     void loadMenuSceneFromLevelChoiceScene();
 
-    void loadGameScene();
+    void loadGameSceneFromMainMenuScene();
 
     void loadLevelChoiceSceneFromMenuScene();
 
