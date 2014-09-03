@@ -66,12 +66,9 @@ public class ResourcesManager {
     }
     public void loadMenuSceneResources() {
         loadMenuSceneGraphics();
-        try {
-            menuMusic = MusicFactory.createMusicFromAsset(engine.getMusicManager(), activity, "scenes/menu/Menu_Theme.mp3");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        loadMenuSceneMusic();
     }
+
 
     public void loadLoadingSceneResources() {
         loadingScreenBackgroundRegion = resourceLoader.getTexture("scenes/loading/LoadingScreen.png");
@@ -104,6 +101,14 @@ public class ResourcesManager {
         play_region = resourceLoader.getTexture("scenes/menu/JustPlay.png");
         level_mode_region = resourceLoader.getTexture("scenes/menu/LevelMode.png");
     }
+    private void loadMenuSceneMusic() {
+        try {
+            menuMusic = MusicFactory.createMusicFromAsset(engine.getMusicManager(), activity, "scenes/menu/Menu_Theme.mp3");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void loadGameSceneGraphics() {
         regionTileMap = this.resourceLoader.getTileTextures();
