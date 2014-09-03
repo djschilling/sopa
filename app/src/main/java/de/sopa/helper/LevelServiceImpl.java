@@ -22,7 +22,7 @@ public class LevelServiceImpl implements LevelService {
 
     @Override
     public int getLevelCount() {
-        throw new UnsupportedOperationException();
+        return levelInfoDataSource.getLevelCount();
     }
 
     @Override
@@ -48,6 +48,11 @@ public class LevelServiceImpl implements LevelService {
     public void saveLevelInfo(LevelInfo levelInfo, Integer levelId) {
         levelInfo.setLevelId(levelId);
         levelInfoDataSource.createLevelInfo(levelInfo);
+    }
+
+    @Override
+    public LevelInfo updateLevelInfo(LevelInfo levelInfo) {
+        return levelInfoDataSource.updateLevelInfo(levelInfo);
     }
 
     @Override

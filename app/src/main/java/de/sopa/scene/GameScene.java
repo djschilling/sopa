@@ -50,10 +50,10 @@ public abstract class GameScene extends BaseScene implements Observer {
     @Override
     public void update() {
         updateTiles();
+        scoreText.setText(String.valueOf(gameService.getLevel().getMovesCount()));
         if (gameService.solvedPuzzle()) {
             onSolvedGame();
         }
-        scoreText.setText(String.valueOf(gameService.getLevel().getMovesCount()));
     }
 
 
@@ -98,6 +98,7 @@ public abstract class GameScene extends BaseScene implements Observer {
 
 
     private void addSolvedIcon() {
+
         solvedSprite = new Sprite(0, 0, 50, 50, resourcesManager.regionTileMap.get('s'), vbom);
         unsolvedSprite = new Sprite(0, 0, 50, 50, resourcesManager.regionTileMap.get('i'), vbom);
         attachChild(solvedSprite);

@@ -37,6 +37,8 @@ public interface LevelService {
      */
     void saveLevelInfo(LevelInfo levelInfo, Integer levelId);
 
+    LevelInfo updateLevelInfo(LevelInfo levelInfo);
+
     /**
      * Saves the given {@link de.sopa.model.Level}.
      *

@@ -56,15 +56,9 @@ public class LevelInfoDataSource {
         values.put(COLUMN_ID, levelInfo.getLevelId());
         values.put(COLUMN_LOCKED, levelInfo.isLocked());
         values.put(COLUMN_FEWEST_MOVES, levelInfo.getFewestMoves());
-        long insertId = database.replace(TABLE_LEVEL_INFO, null,
+        database.replace(TABLE_LEVEL_INFO, null,
                 values);
-        Cursor cursor = database.query(TABLE_LEVEL_INFO,
-                allColumns, COLUMN_ID + " = " + insertId, null,
-                null, null, null);
-        cursor.moveToFirst();
-        LevelInfo newLevelInfo = cursorToLevelInfo(cursor);
-        cursor.close();
-        return newLevelInfo;
+        return getLevelInfoById(levelInfo.getLevelId());
     }
 
     public List<LevelInfo> getAllLevelInfos() {
@@ -88,6 +82,12 @@ public class LevelInfoDataSource {
         LevelInfo levelInfo = cursorToLevelInfo(cursor);
         cursor.close();
         return levelInfo;
+    }
+
+    public int getLevelCount() {
+        Cursor cursor = database.rawQuery("Select count(*) from " + TABLE_LEVEL_INFO, null);
+        cursor.moveToFirst();
+        return cursor.getInt(0);
     }
 
     private LevelInfo cursorToLevelInfo(Cursor cursor) {

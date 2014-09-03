@@ -79,7 +79,7 @@ public class GameFieldService {
                     newPosition = newPosition % (level.getField().length - 2);
                     level.getField()[newPosition + 1][row + 1] = line[i];
                 }
-                if(shiftRelevant == true) {
+                if(shiftRelevant) {
                     level.increaseMovesCounter();
                     return true;
                 } else {
