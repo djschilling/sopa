@@ -21,7 +21,7 @@ public class SettingsScene extends BaseScene {
 
     @Override
     public void onBackKeyPressed() {
-
+        sceneService.loadMenuSceneFromSettingsScene();
     }
 
     @Override
