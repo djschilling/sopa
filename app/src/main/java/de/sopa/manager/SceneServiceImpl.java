@@ -124,7 +124,7 @@ public class SceneServiceImpl implements SceneService {
                 engine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().loadGameSceneResources();
                 Level level = new LevelCreator().generateSolvedField(6, 6);
-                new GameFieldDestroyer().destroyField(level, 3, 5);
+                new GameFieldDestroyer().destroyField(level, 1, 1   );
                 gameScene = new JustPlayGameScene(level);
                 setScene(gameScene);
             }
@@ -233,7 +233,7 @@ public class SceneServiceImpl implements SceneService {
     }
 
     private void disposeSettingsScene() {
-        
+
     }
 
     private void disposeLevelChoiceScene() {
