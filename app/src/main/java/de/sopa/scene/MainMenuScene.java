@@ -3,6 +3,7 @@ package de.sopa.scene;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.modifier.MoveXModifier;
+import org.andengine.entity.modifier.MoveYModifier;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.Sprite;
@@ -48,22 +49,30 @@ public class MainMenuScene extends BaseScene  {
                 playItemSprite.setPosition(camera.getWidth() / 2 - playItemSprite.getWidthScaled() /2, camera.getHeight() / 2 - playItemSprite.getHeightScaled());
         attachChild(playItemSprite);
         registerTouchArea(playItemSprite);
-        final Sprite levelItemSprite = new ButtonSprite(0, 0, resourcesManager.level_mode_region, vbom, new ButtonSprite.OnClickListener() {
+        final ButtonSprite levelItemSprite = new ButtonSprite(0, 0, resourcesManager.level_mode_region, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 sceneService.loadLevelChoiceSceneFromMenuScene();
             }
         });
+        /*
+        final ButtonSprite settingsButton = new ButtonSprite(0,0,resourcesManager.settingsRegion, vbom, new ButtonSprite.OnClickListener() {
+            @Override
+            public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                sceneService.loadSettingsFromMenuScene();
+            }
+        });
+*/
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
                 levelItemSprite.registerEntityModifier(new MoveXModifier(1f, 1080, 0));
                 playItemSprite.registerEntityModifier(new MoveXModifier(1f,-1080,0));
+            //      settingsButton.registerEntityModifier(new MoveYModifier(1f, 1920,1920/2));
             }
         }));
-
-
-
+        //attachChild(settingsButton);
+        //registerTouchArea(settingsButton);
         levelItemSprite.setPosition(camera.getWidth() / 2 - levelItemSprite.getWidthScaled() /2, camera.getHeight() / 2);
         attachChild(levelItemSprite);
         registerTouchArea(levelItemSprite);

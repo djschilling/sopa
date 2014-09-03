@@ -4,14 +4,7 @@ package de.sopa.manager;
 import de.sopa.helper.LevelCreator;
 import de.sopa.model.GameFieldDestroyer;
 import de.sopa.model.Level;
-import de.sopa.scene.BaseScene;
-import de.sopa.scene.JustPlayGameScene;
-import de.sopa.scene.LevelChoiceScene;
-import de.sopa.scene.LevelModeGameScene;
-import de.sopa.scene.LoadingScene;
-import de.sopa.scene.MainMenuScene;
-import de.sopa.scene.ScoreScreen;
-import de.sopa.scene.SplashScene;
+import de.sopa.scene.*;
 import org.andengine.engine.Engine;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -26,7 +19,8 @@ public class SceneServiceImpl implements SceneService {
     private BaseScene gameScene;
     private BaseScene loadingScene;
     private BaseScene choiceScene;
-    private BaseScene scoreScreen;
+    private BaseScene scoreScene;
+    private BaseScene settingsScene;
 
     private BaseScene currentScene;
 
@@ -155,8 +149,8 @@ public class SceneServiceImpl implements SceneService {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().loadScoreSceneResources();
-                scoreScreen = new ScoreScreen(level);
-                setScene(scoreScreen);
+                scoreScene = new ScoreScreen(level);
+                setScene(scoreScene);
             }
         }));
     }
@@ -209,6 +203,20 @@ public class SceneServiceImpl implements SceneService {
         }));
     }
 
+    @Override
+    public void loadSettingsFromMenuScene() {
+        disposeMenuScene();
+        setScene(loadingScene);
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                ResourcesManager.getInstance().SettingsSceneResources();
+                settingsScene = new SettingsScene();
+                setScene(settingsScene);
+            }
+        }));
+    }
+
     private void disposeLevelChoiceScene() {
         ResourcesManager.getInstance().unloadLevelChoiceSceneResources();
         choiceScene.disposeScene();
@@ -229,6 +237,8 @@ public class SceneServiceImpl implements SceneService {
     }
 
     private void disposeScoreScreen() {
+        ResourcesManager.getInstance().unloadScoreSceneResources();
+
     //TODO:Dispose Score Screen
     }
 }

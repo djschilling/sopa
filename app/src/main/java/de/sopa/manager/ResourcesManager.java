@@ -35,7 +35,7 @@ public class ResourcesManager {
 
     public ITextureRegion level_mode_region;
     public ITextureRegion play_region;
-
+    public ITextureRegion settingsRegion;
     public ITextureRegion loadingScreenBackgroundRegion;
 
     public Map<Character, TextureRegion> regionTileMap;
@@ -100,13 +100,10 @@ public class ResourcesManager {
     private void loadMenuSceneGraphics() {
         play_region = resourceLoader.getTexture("scenes/menu/JustPlay.png");
         level_mode_region = resourceLoader.getTexture("scenes/menu/LevelMode.png");
+        settingsRegion = resourceLoader.getTexture("scenes/menu/Settings.png");
     }
     private void loadMenuSceneMusic() {
-        try {
-            menuMusic = MusicFactory.createMusicFromAsset(engine.getMusicManager(), activity, "scenes/menu/Menu_Theme.mp3");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        menuMusic = resourceLoader.getMusic("scenes/menu/Menu_Theme.mp3", engine.getMusicManager(), activity);
     }
 
 
@@ -170,5 +167,23 @@ public class ResourcesManager {
 
     public static ResourcesManager getInstance() {
         return INSTANCE;
+    }
+
+    public void unloadScoreSceneResources() {
+        scoreCompleteFont.getTexture().unload();
+        starRegion.getTexture().unload();
+        starSWRegion.getTexture().unload();
+        nextLevelRegion.getTexture().unload();
+        backToChoiceRegion.getTexture().unload();
+
+        scoreCompleteFont = null;
+        starRegion = null;
+        starSWRegion = null;
+        nextLevelRegion = null;
+        backToChoiceRegion = null;
+    }
+
+    public void SettingsSceneResources() {
+
     }
 }

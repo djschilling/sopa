@@ -1,10 +1,15 @@
 package de.sopa.manager;
 
+import android.app.Activity;
 import android.content.res.AssetManager;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.andengine.audio.music.Music;
+import org.andengine.audio.music.MusicFactory;
+import org.andengine.audio.music.MusicManager;
 import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.font.FontManager;
 import org.andengine.opengl.font.IFont;
@@ -82,5 +87,15 @@ public class ResourceLoader {
         mainFontTexture, assetManager, name, size , true, color, strokeWidth, strokeColor);
         font.load();
         return font;
+    }
+
+    public Music getMusic(String s, MusicManager musicManager, Activity activity) {
+        Music music = null;
+        try {
+            music = MusicFactory.createMusicFromAsset(musicManager, activity, s);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return music;
     }
 }
