@@ -210,7 +210,7 @@ public class SceneServiceImpl implements SceneService {
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().SettingsSceneResources();
+                ResourcesManager.getInstance().loadSettingsScene();
                 settingsScene = new SettingsScene();
                 setScene(settingsScene);
             }

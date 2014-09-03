@@ -48,17 +48,19 @@ public class ResourcesManager {
     public ITextureRegion starRegion;
     public TextureRegion starSWRegion;
     public TextureRegion backToChoiceRegion;
-    public TextureRegion levelChoiceRegionSW;
+    public ITextureRegion muteRegion;
     public TextureRegion nextLevelRegion;
+    public TextureRegion levelChoiceRegionSW;
+    private TextureRegion unMuteRegion;
 
     public IFont scoreFont;
     public IFont levelChoiceFont;
     public IFont scoreCompleteFont;
+
     public IFont levelChoiceSWFont;
+
     public LevelService levelService;
-
     public Music menuMusic;
-
     public boolean musicIsPlaying = false;
 
     public void loadSplashSceneResources() {
@@ -183,7 +185,8 @@ public class ResourcesManager {
         backToChoiceRegion = null;
     }
 
-    public void SettingsSceneResources() {
-
+    public void loadSettingsScene() {
+        muteRegion = resourceLoader.getTexture("scenes/settings/mute.png");
+        unMuteRegion = resourceLoader.getTexture("scenes/settings/mute.png");
     }
 }

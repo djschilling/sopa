@@ -55,24 +55,24 @@ public class MainMenuScene extends BaseScene  {
                 sceneService.loadLevelChoiceSceneFromMenuScene();
             }
         });
-        /*
+
         final ButtonSprite settingsButton = new ButtonSprite(0,0,resourcesManager.settingsRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 sceneService.loadSettingsFromMenuScene();
             }
         });
-*/
+
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
-                levelItemSprite.registerEntityModifier(new MoveXModifier(1f, 1080, 0));
-                playItemSprite.registerEntityModifier(new MoveXModifier(1f,-1080,0));
-            //      settingsButton.registerEntityModifier(new MoveYModifier(1f, 1920,1920/2));
+                levelItemSprite.registerEntityModifier(new MoveXModifier(1f, camera.getWidth(), 0));
+                playItemSprite.registerEntityModifier(new MoveXModifier(1f,-camera.getWidth(),0));
+                  settingsButton.registerEntityModifier(new MoveYModifier(1f, camera.getHeight(),camera.getHeight()/2 + settingsButton.getHeight()  ));
             }
         }));
-        //attachChild(settingsButton);
-        //registerTouchArea(settingsButton);
+        attachChild(settingsButton);
+        registerTouchArea(settingsButton);
         levelItemSprite.setPosition(camera.getWidth() / 2 - levelItemSprite.getWidthScaled() /2, camera.getHeight() / 2);
         attachChild(levelItemSprite);
         registerTouchArea(levelItemSprite);
