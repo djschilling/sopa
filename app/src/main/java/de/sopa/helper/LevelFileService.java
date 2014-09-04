@@ -2,6 +2,7 @@ package de.sopa.helper;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Environment;
 import android.util.Log;
 import de.sopa.manager.ResourcesManager;
 import de.sopa.model.Level;
@@ -14,7 +15,7 @@ public class LevelFileService {
     private final FileHandler fileHandler;
     private LevelCreator LevelCreator;
     private static final String LEVEL_BASE_PATH = "levels/";
-    private static final String LEVEL_SAVE_PATH = "/sdcard/sopa/levels/";
+    private static final String LEVEL_SAVE_PATH = Environment.getExternalStorageDirectory().getPath() + "/sopa/levels/";
     private final static String LEVEL_COUNT = "LEVEL_COUNT";
 
     public LevelFileService(Context context) {
