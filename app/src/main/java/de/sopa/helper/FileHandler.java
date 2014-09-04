@@ -4,11 +4,11 @@ package de.sopa.helper;
  * @author David Schilling - davejs92@gmail.com
  */
 
+import android.app.Activity;
 import android.content.Context;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import de.sopa.manager.ResourcesManager;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +16,6 @@ import java.util.List;
 public class FileHandler {
 
     private final Context context;
-
     public FileHandler(Context context) {
         this.context = context;
     }
@@ -37,10 +36,10 @@ public class FileHandler {
     
     public String[] readFromFile(String filename) throws IOException {
         List<String> lines = new ArrayList<>();
-        FileInputStream fileInputStream = new FileInputStream(new File(filename));
+        InputStream inputStream = ResourcesManager.getInstance().activity.getAssets().open(filename);
         int content;
         StringBuilder lineContent = new StringBuilder();
-        while ((content = fileInputStream.read()) != -1) {
+        while ((content = inputStream.read()) != -1) {
             if ((char) content == '\n') {
                 lines.add(lineContent.toString());
                 lineContent = new StringBuilder();
@@ -52,18 +51,20 @@ public class FileHandler {
         if(lineContent.length() != 0) {
             lines.add(lineContent.toString());
         }
-        fileInputStream.close();
+        inputStream.close();
         return lines.toArray(new String[lines.size()]);
     }
 
 
     public String[] getFilenamesInFolder(String folderPath) {
-        File folder = new File(folderPath);
-        File[] fileArray = folder.listFiles();
-        String[] filenames = new String[fileArray.length];
-        for(int i = 0; i < fileArray.length; i++) {
-            filenames[i] = fileArray[i].getName();
+        String[] fileArray = null;
+        try {
+            System.out.println("Check");
+            fileArray = context.getAssets().list(folderPath.substring(0,folderPath.length()-1));
+            System.out.println("Check" + fileArray[0]);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return filenames;
+        return fileArray;
     }
 }

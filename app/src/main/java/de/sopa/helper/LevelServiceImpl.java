@@ -17,7 +17,6 @@ public class LevelServiceImpl implements LevelService {
     public LevelServiceImpl(LevelFileService levelHandler, LevelInfoDataSource levelInfoDataSource) {
         this.levelHandler = levelHandler;
         this.levelInfoDataSource = levelInfoDataSource;
-        updateLevelInfos();
     }
 
     @Override

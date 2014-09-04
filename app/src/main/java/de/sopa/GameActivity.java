@@ -1,5 +1,6 @@
 package de.sopa;
 
+import android.content.SharedPreferences;
 import android.view.KeyEvent;
 import de.sopa.database.LevelInfoDataSource;
 import de.sopa.helper.LevelFileService;
@@ -22,6 +23,7 @@ public class GameActivity extends BaseGameActivity {
 
     private static final float CAMERA_WIDTH = 1080;
     private static final float CAMERA_HEIGHT = 1920;
+    private static final String PREFS_NAME = "MyPrefsFile";
 
     private Camera camera;
     private LevelInfoDataSource levelInfoDataSource;
@@ -41,9 +43,15 @@ public class GameActivity extends BaseGameActivity {
     public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws Exception {
         levelInfoDataSource = new LevelInfoDataSource(this);
         levelInfoDataSource.open();
+        LevelServiceImpl levelService = new LevelServiceImpl(new LevelFileService(this), levelInfoDataSource);
         ResourcesManager.prepareManager(mEngine, this, camera, getVertexBufferObjectManager(),
                 new ResourceLoader(getTextureManager(), getAssets(), getFontManager()), new SceneServiceImpl(mEngine),
-                new LevelServiceImpl(new LevelFileService(this), levelInfoDataSource));
+                levelService);
+        if(firstStart()) {
+            levelService.updateLevelInfos();
+            levelService.unlockLevel(1);
+            System.out.println("First Start");
+        }
         pOnCreateResourcesCallback.onCreateResourcesFinished();
     }
 
@@ -90,5 +98,14 @@ public class GameActivity extends BaseGameActivity {
     public synchronized void onPauseGame() {
         levelInfoDataSource.close();
         super.onPauseGame();
+    }
+
+    private boolean firstStart() {
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        if (settings.getBoolean("my_first_time", true)) {
+            settings.edit().putBoolean("my_first_time", false).commit();
+            return true;
+        }
+        return false;
     }
 }

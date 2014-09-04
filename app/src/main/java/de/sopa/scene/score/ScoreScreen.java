@@ -20,7 +20,6 @@ public class ScoreScreen extends BaseScene {
     @Override
     public void createScene(final Object o) {
         final Level level = (Level) o;
-        final LevelFileService levelFileService = new LevelFileService(resourcesManager.activity);
 
         attachChild(new Text((float) (camera.getWidth() * 0.14), (float) (camera.getHeight() * 0.17), resourcesManager.scoreCompleteFont, "     Level\nComplete", vbom));
         attachChild(new Sprite(0, (float) (camera.getHeight() * 0.55), 400, 400, resourcesManager.starRegion, vbom));

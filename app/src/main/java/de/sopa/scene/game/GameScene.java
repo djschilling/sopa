@@ -1,6 +1,8 @@
 package de.sopa.scene.game;
 
 
+import de.sopa.helper.LevelFileService;
+import de.sopa.manager.ResourcesManager;
 import de.sopa.model.GameService;
 import de.sopa.model.GameServiceImpl;
 import de.sopa.model.Level;
@@ -14,6 +16,8 @@ import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.input.touch.detector.ContinuousHoldDetector;
 import org.andengine.util.color.Color;
+
+import java.io.IOException;
 
 /**
  * David Schilling - davejs92@gmail.com
@@ -117,11 +121,16 @@ public abstract class GameScene extends BaseScene implements Observer {
     }
 
     private void addButtons() {
+        final LevelFileService levelFileService = new LevelFileService(activity);
         Sprite saveLevelButton = new Sprite(0, camera.getHeight() * 0.8f, resourcesManager.saveButtonRegion, vbom) {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 if (pSceneTouchEvent.isActionUp()) {
-                    levelService.createLevel(gameService.getLevel());
+                    try {
+                        levelFileService.saveGameField(gameService.getLevel());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
                 return true;
             }

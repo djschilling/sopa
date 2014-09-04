@@ -13,7 +13,8 @@ import java.io.IOException;
 public class LevelFileService {
     private final FileHandler fileHandler;
     private LevelCreator LevelCreator;
-    private static final String LEVEL_BASE_PATH = "/sdcard/sopa/levels/";
+    private static final String LEVEL_BASE_PATH = "levels/";
+    private static final String LEVEL_SAVE_PATH = "/sdcard/sopa/levels/";
     private final static String LEVEL_COUNT = "LEVEL_COUNT";
 
     public LevelFileService(Context context) {
@@ -36,7 +37,7 @@ public class LevelFileService {
         Integer count = settings.getInt(LEVEL_COUNT, 0);
         count++;
         level.setId(count);
-        String levelFilename = LEVEL_BASE_PATH + count + ".lv";
+        String levelFilename = LEVEL_SAVE_PATH + count + ".lv";
         fileHandler.writeToFile(levelFilename, LevelCreator.fromGameField(level));
         Log.i("Level saved as ", levelFilename);
         SharedPreferences.Editor editor = settings.edit();
