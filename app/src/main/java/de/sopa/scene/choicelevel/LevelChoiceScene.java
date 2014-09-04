@@ -12,6 +12,7 @@ import org.andengine.entity.modifier.MoveXModifier;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
+import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.util.modifier.ease.EaseQuartInOut;
 
@@ -46,10 +47,13 @@ public class LevelChoiceScene extends BaseScene {
 
             final int finalLevelIndex = levelIndex;
             ITextureRegion iTextureRegion = null;
+            IFont levelChoiceFont;
             if (levelInfos.get(finalLevelIndex).isLocked()) {
                 iTextureRegion = resourcesManager.levelChoiceRegionSW;
+                levelChoiceFont = resourcesManager.levelChoiceSWFont;
             } else {
                 iTextureRegion = resourcesManager.levelChoiceRegion;
+                levelChoiceFont = resourcesManager.levelChoiceFont;
             }
             final ChoiceLevelSprite choiceLevelSprite = new ChoiceLevelSprite(getLevelSpriteX(widthPerLevel, levelIndex),
                     getLevelSpriteY(widthPerLevel, levelIndex), iTextureRegion, vbom, new ButtonSprite.OnClickListener() {
@@ -74,7 +78,7 @@ public class LevelChoiceScene extends BaseScene {
                 fontOffset = 150;
             }
             attachChild(new Text(getLevelSpriteX(widthPerLevel, levelIndex) + fontOffset, getLevelSpriteY(widthPerLevel, levelIndex) + 110,
-                    resourcesManager.levelChoiceFont, String.valueOf(levelIndex + 1), vbom));
+                    levelChoiceFont, String.valueOf(levelIndex + 1), vbom));
 
 
         }
