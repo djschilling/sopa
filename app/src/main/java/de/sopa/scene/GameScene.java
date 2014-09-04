@@ -53,6 +53,7 @@ public abstract class GameScene extends BaseScene implements Observer {
         scoreText.setText(String.valueOf(gameService.getLevel().getMovesCount()));
         if (gameService.solvedPuzzle()) {
             gameService.detach(this);
+            unregisterUpdateHandler(continuousHoldDetector);
             engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
                 public void onTimePassed(final TimerHandler pTimerHandler) {
                     engine.unregisterUpdateHandler(pTimerHandler);
