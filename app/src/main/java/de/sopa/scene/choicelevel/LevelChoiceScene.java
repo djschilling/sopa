@@ -9,6 +9,7 @@ import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.Entity;
 import org.andengine.entity.modifier.MoveXModifier;
+import org.andengine.entity.modifier.RotationModifier;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
@@ -59,7 +60,10 @@ public class LevelChoiceScene extends BaseScene {
                     getLevelSpriteY(widthPerLevel, levelIndex), iTextureRegion, vbom, new ButtonSprite.OnClickListener() {
                 @Override
                 public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                    sceneService.loadGameSceneFromLevelChoiceScene(levelService.getLevelById(levelInfos.get(finalLevelIndex).getLevelId()));
+                    if(!levelInfos.get(finalLevelIndex).isLocked()) {
+                        sceneService.loadGameSceneFromLevelChoiceScene(levelService.getLevelById(levelInfos.get(finalLevelIndex).getLevelId()));
+                    } else {
+                    }
                 }
 
             }
