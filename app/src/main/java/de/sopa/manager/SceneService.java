@@ -16,8 +16,6 @@ public interface SceneService {
 
     void loadMenuSceneFromGameScene();
 
-    void loadMenuSceneFromScoreScene();
-
     void loadMenuSceneFromLevelChoiceScene();
 
     void loadGameSceneFromMainMenuScene();
