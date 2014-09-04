@@ -83,4 +83,22 @@ public class LevelServiceImpl implements LevelService {
             }
         }
     }
+
+    @Override
+    public Level updateFewestMoves(Level level) {
+        if (level.getLevelInfo().getFewestMoves() == -1 || level.getMovesCount() < level.getMinimumMovesToSolve()){
+            level.getLevelInfo().setFewestMoves(level.getMovesCount());
+            updateLevelInfo(level.getLevelInfo());
+        }
+        return level;
+    }
+
+    @Override
+    public void unlockLevel(int levelId) {
+        if(levelId <= getLevelCount()) {
+            Level levelById = getLevelById(levelId);
+            levelById.getLevelInfo().setLocked(false);
+            updateLevelInfo(levelById.getLevelInfo());
+        }
+    }
 }

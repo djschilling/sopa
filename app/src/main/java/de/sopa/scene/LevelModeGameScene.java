@@ -17,17 +17,9 @@ public class LevelModeGameScene extends GameScene {
 
     public void onSolvedGame() {
         Level level = gameService.getLevel();
-        if (level.getLevelInfo().getFewestMoves() == -1 || level.getMovesCount() < level.getMinimumMovesToSolve()){
-           level.getLevelInfo().setFewestMoves(level.getMovesCount());
-        }
-        levelService.updateLevelInfo(level.getLevelInfo());
+        levelService.updateFewestMoves(level);
         int nextLevelId = level.getId() + 1;
-        if(nextLevelId <= levelService.getLevelCount()) {
-            Level levelById = levelService.getLevelById(nextLevelId);
-            levelById.getLevelInfo().setLocked(false);
-            levelService.updateLevelInfo(levelById.getLevelInfo());
-        }
+        levelService.unlockLevel(nextLevelId);
         sceneService.loadScoreScreen(level);
-
     }
 }

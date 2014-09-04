@@ -52,4 +52,8 @@ public interface LevelService {
     Integer createLevel(Level level);
 
     void updateLevelInfos();
+
+    Level updateFewestMoves(Level level);
+
+    void unlockLevel(int levelId);
 }

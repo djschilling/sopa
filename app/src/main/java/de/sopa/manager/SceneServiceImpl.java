@@ -145,6 +145,7 @@ public class SceneServiceImpl implements SceneService {
 
 
     public void loadScoreScreen(final Level level) {
+        setScene(loadingScene);
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
