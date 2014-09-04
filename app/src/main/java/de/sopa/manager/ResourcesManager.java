@@ -71,7 +71,7 @@ public class ResourcesManager {
 
 
     public void loadLoadingSceneResources() {
-        loadingScreenBackgroundRegion = resourceLoader.getTexture("scenes/loading/LoadingScreen.png");
+        loadingScreenBackgroundRegion = resourceLoader.getTexture("scenes/loading/LoadingScreen2.png");
     }
 
     public void loadGameSceneResources() {

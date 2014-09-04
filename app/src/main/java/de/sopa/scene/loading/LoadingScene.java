@@ -15,7 +15,7 @@ public class LoadingScene extends BaseScene {
     @Override
     public void createScene(Object o) {
         float spriteSTartY = (camera.getHeight() - camera.getWidth()) / 2;
-        setBackground(new Background(Color.WHITE));
+        setBackground(new Background(Color.BLACK));
         this.attachChild(new Sprite(0, spriteSTartY, camera.getWidth(), camera.getWidth(), ResourcesManager.getInstance().loadingScreenBackgroundRegion, vbom){
             @Override
             protected void preDraw(GLState pGLState, Camera pCamera) {

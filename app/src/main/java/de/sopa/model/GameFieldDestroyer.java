@@ -6,10 +6,12 @@ public class GameFieldDestroyer {
         GameFieldService gameFieldService = new GameFieldService();
         int shiftCount = (int) (Math.random() * (maxShiftCount - minShiftCount + 1) + minShiftCount);
         for (int i = 0; i < shiftCount; i++) {
+            System.out.println("Destroyed");
             int row;
             int value;
             boolean horizontal;
             do {
+                System.out.println("Destroyed123");
                 horizontal = (Math.random() > 0.5f);
                 if (horizontal) {
                     row = (int) (Math.random() * (level.getField()[0].length - 2));
@@ -21,7 +23,7 @@ public class GameFieldDestroyer {
                 } else {
                     value= -1;
                 }
-            } while (gameFieldService.shiftLine(level, horizontal, row,value));
+            } while (!gameFieldService.shiftLine(level, horizontal, row,value));
 
         }
         level.setMinimumMovesToSolve(shiftCount);
