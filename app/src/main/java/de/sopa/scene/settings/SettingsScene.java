@@ -1,5 +1,6 @@
-package de.sopa.scene;
+package de.sopa.scene.settings;
 
+import de.sopa.scene.BaseScene;
 import org.andengine.entity.sprite.ButtonSprite;
 
 /**

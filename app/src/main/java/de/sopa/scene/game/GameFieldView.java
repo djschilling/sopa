@@ -1,4 +1,4 @@
-package de.sopa.scene;
+package de.sopa.scene.game;
 
 import de.sopa.model.GameService;
 import de.sopa.model.Tile;

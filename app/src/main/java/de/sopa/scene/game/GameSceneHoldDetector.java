@@ -1,4 +1,4 @@
-package de.sopa.scene;
+package de.sopa.scene.game;
 
 import android.util.Log;
 import de.sopa.model.GameService;
@@ -7,7 +7,7 @@ import org.andengine.input.touch.detector.HoldDetector;
 /**
  * @author David Schilling - davejs92@gmail.com
  */
-public class MyHoldDetector implements HoldDetector.IHoldDetectorListener {
+public class GameSceneHoldDetector implements HoldDetector.IHoldDetectorListener {
     private final GameService gameService;
     private final float cameraWidth;
     private final GameFieldView gameFieldView;
@@ -20,7 +20,7 @@ public class MyHoldDetector implements HoldDetector.IHoldDetectorListener {
     private float widthPerTile;
     private int row;
 
-    public MyHoldDetector(float startX, float startY, float widthPerTile, GameFieldView gameFieldView, GameService gameService, float cameraWidth) {
+    public GameSceneHoldDetector(float startX, float startY, float widthPerTile, GameFieldView gameFieldView, GameService gameService, float cameraWidth) {
         this.gameFieldView = gameFieldView;
         vertical = horizontal = false;
         this.startX = startX;

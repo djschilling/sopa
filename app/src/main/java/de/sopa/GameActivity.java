@@ -18,7 +18,7 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.ui.activity.BaseGameActivity;
 
 
-public class MainActivity extends BaseGameActivity {
+public class GameActivity extends BaseGameActivity {
 
     private static final float CAMERA_WIDTH = 1080;
     private static final float CAMERA_HEIGHT = 1920;

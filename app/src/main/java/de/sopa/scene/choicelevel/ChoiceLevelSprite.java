@@ -1,4 +1,4 @@
-package de.sopa.scene;
+package de.sopa.scene.choicelevel;
 
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.Sprite;

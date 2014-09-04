@@ -1,4 +1,6 @@
-package de.sopa.scene;
+package de.sopa.scene.game;
+
+import de.sopa.scene.game.GameScene;
 
 /**
  * David Schilling - davejs92@gmail.com

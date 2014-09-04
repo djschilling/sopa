@@ -1,7 +1,8 @@
-package de.sopa.scene;
+package de.sopa.scene.choicelevel;
 
 
 import de.sopa.model.LevelInfo;
+import de.sopa.scene.BaseScene;
 import java.util.List;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.handler.timer.ITimerCallback;

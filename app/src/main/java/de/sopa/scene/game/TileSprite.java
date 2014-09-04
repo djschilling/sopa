@@ -1,4 +1,4 @@
-package de.sopa.scene;
+package de.sopa.scene.game;
 
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.texture.region.ITextureRegion;

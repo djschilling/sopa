@@ -1,7 +1,8 @@
-package de.sopa.scene;
+package de.sopa.scene.score;
 
 import de.sopa.helper.LevelFileService;
 import de.sopa.model.Level;
+import de.sopa.scene.BaseScene;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.sprite.ButtonSprite;

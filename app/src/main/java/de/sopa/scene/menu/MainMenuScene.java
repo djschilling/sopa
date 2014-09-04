@@ -1,5 +1,6 @@
-package de.sopa.scene;
+package de.sopa.scene.menu;
 
+import de.sopa.scene.BaseScene;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.modifier.MoveXModifier;
@@ -12,7 +13,7 @@ import org.andengine.util.color.Color;
 /**
  * David Schilling - davejs92@gmail.com
  */
-public class MainMenuScene extends BaseScene  {
+public class MainMenuScene extends BaseScene {
 
     @Override
     public void createScene(Object o) {

@@ -1,14 +1,12 @@
 package de.sopa.manager;
 
 import android.graphics.Color;
-import de.sopa.MainActivity;
+import de.sopa.GameActivity;
 import de.sopa.helper.LevelService;
 
-import java.io.IOException;
 import java.util.Map;
 
 import org.andengine.audio.music.Music;
-import org.andengine.audio.music.MusicFactory;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
 import org.andengine.opengl.font.IFont;
@@ -25,7 +23,7 @@ public class ResourcesManager {
     public SceneService sceneService;
 
     public Engine engine;
-    public MainActivity activity;
+    public GameActivity activity;
     public Camera camera;
     public VertexBufferObjectManager vbom;
 
@@ -157,7 +155,7 @@ public class ResourcesManager {
         scoreFont = null;
     }
 
-    public static void prepareManager(Engine engine, MainActivity activity, Camera camera, VertexBufferObjectManager vbom, ResourceLoader resourceLoader, SceneService sceneService, LevelService levelService) {
+    public static void prepareManager(Engine engine, GameActivity activity, Camera camera, VertexBufferObjectManager vbom, ResourceLoader resourceLoader, SceneService sceneService, LevelService levelService) {
         getInstance().engine = engine;
         getInstance().activity = activity;
         getInstance().camera = camera;

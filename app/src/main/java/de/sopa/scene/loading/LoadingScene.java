@@ -1,6 +1,7 @@
-package de.sopa.scene;
+package de.sopa.scene.loading;
 
 import de.sopa.manager.ResourcesManager;
+import de.sopa.scene.BaseScene;
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;

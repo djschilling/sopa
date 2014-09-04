@@ -1,10 +1,11 @@
-package de.sopa.scene;
+package de.sopa.scene.game;
 
 
 import de.sopa.model.GameService;
 import de.sopa.model.GameServiceImpl;
 import de.sopa.model.Level;
 import de.sopa.observer.Observer;
+import de.sopa.scene.BaseScene;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.scene.background.Background;
@@ -53,10 +54,11 @@ public abstract class GameScene extends BaseScene implements Observer {
         scoreText.setText(String.valueOf(gameService.getLevel().getMovesCount()));
         if (gameService.solvedPuzzle()) {
             gameService.detach(this);
-            unregisterUpdateHandler(continuousHoldDetector);
-            engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            this.clearTouchAreas();
+            this.clearUpdateHandlers();
+            baseScene.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
                 public void onTimePassed(final TimerHandler pTimerHandler) {
-                    engine.unregisterUpdateHandler(pTimerHandler);
+                    baseScene.unregisterUpdateHandler(pTimerHandler);
                     onSolvedGame();
                 }
             }));
@@ -99,8 +101,8 @@ public abstract class GameScene extends BaseScene implements Observer {
 
     private void registerTouchHandler() {
         final float widthPerTile = camera.getWidth() / gameService.getLevel().getField().length;
-        MyHoldDetector myHoldDetector = new MyHoldDetector(widthPerTile, getTileSceneStartY() + widthPerTile, widthPerTile, gameFieldView, gameService, camera.getWidth());
-        continuousHoldDetector = new ContinuousHoldDetector(0, 100, 0.01f, myHoldDetector);
+        GameSceneHoldDetector gameSceneHoldDetector = new GameSceneHoldDetector(widthPerTile, getTileSceneStartY() + widthPerTile, widthPerTile, gameFieldView, gameService, camera.getWidth());
+        continuousHoldDetector = new ContinuousHoldDetector(0, 100, 0.01f, gameSceneHoldDetector);
         registerUpdateHandler(continuousHoldDetector);
         setOnSceneTouchListener(continuousHoldDetector);
     }

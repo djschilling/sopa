@@ -25,6 +25,7 @@ public abstract class BaseScene extends Scene {
     protected ResourcesManager resourcesManager;
     protected VertexBufferObjectManager vbom;
     protected Camera camera;
+    protected BaseScene baseScene;
 
     public BaseScene(Object o) {
         this.resourcesManager = ResourcesManager.getInstance();
@@ -34,6 +35,7 @@ public abstract class BaseScene extends Scene {
         this.camera = resourcesManager.camera;
         this.sceneService = resourcesManager.sceneService;
         this.levelService = resourcesManager.levelService;
+        this.baseScene = this;
         createScene(o);
     }
     public BaseScene() {
