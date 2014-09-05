@@ -1,8 +1,6 @@
 package de.sopa.scene.game;
 
 
-import de.sopa.helper.LevelFileService;
-import de.sopa.manager.ResourcesManager;
 import de.sopa.model.GameService;
 import de.sopa.model.GameServiceImpl;
 import de.sopa.model.Level;
@@ -11,14 +9,9 @@ import de.sopa.scene.BaseScene;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.scene.background.Background;
-import org.andengine.entity.sprite.ButtonSprite;
-import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
-import org.andengine.input.touch.TouchEvent;
 import org.andengine.input.touch.detector.ContinuousHoldDetector;
 import org.andengine.util.color.Color;
-
-import java.io.IOException;
 
 /**
  * David Schilling - davejs92@gmail.com
@@ -26,8 +19,6 @@ import java.io.IOException;
 public abstract class GameScene extends BaseScene implements Observer {
 
     protected GameService gameService;
-    private Sprite solvedSprite;
-    private Sprite unsolvedSprite;
     private ContinuousHoldDetector continuousHoldDetector;
     private float spacePerTile;
     private Text scoreText;
@@ -46,7 +37,6 @@ public abstract class GameScene extends BaseScene implements Observer {
         levelBackup = gameService.getLevel().copy();
         addBackground();
         addTiles();
-        addSolvedIcon();
         addButtons();
         addScoreText();
         registerTouchHandler();
@@ -114,14 +104,6 @@ public abstract class GameScene extends BaseScene implements Observer {
         setOnSceneTouchListener(continuousHoldDetector);
     }
 
-
-    private void addSolvedIcon() {
-
-        solvedSprite = new Sprite(0, 0, 50, 50, resourcesManager.regionTileMap.get('s'), vbom);
-        unsolvedSprite = new Sprite(0, 0, 50, 50, resourcesManager.regionTileMap.get('i'), vbom);
-        attachChild(solvedSprite);
-        attachChild(unsolvedSprite);
-    }
 
     protected abstract void addButtons();
 
