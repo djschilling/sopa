@@ -34,4 +34,8 @@ public interface SceneService {
     void loadSettingsFromMenuScene();
 
     void loadMenuSceneFromSettingsScene();
+
+    void loadMenuSceneFromScoreScene();
+
+    void loadGameSceneFromGameScene(Level level);
 }

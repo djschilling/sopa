@@ -71,4 +71,21 @@ public class Level {
     public void setMinimumMovesToSolve(int minimumMovesToSolve) {
         this.minimumMovesToSolve = minimumMovesToSolve;
     }
+
+    public Level copy() {
+        Level level = new Level();
+        Tile[][] tiles = new Tile[field.length][field[0].length];
+        for(int i = 0; i < field.length; i++) {
+            for(int j = 0; j < field[i].length; j++) {
+                tiles[i][j] = field[i][j];
+            }
+        }
+        level.setField(tiles);
+        level.setId(id);
+        level.setLevelInfo(levelInfo);
+        level.setMinimumMovesToSolve(minimumMovesToSolve);
+        level.setStartX(startX);
+        level.setStartY(startY);
+        return level;
+    }
 }

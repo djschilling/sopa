@@ -49,14 +49,17 @@ public class ResourcesManager {
     public ITextureRegion muteRegion;
     public TextureRegion nextLevelRegion;
     public TextureRegion levelChoiceRegionSW;
+    public ITextureRegion backToMenuRegionA;
+    public ITextureRegion backToMenuRegionP;
+    public ITextureRegion restartRegion;
     private TextureRegion unMuteRegion;
 
     public IFont scoreFont;
     public IFont levelChoiceFont;
     public IFont movesScoreFont;
     public IFont scoreCompleteFont;
-    public IFont levelChoiceSWFont;
 
+    public IFont levelChoiceSWFont;
     public LevelService levelService;
     public Music menuMusic;
     public boolean musicIsPlaying = false;
@@ -96,6 +99,9 @@ public class ResourcesManager {
         starSWRegion =  resourceLoader.getTexture("scenes/score/starSW.png");
         nextLevelRegion = resourceLoader.getTexture("scenes/score/NextLevel.png");
         backToChoiceRegion = resourceLoader.getTexture("scenes/score/LevelChoice.png");
+        backToMenuRegionA = resourceLoader.getTexture("scenes/score/BackA.png");
+        backToMenuRegionP = resourceLoader.getTexture("scenes/score/BackP.png");
+
     }
 
     private void loadMenuSceneGraphics() {
@@ -112,6 +118,7 @@ public class ResourcesManager {
         regionTileMap = this.resourceLoader.getTileTextures();
         tilesBorderRegion = resourceLoader.getTexture("scenes/game/borders.png");
         saveButtonRegion = resourceLoader.getTexture("scenes/game/save.png");
+        restartRegion = resourceLoader.getTexture("scenes/game/Restart.png");
     }
 
     public void unloadSplashSceneResources() {

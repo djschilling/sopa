@@ -226,6 +226,35 @@ public class SceneServiceImpl implements SceneService {
         }));
     }
 
+    @Override
+    public void loadMenuSceneFromScoreScene() {
+        setScene(loadingScene);
+        disposeScoreScreen();
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            @Override
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                ResourcesManager.getInstance().loadMenuSceneResources();
+                menuScene = new MainMenuScene();
+                setScene(menuScene);
+            }
+        }));
+    }
+
+    @Override
+    public void loadGameSceneFromGameScene(final Level level) {
+        disposeGameScene();
+        setScene(loadingScene);
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                ResourcesManager.getInstance().loadGameSceneResources();
+                gameScene = new LevelModeGameScene(level);
+                setScene(gameScene);
+            }
+        }));
+    }
+
     private void disposeSettingsScene() {
 
     }

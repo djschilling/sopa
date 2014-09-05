@@ -52,10 +52,18 @@ public class ScoreScreen extends BaseScene {
                 }
             }
         });
+
+        ButtonSprite backToMenuButton = new ButtonSprite((float) (camera.getWidth() / 2 - 200), (float) (camera.getHeight() - 400), resourcesManager.backToMenuRegionA, vbom, new ButtonSprite.OnClickListener() {
+            @Override
+            public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                sceneService.loadMenuSceneFromScoreScene();
+            }
+        });
         registerTouchArea(choiceLevelButton);
         registerTouchArea(nextLevelButton);
+        registerTouchArea(backToMenuButton);
         attachChild(choiceLevelButton);
-        attachChild(new ButtonSprite((float) (camera.getWidth() / 2 - 200), (float) (camera.getHeight() - 400), resourcesManager.backToChoiceRegion, vbom));
+        attachChild(backToMenuButton);
         attachChild(nextLevelButton);
     }
 

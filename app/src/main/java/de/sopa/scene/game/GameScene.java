@@ -11,6 +11,7 @@ import de.sopa.scene.BaseScene;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
@@ -32,6 +33,7 @@ public abstract class GameScene extends BaseScene implements Observer {
     private Text scoreText;
     private GameFieldView gameFieldView;
     private Level level;
+    private Level levelBackup;
 
     public GameScene(Object o) {
         super(o);
@@ -41,6 +43,7 @@ public abstract class GameScene extends BaseScene implements Observer {
     public void createScene(Object o) {
         initializeLogic(o);
         calculateSpacePerTile(gameService.getLevel().getField().length);
+        levelBackup = gameService.getLevel().copy();
         addBackground();
         addTiles();
         addSolvedIcon();
@@ -135,6 +138,18 @@ public abstract class GameScene extends BaseScene implements Observer {
                 return true;
             }
         };
+        if(this instanceof LevelModeGameScene) {
+            ButtonSprite restartButton = new ButtonSprite(camera.getWidth() - 300, (float) (camera.getHeight()*0.9 - 300), resourcesManager.restartRegion, vbom, new ButtonSprite.OnClickListener() {
+                @Override
+                public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                    sceneService.loadGameSceneFromGameScene(levelBackup);
+                }
+            });
+            restartButton.setWidth(300);
+            restartButton.setHeight(300);
+            registerTouchArea(restartButton);
+            attachChild(restartButton);
+        }
         registerTouchArea(saveLevelButton);
         setTouchAreaBindingOnActionDownEnabled(true);
         attachChild(saveLevelButton);
