@@ -33,7 +33,7 @@ public abstract class GameScene extends BaseScene implements Observer {
     private Text scoreText;
     private GameFieldView gameFieldView;
     private Level level;
-    private Level levelBackup;
+    protected Level levelBackup;
 
     public GameScene(Object o) {
         super(o);
@@ -123,37 +123,7 @@ public abstract class GameScene extends BaseScene implements Observer {
         attachChild(unsolvedSprite);
     }
 
-    private void addButtons() {
-        final LevelFileService levelFileService = new LevelFileService(activity);
-        Sprite saveLevelButton = new Sprite(0, camera.getHeight() * 0.8f, resourcesManager.saveButtonRegion, vbom) {
-            @Override
-            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                if (pSceneTouchEvent.isActionUp()) {
-                    try {
-                        levelFileService.saveGameField(gameService.getLevel());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                return true;
-            }
-        };
-        if(this instanceof LevelModeGameScene) {
-            ButtonSprite restartButton = new ButtonSprite(camera.getWidth() - 300, (float) (camera.getHeight()*0.9 - 300), resourcesManager.restartRegion, vbom, new ButtonSprite.OnClickListener() {
-                @Override
-                public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                    sceneService.loadGameSceneFromGameScene(levelBackup);
-                }
-            });
-            restartButton.setWidth(300);
-            restartButton.setHeight(300);
-            registerTouchArea(restartButton);
-            attachChild(restartButton);
-        }
-        registerTouchArea(saveLevelButton);
-        setTouchAreaBindingOnActionDownEnabled(true);
-        attachChild(saveLevelButton);
-    }
+    protected abstract void addButtons();
 
 
     private void addBackground() {
