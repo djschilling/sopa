@@ -8,6 +8,7 @@ import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
+import org.andengine.opengl.texture.region.ITextureRegion;
 
 /**
  * @author Raphael Schilling
@@ -20,11 +21,20 @@ public class ScoreScreen extends BaseScene {
     @Override
     public void createScene(final Object o) {
         final Level level = (Level) o;
-
-        attachChild(new Text((float) (camera.getWidth() * 0.14), (float) (camera.getHeight() * 0.17), resourcesManager.scoreCompleteFont, "     Level\nComplete", vbom));
+        int stars;
+        if (level.getMinimumMovesToSolve() / level.getMovesCount() > 0.9) {
+            stars = 3;
+        } else if ((float) (level.getMinimumMovesToSolve()) / level.getMovesCount() > 0.4) {
+            stars = 2;
+        } else {
+            stars = 1;
+        }
+        System.out.println(stars);
+        attachChild(new Text((float) (camera.getWidth() * 0.14), (float) (camera.getHeight() * 0.05), resourcesManager.scoreCompleteFont, "     Level\nComplete", vbom));
+        attachChild(new Text((float) (camera.getWidth() * 0.05), (float) (camera.getHeight() * 0.4), resourcesManager.movesScoreFont, "You're moves: \t\t\t" + level.getMovesCount() + "\nMoves for 3 Stars: " + level.getMinimumMovesToSolve(), vbom));
         attachChild(new Sprite(0, (float) (camera.getHeight() * 0.55), 400, 400, resourcesManager.starRegion, vbom));
-        attachChild(new Sprite((float) (camera.getWidth() * 0.64), (float) (camera.getHeight() * 0.55), 400, 400, resourcesManager.starSWRegion, vbom));
-        attachChild(new Sprite((float) (camera.getWidth() / 2 - 200), (float) (camera.getHeight() * 0.6), 400, 400, resourcesManager.starRegion, vbom));
+        attachChild(new Sprite((float) (camera.getWidth() * 0.64), (float) (camera.getHeight() * 0.55), 400, 400, (stars == 3) ? resourcesManager.starRegion : resourcesManager.starSWRegion, vbom));
+        attachChild(new Sprite((float) (camera.getWidth() / 2 - 200), (float) (camera.getHeight() * 0.6), 400, 400, (stars >= 2) ? resourcesManager.starRegion : resourcesManager.starSWRegion, vbom));
         ButtonSprite choiceLevelButton = new ButtonSprite(0, (float) (camera.getHeight() - 400), resourcesManager.backToChoiceRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {

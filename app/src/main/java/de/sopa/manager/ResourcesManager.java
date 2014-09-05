@@ -53,8 +53,8 @@ public class ResourcesManager {
 
     public IFont scoreFont;
     public IFont levelChoiceFont;
+    public IFont movesScoreFont;
     public IFont scoreCompleteFont;
-
     public IFont levelChoiceSWFont;
 
     public LevelService levelService;
@@ -91,6 +91,7 @@ public class ResourcesManager {
     }
     public void loadScoreSceneResources() {
         scoreCompleteFont = resourceLoader.getFont("Impact.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 220, Color.WHITE, 0, 0x00000000);
+        movesScoreFont = resourceLoader.getFont("DroidSans-Bold.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 100, Color.WHITE, 0, 0x00000000);
         starRegion =  resourceLoader.getTexture("scenes/score/star.png");
         starSWRegion =  resourceLoader.getTexture("scenes/score/starSW.png");
         nextLevelRegion = resourceLoader.getTexture("scenes/score/NextLevel.png");
@@ -170,6 +171,7 @@ public class ResourcesManager {
     }
 
     public void unloadScoreSceneResources() {
+        movesScoreFont.getTexture().unload();
         scoreCompleteFont.getTexture().unload();
         starRegion.getTexture().unload();
         starSWRegion.getTexture().unload();
@@ -177,6 +179,7 @@ public class ResourcesManager {
         backToChoiceRegion.getTexture().unload();
 
         scoreCompleteFont = null;
+        movesScoreFont = null;
         starRegion = null;
         starSWRegion = null;
         nextLevelRegion = null;
