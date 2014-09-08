@@ -2,6 +2,7 @@ package de.sopa.scene.score;
 
 import de.sopa.helper.LevelFileService;
 import de.sopa.model.Level;
+import de.sopa.model.StarCalculator;
 import de.sopa.scene.BaseScene;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -14,21 +15,18 @@ import org.andengine.opengl.texture.region.ITextureRegion;
  * @author Raphael Schilling
  */
 public class ScoreScreen extends BaseScene {
+    private StarCalculator starCalculator;
     public ScoreScreen(Level level) {
         super(level);
+        starCalculator = new StarCalculator();
     }
 
     @Override
     public void createScene(final Object o) {
         final Level level = (Level) o;
-        int stars;
-        if (level.getMinimumMovesToSolve() / level.getMovesCount() > 0.9) {
-            stars = 3;
-        } else if ((float) (level.getMinimumMovesToSolve()) / level.getMovesCount() > 0.4) {
-            stars = 2;
-        } else {
-            stars = 1;
-        }
+
+        int stars = starCalculator.getStars(level.getMovesCount(), level.getMovesCount());
+
         System.out.println(stars);
         attachChild(new Text((float) (camera.getWidth() * 0.14), (float) (camera.getHeight() * 0.05), resourcesManager.scoreCompleteFont, "     Level\nComplete", vbom));
         attachChild(new Text((float) (camera.getWidth() * 0.05), (float) (camera.getHeight() * 0.4), resourcesManager.movesScoreFont, "You're moves: \t\t\t" + level.getMovesCount() + "\nMoves for 3 Stars: " + level.getMinimumMovesToSolve(), vbom));
