@@ -51,7 +51,7 @@ public class GameSceneHoldDetector implements HoldDetector.IHoldDetectorListener
         } else {
             if(horizontal) {
                 float moveSize = pHoldX - moveStartX;
-                if(moveSize > widthPerTile) {
+                   if(moveSize > widthPerTile) {
                     gameService.shiftLine(true, row, 1);
                     moveStartX = pHoldX;
                     gameFieldView.moveTiles(true, row, 0, true);

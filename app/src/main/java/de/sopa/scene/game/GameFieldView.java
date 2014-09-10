@@ -5,10 +5,14 @@ import de.sopa.model.Tile;
 import de.sopa.model.TileType;
 import java.util.Map;
 import org.andengine.entity.Entity;
+import org.andengine.entity.IEntity;
+import org.andengine.entity.modifier.MoveXModifier;
+import org.andengine.entity.modifier.MoveYModifier;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.andengine.util.modifier.ease.*;
 
 /**
  * David Schilling - davejs92@gmail.com
@@ -88,4 +92,42 @@ public class GameFieldView extends Entity {
         }
     }
 
+    public void oneStep(final boolean horizontal, int row, final int direction) {
+        if (row < 0) {
+            return;
+        }
+        final int finalRow = row;
+
+        row++;
+        if (horizontal) {
+            if (row > tileSprites.length - 2) {
+                return;
+            }
+            for (int x = 1; x < tileSprites.length - 1; x++) {
+                TileSprite tileSprite = tileSprites[x][row];
+                tileSprite.registerEntityModifier(new MoveXModifier(0.3f, tileSprite.getX(), tileSprite.getX() + tileSprite.getWidth() * direction, EaseQuadInOut.getInstance()) {
+                    @Override
+                    protected void onModifierFinished(IEntity pItem) {
+                        gameService.shiftLine(horizontal, finalRow, direction);
+                        super.onModifierFinished(pItem);
+                    }
+                });
+
+            }
+        } else {
+            if (row > tileSprites[0].length - 2) {
+                return;
+            }
+            for (int y = 1; y < tileSprites[row].length - 1; y++) {
+                TileSprite tileSprite = tileSprites[row][y];
+                tileSprite.registerEntityModifier(new MoveYModifier(0.3f, tileSprite.getY(), tileSprite.getY() + tileSprite.getWidth() * direction,EaseQuadInOut.getInstance()) {
+                    @Override
+                    protected void onModifierFinished(IEntity pItem) {
+                        gameService.shiftLine(horizontal, finalRow, direction);
+                        super.onModifierFinished(pItem);
+                    }
+                });
+            }
+        }
+    }
 }

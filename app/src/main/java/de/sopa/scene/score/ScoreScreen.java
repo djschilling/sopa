@@ -18,14 +18,13 @@ public class ScoreScreen extends BaseScene {
     private StarCalculator starCalculator;
     public ScoreScreen(Level level) {
         super(level);
-        starCalculator = new StarCalculator();
     }
 
     @Override
     public void createScene(final Object o) {
         final Level level = (Level) o;
-
-        int stars = starCalculator.getStars(level.getMovesCount(), level.getMovesCount());
+        starCalculator = new StarCalculator();
+        int stars = starCalculator.getStars(level.getMovesCount(), level.getMinimumMovesToSolve());
 
         System.out.println(stars);
         attachChild(new Text((float) (camera.getWidth() * 0.14), (float) (camera.getHeight() * 0.05), resourcesManager.scoreCompleteFont, "     Level\nComplete", vbom));
