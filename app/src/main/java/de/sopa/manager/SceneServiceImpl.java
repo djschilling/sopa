@@ -256,7 +256,7 @@ public class SceneServiceImpl implements SceneService {
     }
 
     private void disposeSettingsScene() {
-
+        ResourcesManager.getInstance().unloadSettingsScene();
     }
 
     private void disposeLevelChoiceScene() {

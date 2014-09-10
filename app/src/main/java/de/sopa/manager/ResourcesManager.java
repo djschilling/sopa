@@ -42,17 +42,17 @@ public class ResourcesManager {
     public ITextureRegion levelChoiceRegion;
     public ITextureRegion levelChoiceArrowRightRegion;
     public ITextureRegion levelChoiceArrowLeftRegion;
-    public TextureRegion levelChoiceRegionLocked;
+    public ITextureRegion levelChoiceRegionLocked;
     public ITextureRegion starRegion;
-    public TextureRegion starSWRegion;
-    public TextureRegion backToChoiceRegion;
+    public ITextureRegion starSWRegion;
+    public ITextureRegion backToChoiceRegion;
     public ITextureRegion muteRegion;
-    public TextureRegion nextLevelRegion;
-    public TextureRegion levelChoiceRegionSW;
+    public ITextureRegion nextLevelRegion;
+    public ITextureRegion levelChoiceRegionSW;
     public ITextureRegion backToMenuRegionA;
     public ITextureRegion backToMenuRegionP;
     public ITextureRegion restartRegion;
-    private TextureRegion unMuteRegion;
+    private ITextureRegion unMuteRegion;
 
     public IFont scoreFont;
     public IFont levelChoiceFont;
@@ -75,6 +75,7 @@ public class ResourcesManager {
 
     public void loadLoadingSceneResources() {
         loadingScreenBackgroundRegion = resourceLoader.getTexture("scenes/loading/LoadingScreen2.png");
+        //TODO: Unload loadingScreenBackgroundRegion
     }
 
     public void loadGameSceneResources() {
@@ -131,11 +132,20 @@ public class ResourcesManager {
 
     public void unloadLevelChoiceSceneResources() {
         levelChoiceRegion.getTexture().unload();
+        levelChoiceRegionSW.getTexture().unload();
+        levelChoiceRegionLocked.getTexture().unload();
         levelChoiceArrowLeftRegion.getTexture().unload();
         levelChoiceArrowRightRegion.getTexture().unload();
+        levelChoiceFont.unload();
+        levelChoiceSWFont.unload();
+
         levelChoiceRegion = null;
+        levelChoiceRegionSW = null;
+        levelChoiceRegionLocked = null;
         levelChoiceArrowRightRegion = null;
         levelChoiceArrowLeftRegion = null;
+        levelChoiceFont = null;
+        levelChoiceSWFont = null;
     }
 
 
@@ -146,14 +156,19 @@ public class ResourcesManager {
     private void unloadMenuSceneTextures() {
         level_mode_region.getTexture().unload();
         play_region.getTexture().unload();
+        settingsRegion.getTexture().unload();
+
         level_mode_region = null;
         play_region = null;
+        settingsRegion = null;
     }
 
     private void unloadGameSceneTextures() {
         for (TextureRegion textureRegion : regionTileMap.values()) {
             textureRegion.getTexture().unload();
         }
+        restartRegion.getTexture().unload();
+        restartRegion = null;
         regionTileMap = null;
         tilesBorderRegion.getTexture().unload();
         tilesBorderRegion = null;
@@ -184,6 +199,8 @@ public class ResourcesManager {
         starSWRegion.getTexture().unload();
         nextLevelRegion.getTexture().unload();
         backToChoiceRegion.getTexture().unload();
+        backToMenuRegionA.getTexture().unload();
+        backToMenuRegionP.getTexture().unload();
 
         scoreCompleteFont = null;
         movesScoreFont = null;
@@ -191,10 +208,30 @@ public class ResourcesManager {
         starSWRegion = null;
         nextLevelRegion = null;
         backToChoiceRegion = null;
+        backToMenuRegionA = null;
+        backToMenuRegionP = null;
+
+
+        scoreCompleteFont = resourceLoader.getFont("Impact.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 220, Color.WHITE, 0, 0x00000000);
+        movesScoreFont = resourceLoader.getFont("DroidSans-Bold.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 100, Color.WHITE, 0, 0x00000000);
+        starRegion =  resourceLoader.getTexture("scenes/score/star.png");
+        starSWRegion =  resourceLoader.getTexture("scenes/score/starSW.png");
+        nextLevelRegion = resourceLoader.getTexture("scenes/score/NextLevel.png");
+        backToChoiceRegion = resourceLoader.getTexture("scenes/score/LevelChoice.png");
+        backToMenuRegionA = resourceLoader.getTexture("scenes/score/BackA.png");
+        backToMenuRegionP = resourceLoader.getTexture("scenes/score/BackP.png");
     }
 
     public void loadSettingsScene() {
         muteRegion = resourceLoader.getTexture("scenes/settings/mute.png");
         unMuteRegion = resourceLoader.getTexture("scenes/settings/mute.png");
+    }
+
+    public void unloadSettingsScene() {
+        muteRegion.getTexture().unload();
+        unMuteRegion.getTexture().unload();
+
+        muteRegion = null;
+        unMuteRegion = null;
     }
 }
