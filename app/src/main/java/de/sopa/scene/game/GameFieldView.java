@@ -46,11 +46,23 @@ public class GameFieldView extends Entity {
             for (int x = 0; x < width; x++) {
                 if (field[x][y].getShortcut() != 'n') {
                     TextureRegion pTextureRegion = tileRegionMap.get(field[x][y].getShortcut());
-                    TileSprite tileSprite = new TileSprite(tilePositionX, tilePositionY, spacePerTile, spacePerTile, pTextureRegion, vbom);
-                    attachChild(tileSprite);
-                    if (field[x][y].getTileType() == TileType.PUZZLE) {
-                        tileSprites[x][y] = tileSprite;
+                    switch (field[x][y].getTileType()) {
+                        case PUZZLE:
+                            TileSprite tileSprite = new TileSprite(tilePositionX, tilePositionY, spacePerTile, spacePerTile, pTextureRegion, vbom);
+                            attachChild(tileSprite);
+                            tileSprites[x][y] = tileSprite;
+                            break;
+                        case FINISH:
+                            createFinishAnsStart(x, y, tilePositionX,tilePositionY, pTextureRegion, field);
+                            break;
+                        case START:
+                            createFinishAnsStart(x, y, tilePositionX, tilePositionY, pTextureRegion, field);
+                            break;
+                        default:
+                            break;
                     }
+
+
                 }
                 tilePositionX += spacePerTile;
             }
@@ -128,6 +140,28 @@ public class GameFieldView extends Entity {
                     }
                 });
             }
+        }
+    }
+    private void createFinishAnsStart(int x,int y, float tilePositionX, float tilePositionY, TextureRegion pTextureRegion, Tile[][] field ) {
+
+        if(x == 0) {
+            Sprite sprite = new TileSprite(tilePositionX + spacePerTile, tilePositionY, spacePerTile, spacePerTile, pTextureRegion, vbom);
+            attachChild(sprite);
+        } else if(x == field.length - 1) {
+            Sprite sprite = new TileSprite(tilePositionX - spacePerTile, tilePositionY, spacePerTile, spacePerTile, pTextureRegion, vbom);
+            sprite.setRotationCenter(sprite.getWidth() / 2, sprite.getHeight() / 2);
+            sprite.setRotation(180f);
+            attachChild(sprite);
+        } else if(y == 0) {
+            Sprite sprite = new TileSprite(tilePositionX, tilePositionY + spacePerTile, spacePerTile, spacePerTile, pTextureRegion, vbom);
+            sprite.setRotationCenter(sprite.getWidth() / 2, sprite.getHeight() / 2);
+            sprite.setRotation(90f);
+            attachChild(sprite);
+        } else if(y == field[x].length - 1) {
+            Sprite sprite = new TileSprite(tilePositionX, tilePositionY - spacePerTile, spacePerTile, spacePerTile, pTextureRegion, vbom);
+            sprite.setRotationCenter(sprite.getWidth() / 2, sprite.getHeight() / 2);
+            sprite.setRotation(270f);
+            attachChild(sprite);
         }
     }
 }

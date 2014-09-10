@@ -33,7 +33,7 @@ public abstract class GameScene extends BaseScene implements Observer {
     @Override
     public void createScene(Object o) {
         initializeLogic(o);
-        calculateSpacePerTile(gameService.getLevel().getField().length);
+        calculateSpacePerTile(gameService.getLevel().getField().length - 2);
         levelBackup = gameService.getLevel().copy();
         addBackground();
         addTiles();
@@ -67,7 +67,7 @@ public abstract class GameScene extends BaseScene implements Observer {
 
     private void addTiles() {
         float tilesSceneStartY = getTileSceneStartY();
-        gameFieldView = new GameFieldView(0, tilesSceneStartY, spacePerTile,
+        gameFieldView = new GameFieldView(0 - spacePerTile, tilesSceneStartY, spacePerTile,
                 gameService, resourcesManager.regionTileMap, vbom, resourcesManager.tilesBorderRegion);
         gameFieldView.addTiles();
         attachChild(gameFieldView);
@@ -97,9 +97,8 @@ public abstract class GameScene extends BaseScene implements Observer {
     }
 
     private void registerTouchHandler() {
-        final float widthPerTile = camera.getWidth() / gameService.getLevel().getField().length;
-        GameSceneSingleMoveDetector gameSceneSingleMoveDetector = new GameSceneSingleMoveDetector(widthPerTile, getTileSceneStartY() + widthPerTile ,widthPerTile, gameFieldView, gameService, camera.getWidth());
-        GameSceneHoldDetector gameSceneHoldDetector = new GameSceneHoldDetector(widthPerTile, getTileSceneStartY() + widthPerTile, widthPerTile, gameFieldView, gameService, camera.getWidth());
+        GameSceneSingleMoveDetector gameSceneSingleMoveDetector = new GameSceneSingleMoveDetector(0, getTileSceneStartY() + spacePerTile ,spacePerTile, gameFieldView, gameService, camera.getWidth());
+    //    GameSceneHoldDetector gameSceneHoldDetector = new GameSceneHoldDetector(widthPerTile, getTileSceneStartY() + widthPerTile, widthPerTile, gameFieldView, gameService, camera.getWidth());
         continuousHoldDetector = new ContinuousHoldDetector(0, 100, 0.01f, gameSceneSingleMoveDetector);
         registerUpdateHandler(continuousHoldDetector);
         setOnSceneTouchListener(continuousHoldDetector);

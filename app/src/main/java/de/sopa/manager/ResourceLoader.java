@@ -59,8 +59,8 @@ public class ResourceLoader {
 
     public Map<Character, TextureRegion> getTileTextures() {
         Map<Character, TextureRegion> regionMap = new HashMap<>();
-        regionMap.put('s', getTexture("scenes/game/s.png"));
-        regionMap.put('f', getTexture("scenes/game/f.png"));
+        regionMap.put('s', getTexture("scenes/game/bordersStart.png"));
+        regionMap.put('f', getTexture("scenes/game/bordersFinish.png"));
         regionMap.put('o', getTexture("scenes/game/o.png"));
         regionMap.put('r', getTexture("scenes/game/r.png"));
         regionMap.put('l', getTexture("scenes/game/l.png"));
