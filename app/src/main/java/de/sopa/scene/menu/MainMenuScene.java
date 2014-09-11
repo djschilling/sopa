@@ -33,6 +33,14 @@ public class MainMenuScene extends BaseScene {
 
     @Override
     public void disposeScene() {
+        final MainMenuScene mainMenuScene = this;
+
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                mainMenuScene.detachChildren();
+            }
+        }));
     }
 
     private void createBackground() {

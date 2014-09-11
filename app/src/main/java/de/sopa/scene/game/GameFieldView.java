@@ -164,4 +164,10 @@ public class GameFieldView extends Entity {
             attachChild(sprite);
         }
     }
+
+    @Override
+    public void dispose() {
+        detachChildren();
+        super.dispose();
+    }
 }

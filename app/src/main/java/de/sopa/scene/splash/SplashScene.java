@@ -2,6 +2,8 @@ package de.sopa.scene.splash;
 
 import de.sopa.scene.BaseScene;
 import org.andengine.engine.camera.Camera;
+import org.andengine.engine.handler.timer.ITimerCallback;
+import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.util.GLState;
 
@@ -31,6 +33,13 @@ public class SplashScene extends BaseScene {
 
     @Override
     public void disposeScene() {
+        final SplashScene splashScene = this;
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                splashScene.detachChildren();
+            }
+        }));
         splash.detachSelf();
         splash.dispose();
         this.detachSelf();

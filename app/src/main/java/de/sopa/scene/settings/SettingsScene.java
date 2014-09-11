@@ -1,6 +1,8 @@
 package de.sopa.scene.settings;
 
 import de.sopa.scene.BaseScene;
+import org.andengine.engine.handler.timer.ITimerCallback;
+import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.sprite.ButtonSprite;
 
 /**
@@ -27,6 +29,13 @@ public class SettingsScene extends BaseScene {
 
     @Override
     public void disposeScene() {
+        final SettingsScene settingsScene = this;
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                settingsScene.detachChildren();
+            }
+        }));
 
     }
 }
