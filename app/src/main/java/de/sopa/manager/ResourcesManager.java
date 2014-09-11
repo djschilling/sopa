@@ -174,7 +174,7 @@ public class ResourcesManager {
         tilesBorderRegion = null;
         saveButtonRegion.getTexture().unload();
         saveButtonRegion = null;
-        scoreFont.getTexture().unload();
+        scoreFont.unload();
         scoreFont = null;
     }
 
@@ -193,8 +193,8 @@ public class ResourcesManager {
     }
 
     public void unloadScoreSceneResources() {
-        movesScoreFont.getTexture().unload();
-        scoreCompleteFont.getTexture().unload();
+        movesScoreFont.unload();
+        scoreCompleteFont.unload();
         starRegion.getTexture().unload();
         starSWRegion.getTexture().unload();
         nextLevelRegion.getTexture().unload();
