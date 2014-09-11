@@ -30,6 +30,7 @@ public class LevelChoiceScene extends BaseScene {
     private static final int LEVEL_SELECT_ICON_WIDTH = 300;
     private List<LevelInfo> levelInfos;
     private float widthPerLevel;
+    private HUD arrowHud;
 
     @Override
     public void createScene(Object o) {
@@ -123,7 +124,7 @@ public class LevelChoiceScene extends BaseScene {
         if (screenCount == 1) {
             rightArrow.setVisible(false);
         }
-        HUD arrowHud = new HUD();
+        arrowHud = new HUD();
         arrowHud.attachChild(leftArrow);
         arrowHud.attachChild(rightArrow);
         arrowHud.registerTouchArea(leftArrow);
@@ -159,6 +160,7 @@ public class LevelChoiceScene extends BaseScene {
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
+                arrowHud.detachChildren();
                 levelChoiceScene.detachChildren();
             }
         }));

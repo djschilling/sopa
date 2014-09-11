@@ -49,7 +49,6 @@ public class ResourceLoader {
                     return assetManager.open(path);
                 }
             }, textureOptions);
-            texture.load();
             return TextureRegionFactory.extractFromTexture(texture);
         } catch (IOException e) {
             e.printStackTrace();
