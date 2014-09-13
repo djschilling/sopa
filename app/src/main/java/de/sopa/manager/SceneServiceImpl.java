@@ -117,7 +117,7 @@ public class SceneServiceImpl implements SceneService {
                 engine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().loadGameSceneResources();
                 Level level = new LevelCreator().generateSolvedField(6, 6);
-                new GameFieldDestroyer().destroyField(level, 1, 1   );
+                new GameFieldDestroyer().destroyField(level, ResourcesManager.getInstance().justPlayMoves, ResourcesManager.getInstance().justPlayMoves   );
                 gameScene = new JustPlayGameScene(level);
                 setScene(gameScene);
             }
@@ -243,8 +243,8 @@ public class SceneServiceImpl implements SceneService {
 
     @Override
     public void loadGameSceneFromGameScene(final Level level) {
-        disposeGameScene();
         setScene(loadingScene);
+        disposeGameScene();
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
@@ -260,7 +260,7 @@ public class SceneServiceImpl implements SceneService {
     }
 
     private void disposeLevelChoiceScene() {
-        ResourcesManager.getInstance().unloadLevelChoiceSceneResources();
+        ResourcesManager.getInstance().unloadLevelChoiceSceneTextures();
         choiceScene.disposeScene();
         choiceScene = null;
     }

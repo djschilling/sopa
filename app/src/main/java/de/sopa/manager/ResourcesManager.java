@@ -59,12 +59,14 @@ public class ResourcesManager {
     public IFont levelChoiceFont;
     public IFont movesScoreFont;
     public IFont scoreCompleteFont;
+    public IFont settingsFont;
 
     public IFont levelChoiceSWFont;
     public LevelService levelService;
     public Music menuMusic;
     public boolean musicIsPlaying = false;
     private boolean preparedTextures = false;
+    public int justPlayMoves = 1;
 
     public void loadSplashSceneResources() {
         splash_region = resourceLoader.getTexture("scenes/splash/CouchStudio.png");
@@ -141,7 +143,7 @@ public class ResourcesManager {
         unloadGameSceneTextures();
     }
 
-    public void unloadLevelChoiceSceneResources() {
+    public void unloadLevelChoiceSceneTextures() {
         levelChoiceRegion.getTexture().unload();
         levelChoiceRegionSW.getTexture().unload();
         levelChoiceRegionLocked.getTexture().unload();
@@ -223,11 +225,14 @@ public class ResourcesManager {
         prepareTextures();
         muteRegion.getTexture().load();
         unMuteRegion.getTexture().load();
+        settingsFont = resourceLoader.getFont("Impact.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 100, Color.BLUE,0, Color.BLUE);
     }
 
     public void unloadSettingsScene() {
         muteRegion.getTexture().unload();
         unMuteRegion.getTexture().unload();
+        settingsFont.unload();
+        settingsFont = null;
 /*
         muteRegion = null;
         unMuteRegion = null;*/
