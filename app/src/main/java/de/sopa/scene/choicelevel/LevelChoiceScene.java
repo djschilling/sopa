@@ -9,7 +9,6 @@ import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.Entity;
 import org.andengine.entity.modifier.MoveXModifier;
-import org.andengine.entity.modifier.RotationModifier;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
@@ -91,7 +90,7 @@ public class LevelChoiceScene extends BaseScene {
 
 
     private void addChangeLevelButtons() {
-        screenCount = (levelInfos.size() / 12) + 1;
+        screenCount = (((int)(levelInfos.size() - 0.1)/ 12)) + 1;
         currentScreen = 0;
         rightArrow = new ButtonSprite(camera.getWidth() * 0.93f - LEVEL_SELECT_ICON_WIDTH, camera.getHeight() * 0.8f, resourcesManager.levelChoiceArrowRightRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
