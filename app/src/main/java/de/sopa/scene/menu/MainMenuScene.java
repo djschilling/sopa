@@ -7,7 +7,6 @@ import org.andengine.entity.modifier.MoveXModifier;
 import org.andengine.entity.modifier.MoveYModifier;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.ButtonSprite;
-import org.andengine.entity.sprite.Sprite;
 import org.andengine.util.color.Color;
 
 /**
@@ -19,11 +18,9 @@ public class MainMenuScene extends BaseScene {
     public void createScene(Object o) {
         createBackground();
         createMenuChildScene();
-        if(resourcesManager.musicIsPlaying == false){
-            resourcesManager.menuMusic.play();
-            resourcesManager.musicIsPlaying = true;
-        }
+        resourcesManager.musicService.playMusic();
     }
+
 
     @Override
     public void onBackKeyPressed() {
@@ -55,7 +52,7 @@ public class MainMenuScene extends BaseScene {
             }
         });
 
-                playItemSprite.setPosition(camera.getWidth() / 2 - playItemSprite.getWidthScaled() /2, camera.getHeight() / 2 - playItemSprite.getHeightScaled());
+        playItemSprite.setPosition(camera.getWidth() / 2 - playItemSprite.getWidthScaled() /2, camera.getHeight() / 2 - playItemSprite.getHeightScaled());
         attachChild(playItemSprite);
         registerTouchArea(playItemSprite);
         final ButtonSprite levelItemSprite = new ButtonSprite(0, 0, resourcesManager.level_mode_region, vbom, new ButtonSprite.OnClickListener() {

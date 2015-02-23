@@ -41,7 +41,10 @@ public abstract class GameScene extends BaseScene implements Observer {
         addScoreText();
         registerTouchHandler();
         gameService.attach(this);
+        resourcesManager.musicService.stopMusic();
     }
+
+
 
     @Override
     public void update() {
@@ -57,7 +60,6 @@ public abstract class GameScene extends BaseScene implements Observer {
                     onSolvedGame();
                 }
             }));
-
 
         }
     }

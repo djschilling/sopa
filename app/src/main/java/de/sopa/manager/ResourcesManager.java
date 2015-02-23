@@ -1,10 +1,11 @@
 package de.sopa.manager;
 
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import de.sopa.GameActivity;
+import de.sopa.R;
 import de.sopa.helper.LevelService;
 import java.util.Map;
-import org.andengine.audio.music.Music;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
 import org.andengine.opengl.font.IFont;
@@ -59,10 +60,9 @@ public class ResourcesManager {
 
     public IFont levelChoiceSWFont;
     public LevelService levelService;
-    public Music menuMusic;
-    public boolean musicIsPlaying = false;
     private boolean preparedTextures = false;
     public int justPlayMoves = 1;
+    public MusicService musicService;
 
     public void loadSplashSceneResources() {
         splash_region = resourceLoader.getTexture("scenes/splash/CouchStudio.png");
@@ -70,7 +70,6 @@ public class ResourcesManager {
     }
     public void loadMenuSceneResources() {
         loadMenuSceneGraphics();
-        loadMenuSceneMusic();
     }
 
 
@@ -113,9 +112,6 @@ public class ResourcesManager {
         play_region.getTexture().load();
         level_mode_region.getTexture().load();
         settingsRegion.getTexture().load();
-    }
-    private void loadMenuSceneMusic() {
-        menuMusic = resourceLoader.getMusic("scenes/menu/Menu_Theme.mp3", engine.getMusicManager(), activity);
     }
 
 
@@ -190,6 +186,7 @@ public class ResourcesManager {
         getInstance().resourceLoader = resourceLoader;
         getInstance().sceneService = sceneService;
         getInstance().levelService = levelService;
+        getInstance().musicService = new MusicService(MediaPlayer.create(activity.getApplicationContext(), R.raw.theme), true);
     }
 
     public static ResourcesManager getInstance() {

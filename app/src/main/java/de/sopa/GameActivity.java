@@ -5,10 +5,10 @@ import android.view.KeyEvent;
 import de.sopa.database.LevelInfoDataSource;
 import de.sopa.helper.LevelFileService;
 import de.sopa.helper.LevelServiceImpl;
+import de.sopa.manager.ResourceLoader;
 import de.sopa.manager.ResourcesManager;
 import de.sopa.manager.SceneService;
 import de.sopa.manager.SceneServiceImpl;
-import de.sopa.manager.ResourceLoader;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -32,8 +32,8 @@ public class GameActivity extends BaseGameActivity {
     public EngineOptions onCreateEngineOptions() {
         camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
         EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED,
-         new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera);
-         engineOptions.getAudioOptions().setNeedsMusic(true);
+                new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera);
+        engineOptions.getAudioOptions().setNeedsMusic(true);
 
         return engineOptions;
 
@@ -47,7 +47,7 @@ public class GameActivity extends BaseGameActivity {
         ResourcesManager.prepareManager(mEngine, this, camera, getVertexBufferObjectManager(),
                 new ResourceLoader(getTextureManager(), getAssets(), getFontManager()), new SceneServiceImpl(mEngine),
                 levelService);
-        if(firstStart()) {
+        if (firstStart()) {
             levelService.updateLevelInfos();
             levelService.unlockLevel(1);
             System.out.println("First Start");
@@ -88,14 +88,18 @@ public class GameActivity extends BaseGameActivity {
         System.exit(0);
     }
 
+
     @Override
     public synchronized void onResumeGame() {
+        ResourcesManager.getInstance().musicService.playMusic();
         levelInfoDataSource.open();
         super.onResumeGame();
     }
 
+
     @Override
     public synchronized void onPauseGame() {
+        ResourcesManager.getInstance().musicService.stopMusic();
         levelInfoDataSource.close();
         super.onPauseGame();
     }

@@ -37,10 +37,7 @@ public class LevelChoiceScene extends BaseScene {
         widthPerLevel =  (camera.getWidth() / COLUMNS);
         addLevelChooseTiles(levelInfos, widthPerLevel);
         addChangeLevelButtons();
-        if(resourcesManager.musicIsPlaying == false){
-            resourcesManager.menuMusic.play();
-            resourcesManager.musicIsPlaying = true;
-        }
+        resourcesManager.musicService.playMusic();
     }
 
     private void addLevelChooseTiles(final List<LevelInfo> levelInfos, float widthPerLevel) {
