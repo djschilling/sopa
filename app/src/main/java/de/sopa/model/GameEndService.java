@@ -23,23 +23,32 @@ public class GameEndService {
     public boolean solvedPuzzle(int startX, int startY, int width, int heigth, Tile[][] field) {
         this.field = field;
         initializePathStates(width, heigth);
-        return searchFinish(startX, startY);
+        return searchFinish(startX, startY, 0);
+    }
+    public boolean solvedPuzzle(int startX, int startY, int width, int heigth, Tile[][] field, int minimalUsedTiles) {
+        this.field = field;
+        initializePathStates(width, heigth);
+        return searchFinish(startX, startY, minimalUsedTiles);
     }
 
 
-    public boolean searchFinish(int x, int y) {
+    public boolean searchFinish(int x, int y, int numberMissingTiles) {
         for (int direction = 0; direction < 4; direction++) {
             int xNew = x + directionsX[direction];
             int yNew = y + directionsY[direction];
             if (possibleTile(x, y, xNew, yNew, direction)) {
                 extendSolution(xNew, yNew);
                 if (!foundFinish(xNew, yNew)) {
-                    if (searchFinish(xNew, yNew)) {
+                    if (searchFinish(xNew, yNew, numberMissingTiles - 1)) {
                         return true;
                     } else {
                         markAsImpossible(xNew, yNew);
                     }
                 } else {
+                    if(numberMissingTiles > 0)
+                    {
+                        return false;
+                    }
                     return true;
                 }
             }

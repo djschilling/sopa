@@ -78,6 +78,8 @@ public class LevelCreator {
                 case 1:
                     level.setMinimumMovesToSolve(Integer.parseInt(string[1]));
                     break;
+                case 2:
+                    level.setTilesCount(Integer.parseInt(string[2]));
                 default:
                     break;
             }
@@ -249,6 +251,7 @@ public class LevelCreator {
         level.setStartX(startX);
         level.setStartY(startY);
         level.setField(tiles);
+        level.setTilesCount(number -    1);
         if(number>(width-2)*(height-2)/3) {
         return level;
         } else {
@@ -262,14 +265,15 @@ public class LevelCreator {
         if(gameField.getId() == null) {
             gameField.setId(-1);
         }
-        String level[] = new String[tiles[0].length+3];
-        level[0]  = String.valueOf(gameField.getId());
-        level[1]  = String.valueOf(gameField.getMinimumMovesToSolve());
-        level[2] = "#";
+        String level[] = new String[tiles[0].length + 4];
+        level[0] = String.valueOf(gameField.getId());
+        level[1] = String.valueOf(gameField.getMinimumMovesToSolve());
+        level[2] = String.valueOf(gameField.getTilesCount());
+        level[3] = "#";
         for(int y = 0; y < tiles[0].length; y++) {
-            level[y + 3]= new String();
+            level[y + 4]= new String();
             for(int x = 0; x < tiles.length; x++) {
-                level[y + 3]= level[y + 3] + String.valueOf(tiles[x][y].getShortcut());
+                level[y + 4]= level[y + 4] + String.valueOf(tiles[x][y].getShortcut());
             }
         }
         return level;

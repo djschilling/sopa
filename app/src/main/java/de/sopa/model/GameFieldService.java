@@ -12,7 +12,7 @@ public class GameFieldService {
     }
 
     public boolean solvedPuzzle(Level level) {
-        return gameEndService.solvedPuzzle(level.getStartX(), level.getStartY(), level.getField().length, level.getField()[0].length, level.getField());
+        return gameEndService.solvedPuzzle(level.getStartX(), level.getStartY(), level.getField().length, level.getField()[0].length, level.getField(), level.getTilesCount());
     }
 
 

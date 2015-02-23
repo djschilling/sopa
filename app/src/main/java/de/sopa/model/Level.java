@@ -9,6 +9,8 @@ public class Level {
     private int movesCounter;
     private LevelInfo levelInfo;
     private int minimumMovesToSolve;
+    private int tilesCount;
+
 
     public Level() {
         this.movesCounter = 0;
@@ -42,7 +44,9 @@ public class Level {
         return startY;
     }
 
-    public void increaseMovesCounter() { movesCounter++; }
+    public void increaseMovesCounter() {
+        movesCounter++;
+    }
 
     public int getMovesCount() {
         return movesCounter;
@@ -75,8 +79,8 @@ public class Level {
     public Level copy() {
         Level level = new Level();
         Tile[][] tiles = new Tile[field.length][field[0].length];
-        for(int i = 0; i < field.length; i++) {
-            for(int j = 0; j < field[i].length; j++) {
+        for (int i = 0; i < field.length; i++) {
+            for (int j = 0; j < field[i].length; j++) {
                 tiles[i][j] = field[i][j];
             }
         }
@@ -86,6 +90,15 @@ public class Level {
         level.setMinimumMovesToSolve(minimumMovesToSolve);
         level.setStartX(startX);
         level.setStartY(startY);
+        level.setTilesCount(tilesCount);
         return level;
+    }
+
+    public int getTilesCount() {
+        return tilesCount;
+    }
+
+    public void setTilesCount(int tilesCount) {
+        this.tilesCount = tilesCount;
     }
 }
