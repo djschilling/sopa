@@ -98,7 +98,6 @@ public abstract class GameScene extends BaseScene implements Observer {
 
     private void registerTouchHandler() {
         GameSceneSingleMoveDetector gameSceneSingleMoveDetector = new GameSceneSingleMoveDetector(0, getTileSceneStartY() + spacePerTile ,spacePerTile, gameFieldView, gameService, camera.getWidth());
-    //    GameSceneHoldDetector gameSceneHoldDetector = new GameSceneHoldDetector(widthPerTile, getTileSceneStartY() + widthPerTile, widthPerTile, gameFieldView, gameService, camera.getWidth());
         continuousHoldDetector = new ContinuousHoldDetector(0, 100, 0.01f, gameSceneSingleMoveDetector);
         registerUpdateHandler(continuousHoldDetector);
         setOnSceneTouchListener(continuousHoldDetector);

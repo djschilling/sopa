@@ -143,11 +143,6 @@ public class ResourcesManager {
         levelChoiceFont.getTexture().unload();
         levelChoiceSWFont.getTexture().unload();
 
-    /*    levelChoiceRegion = null;
-        levelChoiceRegionSW = null;
-        levelChoiceRegionLocked = null;
-        levelChoiceArrowRightRegion = null;
-        levelChoiceArrowLeftRegion = null;*/
         levelChoiceFont = null;
         levelChoiceSWFont = null;
     }
@@ -161,10 +156,6 @@ public class ResourcesManager {
         level_mode_region.getTexture().unload();
         play_region.getTexture().unload();
         settingsRegion.getTexture().unload();
-
-     /*   level_mode_region = null;
-        play_region = null;
-        settingsRegion = null;*/
     }
 
     private void unloadGameSceneTextures() {
@@ -201,15 +192,6 @@ public class ResourcesManager {
         backToChoiceRegion.getTexture().unload();
         backToMenuRegionA.getTexture().unload();
         backToMenuRegionP.getTexture().unload();
-
-       /* scoreCompleteFont = null;
-        movesScoreFont = null;
-        starRegion = null;
-        starSWRegion = null;
-        nextLevelRegion = null;
-        backToChoiceRegion = null;
-        backToMenuRegionA = null;
-        backToMenuRegionP = null;*/
     }
 
     public void loadSettingsScene() {
@@ -224,9 +206,6 @@ public class ResourcesManager {
         unMuteRegion.getTexture().unload();
         settingsFont.unload();
         settingsFont = null;
-/*
-        muteRegion = null;
-        unMuteRegion = null;*/
     }
 
     public void prepareTextures() {
