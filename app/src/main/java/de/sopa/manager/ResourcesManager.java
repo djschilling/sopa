@@ -3,14 +3,11 @@ package de.sopa.manager;
 import android.graphics.Color;
 import de.sopa.GameActivity;
 import de.sopa.helper.LevelService;
-
 import java.util.Map;
-
 import org.andengine.audio.music.Music;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
 import org.andengine.opengl.font.IFont;
-import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TextureRegion;
@@ -58,7 +55,6 @@ public class ResourcesManager {
     public IFont scoreFont;
     public IFont levelChoiceFont;
     public IFont movesScoreFont;
-    public IFont scoreCompleteFont;
     public IFont settingsFont;
 
     public IFont levelChoiceSWFont;
@@ -102,7 +98,6 @@ public class ResourcesManager {
     }
     public void loadScoreSceneResources() {
         prepareTextures();
-        scoreCompleteFont = resourceLoader.getFont("Impact.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 220, Color.WHITE, 0, 0x00000000);
         movesScoreFont = resourceLoader.getFont("DroidSans-Bold.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 100, Color.WHITE, 0, 0x00000000);
         starRegion.getTexture().load();
         starSWRegion.getTexture().load();
@@ -203,7 +198,6 @@ public class ResourcesManager {
 
     public void unloadScoreSceneResources() {
         movesScoreFont.getTexture().unload();
-        scoreCompleteFont.getTexture().unload();
         starRegion.getTexture().unload();
         starSWRegion.getTexture().unload();
         nextLevelRegion.getTexture().unload();
