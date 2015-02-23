@@ -1,16 +1,13 @@
 package de.sopa.scene.game;
 
-import de.sopa.model.GameService;
 import org.andengine.input.touch.detector.HoldDetector;
 
 /**
  * Created by raphael on 10.09.14.
  */
 public class GameSceneSingleMoveDetector implements HoldDetector.IHoldDetectorListener {
-    private static final float MOVE_MULTIPLIER = 0.5f;
+    private final float SWIPE_SENSITIVITY;
     private final float fieldStartX;
-    private final GameService gameService;
-    private final float cameraWidth;
     private float firstX;
     private float firstY;
     private float widthPerTile;
@@ -18,14 +15,13 @@ public class GameSceneSingleMoveDetector implements HoldDetector.IHoldDetectorLi
     private float fieldStartY;
     private boolean isMoved;
 
-    public GameSceneSingleMoveDetector(float startX, float startY, float widthPerTile, GameFieldView gameFieldView, GameService gameService, float cameraWidth) {
+    public GameSceneSingleMoveDetector(float startX, float startY, float widthPerTile, GameFieldView gameFieldView) {
         this.fieldStartX = startX;
         this.fieldStartY = startY;
         this.widthPerTile = widthPerTile;
         this.gameFieldView = gameFieldView;
-        this.gameService = gameService;
-        this.cameraWidth = cameraWidth;
         isMoved = false;
+        SWIPE_SENSITIVITY = widthPerTile * 0.1f;
     }
 
     @Override
@@ -65,22 +61,22 @@ public class GameSceneSingleMoveDetector implements HoldDetector.IHoldDetectorLi
         int row;
         if (!isMoved) {
             if (Math.abs(pHoldX - firstX) > Math.abs(pHoldY - firstY)) {
-                if (pHoldX - firstX > widthPerTile * MOVE_MULTIPLIER) {
+                if (pHoldX - firstX > SWIPE_SENSITIVITY) {
                     row = (int) ((firstY - fieldStartY) / widthPerTile);
                     gameFieldView.oneStep(true, row, 1);
                     isMoved = true;
-                } else if (firstX - pHoldX > widthPerTile * MOVE_MULTIPLIER) {
+                } else if (firstX - pHoldX > SWIPE_SENSITIVITY) {
                     row = (int) ((firstY - fieldStartY) / widthPerTile);
                     gameFieldView.oneStep(true, row, -1);
                     isMoved = true;
                 }
 
             }
-            else if (pHoldY - firstY > widthPerTile * MOVE_MULTIPLIER) {
+            else if (pHoldY - firstY > SWIPE_SENSITIVITY) {
                 row = (int) ((firstX - fieldStartX) / widthPerTile);
                 gameFieldView.oneStep(false, row, 1);
                 isMoved = true;
-            } else if (firstY - pHoldY > widthPerTile * MOVE_MULTIPLIER) {
+            } else if (firstY - pHoldY > SWIPE_SENSITIVITY) {
                 row = (int) ((firstX - fieldStartX) / widthPerTile);
                 gameFieldView.oneStep(false, row, -1);
                 isMoved = true;
