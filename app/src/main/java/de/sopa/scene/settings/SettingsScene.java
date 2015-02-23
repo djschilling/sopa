@@ -28,8 +28,8 @@ public class SettingsScene extends BaseScene {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 if(pSceneTouchEvent.isActionUp()) {
-                    resourcesManager.justPlayMoves += 1;
-                    count.setText("" + resourcesManager.justPlayMoves);
+                    resourcesManager.justPlayMoves++;
+                    count.setText(String.valueOf(resourcesManager.justPlayMoves));
                 }
                 return false;
             }
@@ -40,8 +40,8 @@ public class SettingsScene extends BaseScene {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 if(pSceneTouchEvent.isActionUp()) {
-                    resourcesManager.justPlayMoves -= 1;
-                    count.setText("" + resourcesManager.justPlayMoves);
+                    resourcesManager.justPlayMoves--;
+                    count.setText(String.valueOf(resourcesManager.justPlayMoves));
                 }
                 return false;
             }

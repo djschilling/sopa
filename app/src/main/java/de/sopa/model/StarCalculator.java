@@ -5,7 +5,7 @@ package de.sopa.model;
  */
 public class StarCalculator {
     public int getStars(int neededMoves, int minimumMoves ) {
-        int stars = 0;
+        int stars;
         if ((float) (minimumMoves) / neededMoves > 0.9f) {
             stars = 3;
         } else if ((float) (minimumMoves) / neededMoves > 0.4) {

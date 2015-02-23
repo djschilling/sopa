@@ -13,21 +13,21 @@ import java.io.IOException;
  */
 public class LevelFileService {
     private final FileHandler fileHandler;
-    private LevelCreator LevelCreator;
+    private LevelCreator levelCreator;
     private static final String LEVEL_BASE_PATH = "levels/";
     private static final String LEVEL_SAVE_PATH = Environment.getExternalStorageDirectory().getPath() + "/sopa/levels/";
     private final static String LEVEL_COUNT = "LEVEL_COUNT";
 
     public LevelFileService(Context context) {
-        LevelCreator = new LevelCreator();
-        this.fileHandler = new FileHandler(context);
+        levelCreator = new LevelCreator();
+        fileHandler = new FileHandler(context);
     }
 
     public Level getLevel(Integer id) {
         String levelFilename = null;
         try {
             levelFilename = LEVEL_BASE_PATH + id + ".lv";
-            return LevelCreator.fromString(fileHandler.readFromFile(levelFilename));
+            return levelCreator.fromString(fileHandler.readFromFile(levelFilename));
         } catch (IOException e) {
             throw new LevelServiceException("Not possible to read GameFiled from " + levelFilename, e);
         }
@@ -39,19 +39,12 @@ public class LevelFileService {
         count++;
         level.setId(count);
         String levelFilename = LEVEL_SAVE_PATH + count + ".lv";
-        fileHandler.writeToFile(levelFilename, LevelCreator.fromGameField(level));
+        fileHandler.writeToFile(levelFilename, levelCreator.fromGameField(level));
         Log.i("Level saved as ", levelFilename);
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(LEVEL_COUNT, count);
-        editor.commit();
+        editor.apply();
         return count;
-    }
-
-    public Integer updateGameField(Level level, Integer id) throws IOException {
-        String levelFilename = LEVEL_BASE_PATH + id + ".lv";
-        fileHandler.writeToFile(levelFilename, LevelCreator.fromGameField(level));
-        Log.i("Level updated as ", String.valueOf(id + ".lv"));
-        return id;
     }
 
     public Integer[] getAvailableLevelIds() {

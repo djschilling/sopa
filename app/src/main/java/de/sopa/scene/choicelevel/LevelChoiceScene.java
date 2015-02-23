@@ -44,7 +44,7 @@ public class LevelChoiceScene extends BaseScene {
         for (int levelIndex = 0; levelIndex < levelInfos.size(); levelIndex++) {
 
             final int finalLevelIndex = levelIndex;
-            ITextureRegion iTextureRegion = null;
+            ITextureRegion iTextureRegion;
             IFont levelChoiceFont;
             if (levelInfos.get(finalLevelIndex).isLocked()) {
                 iTextureRegion = resourcesManager.levelChoiceRegionSW;
@@ -53,13 +53,12 @@ public class LevelChoiceScene extends BaseScene {
                 iTextureRegion = resourcesManager.levelChoiceRegion;
                 levelChoiceFont = resourcesManager.levelChoiceFont;
             }
-            final ChoiceLevelSprite choiceLevelSprite = new ChoiceLevelSprite(getLevelSpriteX(widthPerLevel, levelIndex),
+            final ButtonSprite choiceLevelSprite = new ButtonSprite(getLevelSpriteX(widthPerLevel, levelIndex),
                     getLevelSpriteY(widthPerLevel, levelIndex), iTextureRegion, vbom, new ButtonSprite.OnClickListener() {
                 @Override
                 public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                     if(!levelInfos.get(finalLevelIndex).isLocked()) {
                         sceneService.loadGameSceneFromLevelChoiceScene(levelService.getLevelById(levelInfos.get(finalLevelIndex).getLevelId()));
-                    } else {
                     }
                 }
 
@@ -132,11 +131,11 @@ public class LevelChoiceScene extends BaseScene {
     }
 
     private float getLevelSpriteY(float heightPerLevel, int levelIndex) {
-        return ((int) (levelIndex % 12 / COLUMNS)) * heightPerLevel;
+        return ( (levelIndex % 12 / COLUMNS)) * heightPerLevel;
     }
 
     private float getLevelSpriteX(float widthPerLevel, int levelIndex) {
-        return (levelIndex % 12 % COLUMNS) * widthPerLevel + widthPerLevel * COLUMNS * (int) (levelIndex / 12);
+        return (levelIndex % 12 % COLUMNS) * widthPerLevel + widthPerLevel * COLUMNS * (levelIndex / 12);
     }
 
     @Override

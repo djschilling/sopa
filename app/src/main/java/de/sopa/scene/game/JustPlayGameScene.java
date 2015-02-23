@@ -1,12 +1,9 @@
 package de.sopa.scene.game;
 
 import de.sopa.helper.LevelFileService;
-import de.sopa.scene.game.GameScene;
-import org.andengine.entity.sprite.ButtonSprite;
+import java.io.IOException;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
-
-import java.io.IOException;
 
 /**
  * David Schilling - davejs92@gmail.com
@@ -44,7 +41,9 @@ public class JustPlayGameScene extends GameScene {
         sceneService.loadMenuSceneFromGameScene();
     }
 
+    @Override
     public void onSolvedGame() {
-        System.out.println("foo");
+
     }
+
 }

@@ -68,6 +68,7 @@ public class ResourcesManager {
         splash_region = resourceLoader.getTexture("scenes/splash/CouchStudio.png");
         splash_region.getTexture().load();
     }
+
     public void loadMenuSceneResources() {
         loadMenuSceneGraphics();
     }
@@ -95,6 +96,7 @@ public class ResourcesManager {
         levelChoiceFont = resourceLoader.getFont("Impact.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 110, 0xFFca540f, 0, 0xFFca540f);
         levelChoiceSWFont = resourceLoader.getFont("Impact.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 110, 0xFF808080, 0, 0xFF808080);
     }
+
     public void loadScoreSceneResources() {
         prepareTextures();
         movesScoreFont = resourceLoader.getFont("DroidSans-Bold.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 100, Color.WHITE, 0, 0x00000000);
@@ -130,7 +132,8 @@ public class ResourcesManager {
         splash_region.getTexture().unload();
         splash_region = null;
     }
-    public void unloadGameSceneResources(){
+
+    public void unloadGameSceneResources() {
         unloadGameSceneTextures();
     }
 
@@ -148,7 +151,7 @@ public class ResourcesManager {
     }
 
 
-    public void unloadMenuSceneResources(){
+    public void unloadMenuSceneResources() {
         unloadMenuSceneTextures();
     }
 
@@ -198,7 +201,7 @@ public class ResourcesManager {
         prepareTextures();
         muteRegion.getTexture().load();
         unMuteRegion.getTexture().load();
-        settingsFont = resourceLoader.getFont("Impact.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 100, Color.BLUE,0, Color.BLUE);
+        settingsFont = resourceLoader.getFont("Impact.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 100, Color.BLUE, 0, Color.BLUE);
     }
 
     public void unloadSettingsScene() {
@@ -209,15 +212,15 @@ public class ResourcesManager {
     }
 
     public void prepareTextures() {
-        if(!preparedTextures) {
+        if (!preparedTextures) {
             levelChoiceRegion = resourceLoader.getTexture("scenes/levelChoice/Level.png");
             levelChoiceRegionSW = resourceLoader.getTexture("scenes/levelChoice/LevelSW.png");
             levelChoiceRegionLocked = resourceLoader.getTexture("scenes/levelChoice/LevelSW.png");
             levelChoiceArrowLeftRegion = resourceLoader.getTexture("scenes/levelChoice/ArrowLeft.png");
             levelChoiceArrowRightRegion = resourceLoader.getTexture("scenes/levelChoice/ArrowRight.png");
 
-            starRegion =  resourceLoader.getTexture("scenes/score/star.png");
-            starSWRegion =  resourceLoader.getTexture("scenes/score/starSW.png");
+            starRegion = resourceLoader.getTexture("scenes/score/star.png");
+            starSWRegion = resourceLoader.getTexture("scenes/score/starSW.png");
             nextLevelRegion = resourceLoader.getTexture("scenes/score/NextLevel.png");
             backToChoiceRegion = resourceLoader.getTexture("scenes/score/LevelChoice.png");
             backToMenuRegionA = resourceLoader.getTexture("scenes/score/BackA.png");

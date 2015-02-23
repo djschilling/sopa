@@ -20,15 +20,10 @@ public class GameEndService {
         }
     }
 
-    public boolean solvedPuzzle(int startX, int startY, int width, int heigth, Tile[][] field) {
+    public boolean solvedPuzzle(int startX, int startY, int width, int heigth, Tile[][] field, int tilesCountForLevel) {
         this.field = field;
         initializePathStates(width, heigth);
-        return searchFinish(startX, startY, 0);
-    }
-    public boolean solvedPuzzle(int startX, int startY, int width, int heigth, Tile[][] field, int minimalUsedTiles) {
-        this.field = field;
-        initializePathStates(width, heigth);
-        return searchFinish(startX, startY, minimalUsedTiles);
+        return searchFinish(startX, startY, tilesCountForLevel);
     }
 
 

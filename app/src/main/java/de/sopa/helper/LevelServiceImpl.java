@@ -3,7 +3,6 @@ package de.sopa.helper;
 import de.sopa.database.LevelInfoDataSource;
 import de.sopa.model.Level;
 import de.sopa.model.LevelInfo;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -44,28 +43,6 @@ public class LevelServiceImpl implements LevelService {
     }
 
     @Override
-    public void saveLevelInfo(LevelInfo levelInfo, Integer levelId) {
-        levelInfo.setLevelId(levelId);
-        levelInfoDataSource.createLevelInfo(levelInfo);
-    }
-
-    @Override
-    public LevelInfo updateLevelInfo(LevelInfo levelInfo) {
-        return levelInfoDataSource.updateLevelInfo(levelInfo);
-    }
-
-    @Override
-    public Integer createLevel(Level level) {
-        try {
-            Integer saveGameFieldId = levelHandler.saveGameField(level);
-            levelInfoDataSource.createLevelInfo(new LevelInfo(saveGameFieldId, true, -1));
-            return saveGameFieldId;
-        } catch (IOException e) {
-            throw new LevelServiceException("could not save level", e);
-        }
-    }
-
-    @Override
     public void updateLevelInfos() {
         Integer[] availableLevelIds = levelHandler.getAvailableLevelIds();
         List<LevelInfo> allLevelInfos = levelInfoDataSource.getAllLevelInfos();
@@ -87,7 +64,7 @@ public class LevelServiceImpl implements LevelService {
     public Level updateFewestMoves(Level level) {
         if (level.getLevelInfo().getFewestMoves() == -1 || level.getMovesCount() < level.getMinimumMovesToSolve()){
             level.getLevelInfo().setFewestMoves(level.getMovesCount());
-            updateLevelInfo(level.getLevelInfo());
+            levelInfoDataSource.updateLevelInfo(level.getLevelInfo());
         }
         return level;
     }
@@ -97,7 +74,7 @@ public class LevelServiceImpl implements LevelService {
         if(levelId <= getLevelCount()) {
             Level levelById = getLevelById(levelId);
             levelById.getLevelInfo().setLocked(false);
-            updateLevelInfo(levelById.getLevelInfo());
+            levelInfoDataSource.updateLevelInfo(levelById.getLevelInfo());
         }
     }
 }

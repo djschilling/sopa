@@ -23,6 +23,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        throw new UnsupportedOperationException();
     }
+
 }

@@ -38,7 +38,7 @@ public class ScoreScreen extends BaseScene {
                 sceneService.loadLevelChoiceSceneFromScoreScene();
             }
         });
-        ButtonSprite nextLevelButton = new ButtonSprite((float) (camera.getWidth() * 0.64), (float) (camera.getHeight() - 400), resourcesManager.nextLevelRegion, vbom, new ButtonSprite.OnClickListener() {
+        ButtonSprite nextLevelButton = new ButtonSprite((float) (camera.getWidth() * 0.64), (camera.getHeight() - 400), resourcesManager.nextLevelRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 int nextLevelId = level.getId() + 1;
@@ -50,7 +50,7 @@ public class ScoreScreen extends BaseScene {
             }
         });
 
-        ButtonSprite backToMenuButton = new ButtonSprite((float) (camera.getWidth() / 2 - 200), (float) (camera.getHeight() - 400), resourcesManager.backToMenuRegionA, vbom, new ButtonSprite.OnClickListener() {
+        ButtonSprite backToMenuButton = new ButtonSprite((camera.getWidth() / 2 - 200), (camera.getHeight() - 400), resourcesManager.backToMenuRegionA, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 sceneService.loadMenuSceneFromScoreScene();

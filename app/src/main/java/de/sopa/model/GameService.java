@@ -18,6 +18,4 @@ public interface GameService {
     void attach(Observer observer);
 
     void detach(Observer observer);
-
-    void notifyAllObserver();
 }

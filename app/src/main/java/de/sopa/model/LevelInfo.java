@@ -19,10 +19,6 @@ public class LevelInfo {
         return levelId;
     }
 
-    public void setLevelId(Integer levelId) {
-        this.levelId = levelId;
-    }
-
     public boolean isLocked() {
         return locked;
     }

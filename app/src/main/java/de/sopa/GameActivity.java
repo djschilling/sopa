@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.view.KeyEvent;
 import de.sopa.database.LevelInfoDataSource;
 import de.sopa.helper.LevelFileService;
+import de.sopa.helper.LevelService;
 import de.sopa.helper.LevelServiceImpl;
 import de.sopa.manager.ResourceLoader;
 import de.sopa.manager.ResourcesManager;
@@ -43,7 +44,7 @@ public class GameActivity extends BaseGameActivity {
     public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws Exception {
         levelInfoDataSource = new LevelInfoDataSource(this);
         levelInfoDataSource.open();
-        LevelServiceImpl levelService = new LevelServiceImpl(new LevelFileService(this), levelInfoDataSource);
+        LevelService levelService = new LevelServiceImpl(new LevelFileService(this), levelInfoDataSource);
         ResourcesManager.prepareManager(mEngine, this, camera, getVertexBufferObjectManager(),
                 new ResourceLoader(getTextureManager(), getAssets(), getFontManager()), new SceneServiceImpl(mEngine),
                 levelService);

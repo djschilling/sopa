@@ -37,8 +37,4 @@ public class MusicService {
             prepared = false;
         }
     }
-
-    public boolean isPrepared() {
-        return prepared;
-    }
 }

@@ -54,8 +54,7 @@ public class GameServiceImpl implements GameService {
         observers.remove(observer);
     }
 
-    @Override
-    public void notifyAllObserver() {
+    private void notifyAllObserver() {
         for (Observer observer : observers) {
             observer.update();
         }

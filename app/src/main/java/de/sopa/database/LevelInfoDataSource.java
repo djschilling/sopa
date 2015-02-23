@@ -94,7 +94,6 @@ public class LevelInfoDataSource {
         int anInt = cursor.getInt(0);
         boolean locked = cursor.getInt(1) != 0;
         int anInt1 = cursor.getInt(2);
-        LevelInfo levelInfo = new LevelInfo(anInt, locked, anInt1);
-        return levelInfo;
+        return new LevelInfo(anInt, locked, anInt1);
     }
 }

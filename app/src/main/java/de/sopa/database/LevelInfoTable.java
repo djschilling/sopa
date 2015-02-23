@@ -22,6 +22,4 @@ public class LevelInfoTable {
         database.execSQL(DATABASE_CREATE);
     }
 
-    public static void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
-    }
 }

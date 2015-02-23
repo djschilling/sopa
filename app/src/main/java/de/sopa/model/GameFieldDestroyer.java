@@ -2,6 +2,7 @@ package de.sopa.model;
 
 
 public class GameFieldDestroyer {
+
     public Level destroyField(Level level, int minShiftCount, int maxShiftCount) {
         GameFieldService gameFieldService = new GameFieldService();
         int shiftCount = (int) (Math.random() * (maxShiftCount - minShiftCount + 1) + minShiftCount);

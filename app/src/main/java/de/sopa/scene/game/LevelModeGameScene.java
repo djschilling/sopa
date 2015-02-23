@@ -1,7 +1,6 @@
 package de.sopa.scene.game;
 
 import de.sopa.model.Level;
-import de.sopa.scene.game.GameScene;
 import org.andengine.entity.sprite.ButtonSprite;
 
 /**
@@ -15,7 +14,7 @@ public class LevelModeGameScene extends GameScene {
     @Override
     protected void addButtons() {
         if(this instanceof LevelModeGameScene) {
-            ButtonSprite restartButton = new ButtonSprite(camera.getWidth() - 300, (float) (camera.getHeight() - 300), resourcesManager.restartRegion, vbom, new ButtonSprite.OnClickListener() {
+            ButtonSprite restartButton = new ButtonSprite(camera.getWidth() - 300, (camera.getHeight() - 300), resourcesManager.restartRegion, vbom, new ButtonSprite.OnClickListener() {
                 @Override
                 public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                     sceneService.loadGameSceneFromGameScene(levelBackup);

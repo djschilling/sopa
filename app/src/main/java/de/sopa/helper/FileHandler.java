@@ -4,11 +4,11 @@ package de.sopa.helper;
  * @author David Schilling - davejs92@gmail.com
  */
 
-import android.app.Activity;
 import android.content.Context;
 import de.sopa.manager.ResourcesManager;
-
-import java.io.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,9 +59,7 @@ public class FileHandler {
     public String[] getFilenamesInFolder(String folderPath) {
         String[] fileArray = null;
         try {
-            System.out.println("Check");
             fileArray = context.getAssets().list(folderPath.substring(0,folderPath.length()-1));
-            System.out.println("Check" + fileArray[0]);
         } catch (IOException e) {
             e.printStackTrace();
         }

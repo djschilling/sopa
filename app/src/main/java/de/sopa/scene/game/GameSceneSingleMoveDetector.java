@@ -29,7 +29,6 @@ public class GameSceneSingleMoveDetector implements HoldDetector.IHoldDetectorLi
         firstX = pHoldX;
         firstY = pHoldY;
         isMoved = false;
-        System.out.println(pHoldX + " : " + pHoldY);
     }
 
     @Override
