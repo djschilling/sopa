@@ -49,23 +49,25 @@ public class LevelChoiceScene extends BaseScene implements Observer {
         for (int levelIndex = 0; levelIndex < levelInfos.size(); levelIndex++) {
 
             final int finalLevelIndex = levelIndex;
-            ITextureRegion iTextureRegion;
+            ITextureRegion levelTextureRegion;
             IFont levelChoiceFont;
-            if (levelInfos.get(finalLevelIndex).isLocked()) {
-                iTextureRegion = resourcesManager.levelChoiceRegionSW;
+            final LevelInfo levelInfo = levelInfos.get(finalLevelIndex);
+            if (levelInfo.isLocked()) {
+                levelTextureRegion = resourcesManager.levelChoiceRegionSW;
                 levelChoiceFont = resourcesManager.levelChoiceSWFont;
             } else {
-                iTextureRegion = resourcesManager.levelChoiceRegion;
+                levelTextureRegion = resourcesManager.levelChoiceRegion;
                 levelChoiceFont = resourcesManager.levelChoiceFont;
             }
-            final ButtonSprite choiceLevelSprite = new ButtonSprite(getLevelSpriteX(widthPerLevel, levelIndex),
-                    getLevelSpriteY(widthPerLevel, levelIndex), iTextureRegion, vbom, new ButtonSprite.OnClickListener() {
+            float levelSpriteX = getLevelSpriteX(widthPerLevel, levelIndex);
+            float levelSpriteY = getLevelSpriteY(widthPerLevel, levelIndex);
+            final ButtonSprite choiceLevelSprite = new ButtonSprite(levelSpriteX,
+                    levelSpriteY, levelTextureRegion, vbom, new ButtonSprite.OnClickListener() {
                 @Override
                 public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                    if(!levelInfos.get(finalLevelIndex).isLocked()) {
-                        if(finalLevelIndex != 0)
-                        {
-                            sceneService.loadGameSceneFromLevelChoiceScene(levelService.getLevelById(levelInfos.get(finalLevelIndex).getLevelId()));
+                    if (!levelInfo.isLocked()) {
+                        if (finalLevelIndex != 0) {
+                            sceneService.loadGameSceneFromLevelChoiceScene(levelService.getLevelById(levelInfo.getLevelId()));
                         } else {
                             sceneService.loadTutorialSceneFromLevelChoiceScene();
                         }
@@ -75,11 +77,12 @@ public class LevelChoiceScene extends BaseScene implements Observer {
 
             }
             );
-
             choiceLevelSprite.setWidth(widthPerLevel);
             choiceLevelSprite.setHeight(widthPerLevel);
-            registerTouchArea(choiceLevelSprite);
+
             attachChild(choiceLevelSprite);
+            registerTouchArea(choiceLevelSprite);
+
             int fontOffset;
             if ((levelIndex + 1) > 99) {
                 fontOffset = 105;
@@ -88,16 +91,44 @@ public class LevelChoiceScene extends BaseScene implements Observer {
             } else {
                 fontOffset = 150;
             }
-            attachChild(new Text(getLevelSpriteX(widthPerLevel, levelIndex) + fontOffset, getLevelSpriteY(widthPerLevel, levelIndex) + 110,
+            attachChild(new Text(levelSpriteX + fontOffset, levelSpriteY + 110,
                     levelChoiceFont, String.valueOf(levelIndex + 1), vbom));
 
 
+            if (!levelInfo.isLocked()) {
+                ITextureRegion starOneRegion;
+                ITextureRegion starTwoRegion;
+                ITextureRegion starThreeRegion;
+                if (levelInfo.getStars() >= 1) {
+                    starOneRegion = resourcesManager.levelChoiseStarRegion;
+                } else {
+                    starOneRegion = resourcesManager.levelChoiseStarSWRegion;
+                }
+                if (levelInfo.getStars() >= 2) {
+                    starTwoRegion = resourcesManager.levelChoiseStarRegion;
+                } else {
+                    starTwoRegion = resourcesManager.levelChoiseStarSWRegion;
+                }
+                if (levelInfo.getStars() >= 3) {
+                    starThreeRegion = resourcesManager.levelChoiseStarRegion;
+                } else {
+                    starThreeRegion = resourcesManager.levelChoiseStarSWRegion;
+                }
+
+                Sprite starOne = new Sprite(levelSpriteX + 0.04f * widthPerLevel, levelSpriteY + widthPerLevel * 0.7f, starOneRegion, vbom);
+                Sprite starTwo = new Sprite(levelSpriteX + 0.37f * widthPerLevel, levelSpriteY + widthPerLevel * 0.65f, starTwoRegion, vbom);
+                Sprite starThree = new Sprite(levelSpriteX + 0.68f * widthPerLevel, levelSpriteY + widthPerLevel * 0.7f, starThreeRegion, vbom);
+
+                attachChild(starOne);
+                attachChild(starTwo);
+                attachChild(starThree);
+            }
         }
     }
 
 
     private void addChangeLevelButtons() {
-        screenCount = (((int)(levelInfos.size() - 0.1)/ 12)) + 1;
+        screenCount = (((int) (levelInfos.size() - 0.1) / 12)) + 1;
         currentScreen = 0;
         rightArrow = new ButtonSprite(camera.getWidth() * 0.93f - LEVEL_SELECT_ICON_WIDTH, camera.getHeight() * 0.8f, resourcesManager.levelChoiceArrowRightRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
@@ -128,7 +159,7 @@ public class LevelChoiceScene extends BaseScene implements Observer {
     }
 
     private float getLevelSpriteY(float heightPerLevel, int levelIndex) {
-        return ( (levelIndex % 12 / COLUMNS)) * heightPerLevel;
+        return ((levelIndex % 12 / COLUMNS)) * heightPerLevel;
     }
 
     private float getLevelSpriteX(float widthPerLevel, int levelIndex) {
@@ -161,12 +192,12 @@ public class LevelChoiceScene extends BaseScene implements Observer {
     @Override
     public void update() {
         entityToFollow.registerEntityModifier(new MoveXModifier(0.5f, entityToFollow.getX(), levelChoiceService.getCurrentScreen() * camera.getWidth() + camera.getWidth() / 2, EaseQuartInOut.getInstance()));
-        if(levelChoiceService.isFirstScene()){
+        if (levelChoiceService.isFirstScene()) {
             leftArrow.setVisible(false);
         } else {
             leftArrow.setVisible(true);
         }
-        if(levelChoiceService.isLastScene()){
+        if (levelChoiceService.isLastScene()) {
             rightArrow.setVisible(false);
         } else {
             rightArrow.setVisible(true);

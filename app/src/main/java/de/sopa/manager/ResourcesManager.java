@@ -66,6 +66,8 @@ public class ResourcesManager {
     private boolean preparedTextures = false;
     public MusicService musicService;
     public SettingsService settingsService;
+    public ITextureRegion levelChoiseStarRegion;
+    public ITextureRegion levelChoiseStarSWRegion;
 
     public void loadSplashSceneResources() {
         splash_region = resourceLoader.getTexture("scenes/splash/CouchStudio.png");
@@ -96,6 +98,8 @@ public class ResourcesManager {
         levelChoiceRegionLocked.getTexture().load();
         levelChoiceArrowLeftRegion.getTexture().load();
         levelChoiceArrowRightRegion.getTexture().load();
+        levelChoiseStarRegion.getTexture().load();
+        levelChoiseStarSWRegion.getTexture().load();
         levelChoiceFont = resourceLoader.getFont("Impact.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 110, 0xFFca540f, 0, 0xFFca540f);
         levelChoiceSWFont = resourceLoader.getFont("Impact.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 110, 0xFF808080, 0, 0xFF808080);
     }
@@ -144,6 +148,8 @@ public class ResourcesManager {
         levelChoiceRegionLocked.getTexture().unload();
         levelChoiceArrowLeftRegion.getTexture().unload();
         levelChoiceArrowRightRegion.getTexture().unload();
+        levelChoiseStarRegion.getTexture().unload();
+        levelChoiseStarSWRegion.getTexture().unload();
         levelChoiceFont.getTexture().unload();
         levelChoiceSWFont.getTexture().unload();
 
@@ -218,6 +224,8 @@ public class ResourcesManager {
             levelChoiceRegionLocked = resourceLoader.getTexture("scenes/levelChoice/LevelSW.png");
             levelChoiceArrowLeftRegion = resourceLoader.getTexture("scenes/levelChoice/ArrowLeft.png");
             levelChoiceArrowRightRegion = resourceLoader.getTexture("scenes/levelChoice/ArrowRight.png");
+            levelChoiseStarRegion = resourceLoader.getTexture("scenes/levelChoice/star.png");
+            levelChoiseStarSWRegion = resourceLoader.getTexture("scenes/levelChoice/starSW.png");
 
             starRegion = resourceLoader.getTexture("scenes/score/star.png");
             starSWRegion = resourceLoader.getTexture("scenes/score/starSW.png");
