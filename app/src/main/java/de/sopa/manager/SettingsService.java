@@ -26,7 +26,7 @@ public class SettingsService {
     }
 
     public boolean isMute(){
-        return sharedPreferences.getBoolean(MUTE, true);
+        return sharedPreferences.getBoolean(MUTE, false);
     }
 
     public void switchMute() {
