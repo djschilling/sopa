@@ -63,7 +63,13 @@ public class LevelChoiceScene extends BaseScene implements Observer {
                 @Override
                 public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                     if(!levelInfos.get(finalLevelIndex).isLocked()) {
-                        sceneService.loadGameSceneFromLevelChoiceScene(levelService.getLevelById(levelInfos.get(finalLevelIndex).getLevelId()));
+                        if(finalLevelIndex != 0)
+                        {
+                            sceneService.loadGameSceneFromLevelChoiceScene(levelService.getLevelById(levelInfos.get(finalLevelIndex).getLevelId()));
+                        } else {
+                            sceneService.loadTutorialSceneFromLevelChoiceScene();
+                        }
+
                     }
                 }
 

@@ -50,12 +50,16 @@ public class ResourcesManager {
     public ITextureRegion backToMenuRegionP;
     public ITextureRegion restartRegion;
     public ITextureRegion unMuteRegion;
+    public ITextureRegion tutorialTextSwipeRegion;
+    public ITextureRegion tutorialTextConceptRegion;
+    public ITextureRegion tutorialArrowRegion;
+    public ITextureRegion tutorialScreenshotRegion;
+    public ITextureRegion tutorialGridRegion;
 
     public IFont scoreFont;
     public IFont levelChoiceFont;
     public IFont movesScoreFont;
     public IFont settingsFont;
-
     public IFont levelChoiceSWFont;
     public LevelService levelService;
     private boolean preparedTextures = false;
@@ -231,7 +235,29 @@ public class ResourcesManager {
             muteRegion = resourceLoader.getTexture("scenes/settings/mute.png");
             unMuteRegion = resourceLoader.getTexture("scenes/settings/unmute.png");
 
+            tutorialScreenshotRegion = resourceLoader.getTexture("scenes/tutorial/Screenshot.png");
+            tutorialGridRegion = resourceLoader.getTexture("scenes/tutorial/gameField.png");
+            tutorialTextConceptRegion = resourceLoader.getTexture("scenes/tutorial/gameConcept.png");
+            tutorialTextSwipeRegion = resourceLoader.getTexture("scenes/tutorial/swipe.png");
+            tutorialArrowRegion = resourceLoader.getTexture("scenes/tutorial/boxArrow.png");
         }
         preparedTextures = true;
+    }
+
+    public void loadTutorialSceneResources() {
+        prepareTextures();
+        tutorialScreenshotRegion.getTexture().load();
+        tutorialGridRegion.getTexture().load();
+        tutorialTextConceptRegion.getTexture().load();
+        tutorialTextSwipeRegion.getTexture().load();
+        tutorialArrowRegion.getTexture().load();
+    }
+
+    public void unloadTutorialScene() {
+        tutorialScreenshotRegion.getTexture().unload();
+        tutorialGridRegion.getTexture().unload();
+        tutorialArrowRegion.getTexture().unload();
+        tutorialTextSwipeRegion.getTexture().unload();
+        tutorialTextConceptRegion.getTexture().unload();
     }
 }

@@ -5,6 +5,7 @@ import de.sopa.model.game.Level;
 import de.sopa.scene.BaseScene;
 import de.sopa.scene.choicelevel.LevelChoiceScene;
 import de.sopa.scene.game.LevelModeGameScene;
+import de.sopa.scene.game.TutorialScene;
 import de.sopa.scene.loading.LoadingScene;
 import de.sopa.scene.menu.MainMenuScene;
 import de.sopa.scene.score.ScoreScreen;
@@ -30,6 +31,7 @@ public class SceneServiceImpl implements SceneService {
     private BaseScene currentScene;
 
     private Engine engine;
+    private BaseScene tutorialScene;
 
     public SceneServiceImpl(Engine engine) {
         this.engine = engine;
@@ -235,6 +237,44 @@ public class SceneServiceImpl implements SceneService {
                 setScene(gameScene);
             }
         }));
+    }
+
+    @Override
+    public void loadTutorialSceneFromLevelChoiceScene() {
+        setScene(loadingScene);
+        disposeLevelChoiceScene();
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            @Override
+            public void onTimePassed(TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                ResourcesManager.getInstance().loadTutorialSceneResources();
+                tutorialScene = new TutorialScene();
+                setScene(tutorialScene);
+            }
+        }));
+    }
+
+    @Override
+    public void loadFirstLevelFromTutorial() {
+        setScene(loadingScene);
+        disposeTutorialScene();
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            @Override
+            public void onTimePassed(TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                ResourcesManager.getInstance().loadGameSceneResources();
+                gameScene = new LevelModeGameScene(ResourcesManager.getInstance().levelService.getLevelById(1));
+                setScene(gameScene);
+            }
+        }));
+
+    }
+
+    private void disposeTutorialScene() {
+        ResourcesManager.getInstance().unloadTutorialScene();
+        tutorialScene.disposeScene();
+        tutorialScene = null;
+
     }
 
     private void disposeSettingsScene() {
