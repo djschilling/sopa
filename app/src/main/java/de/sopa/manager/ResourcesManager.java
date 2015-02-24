@@ -31,7 +31,6 @@ public class ResourcesManager {
     public ITextureRegion splash_region;
 
     public ITextureRegion level_mode_region;
-    public ITextureRegion play_region;
     public ITextureRegion settingsRegion;
     public ITextureRegion loadingScreenBackgroundRegion;
 
@@ -61,7 +60,6 @@ public class ResourcesManager {
     public IFont levelChoiceSWFont;
     public LevelService levelService;
     private boolean preparedTextures = false;
-    public int justPlayMoves = 1;
     public MusicService musicService;
     public SettingsService settingsService;
 
@@ -112,7 +110,6 @@ public class ResourcesManager {
 
     private void loadMenuSceneGraphics() {
         prepareTextures();
-        play_region.getTexture().load();
         level_mode_region.getTexture().load();
         settingsRegion.getTexture().load();
     }
@@ -158,7 +155,6 @@ public class ResourcesManager {
 
     private void unloadMenuSceneTextures() {
         level_mode_region.getTexture().unload();
-        play_region.getTexture().unload();
         settingsRegion.getTexture().unload();
     }
 
@@ -228,7 +224,6 @@ public class ResourcesManager {
             backToMenuRegionA = resourceLoader.getTexture("scenes/score/BackA.png");
             backToMenuRegionP = resourceLoader.getTexture("scenes/score/BackP.png");
 
-            play_region = resourceLoader.getTexture("scenes/menu/JustPlay.png");
             level_mode_region = resourceLoader.getTexture("scenes/menu/LevelMode.png");
             settingsRegion = resourceLoader.getTexture("scenes/menu/Settings.png");
 

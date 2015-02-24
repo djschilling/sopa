@@ -45,16 +45,6 @@ public class MainMenuScene extends BaseScene {
     }
 
     private void createMenuChildScene() {
-        final ButtonSprite playItemSprite = new ButtonSprite(0, 0, resourcesManager.play_region, vbom, new ButtonSprite.OnClickListener() {
-            @Override
-            public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                sceneService.loadGameSceneFromMainMenuScene();
-            }
-        });
-
-        playItemSprite.setPosition(camera.getWidth() / 2 - playItemSprite.getWidthScaled() /2, camera.getHeight() / 2 - playItemSprite.getHeightScaled());
-        attachChild(playItemSprite);
-        registerTouchArea(playItemSprite);
         final ButtonSprite levelItemSprite = new ButtonSprite(0, 0, resourcesManager.level_mode_region, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
@@ -73,8 +63,7 @@ public class MainMenuScene extends BaseScene {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
                 levelItemSprite.registerEntityModifier(new MoveXModifier(1f, camera.getWidth(), 0));
-                playItemSprite.registerEntityModifier(new MoveXModifier(1f,-camera.getWidth(),0));
-                  settingsButton.registerEntityModifier(new MoveYModifier(1f, camera.getHeight(),camera.getHeight()/2 + settingsButton.getHeight()  ));
+                settingsButton.registerEntityModifier(new MoveYModifier(1f, camera.getHeight(),camera.getHeight()/2 + settingsButton.getHeight()  ));
             }
         }));
         attachChild(settingsButton);

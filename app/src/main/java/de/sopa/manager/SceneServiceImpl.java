@@ -1,12 +1,9 @@
 package de.sopa.manager;
 
 
-import de.sopa.helper.LevelCreator;
-import de.sopa.model.GameFieldDestroyer;
 import de.sopa.model.Level;
-import de.sopa.scene.*;
+import de.sopa.scene.BaseScene;
 import de.sopa.scene.choicelevel.LevelChoiceScene;
-import de.sopa.scene.game.JustPlayGameScene;
 import de.sopa.scene.game.LevelModeGameScene;
 import de.sopa.scene.loading.LoadingScene;
 import de.sopa.scene.menu.MainMenuScene;
@@ -108,21 +105,6 @@ public class SceneServiceImpl implements SceneService {
         gameScene = null;
     }
 
-    @Override
-    public void loadGameSceneFromMainMenuScene() {
-        setScene(loadingScene);
-        disposeMenuScene();
-        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
-            public void onTimePassed(final TimerHandler pTimerHandler) {
-                engine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().loadGameSceneResources();
-                Level level = new LevelCreator().generateSolvedField(6, 6);
-                new GameFieldDestroyer().destroyField(level, ResourcesManager.getInstance().justPlayMoves, ResourcesManager.getInstance().justPlayMoves   );
-                gameScene = new JustPlayGameScene(level);
-                setScene(gameScene);
-            }
-        }));
-    }
     public void loadGameSceneFromLevelChoiceScene(final Level level) {
         disposeLevelChoiceScene();
         setScene(loadingScene);
