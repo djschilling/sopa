@@ -1,6 +1,6 @@
 package de.sopa.scene.game;
 
-import de.sopa.model.Level;
+import de.sopa.model.game.Level;
 import org.andengine.entity.sprite.ButtonSprite;
 
 /**

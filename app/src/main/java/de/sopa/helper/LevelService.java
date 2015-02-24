@@ -1,7 +1,7 @@
 package de.sopa.helper;
 
-import de.sopa.model.Level;
-import de.sopa.model.LevelInfo;
+import de.sopa.model.game.Level;
+import de.sopa.model.game.LevelInfo;
 import java.util.List;
 
 /**
@@ -11,7 +11,7 @@ public interface LevelService {
 
     /**
      *
-     * @return the total count of {@link de.sopa.model.Level}s
+     * @return the total count of {@link de.sopa.model.game.Level}s
      */
     int getLevelCount();
 
@@ -25,7 +25,7 @@ public interface LevelService {
 
     /**
      *
-     * @return {@link de.sopa.model.LevelInfo}s for all Level
+     * @return {@link de.sopa.model.game.LevelInfo}s for all Level
      */
     List<LevelInfo> getLevelInfos();
 

@@ -1,9 +1,9 @@
 package de.sopa.scene.game;
 
 
-import de.sopa.model.GameService;
-import de.sopa.model.GameServiceImpl;
-import de.sopa.model.Level;
+import de.sopa.model.game.GameService;
+import de.sopa.model.game.GameServiceImpl;
+import de.sopa.model.game.Level;
 import de.sopa.observer.Observer;
 import de.sopa.scene.BaseScene;
 import org.andengine.engine.handler.timer.ITimerCallback;

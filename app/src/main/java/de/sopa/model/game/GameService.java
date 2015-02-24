@@ -1,4 +1,4 @@
-package de.sopa.model;
+package de.sopa.model.game;
 
 import de.sopa.observer.Observer;
 

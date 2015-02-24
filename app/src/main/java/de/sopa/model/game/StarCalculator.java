@@ -1,4 +1,4 @@
-package de.sopa.model;
+package de.sopa.model.game;
 
 /**
  * Created by raphael on 08.09.14.

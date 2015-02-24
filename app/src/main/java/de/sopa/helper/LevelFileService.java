@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Environment;
 import android.util.Log;
 import de.sopa.manager.ResourcesManager;
-import de.sopa.model.Level;
+import de.sopa.model.game.Level;
 import java.io.IOException;
 
 /**

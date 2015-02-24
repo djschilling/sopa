@@ -1,7 +1,10 @@
 package de.sopa.scene.choicelevel;
 
 
-import de.sopa.model.LevelInfo;
+import de.sopa.model.game.LevelInfo;
+import de.sopa.model.levelchoice.LevelChoiceService;
+import de.sopa.model.levelchoice.LevelChoiceServiceImpl;
+import de.sopa.observer.Observer;
 import de.sopa.scene.BaseScene;
 import java.util.List;
 import org.andengine.engine.camera.hud.HUD;
@@ -19,7 +22,7 @@ import org.andengine.util.modifier.ease.EaseQuartInOut;
 /**
  * @author Raphael Schilling
  */
-public class LevelChoiceScene extends BaseScene {
+public class LevelChoiceScene extends BaseScene implements Observer {
     private static final int COLUMNS = 3;
     private int currentScreen;
     private int screenCount;
@@ -28,13 +31,15 @@ public class LevelChoiceScene extends BaseScene {
     private Entity entityToFollow;
     private static final int LEVEL_SELECT_ICON_WIDTH = 300;
     private List<LevelInfo> levelInfos;
-    private float widthPerLevel;
     private HUD arrowHud;
+    private LevelChoiceService levelChoiceService;
 
     @Override
     public void createScene(Object o) {
         levelInfos = levelService.getLevelInfos();
-        widthPerLevel =  (camera.getWidth() / COLUMNS);
+        levelChoiceService = new LevelChoiceServiceImpl(levelInfos.size(), 12);
+        levelChoiceService.attach(this);
+        float widthPerLevel = (camera.getWidth() / COLUMNS);
         addLevelChooseTiles(levelInfos, widthPerLevel);
         addChangeLevelButtons();
         resourcesManager.musicService.playMusic();
@@ -91,27 +96,13 @@ public class LevelChoiceScene extends BaseScene {
         rightArrow = new ButtonSprite(camera.getWidth() * 0.93f - LEVEL_SELECT_ICON_WIDTH, camera.getHeight() * 0.8f, resourcesManager.levelChoiceArrowRightRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                if (currentScreen < screenCount - 1) {
-                    currentScreen++;
-                    entityToFollow.registerEntityModifier(new MoveXModifier(0.5f, entityToFollow.getX(), currentScreen * camera.getWidth() + camera.getWidth() / 2, EaseQuartInOut.getInstance()));
-                    if (currentScreen == screenCount - 1) {
-                        rightArrow.setVisible(false);
-                    }
-                    leftArrow.setVisible(true);
-                }
+                levelChoiceService.moveRight();
             }
         });
         leftArrow = new ButtonSprite(camera.getWidth() * 0.07f, camera.getHeight() * 0.8f, resourcesManager.levelChoiceArrowLeftRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                if (currentScreen > 0) {
-                    currentScreen--;
-                    entityToFollow.registerEntityModifier(new MoveXModifier(0.5f, entityToFollow.getX(), currentScreen * camera.getWidth() + camera.getWidth() / 2, EaseQuartInOut.getInstance()));
-                    if (currentScreen == 0) {
-                        leftArrow.setVisible(false);
-                    }
-                    rightArrow.setVisible(true);
-                }
+                levelChoiceService.moveLeft();
             }
         });
 
@@ -159,5 +150,20 @@ public class LevelChoiceScene extends BaseScene {
                 levelChoiceScene.detachChildren();
             }
         }));
+    }
+
+    @Override
+    public void update() {
+        entityToFollow.registerEntityModifier(new MoveXModifier(0.5f, entityToFollow.getX(), levelChoiceService.getCurrentScreen() * camera.getWidth() + camera.getWidth() / 2, EaseQuartInOut.getInstance()));
+        if(levelChoiceService.isFirstScene()){
+            leftArrow.setVisible(false);
+        } else {
+            leftArrow.setVisible(true);
+        }
+        if(levelChoiceService.isLastScene()){
+            rightArrow.setVisible(false);
+        } else {
+            rightArrow.setVisible(true);
+        }
     }
 }

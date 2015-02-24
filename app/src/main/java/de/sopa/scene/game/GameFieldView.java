@@ -1,8 +1,7 @@
 package de.sopa.scene.game;
 
-import de.sopa.model.GameService;
-import de.sopa.model.Tile;
-import de.sopa.model.TileType;
+import de.sopa.model.game.GameService;
+import de.sopa.model.game.Tile;
 import java.util.Map;
 import org.andengine.entity.Entity;
 import org.andengine.entity.IEntity;

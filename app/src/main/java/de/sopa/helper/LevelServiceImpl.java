@@ -1,8 +1,8 @@
 package de.sopa.helper;
 
 import de.sopa.database.LevelInfoDataSource;
-import de.sopa.model.Level;
-import de.sopa.model.LevelInfo;
+import de.sopa.model.game.Level;
+import de.sopa.model.game.LevelInfo;
 import java.util.List;
 
 /**

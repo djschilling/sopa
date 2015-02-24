@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import de.sopa.model.LevelInfo;
+import de.sopa.model.game.LevelInfo;
 import java.util.ArrayList;
 import java.util.List;
 

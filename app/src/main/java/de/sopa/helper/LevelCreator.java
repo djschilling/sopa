@@ -1,15 +1,15 @@
 package de.sopa.helper;
 
-import de.sopa.model.Level;
-import de.sopa.model.Tile;
-import de.sopa.model.TileType;
+import de.sopa.model.game.Level;
+import de.sopa.model.game.Tile;
+import de.sopa.model.game.TileType;
 import java.lang.Character;import java.lang.IllegalArgumentException;import java.lang.IllegalStateException;import java.lang.Math;import java.lang.String;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static de.sopa.model.TileType.PUZZLE;
-import static de.sopa.model.TileType.UNDEFINED;
+import static de.sopa.model.game.TileType.PUZZLE;
+import static de.sopa.model.game.TileType.UNDEFINED;
 
 /**
  * David Schilling - davejs92@gmail.com
@@ -251,7 +251,7 @@ public class LevelCreator {
         level.setStartX(startX);
         level.setStartY(startY);
         level.setField(tiles);
-        level.setTilesCount(number -    1);
+        level.setTilesCount(number - 1);
         if(number>(width-2)*(height-2)/3) {
         return level;
         } else {

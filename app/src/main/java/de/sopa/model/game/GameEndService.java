@@ -1,4 +1,4 @@
-package de.sopa.model;
+package de.sopa.model.game;
 
 /**
  * David Schilling - davejs92@gmail.com

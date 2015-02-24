@@ -1,6 +1,6 @@
 package de.sopa.manager;
 
-import de.sopa.model.Level;
+import de.sopa.model.game.Level;
 import de.sopa.scene.BaseScene;
 
 /**

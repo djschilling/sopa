@@ -36,7 +36,6 @@ public class ResourcesManager {
 
     public Map<Character, TextureRegion> regionTileMap;
     public ITextureRegion tilesBorderRegion;
-    public ITextureRegion saveButtonRegion;
     public ITextureRegion levelChoiceRegion;
     public ITextureRegion levelChoiceArrowRightRegion;
     public ITextureRegion levelChoiceArrowLeftRegion;
@@ -122,7 +121,6 @@ public class ResourcesManager {
             textureRegion.getTexture().load();
         }
         tilesBorderRegion.getTexture().load();
-        saveButtonRegion.getTexture().load();
         restartRegion.getTexture().load();
     }
 
@@ -164,7 +162,6 @@ public class ResourcesManager {
         }
         restartRegion.getTexture().unload();
         tilesBorderRegion.getTexture().unload();
-        saveButtonRegion.getTexture().unload();
         scoreFont.getTexture().unload();
         scoreFont = null;
     }
@@ -229,7 +226,6 @@ public class ResourcesManager {
 
             regionTileMap = this.resourceLoader.getTileTextures();
             tilesBorderRegion = resourceLoader.getTexture("scenes/game/borders.png");
-            saveButtonRegion = resourceLoader.getTexture("scenes/game/save.png");
             restartRegion = resourceLoader.getTexture("scenes/game/Restart.png");
 
             muteRegion = resourceLoader.getTexture("scenes/settings/mute.png");

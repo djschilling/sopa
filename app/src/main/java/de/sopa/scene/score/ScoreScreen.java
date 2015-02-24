@@ -1,7 +1,7 @@
 package de.sopa.scene.score;
 
-import de.sopa.model.Level;
-import de.sopa.model.StarCalculator;
+import de.sopa.model.game.Level;
+import de.sopa.model.game.StarCalculator;
 import de.sopa.scene.BaseScene;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
