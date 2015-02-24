@@ -1,6 +1,5 @@
 package de.sopa;
 
-import android.content.SharedPreferences;
 import android.view.KeyEvent;
 import de.sopa.database.LevelInfoDataSource;
 import de.sopa.helper.LevelFileService;
@@ -10,6 +9,7 @@ import de.sopa.manager.ResourceLoader;
 import de.sopa.manager.ResourcesManager;
 import de.sopa.manager.SceneService;
 import de.sopa.manager.SceneServiceImpl;
+import de.sopa.manager.SettingsService;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -45,10 +45,11 @@ public class GameActivity extends BaseGameActivity {
         levelInfoDataSource = new LevelInfoDataSource(this);
         levelInfoDataSource.open();
         LevelService levelService = new LevelServiceImpl(new LevelFileService(this), levelInfoDataSource);
+        SettingsService settingsService = new SettingsService(getApplicationContext());
         ResourcesManager.prepareManager(mEngine, this, camera, getVertexBufferObjectManager(),
                 new ResourceLoader(getTextureManager(), getAssets(), getFontManager()), new SceneServiceImpl(mEngine),
-                levelService);
-        if (firstStart()) {
+                levelService, settingsService);
+        if (settingsService.isFirstTime()) {
             levelService.updateLevelInfos();
             levelService.unlockLevel(1);
             System.out.println("First Start");
@@ -92,6 +93,9 @@ public class GameActivity extends BaseGameActivity {
 
     @Override
     public synchronized void onResumeGame() {
+        if(ResourcesManager.getInstance().settingsService.isMute()){
+            ResourcesManager.getInstance().musicService.muteMusic();
+        }
         ResourcesManager.getInstance().musicService.playMusic();
         levelInfoDataSource.open();
         super.onResumeGame();
@@ -105,12 +109,4 @@ public class GameActivity extends BaseGameActivity {
         super.onPauseGame();
     }
 
-    private boolean firstStart() {
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        if (settings.getBoolean("my_first_time", true)) {
-            settings.edit().putBoolean("my_first_time", false).commit();
-            return true;
-        }
-        return false;
-    }
 }

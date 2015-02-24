@@ -4,6 +4,7 @@ import android.app.Activity;
 import de.sopa.helper.LevelService;
 import de.sopa.manager.ResourcesManager;
 import de.sopa.manager.SceneService;
+import de.sopa.manager.SettingsService;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.scene.Scene;
@@ -20,6 +21,7 @@ public abstract class BaseScene extends Scene {
 
     protected final SceneService sceneService;
     protected final LevelService levelService;
+    protected final SettingsService settingsService;
     protected Engine engine;
     protected Activity activity;
     protected ResourcesManager resourcesManager;
@@ -36,6 +38,7 @@ public abstract class BaseScene extends Scene {
         this.sceneService = resourcesManager.sceneService;
         this.levelService = resourcesManager.levelService;
         this.baseScene = this;
+        this.settingsService = resourcesManager.settingsService;
         createScene(o);
     }
     public BaseScene() {

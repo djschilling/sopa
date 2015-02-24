@@ -51,7 +51,7 @@ public class ResourcesManager {
     public ITextureRegion backToMenuRegionA;
     public ITextureRegion backToMenuRegionP;
     public ITextureRegion restartRegion;
-    private ITextureRegion unMuteRegion;
+    public ITextureRegion unMuteRegion;
 
     public IFont scoreFont;
     public IFont levelChoiceFont;
@@ -63,6 +63,7 @@ public class ResourcesManager {
     private boolean preparedTextures = false;
     public int justPlayMoves = 1;
     public MusicService musicService;
+    public SettingsService settingsService;
 
     public void loadSplashSceneResources() {
         splash_region = resourceLoader.getTexture("scenes/splash/CouchStudio.png");
@@ -172,7 +173,7 @@ public class ResourcesManager {
         scoreFont = null;
     }
 
-    public static void prepareManager(Engine engine, GameActivity activity, Camera camera, VertexBufferObjectManager vbom, ResourceLoader resourceLoader, SceneService sceneService, LevelService levelService) {
+    public static void prepareManager(Engine engine, GameActivity activity, Camera camera, VertexBufferObjectManager vbom, ResourceLoader resourceLoader, SceneService sceneService, LevelService levelService, SettingsService settingsService) {
         getInstance().engine = engine;
         getInstance().activity = activity;
         getInstance().camera = camera;
@@ -181,6 +182,7 @@ public class ResourcesManager {
         getInstance().sceneService = sceneService;
         getInstance().levelService = levelService;
         getInstance().musicService = new MusicService(MediaPlayer.create(activity.getApplicationContext(), R.raw.theme), true);
+        getInstance().settingsService = settingsService;
     }
 
     public static ResourcesManager getInstance() {
@@ -236,7 +238,7 @@ public class ResourcesManager {
             restartRegion = resourceLoader.getTexture("scenes/game/Restart.png");
 
             muteRegion = resourceLoader.getTexture("scenes/settings/mute.png");
-            unMuteRegion = resourceLoader.getTexture("scenes/settings/mute.png");
+            unMuteRegion = resourceLoader.getTexture("scenes/settings/unmute.png");
 
         }
         preparedTextures = true;

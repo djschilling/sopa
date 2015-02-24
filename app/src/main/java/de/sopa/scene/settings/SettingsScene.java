@@ -12,18 +12,40 @@ import org.andengine.input.touch.TouchEvent;
  */
 public class SettingsScene extends BaseScene {
 
+    private ButtonSprite muteButton;
+    private ButtonSprite unmuteButton;
+
     @Override
     public void createScene(Object o) {
-        ButtonSprite mute =  new ButtonSprite(camera.getWidth()/2+300/2,(camera.getHeight()/2+300/2), resourcesManager.muteRegion,vbom, new ButtonSprite.OnClickListener() {
+        muteButton =  new ButtonSprite(camera.getWidth()/2+300/2,(camera.getHeight()/2+300/2), resourcesManager.muteRegion,vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                //TODO: Mute The Music
+                settingsService.switchMute();
+                muteButton.setVisible(false);
+                unmuteButton.setVisible(true);
+                resourcesManager.musicService.unmuteMusic();
             }
         });
+        unmuteButton =  new ButtonSprite(camera.getWidth()/2+300/2,(camera.getHeight()/2+300/2), resourcesManager.unMuteRegion,vbom, new ButtonSprite.OnClickListener() {
+            @Override
+            public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                settingsService.switchMute();
+                muteButton.setVisible(true);
+                unmuteButton.setVisible(false);
+                resourcesManager.musicService.muteMusic();
+            }
+        });
+        if(settingsService.isMute()){
+            unmuteButton.setVisible(false);
+        } else {
+            muteButton.setVisible(false);
+        }
         final Text count = new Text(200,200,resourcesManager.settingsFont , "" + resourcesManager.justPlayMoves, vbom);
         attachChild(count);
-        attachChild(mute);
-        registerTouchArea(mute);
+        attachChild(muteButton);
+        attachChild(unmuteButton);
+        registerTouchArea(muteButton);
+        registerTouchArea(unmuteButton);
         Text plus = new Text(0,0,resourcesManager.settingsFont, "+",vbom) {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {

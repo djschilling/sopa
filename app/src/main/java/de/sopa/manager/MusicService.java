@@ -37,4 +37,12 @@ public class MusicService {
             prepared = false;
         }
     }
+
+    public void muteMusic() {
+        mediaPlayer.setVolume(0, 0);
+    }
+
+    public void unmuteMusic(){
+        mediaPlayer.setVolume(1, 1);
+    }
 }
