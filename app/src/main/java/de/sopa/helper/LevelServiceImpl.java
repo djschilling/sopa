@@ -3,6 +3,7 @@ package de.sopa.helper;
 import de.sopa.database.LevelInfoDataSource;
 import de.sopa.model.game.Level;
 import de.sopa.model.game.LevelInfo;
+import de.sopa.model.game.StarCalculator;
 import java.util.List;
 
 /**
@@ -12,10 +13,12 @@ public class LevelServiceImpl implements LevelService {
 
     private final LevelFileService levelHandler;
     private final LevelInfoDataSource levelInfoDataSource;
+    private final StarCalculator starCalculator;
 
     public LevelServiceImpl(LevelFileService levelHandler, LevelInfoDataSource levelInfoDataSource) {
         this.levelHandler = levelHandler;
         this.levelInfoDataSource = levelInfoDataSource;
+        this.starCalculator = new StarCalculator();
     }
 
     @Override
@@ -55,18 +58,26 @@ public class LevelServiceImpl implements LevelService {
                 }
             }
             if (!foundId) {
-                levelInfoDataSource.createLevelInfo(new LevelInfo(availableLevelId, true, -1));
+                levelInfoDataSource.createLevelInfo(new LevelInfo(availableLevelId, true, -1, 0));
             }
         }
     }
 
     @Override
-    public Level updateFewestMoves(Level level) {
+    public Level calculateLevelResult(Level level) {
         if (level.getLevelInfo().getFewestMoves() == -1 || level.getMovesCount() < level.getMinimumMovesToSolve()){
             level.getLevelInfo().setFewestMoves(level.getMovesCount());
-            levelInfoDataSource.updateLevelInfo(level.getLevelInfo());
+        }
+        int stars = starCalculator.getStars(level.getMovesCount(), level.getMinimumMovesToSolve());
+        if(level.getLevelInfo().getStars() < stars){
+            level.getLevelInfo().setStars(stars);
         }
         return level;
+    }
+
+    @Override
+    public LevelInfo updateLevelInfo(LevelInfo levelInfo) {
+        return levelInfoDataSource.updateLevelInfo(levelInfo);
     }
 
     @Override

@@ -8,11 +8,13 @@ public class LevelInfo {
     private Integer levelId;
     private boolean locked;
     private Integer fewestMoves;
+    private int stars;
 
-    public LevelInfo(Integer levelId, boolean locked, Integer fewestMoves) {
+    public LevelInfo(Integer levelId, boolean locked, Integer fewestMoves, int starts) {
         this.locked = locked;
         this.fewestMoves = fewestMoves;
         this.levelId = levelId;
+        this.stars = starts;
     }
 
     public Integer getLevelId() {
@@ -33,6 +35,14 @@ public class LevelInfo {
 
     public void setFewestMoves(Integer fewestMoves) {
         this.fewestMoves = fewestMoves;
+    }
+
+    public int getStars() {
+        return stars;
+    }
+
+    public void setStars(int stars) {
+        this.stars = stars;
     }
 
     @Override

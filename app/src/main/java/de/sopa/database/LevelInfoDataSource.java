@@ -11,6 +11,7 @@ import java.util.List;
 import static de.sopa.database.LevelInfoTable.COLUMN_FEWEST_MOVES;
 import static de.sopa.database.LevelInfoTable.COLUMN_ID;
 import static de.sopa.database.LevelInfoTable.COLUMN_LOCKED;
+import static de.sopa.database.LevelInfoTable.COLUMN_STARS;
 import static de.sopa.database.LevelInfoTable.TABLE_LEVEL_INFO;
 
 /**
@@ -20,7 +21,7 @@ public class LevelInfoDataSource {
 
     private SQLiteDatabase database;
     private MySQLiteHelper dbHelper;
-    private String[] allColumns = {COLUMN_ID, COLUMN_LOCKED, COLUMN_FEWEST_MOVES};
+    private String[] allColumns = {COLUMN_ID, COLUMN_LOCKED, COLUMN_FEWEST_MOVES, COLUMN_STARS};
 
     public LevelInfoDataSource (Context context) {
         dbHelper = new MySQLiteHelper(context);
@@ -41,6 +42,7 @@ public class LevelInfoDataSource {
         }
         values.put(COLUMN_LOCKED, levelInfo.isLocked());
         values.put(COLUMN_FEWEST_MOVES, levelInfo.getFewestMoves());
+        values.put(COLUMN_STARS, levelInfo.getStars());
         long insertId = database.insert(TABLE_LEVEL_INFO, null,
                 values);
         Cursor cursor = database.query(TABLE_LEVEL_INFO,
@@ -56,6 +58,7 @@ public class LevelInfoDataSource {
         values.put(COLUMN_ID, levelInfo.getLevelId());
         values.put(COLUMN_LOCKED, levelInfo.isLocked());
         values.put(COLUMN_FEWEST_MOVES, levelInfo.getFewestMoves());
+        values.put(COLUMN_STARS, levelInfo.getStars());
         database.replace(TABLE_LEVEL_INFO, null,
                 values);
         return getLevelInfoById(levelInfo.getLevelId());
@@ -93,7 +96,8 @@ public class LevelInfoDataSource {
     private LevelInfo cursorToLevelInfo(Cursor cursor) {
         int anInt = cursor.getInt(0);
         boolean locked = cursor.getInt(1) != 0;
-        int anInt1 = cursor.getInt(2);
-        return new LevelInfo(anInt, locked, anInt1);
+        int fewestMoves = cursor.getInt(2);
+        int stars = cursor.getInt(3);
+        return new LevelInfo(anInt, locked, fewestMoves, stars);
     }
 }

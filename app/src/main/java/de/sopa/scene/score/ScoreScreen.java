@@ -1,7 +1,6 @@
 package de.sopa.scene.score;
 
 import de.sopa.model.game.Level;
-import de.sopa.model.game.StarCalculator;
 import de.sopa.scene.BaseScene;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -13,7 +12,7 @@ import org.andengine.entity.text.Text;
  * @author Raphael Schilling
  */
 public class ScoreScreen extends BaseScene {
-    private StarCalculator starCalculator;
+
     public ScoreScreen(Level level) {
         super(level);
     }
@@ -21,8 +20,6 @@ public class ScoreScreen extends BaseScene {
     @Override
     public void createScene(final Object o) {
         final Level level = (Level) o;
-        starCalculator = new StarCalculator();
-        int stars = starCalculator.getStars(level.getMovesCount(), level.getMinimumMovesToSolve());
         String levelCompleteString = level.getLevelInfo().getLevelId() + ". Level\nComplete";
         Text levelCompleteTextShape = new Text((float) (camera.getWidth() * 0.05), (float) (camera.getHeight() * 0.05), resourcesManager.movesScoreFont, levelCompleteString, vbom);
         levelCompleteTextShape.setScaleCenter(0, 0);
@@ -30,8 +27,8 @@ public class ScoreScreen extends BaseScene {
         attachChild(levelCompleteTextShape);
         attachChild(new Text((float) (camera.getWidth() * 0.05), (float) (camera.getHeight() * 0.4), resourcesManager.movesScoreFont, "You're moves: \t\t\t" + level.getMovesCount() + "\nMoves for 3 Stars: " + level.getMinimumMovesToSolve(), vbom));
         attachChild(new Sprite(0, (float) (camera.getHeight() * 0.55), 400, 400, resourcesManager.starRegion, vbom));
-        attachChild(new Sprite((float) (camera.getWidth() * 0.64), (float) (camera.getHeight() * 0.55), 400, 400, (stars == 3) ? resourcesManager.starRegion : resourcesManager.starSWRegion, vbom));
-        attachChild(new Sprite((camera.getWidth() / 2 - 200), (float) (camera.getHeight() * 0.6), 400, 400, (stars >= 2) ? resourcesManager.starRegion : resourcesManager.starSWRegion, vbom));
+        attachChild(new Sprite((float) (camera.getWidth() * 0.64), (float) (camera.getHeight() * 0.55), 400, 400, (level.getLevelInfo().getStars() == 3) ? resourcesManager.starRegion : resourcesManager.starSWRegion, vbom));
+        attachChild(new Sprite((camera.getWidth() / 2 - 200), (float) (camera.getHeight() * 0.6), 400, 400, (level.getLevelInfo().getStars() >= 2) ? resourcesManager.starRegion : resourcesManager.starSWRegion, vbom));
         ButtonSprite choiceLevelButton = new ButtonSprite(0, (camera.getHeight() - 400), resourcesManager.backToChoiceRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {

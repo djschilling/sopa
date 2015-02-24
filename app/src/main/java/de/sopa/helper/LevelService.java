@@ -31,7 +31,9 @@ public interface LevelService {
 
     void updateLevelInfos();
 
-    Level updateFewestMoves(Level level);
+    Level calculateLevelResult(Level level);
+
+    LevelInfo updateLevelInfo(LevelInfo levelInfo);
 
     void unlockLevel(int levelId);
 }
