@@ -19,13 +19,15 @@ public class TutorialScene extends BaseScene implements Observer{
     private Sprite conceptText;
     private Sprite swipeText;
     private Sprite arrow;
-    private boolean alreadySwitched = false;
+    private int alreadySwitched = 0;
 
     @Override
     public void createScene(Object o) {
-        ButtonSprite background = new ButtonSprite(0,43, resourcesManager.tutorialScreenshotRegion, vbom);
+        final ButtonSprite background = new ButtonSprite(0,43, resourcesManager.tutorialScreenshotRegion, vbom);
         background.setWidth(1080);
         background.setHeight(1834);
+        final ButtonSprite letsGo = new ButtonSprite(146, 843, resourcesManager.tutorialLetsGoRegion, vbom);
+        letsGo.setVisible(false);
         grid = new Sprite(4, 412, 1064, 1064,resourcesManager.tutorialGridRegion, vbom);
         conceptText = new Sprite(18, 1521, 765, 258, resourcesManager.tutorialTextConceptRegion, vbom);
 
@@ -33,25 +35,35 @@ public class TutorialScene extends BaseScene implements Observer{
         swipeText.setVisible(false);
         arrow = new Sprite(539, 406, 288, 1084, resourcesManager.tutorialArrowRegion, vbom);
         arrow.setVisible(false);
-        background.setOnClickListener(new ButtonSprite.OnClickListener() {
+        final ButtonSprite.OnClickListener listener = new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                if(!alreadySwitched) {
+                if(alreadySwitched == 0) {
                     grid.setVisible(false);
                     conceptText.setVisible(false);
                     arrow.setVisible(true);
                     swipeText.setVisible(true);
+                } else if(alreadySwitched == 1){
+                    background.setVisible(false);
+                    arrow.setVisible(false);
+                    swipeText.setVisible(false);
+                    letsGo.setVisible(true);
+                    letsGo.setOnClickListener(this);
+                    unregisterTouchArea(background);
+                    registerTouchArea(letsGo);
                 } else {
                     sceneService.loadFirstLevelFromTutorial();
                 }
-                alreadySwitched = true;
+                alreadySwitched++;
             }
-        });
+        };
+        background.setOnClickListener(listener);
         attachChild(background);
         attachChild(grid);
         attachChild(conceptText);
         attachChild(arrow);
         attachChild(swipeText);
+        attachChild(letsGo);
         registerTouchArea(background);
     }
 

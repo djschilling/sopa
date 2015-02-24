@@ -55,6 +55,7 @@ public class ResourcesManager {
     public ITextureRegion tutorialArrowRegion;
     public ITextureRegion tutorialScreenshotRegion;
     public ITextureRegion tutorialGridRegion;
+    public ITextureRegion tutorialLetsGoRegion;
 
     public IFont scoreFont;
     public IFont levelChoiceFont;
@@ -240,6 +241,7 @@ public class ResourcesManager {
             tutorialTextConceptRegion = resourceLoader.getTexture("scenes/tutorial/gameConcept.png");
             tutorialTextSwipeRegion = resourceLoader.getTexture("scenes/tutorial/swipe.png");
             tutorialArrowRegion = resourceLoader.getTexture("scenes/tutorial/boxArrow.png");
+            tutorialLetsGoRegion = resourceLoader.getTexture("scenes/tutorial/letsGo.png");
         }
         preparedTextures = true;
     }
@@ -251,6 +253,7 @@ public class ResourcesManager {
         tutorialTextConceptRegion.getTexture().load();
         tutorialTextSwipeRegion.getTexture().load();
         tutorialArrowRegion.getTexture().load();
+        tutorialLetsGoRegion.getTexture().load();
     }
 
     public void unloadTutorialScene() {
@@ -259,5 +262,6 @@ public class ResourcesManager {
         tutorialArrowRegion.getTexture().unload();
         tutorialTextSwipeRegion.getTexture().unload();
         tutorialTextConceptRegion.getTexture().unload();
+        tutorialLetsGoRegion.getTexture().unload();
     }
 }
