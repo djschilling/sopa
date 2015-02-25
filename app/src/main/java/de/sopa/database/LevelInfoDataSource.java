@@ -93,6 +93,14 @@ public class LevelInfoDataSource {
         return cursor.getInt(0);
     }
 
+    public LevelInfo getLastUnlocked() {
+        Cursor cursor = database.query(TABLE_LEVEL_INFO, allColumns, COLUMN_LOCKED + " = 0", null, null, null, COLUMN_LOCKED + " DESC");
+        cursor.moveToLast();
+        LevelInfo levelInfo = cursorToLevelInfo(cursor);
+        cursor.close();
+        return levelInfo;
+    }
+
     private LevelInfo cursorToLevelInfo(Cursor cursor) {
         int anInt = cursor.getInt(0);
         boolean locked = cursor.getInt(1) != 0;

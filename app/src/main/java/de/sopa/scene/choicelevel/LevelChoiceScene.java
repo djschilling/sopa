@@ -24,7 +24,6 @@ import org.andengine.util.modifier.ease.EaseQuartInOut;
  */
 public class LevelChoiceScene extends BaseScene implements Observer {
     private static final int COLUMNS = 3;
-    private int currentScreen;
     private int screenCount;
     private Sprite leftArrow;
     private Sprite rightArrow;
@@ -42,7 +41,16 @@ public class LevelChoiceScene extends BaseScene implements Observer {
         float widthPerLevel = (camera.getWidth() / COLUMNS);
         addLevelChooseTiles(levelInfos, widthPerLevel);
         addChangeLevelButtons();
+        moveToLastUnlocked();
         resourcesManager.musicService.playMusic();
+    }
+
+    private void moveToLastUnlocked() {
+        LevelInfo lastUnlocked = levelService.getLastUnlocked();
+        int screenToJumpTo = (int)(lastUnlocked.getLevelId() - 0.1) / 12;
+        while (levelChoiceService.getCurrentScreen() < screenToJumpTo){
+            levelChoiceService.moveRight();
+        }
     }
 
     private void addLevelChooseTiles(final List<LevelInfo> levelInfos, float widthPerLevel) {
@@ -129,7 +137,6 @@ public class LevelChoiceScene extends BaseScene implements Observer {
 
     private void addChangeLevelButtons() {
         screenCount = (((int) (levelInfos.size() - 0.1) / 12)) + 1;
-        currentScreen = 0;
         rightArrow = new ButtonSprite(camera.getWidth() * 0.93f - LEVEL_SELECT_ICON_WIDTH, camera.getHeight() * 0.8f, resourcesManager.levelChoiceArrowRightRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {

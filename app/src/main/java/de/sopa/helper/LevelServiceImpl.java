@@ -46,6 +46,11 @@ public class LevelServiceImpl implements LevelService {
     }
 
     @Override
+    public LevelInfo getLastUnlocked() {
+        return levelInfoDataSource.getLastUnlocked();
+    }
+
+    @Override
     public void updateLevelInfos() {
         Integer[] availableLevelIds = levelHandler.getAvailableLevelIds();
         List<LevelInfo> allLevelInfos = levelInfoDataSource.getAllLevelInfos();

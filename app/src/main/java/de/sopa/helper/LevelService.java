@@ -29,6 +29,8 @@ public interface LevelService {
      */
     List<LevelInfo> getLevelInfos();
 
+    LevelInfo getLastUnlocked();
+
     void updateLevelInfos();
 
     Level calculateLevelResult(Level level);
