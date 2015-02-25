@@ -1,4 +1,4 @@
-package de.sopa.scene.game;
+package de.sopa.scene.tutorial;
 
 import de.sopa.scene.BaseScene;
 import org.andengine.engine.handler.timer.ITimerCallback;

@@ -5,7 +5,7 @@ import de.sopa.model.game.Level;
 import de.sopa.scene.BaseScene;
 import de.sopa.scene.choicelevel.LevelChoiceScene;
 import de.sopa.scene.game.LevelModeGameScene;
-import de.sopa.scene.game.TutorialScene;
+import de.sopa.scene.tutorial.TutorialScene;
 import de.sopa.scene.loading.LoadingScene;
 import de.sopa.scene.menu.MainMenuScene;
 import de.sopa.scene.score.ScoreScreen;
