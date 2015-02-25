@@ -1,8 +1,6 @@
 package de.sopa.scene.tutorial;
 
-import de.sopa.manager.ResourcesManager;
 import de.sopa.scene.BaseScene;
-import de.sopa.scene.game.LevelModeGameScene;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.scene.IOnSceneTouchListener;
@@ -16,35 +14,28 @@ import org.andengine.input.touch.TouchEvent;
  *
  */
 public class TutorialScene extends BaseScene implements IOnSceneTouchListener {
-    private Sprite grid;
-    private Sprite conceptText;
-    private Sprite swipeText;
-    private Sprite arrow;
+    private Sprite secondScreenA;
     private int alreadySwitched = 0;
-    private Sprite background;
+    private Sprite firstScreenB;
     private Sprite letsGo;
+    private Sprite firstScreenA;
+    private Sprite secondScreenB;
 
     @Override
     public void createScene(Object o) {
-        background = new Sprite(0, 43, resourcesManager.tutorialScreenshotRegion, vbom);
-        background.setWidth(1080);
-        background.setHeight(1834);
+        firstScreenA = new Sprite(0, 0, 1080, 960, resourcesManager.tutorialFirstRegionA, vbom);
+        firstScreenB = new Sprite(0, 960, 1080, 960, resourcesManager.tutorialFirstRegionB, vbom);
         letsGo = new Sprite(146, 843, resourcesManager.tutorialLetsGoRegion, vbom);
         letsGo.setVisible(false);
-        grid = new Sprite(4, 412, 1064, 1064, resourcesManager.tutorialGridRegion, vbom);
-        conceptText = new Sprite(18, 1521, 765, 258, resourcesManager.tutorialTextConceptRegion, vbom);
-
-        swipeText = new Sprite(52, 1501, 649, 346, resourcesManager.tutorialTextSwipeRegion, vbom);
-        swipeText.setVisible(false);
-        arrow = new Sprite(539, 406, 288, 1084, resourcesManager.tutorialArrowRegion, vbom);
-        arrow.setVisible(false);
-
+        secondScreenA = new Sprite(0, 0, 1080, 960, resourcesManager.tutorialSecondRegionA, vbom);
+        secondScreenB = new Sprite(0, 960, 1080, 960, resourcesManager.tutorialSecondRegionB, vbom);
+        secondScreenA.setVisible(false);
+        secondScreenB.setVisible(false);
         setOnSceneTouchListener(this);
-        attachChild(background);
-        attachChild(grid);
-        attachChild(conceptText);
-        attachChild(arrow);
-        attachChild(swipeText);
+        attachChild(firstScreenA);
+        attachChild(firstScreenB);
+        attachChild(secondScreenA);
+        attachChild(secondScreenB);
         attachChild(letsGo);
     }
 
@@ -68,14 +59,13 @@ public class TutorialScene extends BaseScene implements IOnSceneTouchListener {
     public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
         if (pSceneTouchEvent.isActionDown()) {
             if (alreadySwitched == 0) {
-                grid.setVisible(false);
-                conceptText.setVisible(false);
-                arrow.setVisible(true);
-                swipeText.setVisible(true);
+                firstScreenA.setVisible(false);
+                firstScreenB.setVisible(false);
+                secondScreenA.setVisible(true);
+                secondScreenB.setVisible(true);
             } else if (alreadySwitched == 1) {
-                background.setVisible(false);
-                arrow.setVisible(false);
-                swipeText.setVisible(false);
+                secondScreenA.setVisible(false);
+                secondScreenB.setVisible(false);
                 letsGo.setVisible(true);
                 engine.registerUpdateHandler(new TimerHandler(2.5f, new ITimerCallback() {
                     @Override
@@ -84,8 +74,6 @@ public class TutorialScene extends BaseScene implements IOnSceneTouchListener {
                         sceneService.loadFirstLevelFromTutorial();
                     }
                 }));
-            } else {
-                sceneService.loadFirstLevelFromTutorial();
             }
             alreadySwitched++;
         }

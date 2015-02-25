@@ -50,12 +50,11 @@ public class ResourcesManager {
     public ITextureRegion backToMenuRegionP;
     public ITextureRegion restartRegion;
     public ITextureRegion unMuteRegion;
-    public ITextureRegion tutorialTextSwipeRegion;
-    public ITextureRegion tutorialTextConceptRegion;
-    public ITextureRegion tutorialArrowRegion;
-    public ITextureRegion tutorialScreenshotRegion;
-    public ITextureRegion tutorialGridRegion;
+    public ITextureRegion tutorialSecondRegionA;
+    public ITextureRegion tutorialSecondRegionB;
     public ITextureRegion tutorialLetsGoRegion;
+    public ITextureRegion tutorialFirstRegionA;
+    public ITextureRegion tutorialFirstRegionB;
 
     public IFont scoreFont;
     public IFont levelChoiceFont;
@@ -244,32 +243,29 @@ public class ResourcesManager {
             muteRegion = resourceLoader.getTexture("scenes/settings/mute.png");
             unMuteRegion = resourceLoader.getTexture("scenes/settings/unmute.png");
 
-            tutorialScreenshotRegion = resourceLoader.getTexture("scenes/tutorial/Screenshot.png");
-            tutorialGridRegion = resourceLoader.getTexture("scenes/tutorial/gameField.png");
-            tutorialTextConceptRegion = resourceLoader.getTexture("scenes/tutorial/gameConcept.png");
-            tutorialTextSwipeRegion = resourceLoader.getTexture("scenes/tutorial/swipe.png");
-            tutorialArrowRegion = resourceLoader.getTexture("scenes/tutorial/boxArrow.png");
             tutorialLetsGoRegion = resourceLoader.getTexture("scenes/tutorial/letsGo.png");
+            tutorialFirstRegionB = resourceLoader.getTexture("scenes/tutorial/firstTutorialScreenB.png");
+            tutorialFirstRegionA = resourceLoader.getTexture("scenes/tutorial/firstTutorialScreenA.png");
+            tutorialSecondRegionA = resourceLoader.getTexture("scenes/tutorial/secondTutorialScreenA.png");
+            tutorialSecondRegionB = resourceLoader.getTexture("scenes/tutorial/secondTutorialScreenB.png");
         }
         preparedTextures = true;
     }
 
     public void loadTutorialSceneResources() {
         prepareTextures();
-        tutorialScreenshotRegion.getTexture().load();
-        tutorialGridRegion.getTexture().load();
-        tutorialTextConceptRegion.getTexture().load();
-        tutorialTextSwipeRegion.getTexture().load();
-        tutorialArrowRegion.getTexture().load();
+        tutorialFirstRegionB.getTexture().load();
+        tutorialFirstRegionA.getTexture().load();
+        tutorialSecondRegionA.getTexture().load();
+        tutorialSecondRegionB.getTexture().load();
         tutorialLetsGoRegion.getTexture().load();
     }
 
     public void unloadTutorialScene() {
-        tutorialScreenshotRegion.getTexture().unload();
-        tutorialGridRegion.getTexture().unload();
-        tutorialArrowRegion.getTexture().unload();
-        tutorialTextSwipeRegion.getTexture().unload();
-        tutorialTextConceptRegion.getTexture().unload();
         tutorialLetsGoRegion.getTexture().unload();
+        tutorialSecondRegionA.getTexture().unload();
+        tutorialSecondRegionB.getTexture().unload();
+        tutorialFirstRegionA.getTexture().unload();
+        tutorialFirstRegionB.getTexture().unload();
     }
 }
