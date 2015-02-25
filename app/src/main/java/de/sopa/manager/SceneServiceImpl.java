@@ -270,6 +270,22 @@ public class SceneServiceImpl implements SceneService {
 
     }
 
+    @Override
+    public void loadLevelChoiceFromTutorial() {
+        setScene(loadingScene);
+        disposeTutorialScene();
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            @Override
+            public void onTimePassed(TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                ResourcesManager.getInstance().loadLevelChoiceSceneResources();
+                choiceScene = new LevelChoiceScene();
+                setScene(choiceScene);
+            }
+        }));
+
+    }
+
     private void disposeTutorialScene() {
         ResourcesManager.getInstance().unloadTutorialScene();
         tutorialScene.disposeScene();

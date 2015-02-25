@@ -40,4 +40,6 @@ public interface SceneService {
     void loadTutorialSceneFromLevelChoiceScene();
 
     void loadFirstLevelFromTutorial();
+
+    void loadLevelChoiceFromTutorial();
 }

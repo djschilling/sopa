@@ -48,7 +48,7 @@ public class TutorialScene extends BaseScene implements IOnSceneTouchListener {
 
     @Override
     public void onBackKeyPressed() {
-
+        sceneService.loadLevelChoiceFromTutorial();
     }
 
     @Override
