@@ -1,6 +1,6 @@
 # Sopa #
 
-* [Übersicht](https://github.com/pongo710/sopa/#übersicht)
+* [Übersicht](https://github.com/pongo710/sopa/#%C3%9Cbersicht)
 * [Spielmodi](https://github.com/pongo710/sopa/#spielmodi)
 * [Lizenz](https://github.com/pongo710/sopa/#lizenz)
 
