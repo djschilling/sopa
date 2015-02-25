@@ -1,6 +1,8 @@
 package de.sopa.scene.tutorial;
 
+import de.sopa.manager.ResourcesManager;
 import de.sopa.scene.BaseScene;
+import de.sopa.scene.game.LevelModeGameScene;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.scene.IOnSceneTouchListener;
@@ -75,6 +77,13 @@ public class TutorialScene extends BaseScene implements IOnSceneTouchListener {
                 arrow.setVisible(false);
                 swipeText.setVisible(false);
                 letsGo.setVisible(true);
+                engine.registerUpdateHandler(new TimerHandler(2.5f, new ITimerCallback() {
+                    @Override
+                    public void onTimePassed(TimerHandler pTimerHandler) {
+                        engine.unregisterUpdateHandler(pTimerHandler);
+                        sceneService.loadFirstLevelFromTutorial();
+                    }
+                }));
             } else {
                 sceneService.loadFirstLevelFromTutorial();
             }
