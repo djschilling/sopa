@@ -28,6 +28,14 @@ public class LevelChoiceServiceImpl implements LevelChoiceService {
     }
 
     @Override
+    public void moveRight(int screen) {
+        if(screen < screenCount) {
+            currentScreen = screen;
+        }
+        updateAll();
+    }
+
+    @Override
     public void moveLeft() {
         if(currentScreen > 0) {
             currentScreen--;

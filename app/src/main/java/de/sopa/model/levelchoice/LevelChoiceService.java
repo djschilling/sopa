@@ -8,6 +8,8 @@ import de.sopa.observer.Observer;
 public interface LevelChoiceService {
     void moveRight();
 
+    void moveRight(int screen);
+
     void moveLeft();
 
     int getCurrentScreen();

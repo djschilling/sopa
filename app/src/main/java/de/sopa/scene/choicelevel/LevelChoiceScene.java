@@ -48,9 +48,7 @@ public class LevelChoiceScene extends BaseScene implements Observer {
     private void moveToLastUnlocked() {
         LevelInfo lastUnlocked = levelService.getLastUnlocked();
         int screenToJumpTo = (int)(lastUnlocked.getLevelId() - 0.1) / 12;
-        while (levelChoiceService.getCurrentScreen() < screenToJumpTo){
-            levelChoiceService.moveRight();
-        }
+        levelChoiceService.moveRight(screenToJumpTo);
     }
 
     private void addLevelChooseTiles(final List<LevelInfo> levelInfos, float widthPerLevel) {
