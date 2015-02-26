@@ -234,7 +234,7 @@ public class ResourcesManager {
             starSWRegion = resourceLoader.getTexture("scenes/score/starSW.png");
             nextLevelRegion = resourceLoader.getTexture("scenes/score/NextLevel.png");
             backToChoiceRegion = resourceLoader.getTexture("scenes/score/LevelChoice.png");
-            backToMenuRegionA = resourceLoader.getTexture("scenes/score/BackA.png");
+            backToMenuRegionA = resourceLoader.getTexture("scenes/score/Restart.png");
             backToMenuRegionP = resourceLoader.getTexture("scenes/score/BackP.png");
 
             level_mode_region = resourceLoader.getTexture("scenes/menu/LevelMode.png");
