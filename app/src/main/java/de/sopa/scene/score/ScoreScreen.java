@@ -47,17 +47,17 @@ public class ScoreScreen extends BaseScene {
             }
         });
 
-        ButtonSprite backToMenuButton = new ButtonSprite((camera.getWidth() / 2 - 200), (camera.getHeight() - 400), resourcesManager.backToMenuRegionA, vbom, new ButtonSprite.OnClickListener() {
+        ButtonSprite levelAgainButton = new ButtonSprite((camera.getWidth() / 2 - 200), (camera.getHeight() - 400), resourcesManager.backToMenuRegionA, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                sceneService.loadMenuSceneFromScoreScene();
+                sceneService.loadGameSceneFromScoreScene(levelService.getLevelById(level.getId()));
             }
         });
         registerTouchArea(choiceLevelButton);
         registerTouchArea(nextLevelButton);
-        registerTouchArea(backToMenuButton);
+        registerTouchArea(levelAgainButton);
         attachChild(choiceLevelButton);
-        attachChild(backToMenuButton);
+        attachChild(levelAgainButton);
         attachChild(nextLevelButton);
     }
 
