@@ -28,7 +28,6 @@ public class ResourcesManager {
 
     private ResourceLoader resourceLoader;
 
-    public ITextureRegion splash_region;
 
     public ITextureRegion level_mode_region;
     public ITextureRegion settingsRegion;
@@ -70,10 +69,6 @@ public class ResourcesManager {
     public IFont minMovesFont;
     public IFont levelFont;
 
-    public void loadSplashSceneResources() {
-        splash_region = resourceLoader.getTexture("scenes/splash/CouchStudio.png");
-        splash_region.getTexture().load();
-    }
 
     public void loadMenuSceneResources() {
         loadMenuSceneGraphics();
@@ -134,11 +129,6 @@ public class ResourcesManager {
         }
         tilesBorderRegion.getTexture().load();
         restartRegion.getTexture().load();
-    }
-
-    public void unloadSplashSceneResources() {
-        splash_region.getTexture().unload();
-        splash_region = null;
     }
 
     public void unloadGameSceneResources() {

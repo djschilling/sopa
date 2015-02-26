@@ -61,7 +61,7 @@ public class GameActivity extends BaseGameActivity {
     @Override
     public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) throws Exception {
         SceneService sceneService = ResourcesManager.getInstance().sceneService;
-        sceneService.createSplashScene();
+        sceneService.createLoadingScene();
         pOnCreateSceneCallback.onCreateSceneFinished(sceneService.getCurrentScene());
     }
 

@@ -5,12 +5,11 @@ import de.sopa.model.game.Level;
 import de.sopa.scene.BaseScene;
 import de.sopa.scene.choicelevel.LevelChoiceScene;
 import de.sopa.scene.game.LevelModeGameScene;
-import de.sopa.scene.tutorial.TutorialScene;
 import de.sopa.scene.loading.LoadingScene;
 import de.sopa.scene.menu.MainMenuScene;
 import de.sopa.scene.score.ScoreScreen;
 import de.sopa.scene.settings.SettingsScene;
-import de.sopa.scene.splash.SplashScene;
+import de.sopa.scene.tutorial.TutorialScene;
 import org.andengine.engine.Engine;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -20,7 +19,6 @@ import org.andengine.engine.handler.timer.TimerHandler;
  */
 public class SceneServiceImpl implements SceneService {
 
-    private BaseScene splashScene;
     private BaseScene menuScene;
     private BaseScene gameScene;
     private BaseScene loadingScene;
@@ -49,26 +47,19 @@ public class SceneServiceImpl implements SceneService {
     }
 
     @Override
-    public void createSplashScene() {
-        ResourcesManager.getInstance().loadSplashSceneResources();
-        splashScene = new SplashScene();
-        currentScene = splashScene;
+    public void createLoadingScene() {
+        ResourcesManager.getInstance().loadLoadingSceneResources();
+        loadingScene = new LoadingScene();
+        currentScene = loadingScene;
     }
 
-    private void disposeSplashScene() {
-        ResourcesManager.getInstance().unloadSplashSceneResources();
-        splashScene.disposeScene();
-        splashScene = null;
-    }
 
     @Override
     public void createMenuScene() {
         ResourcesManager.getInstance().loadMenuSceneResources();
         menuScene = new MainMenuScene();
         ResourcesManager.getInstance().loadLoadingSceneResources();
-        loadingScene = new LoadingScene();
         setScene(menuScene);
-        disposeSplashScene();
     }
 
     @Override

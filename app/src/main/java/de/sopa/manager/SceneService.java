@@ -10,7 +10,7 @@ public interface SceneService {
 
     BaseScene getCurrentScene();
 
-    void createSplashScene();
+    void createLoadingScene();
 
     void createMenuScene();
 
