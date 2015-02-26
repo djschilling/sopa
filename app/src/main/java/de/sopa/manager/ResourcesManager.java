@@ -67,6 +67,8 @@ public class ResourcesManager {
     public SettingsService settingsService;
     public ITextureRegion levelChoiseStarRegion;
     public ITextureRegion levelChoiseStarSWRegion;
+    public IFont minMovesFont;
+    public IFont levelFont;
 
     public void loadSplashSceneResources() {
         splash_region = resourceLoader.getTexture("scenes/splash/CouchStudio.png");
@@ -87,6 +89,8 @@ public class ResourcesManager {
     public void loadGameSceneResources() {
         loadGameSceneGraphics();
         scoreFont = resourceLoader.getFont("Impact.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 200, Color.WHITE, 2, Color.RED);
+        minMovesFont = resourceLoader.getFont("Impact.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 200, Color.WHITE, 2, Color.RED);
+        levelFont = resourceLoader.getFont("Impact.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 200, Color.WHITE, 2, Color.RED);
 
     }
 

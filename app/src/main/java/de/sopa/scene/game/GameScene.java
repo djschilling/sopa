@@ -90,8 +90,27 @@ public abstract class GameScene extends BaseScene implements Observer {
     }
 
     private void addScoreText() {
-        scoreText = new Text(camera.getWidth() * 0.7f, camera.getHeight() * 0.01f, resourcesManager.scoreFont, String.valueOf(gameService.getLevel().getMovesCount()), 4, vbom);
+
+        scoreText = new Text(camera.getWidth() * 0.67f, camera.getHeight() * 0.03f, resourcesManager.scoreFont, String.valueOf(gameService.getLevel().getMovesCount()), 4, vbom);
         attachChild(scoreText);
+        Text score = new Text(camera.getWidth() * 0.67f, camera.getHeight() * 0.01f, resourcesManager.levelFont, "Current Moves", vbom);
+        score.setScaleCenter(0, 0);
+        score.setScale(0.3f);
+        attachChild(score);
+
+        Text minimumMovesScoreText = new Text(0, camera.getHeight() * 0.01f, resourcesManager.minMovesFont, "Min. Moves", vbom);
+        minimumMovesScoreText.setScaleCenter(0, 0);
+        minimumMovesScoreText.setScale(0.3f);
+        attachChild(minimumMovesScoreText);
+        Text minimumMovesScore = new Text(0, camera.getHeight() * 0.03f, resourcesManager.minMovesFont, String.valueOf(gameService.getLevel().getMinimumMovesToSolve()), vbom);
+        attachChild(minimumMovesScore);
+
+        Text levelText = new Text(0, camera.getHeight() * 0.96f, resourcesManager.levelFont, "Level", vbom);
+        levelText.setScaleCenter(0, 0);
+        levelText.setScale(0.3f);
+        attachChild(levelText);
+        Text level = new Text(0, camera.getHeight() * 0.85f, resourcesManager.levelFont, String.valueOf(gameService.getLevel().getId()), vbom);
+        attachChild(level);
     }
 
     private void registerTouchHandler() {
