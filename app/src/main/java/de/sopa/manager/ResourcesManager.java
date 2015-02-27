@@ -31,6 +31,7 @@ public class ResourcesManager {
 
     public ITextureRegion level_mode_region;
     public ITextureRegion settingsRegion;
+    public ITextureRegion creditsRegion;
     public ITextureRegion loadingScreenBackgroundRegion;
 
     public Map<Character, TextureRegion> regionTileMap;
@@ -120,6 +121,7 @@ public class ResourcesManager {
         prepareTextures();
         level_mode_region.getTexture().load();
         settingsRegion.getTexture().load();
+        creditsRegion.getTexture().load();
     }
 
 
@@ -160,6 +162,7 @@ public class ResourcesManager {
     private void unloadMenuSceneTextures() {
         level_mode_region.getTexture().unload();
         settingsRegion.getTexture().unload();
+        creditsRegion.getTexture().unload();
     }
 
     private void unloadGameSceneTextures() {
@@ -241,6 +244,7 @@ public class ResourcesManager {
 
             level_mode_region = resourceLoader.getTexture("scenes/menu/LevelMode.png");
             settingsRegion = resourceLoader.getTexture("scenes/menu/Settings.png");
+            creditsRegion = resourceLoader.getTexture("scenes/menu/credits.png");
 
             regionTileMap = this.resourceLoader.getTileTextures();
             tilesBorderRegion = resourceLoader.getTexture("scenes/game/borders.png");
