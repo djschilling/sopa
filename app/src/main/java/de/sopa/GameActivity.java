@@ -24,8 +24,6 @@ public class GameActivity extends BaseGameActivity {
 
     private static final float CAMERA_WIDTH = 1080;
     private static final float CAMERA_HEIGHT = 1920;
-    private static final String PREFS_NAME = "MyPrefsFile";
-
     private Camera camera;
     private LevelInfoDataSource levelInfoDataSource;
 
@@ -52,7 +50,6 @@ public class GameActivity extends BaseGameActivity {
         if (settingsService.isFirstTime()) {
             levelService.updateLevelInfos();
             levelService.unlockLevel(1);
-            System.out.println("First Start");
         }
         pOnCreateResourcesCallback.onCreateResourcesFinished();
     }

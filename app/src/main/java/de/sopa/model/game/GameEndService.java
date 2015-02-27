@@ -92,14 +92,4 @@ public class GameEndService {
     private void markAsImpossible(int xNew, int yNew) {
         pathStates[xNew][yNew] = PathState.IMPOSSIBLE;
     }
-
-    public void printBacktracking() {
-        System.out.println("Backtracking Result :");
-        for (int i = 0; i < pathStates[0].length; i++) {
-            for (int j = 0; j < pathStates.length; j++) {
-                System.out.print(pathStates[j][i] + "\t");
-            }
-            System.out.println();
-        }
-    }
 }
