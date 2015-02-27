@@ -1,7 +1,9 @@
 package de.sopa.scene.score;
 
 import de.sopa.model.game.Level;
+import de.sopa.model.game.LevelResult;
 import de.sopa.scene.BaseScene;
+
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.sprite.ButtonSprite;
@@ -13,22 +15,23 @@ import org.andengine.entity.text.Text;
  */
 public class ScoreScreen extends BaseScene {
 
-    public ScoreScreen(Level level) {
+    public ScoreScreen(LevelResult level) {
         super(level);
     }
 
     @Override
     public void createScene(final Object o) {
-        final Level level = (Level) o;
-        String levelCompleteString = level.getLevelInfo().getLevelId() + ". Level\nComplete";
+        final LevelResult levelResult = (LevelResult) o;
+        final Level level = levelService.getLevelById(levelResult.getLevelId());
+        String levelCompleteString = levelResult.getLevelId() + ". Level\nComplete";
         Text levelCompleteTextShape = new Text((float) (camera.getWidth() * 0.05), (float) (camera.getHeight() * 0.05), resourcesManager.movesScoreFont, levelCompleteString, vbom);
         levelCompleteTextShape.setScaleCenter(0, 0);
         levelCompleteTextShape.setScale(2);
         attachChild(levelCompleteTextShape);
-        attachChild(new Text((float) (camera.getWidth() * 0.05), (float) (camera.getHeight() * 0.4), resourcesManager.movesScoreFont, "You're moves: \t\t\t" + level.getMovesCount() + "\nMoves for 3 Stars: " + level.getMinimumMovesToSolve(), vbom));
+        attachChild(new Text((float) (camera.getWidth() * 0.05), (float) (camera.getHeight() * 0.4), resourcesManager.movesScoreFont, "You're moves: \t\t\t" + levelResult.getMoveCount() + "\nMoves for 3 Stars: " + level.getMinimumMovesToSolve(), vbom));
         attachChild(new Sprite(0, (float) (camera.getHeight() * 0.55), 400, 400, resourcesManager.starRegion, vbom));
-        attachChild(new Sprite((float) (camera.getWidth() * 0.64), (float) (camera.getHeight() * 0.55), 400, 400, (level.getLevelInfo().getStars() == 3) ? resourcesManager.starRegion : resourcesManager.starSWRegion, vbom));
-        attachChild(new Sprite((camera.getWidth() / 2 - 200), (float) (camera.getHeight() * 0.6), 400, 400, (level.getLevelInfo().getStars() >= 2) ? resourcesManager.starRegion : resourcesManager.starSWRegion, vbom));
+        attachChild(new Sprite((float) (camera.getWidth() * 0.64), (float) (camera.getHeight() * 0.55), 400, 400, (levelResult.getStars() == 3) ? resourcesManager.starRegion : resourcesManager.starSWRegion, vbom));
+        attachChild(new Sprite((camera.getWidth() / 2 - 200), (float) (camera.getHeight() * 0.6), 400, 400, (levelResult.getStars() >= 2) ? resourcesManager.starRegion : resourcesManager.starSWRegion, vbom));
         ButtonSprite choiceLevelButton = new ButtonSprite(0, (camera.getHeight() - 400), resourcesManager.backToChoiceRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
@@ -38,7 +41,7 @@ public class ScoreScreen extends BaseScene {
         ButtonSprite nextLevelButton = new ButtonSprite((float) (camera.getWidth() * 0.64), (camera.getHeight() - 400), resourcesManager.nextLevelRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                int nextLevelId = level.getId() + 1;
+                int nextLevelId = levelResult.getLevelId() + 1;
                 if (nextLevelId > levelService.getLevelCount()) {
                     sceneService.loadLevelChoiceSceneFromScoreScene();
                 } else {
@@ -50,7 +53,7 @@ public class ScoreScreen extends BaseScene {
         ButtonSprite levelAgainButton = new ButtonSprite((camera.getWidth() / 2 - 200), (camera.getHeight() - 400), resourcesManager.backToMenuRegionA, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                sceneService.loadGameSceneFromScoreScene(levelService.getLevelById(level.getId()));
+                sceneService.loadGameSceneFromScoreScene(level);
             }
         });
         registerTouchArea(choiceLevelButton);

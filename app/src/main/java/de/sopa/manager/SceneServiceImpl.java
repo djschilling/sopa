@@ -2,6 +2,7 @@ package de.sopa.manager;
 
 
 import de.sopa.model.game.Level;
+import de.sopa.model.game.LevelResult;
 import de.sopa.scene.BaseScene;
 import de.sopa.scene.choicelevel.LevelChoiceScene;
 import de.sopa.scene.game.LevelModeGameScene;
@@ -113,7 +114,7 @@ public class SceneServiceImpl implements SceneService {
     }
 
 
-    public void loadScoreScreen(final Level level) {
+    public void loadScoreScreen(final LevelResult level) {
         setScene(loadingScene);
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {

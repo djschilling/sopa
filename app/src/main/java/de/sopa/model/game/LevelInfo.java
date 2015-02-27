@@ -17,6 +17,14 @@ public class LevelInfo {
         this.stars = starts;
     }
 
+    public LevelInfo(LevelInfo levelInfo) {
+        this.levelId = levelInfo.levelId;
+        this.locked = levelInfo.locked;
+        this.fewestMoves = levelInfo.fewestMoves;
+        this.stars = levelInfo.stars;
+
+    }
+
     public Integer getLevelId() {
         return levelId;
     }

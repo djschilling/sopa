@@ -2,6 +2,8 @@ package de.sopa.helper;
 
 import de.sopa.model.game.Level;
 import de.sopa.model.game.LevelInfo;
+import de.sopa.model.game.LevelResult;
+
 import java.util.List;
 
 /**
@@ -33,9 +35,9 @@ public interface LevelService {
 
     void updateLevelInfos();
 
-    Level calculateLevelResult(Level level);
+    LevelResult calculateLevelResult(Level level);
 
-    LevelInfo updateLevelInfo(LevelInfo levelInfo);
+    LevelInfo persistLevelResult(LevelResult levelResult);
 
     void unlockLevel(int levelId);
 }

@@ -86,7 +86,11 @@ public class Level {
         }
         level.setField(tiles);
         level.setId(id);
-        level.setLevelInfo(levelInfo);
+        if (levelInfo == null) {
+            level.setLevelInfo(null);
+        } else {
+            level.setLevelInfo(new LevelInfo(levelInfo));
+        }
         level.setMinimumMovesToSolve(minimumMovesToSolve);
         level.setStartX(startX);
         level.setStartY(startY);

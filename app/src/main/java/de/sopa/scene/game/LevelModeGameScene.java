@@ -1,6 +1,8 @@
 package de.sopa.scene.game;
 
 import de.sopa.model.game.Level;
+import de.sopa.model.game.LevelResult;
+
 import org.andengine.entity.sprite.ButtonSprite;
 
 /**
@@ -32,11 +34,11 @@ public class LevelModeGameScene extends GameScene {
 
     public void onSolvedGame() {
         Level level = gameService.getLevel();
-        Level resultedLevel = levelService.calculateLevelResult(level);
-        levelService.updateLevelInfo(resultedLevel.getLevelInfo());
+        LevelResult levelResult = levelService.calculateLevelResult(level);
+        levelService.persistLevelResult(levelResult);
         int nextLevelId = level.getId() + 1;
         levelService.unlockLevel(nextLevelId);
-        sceneService.loadScoreScreen(resultedLevel);
+        sceneService.loadScoreScreen(levelResult);
     }
 
 }
