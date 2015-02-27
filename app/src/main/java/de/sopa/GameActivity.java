@@ -47,8 +47,8 @@ public class GameActivity extends BaseGameActivity {
         ResourcesManager.prepareManager(mEngine, this, camera, getVertexBufferObjectManager(),
                 new ResourceLoader(getTextureManager(), getAssets(), getFontManager()), new SceneServiceImpl(mEngine),
                 levelService, settingsService);
-        if (settingsService.isFirstTime()) {
-            levelService.updateLevelInfos();
+        levelService.updateLevelInfos();
+        if (settingsService.isFirstTime() ) {
             levelService.unlockLevel(1);
         }
         pOnCreateResourcesCallback.onCreateResourcesFinished();
