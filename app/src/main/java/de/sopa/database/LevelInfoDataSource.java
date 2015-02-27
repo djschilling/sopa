@@ -90,7 +90,9 @@ public class LevelInfoDataSource {
     public int getLevelCount() {
         Cursor cursor = database.rawQuery("Select count(*) from " + TABLE_LEVEL_INFO, null);
         cursor.moveToFirst();
-        return cursor.getInt(0);
+        int levelCount = cursor.getInt(0);
+        cursor.close();
+        return levelCount;
     }
 
     public LevelInfo getLastUnlocked() {
