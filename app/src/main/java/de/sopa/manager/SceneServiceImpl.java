@@ -30,6 +30,7 @@ public class SceneServiceImpl implements SceneService {
 
     private Engine engine;
     private BaseScene tutorialScene;
+    private CreditsScene creditsScene;
 
     public SceneServiceImpl(Engine engine) {
         this.engine = engine;
@@ -142,6 +143,38 @@ public class SceneServiceImpl implements SceneService {
             }
         }));
     }
+
+    @Override
+    public void loadCreditsFromMenuScene() {
+        setScene(loadingScene);
+        disposeMenuScene();
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            @Override
+            public void onTimePassed(TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                ResourcesManager.getInstance().loadLevelCreditsSceneResources();
+                creditsScene = new CreditsScene();
+                setScene(creditsScene);
+            }
+        }));
+    }
+
+    @Override
+    public void loadMenuSceneFromCreditsScene() {
+        setScene(loadingScene);
+        ResourcesManager.getInstance().unloadLevelCreditsSceneResources();
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            @Override
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                ResourcesManager.getInstance().loadMenuSceneResources();
+                menuScene = new MainMenuScene();
+                setScene(menuScene);
+            }
+        }));
+
+    }
+
 
     @Override
     public void loadLevelChoiceSceneFromScoreScene() {

@@ -67,6 +67,9 @@ public class ResourcesManager {
     public ITextureRegion levelChoiseStarSWRegion;
     public IFont minMovesFont;
     public IFont levelFont;
+    public IFont creditsHeading;
+    public IFont creditsSubHeading;
+    public IFont creditsText;
 
 
     public void loadMenuSceneResources() {
@@ -206,6 +209,19 @@ public class ResourcesManager {
         unMuteRegion.getTexture().unload();
     }
 
+    public void loadLevelCreditsSceneResources() {
+        creditsHeading = resourceLoader.getFont("Impact.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 200, Color.WHITE, 2, Color.TRANSPARENT);
+        creditsSubHeading = resourceLoader.getFont("Impact.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 100, Color.WHITE, 2, Color.TRANSPARENT);
+        creditsText = resourceLoader.getFont("Impact.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 50, Color.WHITE, 2, Color.TRANSPARENT);
+    }
+
+    public void unloadLevelCreditsSceneResources() {
+        creditsHeading.unload();
+        creditsSubHeading.unload();
+        creditsText.unload();
+    }
+
+
     public void prepareTextures() {
         if (!preparedTextures) {
             levelChoiceRegion = resourceLoader.getTexture("scenes/levelChoice/Level.png");
@@ -258,4 +274,5 @@ public class ResourcesManager {
         tutorialFirstRegionA.getTexture().unload();
         tutorialFirstRegionB.getTexture().unload();
     }
+
 }

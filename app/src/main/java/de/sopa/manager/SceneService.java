@@ -42,4 +42,8 @@ public interface SceneService {
     void loadFirstLevelFromTutorial();
 
     void loadLevelChoiceFromTutorial();
+
+    void loadCreditsFromMenuScene();
+
+    void loadMenuSceneFromCreditsScene();
 }
