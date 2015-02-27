@@ -1,3 +1,5 @@
 include ':app'
 
 include 'andengine'
+
+project(':andengine').projectDir = new File(settingsDir, 'AndEngine')
