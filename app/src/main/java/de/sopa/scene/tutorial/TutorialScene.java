@@ -20,6 +20,7 @@ public class TutorialScene extends BaseScene implements IOnSceneTouchListener {
     private Sprite letsGo;
     private Sprite firstScreenA;
     private Sprite secondScreenB;
+    private boolean leaveScene = false;
 
     @Override
     public void createScene(Object o) {
@@ -41,6 +42,7 @@ public class TutorialScene extends BaseScene implements IOnSceneTouchListener {
 
     @Override
     public void onBackKeyPressed() {
+        leaveScene = true;
         sceneService.loadLevelChoiceFromTutorial();
     }
 
@@ -71,7 +73,9 @@ public class TutorialScene extends BaseScene implements IOnSceneTouchListener {
                     @Override
                     public void onTimePassed(TimerHandler pTimerHandler) {
                         engine.unregisterUpdateHandler(pTimerHandler);
-                        sceneService.loadFirstLevelFromTutorial();
+                        if(!leaveScene){
+                            sceneService.loadFirstLevelFromTutorial();
+                        }
                     }
                 }));
             }
