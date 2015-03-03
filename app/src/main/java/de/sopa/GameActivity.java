@@ -10,6 +10,9 @@ import de.sopa.manager.ResourcesManager;
 import de.sopa.manager.SceneService;
 import de.sopa.manager.SceneServiceImpl;
 import de.sopa.manager.SettingsService;
+import de.sopa.scene.game.GameScene;
+import de.sopa.scene.score.ScoreScreen;
+
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -93,7 +96,9 @@ public class GameActivity extends BaseGameActivity {
         if(ResourcesManager.getInstance().settingsService.isMute()){
             ResourcesManager.getInstance().musicService.muteMusic();
         }
-        ResourcesManager.getInstance().musicService.playMusic();
+        if(!(mEngine.getScene() instanceof GameScene)  && !(mEngine.getScene() instanceof ScoreScreen)){
+            ResourcesManager.getInstance().musicService.playMusic();
+        }
         levelInfoDataSource.open();
         super.onResumeGame();
     }
