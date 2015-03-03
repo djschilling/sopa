@@ -67,7 +67,7 @@ public class TutorialScene extends BaseScene implements IOnSceneTouchListener {
                 secondScreenA.setVisible(false);
                 secondScreenB.setVisible(false);
                 letsGo.setVisible(true);
-                engine.registerUpdateHandler(new TimerHandler(2.5f, new ITimerCallback() {
+                engine.registerUpdateHandler(new TimerHandler(1.5f, new ITimerCallback() {
                     @Override
                     public void onTimePassed(TimerHandler pTimerHandler) {
                         engine.unregisterUpdateHandler(pTimerHandler);
