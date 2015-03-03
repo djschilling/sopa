@@ -10,16 +10,16 @@ public class SettingsService {
 
     SharedPreferences sharedPreferences;
     private static final String PREFS_NAME = "MyPrefsFile";
-    private String MUTE = "mute";
+    private static final String MUTE = "mute";
+    private static final String MY_FIRST_TIME = "MY_FIRST_TIME";
 
     public SettingsService(Context context) {
         sharedPreferences = context.getSharedPreferences(PREFS_NAME, 0);
     }
 
     public boolean isFirstTime() {
-        String my_first_time = "my_first_time";
-        if(sharedPreferences.getBoolean(my_first_time, true)) {
-            sharedPreferences.edit().putBoolean(my_first_time, false).apply();
+        if(sharedPreferences.getBoolean(MY_FIRST_TIME, true)) {
+            sharedPreferences.edit().putBoolean(MY_FIRST_TIME, false).apply();
             return true;
         }
         return false;
@@ -30,6 +30,6 @@ public class SettingsService {
     }
 
     public void switchMute() {
-        sharedPreferences.edit().putBoolean(MUTE, !sharedPreferences.getBoolean(MUTE, true)).apply();
+        sharedPreferences.edit().putBoolean(MUTE, !isMute()).apply();
     }
 }
