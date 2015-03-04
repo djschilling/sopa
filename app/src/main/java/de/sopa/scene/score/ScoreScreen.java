@@ -28,7 +28,7 @@ public class ScoreScreen extends BaseScene {
         levelCompleteTextShape.setScaleCenter(0, 0);
         levelCompleteTextShape.setScale(2);
         attachChild(levelCompleteTextShape);
-        attachChild(new Text((float) (camera.getWidth() * 0.05), (float) (camera.getHeight() * 0.4), resourcesManager.movesScoreFont, "You're moves: \t\t\t" + levelResult.getMoveCount() + "\nMoves for 3 Stars: " + level.getMinimumMovesToSolve(), vbom));
+        attachChild(new Text((float) (camera.getWidth() * 0.05), (float) (camera.getHeight() * 0.4), resourcesManager.movesScoreFont, "Your moves:          \t" + levelResult.getMoveCount() + "\nMoves for 3 Stars:\t" + level.getMinimumMovesToSolve(), vbom));
         attachChild(new Sprite(0, (float) (camera.getHeight() * 0.55), 400, 400, resourcesManager.starRegion, vbom));
         attachChild(new Sprite((float) (camera.getWidth() * 0.64), (float) (camera.getHeight() * 0.55), 400, 400, (levelResult.getStars() == 3) ? resourcesManager.starRegion : resourcesManager.starSWRegion, vbom));
         attachChild(new Sprite((camera.getWidth() / 2 - 200), (float) (camera.getHeight() * 0.6), 400, 400, (levelResult.getStars() >= 2) ? resourcesManager.starRegion : resourcesManager.starSWRegion, vbom));
