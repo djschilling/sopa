@@ -7,9 +7,14 @@ buildscript {
     }
 }
 apply plugin: 'com.android.application'
+apply plugin: 'jacoco'
 
 repositories {
     mavenCentral()
+}
+
+jacoco {
+    version = '0.7.4.201502262128'
 }
 
 android {
@@ -28,6 +33,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_7
     }
     buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
@@ -43,4 +51,30 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.3.2'
     testCompile 'junit:junit:4.12'
     testCompile "org.mockito:mockito-core:1.9.5"
+}
+
+task jacocoTestReport(type:JacocoReport, dependsOn: "testDebug") {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports"
+
+    classDirectories = fileTree(
+            dir: "${buildDir}/intermediates/classes/debug",
+            excludes: ['**/R.class',
+                       '**/R$*.class',
+                       '**/*$ViewInjector*.*',
+                       '**/BuildConfig.*',
+                       '**/Manifest*.*']
+    )
+
+    sourceDirectories = files("${buildDir.parent}/src/main/java")
+    additionalSourceDirs = files([
+            "${buildDir}/generated/source/buildConfig/debug",
+            "${buildDir}/generated/source/r/debug"
+    ])
+    executionData = files("${buildDir}/jacoco/testDebug.exec")
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
 }

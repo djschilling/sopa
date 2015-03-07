@@ -40,6 +40,15 @@ Tests ausführen:
 Build ausführen:
 
 ```./gradlew build```
+
+### Reporting ###
+
+Über Jacoco lassen sich Reports über die Codeabdeckung erstellen. Dazu führt man folgenden Befehl aus:
+
+```./gradlew jacocoTestReport```
+
+Die erstellten HTML-Reports sind anschließend unter ```app/build/reports/jacoco/jacocoTestReport/html/index.html``` zu finden.
+
 ## Lizenz ##
 
 [Sopa](https://github.com/pongo710/sopa) is licensed under the Apache License, Version 2.0. See [LICENSE](https://github.com/pongo710/sopa/blob/master/LICENSE.txt) for the full license text.
