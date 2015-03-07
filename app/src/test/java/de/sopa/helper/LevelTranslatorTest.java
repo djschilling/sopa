@@ -31,6 +31,18 @@ public class LevelTranslatorTest {
         "ngooun",
         "nnnfnn"
     };
+    private static final String[] invalidLevelAsString = {
+        "5",
+        "2",
+        "6",
+        "#",
+        "nonsnn",
+        "ncooen",
+        "noooin",
+        "noooin",
+        "ngooun",
+        "nnnfnn"
+    };
     private Level level;
 
     @Before
@@ -44,6 +56,11 @@ public class LevelTranslatorTest {
     public void fromString() {
         Level resultingLevel = sut.fromString(levelAsString);
         assertThat(resultingLevel, is(level));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void fromStringInvalid() {
+        sut.fromString(invalidLevelAsString);
     }
 
     @Test
