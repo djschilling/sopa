@@ -1,7 +1,7 @@
 package de.sopa.observer;
 
 /**
- * David Schilling - davejs92@gmail.com
+ * @author David Schilling - davejs92@gmail.com
  */
 public interface Observer {
 

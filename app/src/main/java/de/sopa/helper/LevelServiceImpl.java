@@ -8,7 +8,8 @@ import de.sopa.model.game.StarCalculator;
 import java.util.List;
 
 /**
- * David Schilling - davejs92@gmail.com
+ * @author David Schilling - davejs92@gmail.com
+ * @author Raphael Schilling
  */
 public class LevelServiceImpl implements LevelService {
 

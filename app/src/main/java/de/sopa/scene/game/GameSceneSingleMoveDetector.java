@@ -3,7 +3,8 @@ package de.sopa.scene.game;
 import org.andengine.input.touch.detector.HoldDetector;
 
 /**
- * Created by raphael on 10.09.14.
+ * @author Raphael Schilling
+ * @author David Schilling - davejs92@gmail.com
  */
 public class GameSceneSingleMoveDetector implements HoldDetector.IHoldDetectorListener {
     private final float SWIPE_SENSITIVITY;

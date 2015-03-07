@@ -2,6 +2,7 @@ package de.sopa.helper;
 
 /**
  * @author David Schilling - davejs92@gmail.com
+ * @author Raphael Schilling
  */
 
 import android.content.Context;

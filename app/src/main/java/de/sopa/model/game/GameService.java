@@ -3,7 +3,8 @@ package de.sopa.model.game;
 import de.sopa.observer.Observer;
 
 /**
- * David Schilling - davejs92@gmail.com
+ * @author David Schilling - davejs92@gmail.com
+ * @author Raphael Schilling
  */
 public interface GameService {
 

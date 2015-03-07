@@ -1,7 +1,7 @@
 package de.sopa.helper;
 
 /**
- * @author Raphael Schilling
+ * @author David Schilling - davejs92@gmail.com
  */
 public class LevelServiceException extends RuntimeException {
     public LevelServiceException(String detailMessage, Throwable throwable) {

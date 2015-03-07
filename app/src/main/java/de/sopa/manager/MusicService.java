@@ -4,7 +4,7 @@ import android.media.MediaPlayer;
 import java.io.IOException;
 
 /**
- * David Schilling - davejs92@gmail.com
+ * @author David Schilling - davejs92@gmail.com
  */
 public class MusicService {
 

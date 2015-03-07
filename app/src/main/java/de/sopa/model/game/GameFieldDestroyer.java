@@ -1,6 +1,9 @@
 package de.sopa.model.game;
 
-
+/**
+ * @author David Schilling - davejs92@gmail.com
+ * @author Raphael Schilling
+ */
 public class GameFieldDestroyer {
 
     public Level destroyField(Level level, int minShiftCount, int maxShiftCount) {

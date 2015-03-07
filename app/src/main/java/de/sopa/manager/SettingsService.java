@@ -4,7 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * David Schilling - davejs92@gmail.com
+ * @author David Schilling - davejs92@gmail.com
+ * @author Raphael Schilling
  */
 public class SettingsService {
 

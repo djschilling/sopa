@@ -14,7 +14,8 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.modifier.ease.*;
 
 /**
- * David Schilling - davejs92@gmail.com
+ * @author David Schilling - davejs92@gmail.com
+ * @author Raphael Schilling
  */
 public class GameFieldView extends Entity {
     private final GameService gameService;

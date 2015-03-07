@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * David Schilling - davejs92@gmail.com
+ * @author David Schilling - davejs92@gmail.com
+ * @author Raphael Schilling
  */
 public class GameServiceImpl implements GameService {
 

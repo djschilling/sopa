@@ -12,6 +12,7 @@ import org.andengine.entity.text.Text;
 
 /**
  * @author Raphael Schilling
+ * @author David Schilling - davejs92@gmail.com
  */
 public class ScoreScreen extends BaseScene {
 

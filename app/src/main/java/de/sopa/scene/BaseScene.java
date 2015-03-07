@@ -11,11 +11,11 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 /**
- * David Schilling - davejs92@gmail.com
- *
  * This abstract scene should always be used when creating new scenes.
  *
  * It holds resources which are often needed in scenes.
+ *
+ * @author David Schilling - davejs92@gmail.com
  */
 public abstract class BaseScene extends Scene {
 

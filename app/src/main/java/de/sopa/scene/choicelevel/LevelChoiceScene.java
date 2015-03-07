@@ -21,6 +21,7 @@ import org.andengine.util.modifier.ease.EaseQuartInOut;
 
 /**
  * @author Raphael Schilling
+ * @author David Schilling - davejs92@gmail.com
  */
 public class LevelChoiceScene extends BaseScene implements Observer {
     private static final int COLUMNS = 3;

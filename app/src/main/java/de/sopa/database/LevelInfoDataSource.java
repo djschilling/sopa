@@ -15,7 +15,7 @@ import static de.sopa.database.LevelInfoTable.COLUMN_STARS;
 import static de.sopa.database.LevelInfoTable.TABLE_LEVEL_INFO;
 
 /**
- * David Schilling - davejs92@gmail.com
+ * @author David Schilling - davejs92@gmail.com
  */
 public class LevelInfoDataSource {
 

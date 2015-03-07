@@ -12,7 +12,8 @@ import static de.sopa.model.game.TileType.PUZZLE;
 import static de.sopa.model.game.TileType.UNDEFINED;
 
 /**
- * David Schilling - davejs92@gmail.com
+ * @author David Schilling - davejs92@gmail.com
+ * @author Raphael Schilling
  */
 
 public class LevelCreator {

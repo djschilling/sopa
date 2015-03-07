@@ -10,7 +10,8 @@ import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.util.color.Color;
 
 /**
- * David Schilling - davejs92@gmail.com
+ * @author David Schilling - davejs92@gmail.com
+ * @author Raphael Schilling
  */
 public class MainMenuScene extends BaseScene {
 

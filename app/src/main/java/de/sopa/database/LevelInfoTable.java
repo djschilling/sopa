@@ -3,7 +3,7 @@ package de.sopa.database;
 import android.database.sqlite.SQLiteDatabase;
 
 /**
- * David Schilling - davejs92@gmail.com
+ * @author David Schilling - davejs92@gmail.com
  */
 public class LevelInfoTable {
 

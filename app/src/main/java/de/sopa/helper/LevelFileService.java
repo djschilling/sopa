@@ -10,6 +10,7 @@ import java.io.IOException;
 
 /**
  * @author David Schilling - davejs92@gmail.com
+ * @author Raphael Schilling
  */
 public class LevelFileService {
     private final FileHandler fileHandler;

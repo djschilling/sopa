@@ -6,7 +6,8 @@ import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.sprite.ButtonSprite;
 
 /**
- * Created by raphael on 03.09.14.
+ * @author Raphael Schilling
+ * @author David Schilling - davejs92@gmail.com
  */
 public class SettingsScene extends BaseScene {
 

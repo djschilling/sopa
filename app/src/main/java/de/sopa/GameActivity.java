@@ -22,7 +22,10 @@ import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
 import org.andengine.ui.activity.BaseGameActivity;
 
-
+/**
+ * @author Raphael Schilling
+ * @author David Schilling - davejs92@gmail.com
+ */
 public class GameActivity extends BaseGameActivity {
 
     private static final float CAMERA_WIDTH = 1080;

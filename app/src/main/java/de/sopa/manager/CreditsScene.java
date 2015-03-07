@@ -4,7 +4,7 @@ import de.sopa.scene.BaseScene;
 import org.andengine.entity.text.Text;
 
 /**
- * David Schilling - davejs92@gmail.com
+ * @author David Schilling - davejs92@gmail.com
  */
 public class CreditsScene extends BaseScene{
     @Override

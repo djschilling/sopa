@@ -6,7 +6,8 @@ import de.sopa.model.game.LevelResult;
 import org.andengine.entity.sprite.ButtonSprite;
 
 /**
- * David Schilling - davejs92@gmail.com
+ * @author David Schilling - davejs92@gmail.com
+ * @author Raphael Schilling
  */
 public class LevelModeGameScene extends GameScene {
     public LevelModeGameScene(Object o) {
