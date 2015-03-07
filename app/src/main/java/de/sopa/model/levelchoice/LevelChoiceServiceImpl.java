@@ -15,8 +15,12 @@ public class LevelChoiceServiceImpl implements LevelChoiceService {
 
     public LevelChoiceServiceImpl(int levelCount, int levelPerScreen) {
         currentScreen = 0;
-        screenCount = (((int) (levelCount - 0.1) / levelPerScreen)) + 1;
+        screenCount = calculateScreenCount(levelCount, levelPerScreen);
         observers = new ArrayList<>();
+    }
+
+    int calculateScreenCount(int levelCount, int levelPerScreen) {
+        return (((int) (levelCount - 0.1) / levelPerScreen)) + 1;
     }
 
     @Override
@@ -28,17 +32,17 @@ public class LevelChoiceServiceImpl implements LevelChoiceService {
     }
 
     @Override
-    public void moveRight(int screen) {
-        if(screen < screenCount) {
-            currentScreen = screen;
+    public void moveLeft() {
+        if(currentScreen > 0) {
+            currentScreen--;
         }
         updateAll();
     }
 
     @Override
-    public void moveLeft() {
-        if(currentScreen > 0) {
-            currentScreen--;
+    public void moveTo(int screen) {
+        if(screen < screenCount && screen >= 0) {
+            currentScreen = screen;
         }
         updateAll();
     }
