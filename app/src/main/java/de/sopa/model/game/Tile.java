@@ -1,5 +1,7 @@
 package de.sopa.model.game;
 
+import static de.sopa.model.game.TileType.*;
+
 /**
  * @author David Schilling - davejs92@gmail.com
  */
@@ -30,10 +32,22 @@ public class Tile {
         shortcut = tile.getShortcut();
     }
 
+    public Tile(TileType tileType, char shortcut) {
+        this.top = false;
+        this.bottom = false;
+        this.left = false;
+        this.right = false;
+        this.tileType = tileType;
+        this.shortcut = shortcut;
+    }
+
+    public Tile() {
+        this(NONE, 'n');
+    }
+
     public boolean isTop() {
         return top;
     }
-
 
 
     public boolean isBottom() {

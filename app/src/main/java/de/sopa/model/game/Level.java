@@ -1,5 +1,7 @@
 package de.sopa.model.game;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+
 /**
  * @author David Schilling - davejs92@gmail.com
  * @author Raphael Schilling
@@ -108,5 +110,35 @@ public class Level {
 
     public void setTilesCount(int tilesCount) {
         this.tilesCount = tilesCount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o){
+            return true;
+        }
+        if (!(o instanceof Level)){
+            return false;
+        }
+
+        Level that = (Level) o;
+
+        return new EqualsBuilder().append(id, that.id).append(field, that.field).
+                append(startX, that.startX).append(startY, that.startY).
+                append(movesCounter, that.movesCounter).append(levelInfo, that.levelInfo).
+                append(minimumMovesToSolve, that.minimumMovesToSolve).
+                append(tilesCount, that.tilesCount).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + startX;
+        result = 31 * result + startY;
+        result = 31 * result + movesCounter;
+        result = 31 * result + (levelInfo != null ? levelInfo.hashCode() : 0);
+        result = 31 * result + minimumMovesToSolve;
+        result = 31 * result + tilesCount;
+        return result;
     }
 }
