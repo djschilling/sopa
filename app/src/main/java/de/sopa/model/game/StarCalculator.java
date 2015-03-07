@@ -1,14 +1,18 @@
 package de.sopa.model.game;
 
 /**
- * Created by raphael on 08.09.14.
+ * Calculates the amount of stars one get after winning a level.
+ *
+ * @author Raphael Schilling
+ * @author David Schilling - davejs92@gmail.com
  */
 public class StarCalculator {
+
     public int getStars(int neededMoves, int minimumMoves ) {
         int stars;
-        if ((float) (minimumMoves) / neededMoves > 0.9f) {
+        if ((minimumMoves - neededMoves) >= 0) {
             stars = 3;
-        } else if ((float) (minimumMoves) / neededMoves > 0.4) {
+        } else if (((float) (minimumMoves) / neededMoves) > 0.6) {
             stars = 2;
         } else {
             stars = 1;
