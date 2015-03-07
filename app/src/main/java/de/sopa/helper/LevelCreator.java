@@ -36,19 +36,19 @@ public class LevelCreator {
             }
         }
         for(int i = 0; i< width; i++) {
-            tiles[i][0] = new Tile(false,false,false,false,TileType.NONE,'n');
+            tiles[i][0] = new Tile();
         }
 
         for(int i = 0; i< width; i++) {
-            tiles[i][height-1] = new Tile(false,false,false,false,TileType.NONE,'n');
+            tiles[i][height-1] = new Tile();
         }
 
         for(int i = 0; i< height; i++) {
-            tiles[0][i] = new Tile(false,false,false,false,TileType.NONE,'n');
+            tiles[0][i] = new Tile();
         }
 
         for(int i = 0; i< height; i++) {
-            tiles[width-1][i] = new Tile(false,false,false,false,TileType.NONE,'n');
+            tiles[width-1][i] = new Tile();
         }
         Tile startTile;
         switch ((int) (Math.random() * (4))) {
