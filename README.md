@@ -3,6 +3,7 @@
 * [Übersicht](https://github.com/pongo710/sopa/#%C3%9Cbersicht)
 * [Spielmodi](https://github.com/pongo710/sopa/#spielmodi)
 * [Lizenz](https://github.com/pongo710/sopa/#lizenz)
+* [Entwicklung](https://github.com/pongo710/sopa/#entwicklung)
 
 ## Übersicht ##
 
@@ -26,6 +27,19 @@ Der Levelmode bietet vorgefertigte Level an die der Reihe nach durchgespielt wer
 
 Beim Lösen eines Levels werden eine Anzahl Sterne berechnet die man durch die Anzahl an gebrauchten Sielzüge verdient hat. Die maximale Sterneanzahl beträgt 3.
 
+## Entwicklung ##
+
+### Tests ###
+
+Mit Android Studio 1.1 gibt es jetzt auch endlich Support für Android Unit Tests.
+
+Tests ausführen:
+
+```./gradlew test --continue```
+
+Build ausführen:
+
+```./gradlew build```
 ## Lizenz ##
 
 [Sopa](https://github.com/pongo710/sopa) is licensed under the Apache License, Version 2.0. See [LICENSE](https://github.com/pongo710/sopa/blob/master/LICENSE.txt) for the full license text.
