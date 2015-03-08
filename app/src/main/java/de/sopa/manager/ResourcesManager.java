@@ -72,6 +72,8 @@ public class ResourcesManager {
     public IFont creditsHeading;
     public IFont creditsSubHeading;
     public IFont creditsText;
+    public ITextureRegion twitterLogoRegion;
+    public IFont shareFont;
 
 
     public void loadMenuSceneResources() {
@@ -82,7 +84,6 @@ public class ResourcesManager {
     public void loadLoadingSceneResources() {
         loadingScreenBackgroundRegion = resourceLoader.getTexture("scenes/loading/LoadingScreen2.png");
         loadingScreenBackgroundRegion.getTexture().load();
-        //TODO: Unload loadingScreenBackgroundRegion
     }
 
     public void loadGameSceneResources() {
@@ -123,6 +124,8 @@ public class ResourcesManager {
         level_mode_region.getTexture().load();
         settingsRegion.getTexture().load();
         creditsRegion.getTexture().load();
+        twitterLogoRegion.getTexture().load();
+        shareFont = resourceLoader.getFont("Impact.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 200, Color.WHITE, 2, Color.TRANSPARENT);
     }
 
 
@@ -164,6 +167,8 @@ public class ResourcesManager {
         level_mode_region.getTexture().unload();
         settingsRegion.getTexture().unload();
         creditsRegion.getTexture().unload();
+        twitterLogoRegion.getTexture().unload();
+        shareFont.getTexture().unload();
     }
 
     private void unloadGameSceneTextures() {
@@ -246,6 +251,7 @@ public class ResourcesManager {
             level_mode_region = resourceLoader.getTexture("scenes/menu/LevelMode.png");
             settingsRegion = resourceLoader.getTexture("scenes/menu/Settings.png");
             creditsRegion = resourceLoader.getTexture("scenes/menu/credits.png");
+            twitterLogoRegion = resourceLoader.getTexture("scenes/menu/Twitter_logo_blue.png");
 
             regionTileMap = this.resourceLoader.getTileTextures();
             tilesBorderRegion = resourceLoader.getTexture("scenes/game/borders.png");
