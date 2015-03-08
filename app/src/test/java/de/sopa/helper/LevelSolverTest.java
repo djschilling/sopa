@@ -45,6 +45,44 @@ public class LevelSolverTest {
             "naan",
             "nnnn"
     };
+    private static final String[] LEVEL_TWO_MOVES = {
+            "5",
+            "2",
+            "6",
+            "#",
+            "nnnsnn",
+            "ncooen",
+            "noooin",
+            "noooin",
+            "ngooun",
+            "nnnfnn"
+    };
+    private static final String[] LEVEL_THREE_MOVES = {
+            "21",
+            "3",
+            "5",
+            "#",
+            "nnfnnn",
+            "noioon",
+            "soioon",
+            "ngoocn",
+            "noeoon",
+            "nnnnnn"
+    };
+    private static final String[] LEVEL_FOUR_MOVES = {
+            "21",
+            "4",
+            "4",
+            "#",
+            "nnnnnn",
+            "naaaan",
+            "soooof",
+            "noooon",
+            "noooon",
+            "nnnnnn"
+    };
+
+
     private LevelTranslator levelTranslator;
 
 
@@ -56,20 +94,49 @@ public class LevelSolverTest {
 
     @Test
     public void solveOneMoveColumnTrue() {
-        Level solvedLevel = sut.solve(levelTranslator.fromString(LEVEL_ONE_MOVE_COLUMN));
+        Level solvedLevel = sut.solve(levelTranslator.fromString(LEVEL_ONE_MOVE_COLUMN), 4);
         assertThat(solvedLevel, notNullValue());
         assertThat(solvedLevel.getMinimumMovesToSolve(), is(1));
     }
+
     @Test
-    public void solveOneMoveColumnFalse() {
-        Level solvedLevel = sut.solve(levelTranslator.fromString(LEVEL_TWO_MOVE_COLUMN));
-        assertThat(solvedLevel, nullValue());
+    public void solveTwoMoveColumnFalse() {
+        Level solvedLevel = sut.solve(levelTranslator.fromString(LEVEL_TWO_MOVE_COLUMN), 4);
+        assertThat(solvedLevel, notNullValue());
+        assertThat(solvedLevel.getMinimumMovesToSolve(), is(2));
     }
 
     @Test
     public void solveOneMoveRowTrue() {
-        Level solvedLevel = sut.solve(levelTranslator.fromString(LEVEL_ONE_MOVE_ROW));
+        Level solvedLevel = sut.solve(levelTranslator.fromString(LEVEL_ONE_MOVE_ROW), 4);
         assertThat(solvedLevel, notNullValue());
         assertThat(solvedLevel.getMinimumMovesToSolve(), is(1));
+    }
+
+    @Test
+    public void solveTwoMoves() {
+        Level solvedLevel = sut.solve(levelTranslator.fromString(LEVEL_TWO_MOVES), 4);
+        assertThat(solvedLevel, notNullValue());
+        assertThat(solvedLevel.getMinimumMovesToSolve(), is(2));
+    }
+
+    @Test
+    public void solveThreeMoves() {
+        Level solvedLevel = sut.solve(levelTranslator.fromString(LEVEL_THREE_MOVES), 4);
+        assertThat(solvedLevel, notNullValue());
+        assertThat(solvedLevel.getMinimumMovesToSolve(), is(3));
+    }
+
+    @Test
+    public void solveFourMovesNotEnoughDeepth() {
+        Level solvedLevel = sut.solve(levelTranslator.fromString(LEVEL_FOUR_MOVES), 3);
+        assertThat(solvedLevel, nullValue());
+    }
+
+    @Test
+    public void solveFourMoves() {
+        Level solvedLevel = sut.solve(levelTranslator.fromString(LEVEL_FOUR_MOVES), 4);
+        assertThat(solvedLevel, notNullValue());
+        assertThat(solvedLevel.getMinimumMovesToSolve(), is(4));
     }
 }
