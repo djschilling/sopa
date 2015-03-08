@@ -122,4 +122,12 @@ public class Tile {
         result = 31 * result + (int) shortcut;
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Tile{" +
+                "tileType=" + tileType +
+                ", shortcut=" + shortcut +
+                '}';
+    }
 }

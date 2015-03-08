@@ -35,7 +35,7 @@ public abstract class GameScene extends BaseScene implements Observer {
     public void createScene(Object o) {
         initializeLogic(o);
         calculateSpacePerTile(gameService.getLevel().getField().length - 2);
-        levelBackup = gameService.getLevel().copy();
+        levelBackup = new Level(gameService.getLevel());
         addBackground();
         addTiles();
         addButtons();

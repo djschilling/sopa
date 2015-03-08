@@ -22,6 +22,26 @@ public class Level {
         this.movesCounter = 0;
     }
 
+    public Level(Level level) {
+
+        Tile[][] tiles = new Tile[level.field.length][level.field[0].length];
+        for (int i = 0; i < level.field.length; i++) {
+            System.arraycopy(level.field[i], 0, tiles[i], 0, level.field[i].length);
+        }
+        field = tiles;
+        id = level.getId();
+        if (level.levelInfo == null) {
+            levelInfo = null;
+        } else {
+            levelInfo = new LevelInfo(level.levelInfo);
+        }
+        minimumMovesToSolve = level.minimumMovesToSolve;
+        startX = level.startX;
+        startY = level.startY;
+        tilesCount = level.tilesCount;
+    }
+
+
     public void setField(Tile[][] field) {
         this.field = field;
     }
@@ -82,28 +102,6 @@ public class Level {
         this.minimumMovesToSolve = minimumMovesToSolve;
     }
 
-    public Level copy() {
-        Level level = new Level();
-        Tile[][] tiles = new Tile[field.length][field[0].length];
-        for (int i = 0; i < field.length; i++) {
-            for (int j = 0; j < field[i].length; j++) {
-                tiles[i][j] = field[i][j];
-            }
-        }
-        level.setField(tiles);
-        level.setId(id);
-        if (levelInfo == null) {
-            level.setLevelInfo(null);
-        } else {
-            level.setLevelInfo(new LevelInfo(levelInfo));
-        }
-        level.setMinimumMovesToSolve(minimumMovesToSolve);
-        level.setStartX(startX);
-        level.setStartY(startY);
-        level.setTilesCount(tilesCount);
-        return level;
-    }
-
     public int getTilesCount() {
         return tilesCount;
     }
@@ -114,10 +112,10 @@ public class Level {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o){
+        if (this == o) {
             return true;
         }
-        if (!(o instanceof Level)){
+        if (!(o instanceof Level)) {
             return false;
         }
 
