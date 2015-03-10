@@ -1,6 +1,5 @@
 package de.sopa.scene.menu;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 
@@ -8,12 +7,13 @@ import de.sopa.scene.BaseScene;
 
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
+import org.andengine.entity.modifier.AlphaModifier;
 import org.andengine.entity.modifier.MoveXModifier;
 import org.andengine.entity.modifier.MoveYModifier;
+import org.andengine.entity.modifier.ScaleModifier;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.text.Text;
-import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.color.Color;
 
 /**
@@ -78,50 +78,60 @@ public class MainMenuScene extends BaseScene {
             }
         });
 
-        final ButtonSprite twitterLogo = new ButtonSprite(camera.getWidth() * 0.7f, camera.getHeight() * 0.8f, resourcesManager.twitterLogoRegion, vbom, new ButtonSprite.OnClickListener() {
+        final ButtonSprite twitterLogo = new ButtonSprite(0, 0, resourcesManager.twitterLogoRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 final Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(SOPA_TWITTER_URL));
                 activity.startActivity(intent);
             }
         });
-        Text shareText = new Text(camera.getWidth() * 0.03f, camera.getHeight() * 0.8f, resourcesManager.shareFont, "Share", vbom) {
+        final ButtonSprite shareLogo = new ButtonSprite(0, 0, resourcesManager.shareLogoTexture, vbom, new ButtonSprite.OnClickListener() {
             @Override
-            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                if (pSceneTouchEvent.isActionDown()) {
-                    Intent shareIntent = new Intent();
-                    shareIntent.setAction(Intent.ACTION_SEND);
-                    shareIntent.setType("text/plain");
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, "I played SOPA: " + LINK_TO_STORE);
-                    activity.startActivity(Intent.createChooser(shareIntent, "Share your thoughts"));
-                }
-                return super.onAreaTouched(pSceneTouchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
+            public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, "I played SOPA: " + LINK_TO_STORE);
+                activity.startActivity(Intent.createChooser(shareIntent, "Share your thoughts"));
             }
-        };
+        });
+
+        final Text sopaText = new Text(camera.getWidth()/2 - 595/2, camera.getHeight() * 0.07f, resourcesManager.sopaFont, "SOPA", vbom);
+
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
                 playItemSprite.registerEntityModifier(new MoveXModifier(1f, -camera.getWidth(), 0));
                 settingsSprite.registerEntityModifier(new MoveXModifier(1f, camera.getWidth(), 0));
                 creditsButton.registerEntityModifier(new MoveYModifier(1f, camera.getHeight(), camera.getHeight() * 0.4f + creditsButton.getHeight()));
+                shareLogo.registerEntityModifier(new AlphaModifier(1f, 0f, 1f ));
+                twitterLogo.registerEntityModifier(new AlphaModifier(1f, 0f, 1f ));
+                shareLogo.registerEntityModifier(new MoveXModifier(1f, -shareLogo.getWidth(), camera.getWidth() * 0.05f));
+                twitterLogo.registerEntityModifier(new MoveXModifier(1f, camera.getWidth(), camera.getWidth() * 0.65f));
+                sopaText.registerEntityModifier(new ScaleModifier(1f, 0f, 1f));
             }
         }));
 
-        playItemSprite.setPosition(camera.getWidth() / 2 - playItemSprite.getWidthScaled() / 2, camera.getHeight() * 0.4f - playItemSprite.getHeightScaled());
+        playItemSprite.setPosition(1080, camera.getHeight() * 0.4f - playItemSprite.getHeightScaled());
         attachChild(playItemSprite);
         registerTouchArea(playItemSprite);
 
-        settingsSprite.setPosition(camera.getWidth() / 2 - settingsSprite.getWidthScaled() / 2, camera.getHeight() * 0.4f);
+        settingsSprite.setPosition(1080, camera.getHeight() * 0.4f);
         attachChild(settingsSprite);
         registerTouchArea(settingsSprite);
 
         attachChild(creditsButton);
         registerTouchArea(creditsButton);
 
+        twitterLogo.setPosition(1080, camera.getHeight() * 0.8f);
         attachChild(twitterLogo);
         registerTouchArea(twitterLogo);
 
-        attachChild(shareText);
-        registerTouchArea(shareText);
+        shareLogo.setPosition(1080, camera.getHeight() * 0.8f);
+        attachChild(shareLogo);
+        registerTouchArea(shareLogo);
+
+        sopaText.setScale(0f);
+        attachChild(sopaText);
     }
 }

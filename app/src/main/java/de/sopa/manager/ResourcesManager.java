@@ -71,9 +71,10 @@ public class ResourcesManager {
     public IFont levelFont;
     public IFont creditsHeading;
     public IFont creditsSubHeading;
+    public IFont sopaFont;
     public IFont creditsText;
     public ITextureRegion twitterLogoRegion;
-    public IFont shareFont;
+    public ITextureRegion shareLogoTexture;
 
 
     public void loadMenuSceneResources() {
@@ -125,7 +126,8 @@ public class ResourcesManager {
         settingsRegion.getTexture().load();
         creditsRegion.getTexture().load();
         twitterLogoRegion.getTexture().load();
-        shareFont = resourceLoader.getFont("Impact.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 200, Color.WHITE, 2, Color.TRANSPARENT);
+        shareLogoTexture.getTexture().load();
+        sopaFont = resourceLoader.getFont("Impact.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 290, 0xFFD6D6D6, 0, Color.TRANSPARENT);
     }
 
 
@@ -168,7 +170,9 @@ public class ResourcesManager {
         settingsRegion.getTexture().unload();
         creditsRegion.getTexture().unload();
         twitterLogoRegion.getTexture().unload();
-        shareFont.getTexture().unload();
+        shareLogoTexture.getTexture().unload();
+        sopaFont.getTexture().unload();
+        sopaFont = null;
     }
 
     private void unloadGameSceneTextures() {
@@ -252,6 +256,7 @@ public class ResourcesManager {
             settingsRegion = resourceLoader.getTexture("scenes/menu/Settings.png");
             creditsRegion = resourceLoader.getTexture("scenes/menu/credits.png");
             twitterLogoRegion = resourceLoader.getTexture("scenes/menu/Twitter_logo_blue.png");
+            shareLogoTexture = resourceLoader.getTexture("scenes/menu/ShareThis.png");
 
             regionTileMap = this.resourceLoader.getTileTextures();
             tilesBorderRegion = resourceLoader.getTexture("scenes/game/borders.png");
