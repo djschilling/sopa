@@ -9,7 +9,8 @@ import de.sopa.model.game.Level;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 public class LevelSolverTest {
 
@@ -82,6 +83,19 @@ public class LevelSolverTest {
             "nnnnnn"
     };
 
+    private static final String[] LEVEL_SIX_MOVES = {
+            "100",
+            "6",
+            "12",
+            "#",
+            "nnnnnn",
+            "nouoas",
+            "naacin",
+            "ngueon",
+            "naoiin",
+            "nnnnfn"
+    };
+
 
     private LevelTranslator levelTranslator;
 
@@ -138,5 +152,15 @@ public class LevelSolverTest {
         Level solvedLevel = sut.solve(levelTranslator.fromString(LEVEL_FOUR_MOVES), 4);
         assertThat(solvedLevel, notNullValue());
         assertThat(solvedLevel.getMinimumMovesToSolve(), is(4));
+    }
+
+    @Test
+    public void solveSixMovesFast() {
+        long startTime = System.currentTimeMillis();
+        Level solvedLevel = sut.solve(levelTranslator.fromString(LEVEL_SIX_MOVES), 6);
+        assertThat(solvedLevel, notNullValue());
+        assertThat(solvedLevel.getMinimumMovesToSolve(), is(6));
+        long timeInMs = System.currentTimeMillis() - startTime;
+        fail("sixs moves lasted " + timeInMs);
     }
 }
