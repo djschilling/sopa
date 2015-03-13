@@ -14,6 +14,11 @@ public class LevelSolver {
 
     private final GameFieldService gameFieldService;
 
+    private int highestHit = -1;
+
+    private int columns = -1;
+    private int rows = -1;
+
 
     public LevelSolver(GameFieldService gameFieldService) {
         this.gameFieldService = gameFieldService;
@@ -21,7 +26,13 @@ public class LevelSolver {
 
     public Level solve(Level level, int maxDepth) {
         List<Level> possibleSolutions = new ArrayList<>();
-        solve(level, maxDepth, 0, possibleSolutions);
+        Level levelToSolve = new Level(level);
+        levelToSolve.setMinimumMovesToSolve(maxDepth + 1);
+        highestHit = maxDepth + 1;
+        Tile[][] field = level.getField();
+        columns = field.length;
+        rows = field[0].length;
+        solve(levelToSolve, maxDepth, 0, possibleSolutions);
         Level best = new Level();
         best.setMinimumMovesToSolve(maxDepth + 1);
         for (Level possibleSolution : possibleSolutions) {
@@ -35,52 +46,50 @@ public class LevelSolver {
         return best;
     }
 
-    public void solve(Level level, int maxDepth, int currentDepth, List<Level> possibleSolutions) {
-        Tile[][] field = level.getField();
-        int columns = field.length;
-        int rows = field[0].length;
+    public boolean solve(Level level, int maxDepth, int currentDepth, List<Level> possibleSolutions) {
+        if(gameFieldService.solvedPuzzle(level)) {
+            addPossibleSolutions(new Level(level), currentDepth, possibleSolutions);
+            if(currentDepth < highestHit) {
+                highestHit = currentDepth;
+            }
+            return true;
+        }
+        if (currentDepth < maxDepth) {
+            for (int column = 0; column < columns - 2; column++) {
+                gameFieldService.shiftLine(level, false, column, 1);
+                if(currentDepth + 1 < highestHit && solve(level, maxDepth, currentDepth + 1, possibleSolutions)) {
+                    if(currentDepth + 1 < highestHit) return true;
+                }
 
-        boolean solvedPuzzle = gameFieldService.solvedPuzzle(level);
-        if(solvedPuzzle) {
-            possibleSolutions.add(level);
-        }
-        Level levelToModify;
-        for (int column = 0; column < columns - 2; column++) {
-            levelToModify = new Level(level);
-            gameFieldService.shiftLine(levelToModify, false, column, 1);
-            if (gameFieldService.solvedPuzzle(levelToModify)) {
-                addPossibleSolutions(levelToModify, currentDepth + 1, possibleSolutions);
-            } else if (currentDepth < maxDepth - 1) {
-                solve(levelToModify, maxDepth, currentDepth + 1, possibleSolutions);
+                gameFieldService.shiftLine(level, false, column, -2);
+                if(currentDepth + 1 < highestHit && solve(level, maxDepth, currentDepth + 1, possibleSolutions)) {
+                    if(currentDepth + 1 < highestHit) return true;
+                }
+                //restore state
+                gameFieldService.shiftLine(level, false, column, 1);
+
             }
-            levelToModify = new Level(level);
-            gameFieldService.shiftLine(levelToModify, false, column, -1);
-            if(gameFieldService.solvedPuzzle(levelToModify)) {
-                addPossibleSolutions(levelToModify, currentDepth + 1, possibleSolutions);
-            } else if (currentDepth < maxDepth - 1) {
-                solve(levelToModify, maxDepth, currentDepth + 1, possibleSolutions);
-            }
-        }
-        for (int row = 0; row < rows - 2; row++) {
-            levelToModify = new Level(level);
-            gameFieldService.shiftLine(levelToModify, true, row, 1);
-            if (gameFieldService.solvedPuzzle(levelToModify)) {
-                addPossibleSolutions(levelToModify, currentDepth + 1, possibleSolutions);
-            } else if (currentDepth < maxDepth - 1) {
-                solve(levelToModify, maxDepth, currentDepth + 1, possibleSolutions);
-            }
-            levelToModify = new Level(level);
-            gameFieldService.shiftLine(levelToModify, true, row, -1);
-            if(gameFieldService.solvedPuzzle(levelToModify)) {
-                addPossibleSolutions(levelToModify, currentDepth + 1, possibleSolutions);
-            } else if (currentDepth < maxDepth - 1) {
-                solve(levelToModify, maxDepth, currentDepth + 1, possibleSolutions);
+            for (int row = 0; row < rows - 2; row++) {
+                gameFieldService.shiftLine(level, true, row, 1);
+                if(currentDepth + 1 < highestHit && solve(level, maxDepth, currentDepth + 1, possibleSolutions)) {
+                    if(currentDepth + 1 < highestHit) return true;
+                }
+
+                gameFieldService.shiftLine(level, true, row, -2);
+                if(currentDepth + 1 < highestHit && solve(level, maxDepth, currentDepth + 1, possibleSolutions)) {
+                    if(currentDepth + 1 < highestHit) return true;
+                }
+                //restore state
+                gameFieldService.shiftLine(level, true, row, 1);
             }
         }
+        return false;
     }
 
-    private void addPossibleSolutions(Level levelToModify, int moveCount, List<Level> possibleSolutions) {
-        levelToModify.setMinimumMovesToSolve(moveCount);
-        possibleSolutions.add(levelToModify);
+    private void addPossibleSolutions(Level level, int moveCount, List<Level> possibleSolutions) {
+        if(level.getMinimumMovesToSolve() > moveCount) {
+            level.setMinimumMovesToSolve(moveCount);
+            possibleSolutions.add(level);
+        }
     }
 }
