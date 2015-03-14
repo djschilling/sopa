@@ -2,7 +2,6 @@ package de.sopa.scene.menu;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.widget.Toast;
 
 import de.sopa.scene.BaseScene;
 
@@ -89,12 +88,11 @@ public class MainMenuScene extends BaseScene {
         final ButtonSprite shareLogo = new ButtonSprite(0, 0, resourcesManager.shareLogoTexture, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(activity.getApplicationContext(), "Feature disabled for beta tests.", Toast.LENGTH_LONG).show();
-                    }
-                });
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, "I played SOPA: " + LINK_TO_STORE);
+                activity.startActivity(Intent.createChooser(shareIntent, "Share your thoughts"));
             }
         });
 
