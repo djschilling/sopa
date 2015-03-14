@@ -262,11 +262,11 @@ public class SceneServiceImpl implements SceneService {
     @Override
     public void loadGameSceneFromGameScene(final Level level) {
         setScene(loadingScene);
-        disposeGameScene();
+        //disposeGameScene();
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().loadGameSceneResources();
+                //ResourcesManager.getInstance().loadGameSceneResources();
                 gameScene = new LevelModeGameScene(level);
                 setScene(gameScene);
             }
