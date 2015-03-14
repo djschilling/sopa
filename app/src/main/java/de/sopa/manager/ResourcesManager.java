@@ -183,6 +183,10 @@ public class ResourcesManager {
         tilesBorderRegion.getTexture().unload();
         scoreFont.getTexture().unload();
         scoreFont = null;
+        minMovesFont.unload();
+        minMovesFont = null;
+        levelFont.unload();
+        levelFont = null;
     }
 
     public static void prepareManager(Engine engine, GameActivity activity, Camera camera, VertexBufferObjectManager vbom, ResourceLoader resourceLoader, SceneService sceneService, LevelService levelService, SettingsService settingsService) {
@@ -203,6 +207,7 @@ public class ResourcesManager {
 
     public void unloadScoreSceneResources() {
         movesScoreFont.getTexture().unload();
+        movesScoreFont = null;
         starRegion.getTexture().unload();
         starSWRegion.getTexture().unload();
         nextLevelRegion.getTexture().unload();
@@ -228,7 +233,7 @@ public class ResourcesManager {
         creditsText = resourceLoader.getFont("Impact.ttf", TextureOptions.REPEATING_BILINEAR_PREMULTIPLYALPHA, 50, Color.WHITE, 2, Color.TRANSPARENT);
     }
 
-    public void unloadLevelCreditsSceneResources() {
+    public void unloadCreditsSceneResources() {
         creditsHeading.unload();
         creditsSubHeading.unload();
         creditsText.unload();

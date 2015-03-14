@@ -116,6 +116,7 @@ public class SceneServiceImpl implements SceneService {
 
 
     public void loadScoreScreen(final LevelResult level) {
+        disposeGameScene();
         setScene(loadingScene);
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
@@ -164,7 +165,8 @@ public class SceneServiceImpl implements SceneService {
     @Override
     public void loadMenuSceneFromCreditsScene() {
         setScene(loadingScene);
-        ResourcesManager.getInstance().unloadLevelCreditsSceneResources();
+        disposeCreditsScene();
+        ResourcesManager.getInstance().unloadCreditsSceneResources();
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             @Override
             public void onTimePassed(final TimerHandler pTimerHandler) {
@@ -175,6 +177,12 @@ public class SceneServiceImpl implements SceneService {
             }
         }));
 
+    }
+
+    private void disposeCreditsScene() {
+        ResourcesManager.getInstance().unloadCreditsSceneResources();
+        creditsScene.disposeScene();
+        creditsScene = null;
     }
 
 
