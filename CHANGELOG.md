@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0
+
+* first App Store version.
+
 ## 1.0.2
 
 ### Bugfixes
