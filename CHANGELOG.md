@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.1
+
+### Bugfixes
+
+* fix performance issues.
+
 ## 1.1.0
 
 * first App Store version.
