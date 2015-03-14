@@ -67,7 +67,7 @@ public class ScoreScreen extends BaseScene {
 
     @Override
     public void onBackKeyPressed() {
-        sceneService.loadMenuSceneFromGameScene();
+        sceneService.loadMenuSceneFromScoreScene();
     }
 
     @Override
