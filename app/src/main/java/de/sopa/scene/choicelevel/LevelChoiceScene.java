@@ -1,6 +1,7 @@
 package de.sopa.scene.choicelevel;
 
 
+
 import de.sopa.model.game.LevelInfo;
 import de.sopa.model.levelchoice.LevelChoiceService;
 import de.sopa.model.levelchoice.LevelChoiceServiceImpl;
@@ -15,6 +16,7 @@ import org.andengine.entity.modifier.MoveXModifier;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
+import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.util.modifier.ease.EaseQuartInOut;
@@ -40,10 +42,25 @@ public class LevelChoiceScene extends BaseScene implements Observer {
         levelChoiceService = new LevelChoiceServiceImpl(levelInfos.size(), 12);
         levelChoiceService.attach(this);
         float widthPerLevel = (camera.getWidth() / COLUMNS);
-        addLevelChooseTiles(levelInfos, widthPerLevel);
         addChangeLevelButtons();
+        addSwipeDetector();
+        addLevelChooseTiles(levelInfos, widthPerLevel);
         moveToLastUnlocked();
         resourcesManager.musicService.playMusic();
+    }
+
+    private void addSwipeDetector() {
+        registerTouchArea(new LevelChoiceSceneSwipeDetector(entityToFollow) {
+            @Override
+            protected void swipeRight() {
+                levelChoiceService.moveRight();
+            }
+
+            @Override
+            protected void swipeLeft() {
+                levelChoiceService.moveLeft();
+            }
+        });
     }
 
     private void moveToLastUnlocked() {
