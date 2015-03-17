@@ -57,28 +57,28 @@ public class MainMenuScene extends BaseScene {
 
     private void createMenuChildScene() {
 
-        final ButtonSprite playItemSprite = new ButtonSprite(0, 0, resourcesManager.level_mode_region, vbom, new ButtonSprite.OnClickListener() {
+        final ButtonSprite playItemSprite = new ButtonSprite(camera.getWidth(), 0, resourcesManager.level_mode_region, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 sceneService.loadLevelChoiceSceneFromMenuScene();
             }
         });
 
-        final ButtonSprite settingsSprite = new ButtonSprite(0, 0, resourcesManager.settingsRegion, vbom, new ButtonSprite.OnClickListener() {
+        final ButtonSprite settingsSprite = new ButtonSprite(camera.getWidth(), 0, resourcesManager.settingsRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 sceneService.loadSettingsFromMenuScene();
             }
         });
 
-        final ButtonSprite creditsButton = new ButtonSprite(0, 0, resourcesManager.creditsRegion, vbom, new ButtonSprite.OnClickListener() {
+        final ButtonSprite creditsButton = new ButtonSprite(0 , camera.getHeight(), resourcesManager.creditsRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 sceneService.loadCreditsFromMenuScene();
             }
         });
 
-        final ButtonSprite twitterLogo = new ButtonSprite(0, 0, resourcesManager.twitterLogoRegion, vbom, new ButtonSprite.OnClickListener() {
+        final ButtonSprite twitterLogo = new ButtonSprite(camera.getWidth(), 0, resourcesManager.twitterLogoRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 final Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(SOPA_TWITTER_URL));
