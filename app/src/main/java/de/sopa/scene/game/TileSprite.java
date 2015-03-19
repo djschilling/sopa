@@ -1,7 +1,9 @@
 package de.sopa.scene.game;
 
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.sprite.TiledSprite;
 import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import java.util.UUID;
@@ -9,17 +11,18 @@ import java.util.UUID;
 /**
  * @author David Schilling - davejs92@gmail.com
  */
-public class TileSprite extends Sprite {
+public class TileSprite extends TiledSprite {
 
     private float startX;
     private float startY;
     private UUID uuid;
 
-    public TileSprite(final float pX, final float pY, final float pWidth, final float pHeight, final ITextureRegion pTextureRegion, final VertexBufferObjectManager vbo){
+    public TileSprite(final float pX, final float pY, final float pWidth, final float pHeight, final TiledTextureRegion pTextureRegion, final VertexBufferObjectManager vbo){
         super(pX, pY, pWidth, pHeight, pTextureRegion, vbo);
         this.startX = pX;
         this.startY = pY;
         uuid = UUID.randomUUID();
+        setCurrentTileIndex(0);
     }
 
     public float getStartX() {

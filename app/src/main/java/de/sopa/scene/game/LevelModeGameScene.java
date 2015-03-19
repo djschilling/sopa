@@ -3,6 +3,8 @@ package de.sopa.scene.game;
 import de.sopa.model.game.Level;
 import de.sopa.model.game.LevelResult;
 
+import org.andengine.engine.handler.timer.ITimerCallback;
+import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.sprite.ButtonSprite;
 
 /**
@@ -10,6 +12,7 @@ import org.andengine.entity.sprite.ButtonSprite;
  * @author Raphael Schilling
  */
 public class LevelModeGameScene extends GameScene {
+
     public LevelModeGameScene(Object o) {
         super(o);
     }
@@ -34,12 +37,19 @@ public class LevelModeGameScene extends GameScene {
     }
 
     public void onSolvedGame() {
+        gameFieldView.tubesState(1);
         Level level = gameService.getLevel();
-        LevelResult levelResult = levelService.calculateLevelResult(level);
+        final LevelResult levelResult = levelService.calculateLevelResult(level);
         levelService.persistLevelResult(levelResult);
         int nextLevelId = level.getId() + 1;
         levelService.unlockLevel(nextLevelId);
-        sceneService.loadScoreScreen(levelResult);
+        engine.registerUpdateHandler(new TimerHandler(1.5f,new ITimerCallback() {
+            @Override
+            public void onTimePassed(TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                sceneService.loadScoreScreen(levelResult);
+            }
+        }));
     }
 
 }

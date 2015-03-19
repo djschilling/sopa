@@ -11,7 +11,9 @@ import org.andengine.engine.camera.Camera;
 import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.texture.region.TextureRegion;
+import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 /**
@@ -35,7 +37,7 @@ public class ResourcesManager {
     public ITextureRegion creditsRegion;
     public ITextureRegion loadingScreenBackgroundRegion;
 
-    public Map<Character, TextureRegion> regionTileMap;
+    public Map<Character, TiledTextureRegion> regionTileMap;
     public ITextureRegion tilesBorderRegion;
     public ITextureRegion levelChoiceRegion;
     public ITextureRegion levelChoiceArrowRightRegion;
@@ -56,6 +58,7 @@ public class ResourcesManager {
     public ITextureRegion tutorialLetsGoRegion;
     public ITextureRegion tutorialFirstRegionA;
     public ITextureRegion tutorialFirstRegionB;
+    public ITiledTextureRegion iTiledTextureRegion;
 
     public IFont scoreFont;
     public IFont levelChoiceFont;
@@ -134,7 +137,7 @@ public class ResourcesManager {
     private void loadGameSceneGraphics() {
         prepareTextures();
         regionTileMap = this.resourceLoader.getTileTextures();
-        for (TextureRegion textureRegion : regionTileMap.values()) {
+        for (TiledTextureRegion textureRegion : regionTileMap.values()) {
             textureRegion.getTexture().load();
         }
         tilesBorderRegion.getTexture().load();
@@ -176,7 +179,7 @@ public class ResourcesManager {
     }
 
     private void unloadGameSceneTextures() {
-        for (TextureRegion textureRegion : regionTileMap.values()) {
+        for (TiledTextureRegion textureRegion : regionTileMap.values()) {
             textureRegion.getTexture().unload();
         }
         restartRegion.getTexture().unload();
