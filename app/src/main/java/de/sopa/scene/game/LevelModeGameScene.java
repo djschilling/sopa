@@ -1,11 +1,11 @@
 package de.sopa.scene.game;
 
-import de.sopa.model.game.Level;
-import de.sopa.model.game.LevelResult;
-
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.sprite.ButtonSprite;
+
+import de.sopa.model.game.Level;
+import de.sopa.model.game.LevelResult;
 
 /**
  * @author David Schilling - davejs92@gmail.com
@@ -13,8 +13,11 @@ import org.andengine.entity.sprite.ButtonSprite;
  */
 public class LevelModeGameScene extends GameScene {
 
+    private boolean leaveScene;
+
     public LevelModeGameScene(Object o) {
         super(o);
+        leaveScene = false;
     }
 
     @Override
@@ -33,6 +36,7 @@ public class LevelModeGameScene extends GameScene {
 
     @Override
     public void onBackKeyPressed() {
+        leaveScene = true;
         sceneService.loadLevelChoiceSceneFromGameScene();
     }
 
@@ -43,13 +47,14 @@ public class LevelModeGameScene extends GameScene {
         levelService.persistLevelResult(levelResult);
         int nextLevelId = level.getId() + 1;
         levelService.unlockLevel(nextLevelId);
-        engine.registerUpdateHandler(new TimerHandler(1.5f,new ITimerCallback() {
+        engine.registerUpdateHandler(new TimerHandler(1.5f, new ITimerCallback() {
             @Override
             public void onTimePassed(TimerHandler pTimerHandler) {
-                engine.unregisterUpdateHandler(pTimerHandler);
-                sceneService.loadScoreScreen(levelResult);
+                if (!leaveScene) {
+                    engine.unregisterUpdateHandler(pTimerHandler);
+                    sceneService.loadScoreScreen(levelResult);
+                }
             }
         }));
     }
-
 }
