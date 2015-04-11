@@ -37,17 +37,13 @@ public class ResourceLoader {
     }
 
     public TextureRegion getTexture(final String path) {
-        return getTexture(path, TextureOptions.DEFAULT);
-    }
-
-    public TextureRegion getTexture(final String path, TextureOptions textureOptions) {
         try {
             ITexture texture = new BitmapTexture(textureManager, new IInputStreamOpener() {
                 @Override
                 public InputStream open() throws IOException {
                     return assetManager.open(path);
                 }
-            }, textureOptions);
+            }, TextureOptions.BILINEAR);
             return TextureRegionFactory.extractFromTexture(texture);
         } catch (IOException e) {
             e.printStackTrace();
@@ -69,9 +65,9 @@ public class ResourceLoader {
         return regionMap;
     }
 
-    public IFont getFont(final String name, TextureOptions textureOptions, float size, int color, float strokeWidth, int strokeColor) {
+    public IFont getFont(final String name, float size, int color, float strokeWidth, int strokeColor) {
         FontFactory.setAssetBasePath("fonts/");
-        final ITexture mainFontTexture = new BitmapTextureAtlas(textureManager, 512, 512, textureOptions);
+        final ITexture mainFontTexture = new BitmapTextureAtlas(textureManager, 512, 512, TextureOptions.BILINEAR);
         IFont font = FontFactory.createStrokeFromAsset(fontManager,
         mainFontTexture, assetManager, name, size , true, color, strokeWidth, strokeColor);
         font.load();
@@ -79,7 +75,7 @@ public class ResourceLoader {
     }
 
     public TiledTextureRegion getTiledTexture(String path, int width, int height, int tileColumns, int tileRows) {
-        BitmapTextureAtlas texBanana = new BitmapTextureAtlas(textureManager, width, height, TextureOptions.DEFAULT);
+        BitmapTextureAtlas texBanana = new BitmapTextureAtlas(textureManager, width, height, TextureOptions.BILINEAR);
         TiledTextureRegion regBanana = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(texBanana, assetManager, path, 0, 0, tileColumns, tileRows);
         return regBanana;
     }
