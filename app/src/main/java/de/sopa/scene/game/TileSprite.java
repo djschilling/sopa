@@ -4,6 +4,7 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -14,12 +15,17 @@ public class TileSprite extends Sprite {
     private float startX;
     private float startY;
     private UUID uuid;
+    private List<ITextureRegion> pTextureRegions;
+    private int index;
 
-    public TileSprite(final float pX, final float pY, final float pWidth, final float pHeight, final ITextureRegion pTextureRegion, final VertexBufferObjectManager vbo){
-        super(pX, pY, pWidth, pHeight, pTextureRegion, vbo);
+    public TileSprite(final float pX, final float pY, final float pWidth, final float pHeight,
+                      List<ITextureRegion> pTextureRegions, final VertexBufferObjectManager vbo) {
+        super(pX, pY, pWidth, pHeight, pTextureRegions.get(0), vbo);
         this.startX = pX;
         this.startY = pY;
         uuid = UUID.randomUUID();
+        this.index = 0;
+        this.pTextureRegions = pTextureRegions;
     }
 
     public float getStartX() {
@@ -38,12 +44,25 @@ public class TileSprite extends Sprite {
         this.startY = startY;
     }
 
+    public void setITextureRegionIndex(int index) {
+        this.index = index;
+    }
+
+
+    @Override
+    public ITextureRegion getTextureRegion() {
+        if(pTextureRegions == null) {
+            return mTextureRegion;
+        }
+        return pTextureRegions.get(index);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof TileSprite)){
+        if (!(o instanceof TileSprite)) {
             return false;
         }
 

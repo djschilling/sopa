@@ -59,6 +59,15 @@ public class ResourceLoader {
         regionMap.put('e', getTexture("scenes/game/e.png"));
         regionMap.put('g', getTexture("scenes/game/g.png"));
         regionMap.put('i', getTexture("scenes/game/i.png"));
+        regionMap.put('S', getTexture("scenes/game/bordersStart_filled.png"));
+        regionMap.put('F', getTexture("scenes/game/bordersFinish_filled.png"));
+        regionMap.put('O', getTexture("scenes/game/o.png"));
+        regionMap.put('A', getTexture("scenes/game/a_filled.png"));
+        regionMap.put('U', getTexture("scenes/game/u_filled.png"));
+        regionMap.put('C', getTexture("scenes/game/c_filled.png"));
+        regionMap.put('E', getTexture("scenes/game/e_filled.png"));
+        regionMap.put('G', getTexture("scenes/game/g_filled.png"));
+        regionMap.put('I', getTexture("scenes/game/i_filled.png"));
         return regionMap;
     }
 

@@ -1,8 +1,5 @@
 package de.sopa.scene.game;
 
-import de.sopa.model.game.GameService;
-import de.sopa.model.game.Tile;
-import java.util.Map;
 import org.andengine.entity.Entity;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.MoveXModifier;
@@ -11,7 +8,15 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
-import org.andengine.util.modifier.ease.*;
+import org.andengine.util.modifier.ease.EaseQuadInOut;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import de.sopa.model.game.GameService;
+import de.sopa.model.game.Tile;
 
 /**
  * @author David Schilling - davejs92@gmail.com
@@ -24,6 +29,8 @@ public class GameFieldView extends Entity {
     private final VertexBufferObjectManager vbom;
     private final ITextureRegion tilesBorderRegion;
     private TileSprite[][] tileSprites;
+    private TileSprite start;
+    private TileSprite finish;
 
     public GameFieldView(float pX, float pY, float spacePerTile, GameService gameService, Map<Character, TextureRegion> regionMap, VertexBufferObjectManager vbom, ITextureRegion tilesBorderRegion) {
         super(pX, pY);
@@ -46,17 +53,19 @@ public class GameFieldView extends Entity {
             for (int x = 0; x < width; x++) {
                 if (field[x][y].getShortcut() != 'n') {
                     TextureRegion pTextureRegion = tileRegionMap.get(field[x][y].getShortcut());
+                    TextureRegion pTextureRegionFilled = tileRegionMap.get(Character.toUpperCase(field[x][y].getShortcut()));
+                    List<ITextureRegion> textureRegions = Arrays.<ITextureRegion>asList(pTextureRegion, pTextureRegionFilled);
                     switch (field[x][y].getTileType()) {
                         case PUZZLE:
-                            TileSprite tileSprite = new TileSprite(tilePositionX, tilePositionY, spacePerTile, spacePerTile, pTextureRegion, vbom);
+                            TileSprite tileSprite = new TileSprite(tilePositionX, tilePositionY, spacePerTile, spacePerTile, textureRegions, vbom);
                             attachChild(tileSprite);
                             tileSprites[x][y] = tileSprite;
                             break;
                         case FINISH:
-                            createFinishAnsStart(x, y, tilePositionX,tilePositionY, pTextureRegion, field);
+                            finish = createFinishAnsStart(x, y, tilePositionX, tilePositionY, textureRegions, field);
                             break;
                         case START:
-                            createFinishAnsStart(x, y, tilePositionX, tilePositionY, pTextureRegion, field);
+                            start = createFinishAnsStart(x, y, tilePositionX, tilePositionY, textureRegions, field);
                             break;
                         default:
                             break;
@@ -100,7 +109,7 @@ public class GameFieldView extends Entity {
             }
             for (int y = 1; y < tileSprites[row].length - 1; y++) {
                 TileSprite tileSprite = tileSprites[row][y];
-                tileSprite.registerEntityModifier(new MoveYModifier(0.3f, tileSprite.getY(), tileSprite.getY() + tileSprite.getWidth() * direction,EaseQuadInOut.getInstance()) {
+                tileSprite.registerEntityModifier(new MoveYModifier(0.3f, tileSprite.getY(), tileSprite.getY() + tileSprite.getWidth() * direction, EaseQuadInOut.getInstance()) {
                     @Override
                     protected void onModifierFinished(IEntity pItem) {
                         gameService.shiftLine(horizontal, finalRow, direction);
@@ -110,32 +119,49 @@ public class GameFieldView extends Entity {
             }
         }
     }
-    private void createFinishAnsStart(int x,int y, float tilePositionX, float tilePositionY, TextureRegion pTextureRegion, Tile[][] field ) {
 
-        if(x == 0) {
-            Sprite sprite = new TileSprite(tilePositionX + spacePerTile, tilePositionY, spacePerTile, spacePerTile, pTextureRegion, vbom);
-            attachChild(sprite);
-        } else if(x == field.length - 1) {
-            Sprite sprite = new TileSprite(tilePositionX - spacePerTile, tilePositionY, spacePerTile, spacePerTile, pTextureRegion, vbom);
-            sprite.setRotationCenter(sprite.getWidth() / 2, sprite.getHeight() / 2);
-            sprite.setRotation(180f);
-            attachChild(sprite);
-        } else if(y == 0) {
-            Sprite sprite = new TileSprite(tilePositionX, tilePositionY + spacePerTile, spacePerTile, spacePerTile, pTextureRegion, vbom);
-            sprite.setRotationCenter(sprite.getWidth() / 2, sprite.getHeight() / 2);
-            sprite.setRotation(90f);
-            attachChild(sprite);
-        } else if(y == field[x].length - 1) {
-            Sprite sprite = new TileSprite(tilePositionX, tilePositionY - spacePerTile, spacePerTile, spacePerTile, pTextureRegion, vbom);
-            sprite.setRotationCenter(sprite.getWidth() / 2, sprite.getHeight() / 2);
-            sprite.setRotation(270f);
-            attachChild(sprite);
+    private TileSprite createFinishAnsStart(int x, int y, float tilePositionX, float tilePositionY, List<ITextureRegion> pTextureRegion, Tile[][] field) {
+
+        TileSprite tileSprite;
+        if (x == 0) {
+            tileSprite = new TileSprite(tilePositionX + spacePerTile, tilePositionY, spacePerTile, spacePerTile, pTextureRegion, vbom);
+            attachChild(tileSprite);
+        } else if (x == field.length - 1) {
+            tileSprite = new TileSprite(tilePositionX - spacePerTile, tilePositionY, spacePerTile, spacePerTile, pTextureRegion, vbom);
+            tileSprite.setRotationCenter(tileSprite.getWidth() / 2, tileSprite.getHeight() / 2);
+            tileSprite.setRotation(180f);
+            attachChild(tileSprite);
+        } else if (y == 0) {
+            tileSprite = new TileSprite(tilePositionX, tilePositionY + spacePerTile, spacePerTile, spacePerTile, pTextureRegion, vbom);
+            tileSprite.setRotationCenter(tileSprite.getWidth() / 2, tileSprite.getHeight() / 2);
+            tileSprite.setRotation(90f);
+            attachChild(tileSprite);
+        } else {
+            tileSprite = new TileSprite(tilePositionX, tilePositionY - spacePerTile, spacePerTile, spacePerTile, pTextureRegion, vbom);
+            tileSprite.setRotationCenter(tileSprite.getWidth() / 2, tileSprite.getHeight() / 2);
+            tileSprite.setRotation(270f);
+            attachChild(tileSprite);
         }
+
+        return tileSprite;
     }
 
     @Override
     public void dispose() {
         detachChildren();
         super.dispose();
+    }
+
+    public void setTubesState(int state) {
+        for (TileSprite[] tileSprite : tileSprites) {
+            for (TileSprite currentSprite : tileSprite) {
+                if (currentSprite != null) {
+                    currentSprite.setITextureRegionIndex(state);
+                }
+            }
+        }
+        start.setITextureRegionIndex(1);
+        finish.setITextureRegionIndex(1);
+
     }
 }
