@@ -53,15 +53,15 @@ public class ResourceLoader {
 
     public Map<Character, TiledTextureRegion> getTileTextures() {
         Map<Character, TiledTextureRegion> regionMap = new HashMap<>();
-        regionMap.put('s', getTiledTexture("scenes/game/bordersStart.png",400,200,2,1));
-        regionMap.put('f', getTiledTexture("scenes/game/bordersFinish.png", 400, 200, 2, 1));
-        regionMap.put('o', getTiledTexture("scenes/game/o.png", 400, 200, 2, 1));
-        regionMap.put('a', getTiledTexture("scenes/game/a.png", 400, 200, 2, 1));
-        regionMap.put('u', getTiledTexture("scenes/game/u.png", 400, 200, 2, 1));
-        regionMap.put('c', getTiledTexture("scenes/game/c.png", 400, 200, 2, 1));
-        regionMap.put('e', getTiledTexture("scenes/game/e.png", 400, 200, 2, 1));
-        regionMap.put('g', getTiledTexture("scenes/game/g.png", 400, 200, 2, 1));
-        regionMap.put('i', getTiledTexture("scenes/game/i.png", 400, 200, 2, 1));
+        regionMap.put('s', getTiledTexture("scenes/game/bordersStart.png",540, 270,2,1));
+        regionMap.put('f', getTiledTexture("scenes/game/bordersFinish.png", 540, 270, 2, 1));
+        regionMap.put('o', getTiledTexture("scenes/game/o.png", 540, 270, 2, 1));
+        regionMap.put('a', getTiledTexture("scenes/game/a.png", 540, 270, 2, 1));
+        regionMap.put('u', getTiledTexture("scenes/game/u.png", 540, 270, 2, 1));
+        regionMap.put('c', getTiledTexture("scenes/game/c.png", 540, 270, 2, 1));
+        regionMap.put('e', getTiledTexture("scenes/game/e.png", 540, 270, 2, 1));
+        regionMap.put('g', getTiledTexture("scenes/game/g.png", 540, 270, 2, 1));
+        regionMap.put('i', getTiledTexture("scenes/game/i.png", 540, 270, 2, 1));
         return regionMap;
     }
 
@@ -75,7 +75,7 @@ public class ResourceLoader {
     }
 
     public TiledTextureRegion getTiledTexture(String path, int width, int height, int tileColumns, int tileRows) {
-        BitmapTextureAtlas texBanana = new BitmapTextureAtlas(textureManager, width, height, TextureOptions.BILINEAR);
+        BitmapTextureAtlas texBanana = new BitmapTextureAtlas(textureManager, width, height, TextureOptions.BILINEAR_PREMULTIPLYALPHA    );
         TiledTextureRegion regBanana = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(texBanana, assetManager, path, 0, 0, tileColumns, tileRows);
         return regBanana;
     }
