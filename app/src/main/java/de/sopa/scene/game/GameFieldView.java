@@ -72,38 +72,6 @@ public class GameFieldView extends Entity {
                 spacePerTile * (width - 2), tilesBorderRegion, vbom));
     }
 
-    public void moveTiles(boolean horizontal, int row, float moveSize, boolean moveOver) {
-        if (row < 0) {
-            return;
-        }
-        row++;
-        if (horizontal) {
-            if (row > tileSprites.length - 2) {
-                return;
-            }
-            for (int x = 1; x < tileSprites.length - 1; x++) {
-                TileSprite tileSprite = tileSprites[x][row];
-                float toX = tileSprite.getStartX() + moveSize;
-                tileSprite.setX(toX);
-                if (moveOver) {
-                    tileSprite.setStartX(toX);
-                }
-            }
-        } else {
-            if (row > tileSprites[0].length - 2) {
-                return;
-            }
-            for (int y = 1; y < tileSprites[row].length - 1; y++) {
-                TileSprite tileSprite = tileSprites[row][y];
-                float toY = tileSprite.getStartY() + moveSize;
-                tileSprite.setY(toY);
-                if (moveOver) {
-                    tileSprite.setStartY(toY);
-                }
-            }
-        }
-    }
-
     public void oneStep(final boolean horizontal, int row, final int direction) {
         if (row < 0) {
             return;
