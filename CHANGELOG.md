@@ -1,5 +1,11 @@
 # Changelog
 
+# 1.2.0
+
+* add swipe to level-choice-scene #1
+* add highlighting for level solving.
+* improve image quality.
+
 ## 1.1.1
 
 ### Bugfixes
