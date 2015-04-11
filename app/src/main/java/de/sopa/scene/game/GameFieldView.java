@@ -8,9 +8,8 @@ import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.MoveXModifier;
 import org.andengine.entity.modifier.MoveYModifier;
 import org.andengine.entity.sprite.Sprite;
-import org.andengine.entity.sprite.TiledSprite;
 import org.andengine.opengl.texture.region.ITextureRegion;
-import org.andengine.opengl.texture.region.TiledTextureRegion;
+import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.modifier.ease.*;
 
@@ -21,14 +20,12 @@ import org.andengine.util.modifier.ease.*;
 public class GameFieldView extends Entity {
     private final GameService gameService;
     private final float spacePerTile;
-    private final Map<Character, TiledTextureRegion> tileRegionMap;
+    private final Map<Character, TextureRegion> tileRegionMap;
     private final VertexBufferObjectManager vbom;
     private final ITextureRegion tilesBorderRegion;
     private TileSprite[][] tileSprites;
-    private TiledSprite start;
-    private TiledSprite finish;
 
-    public GameFieldView(float pX, float pY, float spacePerTile, GameService gameService, Map<Character, TiledTextureRegion> regionMap, VertexBufferObjectManager vbom, ITextureRegion tilesBorderRegion) {
+    public GameFieldView(float pX, float pY, float spacePerTile, GameService gameService, Map<Character, TextureRegion> regionMap, VertexBufferObjectManager vbom, ITextureRegion tilesBorderRegion) {
         super(pX, pY);
         this.gameService = gameService;
         this.spacePerTile = spacePerTile;
@@ -48,7 +45,7 @@ public class GameFieldView extends Entity {
             int tilePositionX = 0;
             for (int x = 0; x < width; x++) {
                 if (field[x][y].getShortcut() != 'n') {
-                    TiledTextureRegion pTextureRegion = tileRegionMap.get(field[x][y].getShortcut());
+                    TextureRegion pTextureRegion = tileRegionMap.get(field[x][y].getShortcut());
                     switch (field[x][y].getTileType()) {
                         case PUZZLE:
                             TileSprite tileSprite = new TileSprite(tilePositionX, tilePositionY, spacePerTile, spacePerTile, pTextureRegion, vbom);
@@ -56,10 +53,10 @@ public class GameFieldView extends Entity {
                             tileSprites[x][y] = tileSprite;
                             break;
                         case FINISH:
-                            finish = createFinishAnsStart(x, y, tilePositionX,tilePositionY, pTextureRegion, field);
+                            createFinishAnsStart(x, y, tilePositionX,tilePositionY, pTextureRegion, field);
                             break;
                         case START:
-                            start = createFinishAnsStart(x, y, tilePositionX, tilePositionY, pTextureRegion, field);
+                            createFinishAnsStart(x, y, tilePositionX, tilePositionY, pTextureRegion, field);
                             break;
                         default:
                             break;
@@ -145,47 +142,32 @@ public class GameFieldView extends Entity {
             }
         }
     }
-    private TiledSprite createFinishAnsStart(int x,int y, float tilePositionX, float tilePositionY, TiledTextureRegion pTextureRegion, Tile[][] field ) {
+    private void createFinishAnsStart(int x,int y, float tilePositionX, float tilePositionY, TextureRegion pTextureRegion, Tile[][] field ) {
 
-        TiledSprite sprite = null;
         if(x == 0) {
-            sprite = new TileSprite(tilePositionX + spacePerTile, tilePositionY, spacePerTile, spacePerTile, pTextureRegion, vbom);
+            Sprite sprite = new TileSprite(tilePositionX + spacePerTile, tilePositionY, spacePerTile, spacePerTile, pTextureRegion, vbom);
             attachChild(sprite);
         } else if(x == field.length - 1) {
-            sprite = new TileSprite(tilePositionX - spacePerTile, tilePositionY, spacePerTile, spacePerTile, pTextureRegion, vbom);
+            Sprite sprite = new TileSprite(tilePositionX - spacePerTile, tilePositionY, spacePerTile, spacePerTile, pTextureRegion, vbom);
             sprite.setRotationCenter(sprite.getWidth() / 2, sprite.getHeight() / 2);
             sprite.setRotation(180f);
             attachChild(sprite);
         } else if(y == 0) {
-            sprite = new TileSprite(tilePositionX, tilePositionY + spacePerTile, spacePerTile, spacePerTile, pTextureRegion, vbom);
+            Sprite sprite = new TileSprite(tilePositionX, tilePositionY + spacePerTile, spacePerTile, spacePerTile, pTextureRegion, vbom);
             sprite.setRotationCenter(sprite.getWidth() / 2, sprite.getHeight() / 2);
             sprite.setRotation(90f);
             attachChild(sprite);
         } else if(y == field[x].length - 1) {
-            sprite = new TileSprite(tilePositionX, tilePositionY - spacePerTile, spacePerTile, spacePerTile, pTextureRegion, vbom);
+            Sprite sprite = new TileSprite(tilePositionX, tilePositionY - spacePerTile, spacePerTile, spacePerTile, pTextureRegion, vbom);
             sprite.setRotationCenter(sprite.getWidth() / 2, sprite.getHeight() / 2);
             sprite.setRotation(270f);
             attachChild(sprite);
         }
-        return sprite;
     }
 
     @Override
     public void dispose() {
         detachChildren();
         super.dispose();
-    }
-
-    public void tubesState(int state) {
-        for (TileSprite[] tileSprite :tileSprites) {
-            for(TileSprite currentSprite : tileSprite) {
-                if(currentSprite != null) {
-                    currentSprite.setCurrentTileIndex(state);
-                }
-            }
-        }
-        start.setCurrentTileIndex(1);
-        finish.setCurrentTileIndex(1);
-
     }
 }

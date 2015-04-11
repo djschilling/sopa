@@ -1,5 +1,8 @@
 package de.sopa.scene.game;
 
+
+import android.view.animation.Animation;
+
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.sprite.ButtonSprite;
@@ -12,7 +15,6 @@ import de.sopa.model.game.LevelResult;
  * @author Raphael Schilling
  */
 public class LevelModeGameScene extends GameScene {
-
     private boolean leaveScene;
 
     public LevelModeGameScene(Object o) {
@@ -41,7 +43,6 @@ public class LevelModeGameScene extends GameScene {
     }
 
     public void onSolvedGame() {
-        gameFieldView.tubesState(1);
         Level level = gameService.getLevel();
         final LevelResult levelResult = levelService.calculateLevelResult(level);
         levelService.persistLevelResult(levelResult);
@@ -56,5 +57,6 @@ public class LevelModeGameScene extends GameScene {
                 }
             }
         }));
+
     }
 }
