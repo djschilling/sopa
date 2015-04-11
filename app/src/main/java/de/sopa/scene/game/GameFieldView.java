@@ -179,7 +179,7 @@ public class GameFieldView extends Entity {
     public void tubesState(int state) {
         for (TileSprite[] tileSprite :tileSprites) {
             for(TileSprite currentSprite : tileSprite) {
-                if(currentSprite instanceof TileSprite) {
+                if(currentSprite != null) {
                     currentSprite.setCurrentTileIndex(state);
                 }
             }
