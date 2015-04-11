@@ -12,12 +12,9 @@ import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
-import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.bitmap.BitmapTexture;
-import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.texture.region.TextureRegionFactory;
-import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.util.adt.io.in.IInputStreamOpener;
 
 /**
@@ -51,17 +48,17 @@ public class ResourceLoader {
         return null;
     }
 
-    public Map<Character, TiledTextureRegion> getTileTextures() {
-        Map<Character, TiledTextureRegion> regionMap = new HashMap<>();
-        regionMap.put('s', getTiledTexture("scenes/game/bordersStart.png",400,200,2,1));
-        regionMap.put('f', getTiledTexture("scenes/game/bordersFinish.png", 400, 200, 2, 1));
-        regionMap.put('o', getTiledTexture("scenes/game/o.png", 400, 200, 2, 1));
-        regionMap.put('a', getTiledTexture("scenes/game/a.png", 400, 200, 2, 1));
-        regionMap.put('u', getTiledTexture("scenes/game/u.png", 400, 200, 2, 1));
-        regionMap.put('c', getTiledTexture("scenes/game/c.png", 400, 200, 2, 1));
-        regionMap.put('e', getTiledTexture("scenes/game/e.png", 400, 200, 2, 1));
-        regionMap.put('g', getTiledTexture("scenes/game/g.png", 400, 200, 2, 1));
-        regionMap.put('i', getTiledTexture("scenes/game/i.png", 400, 200, 2, 1));
+    public Map<Character, TextureRegion> getTileTextures() {
+        Map<Character, TextureRegion> regionMap = new HashMap<>();
+        regionMap.put('s', getTexture("scenes/game/bordersStart.png"));
+        regionMap.put('f', getTexture("scenes/game/bordersFinish.png"));
+        regionMap.put('o', getTexture("scenes/game/o.png"));
+        regionMap.put('a', getTexture("scenes/game/a.png"));
+        regionMap.put('u', getTexture("scenes/game/u.png"));
+        regionMap.put('c', getTexture("scenes/game/c.png"));
+        regionMap.put('e', getTexture("scenes/game/e.png"));
+        regionMap.put('g', getTexture("scenes/game/g.png"));
+        regionMap.put('i', getTexture("scenes/game/i.png"));
         return regionMap;
     }
 
@@ -72,11 +69,5 @@ public class ResourceLoader {
         mainFontTexture, assetManager, name, size , true, color, strokeWidth, strokeColor);
         font.load();
         return font;
-    }
-
-    public TiledTextureRegion getTiledTexture(String path, int width, int height, int tileColumns, int tileRows) {
-        BitmapTextureAtlas texBanana = new BitmapTextureAtlas(textureManager, width, height, TextureOptions.BILINEAR);
-        TiledTextureRegion regBanana = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(texBanana, assetManager, path, 0, 0, tileColumns, tileRows);
-        return regBanana;
     }
 }

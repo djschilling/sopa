@@ -23,7 +23,7 @@ public abstract class GameScene extends BaseScene implements Observer {
     private ContinuousHoldDetector continuousHoldDetector;
     private float spacePerTile;
     private Text scoreText;
-    protected GameFieldView gameFieldView;
+    private GameFieldView gameFieldView;
     private Level level;
     protected Level levelBackup;
 
