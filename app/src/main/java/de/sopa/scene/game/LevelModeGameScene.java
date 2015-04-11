@@ -38,8 +38,9 @@ public class LevelModeGameScene extends GameScene {
 
     @Override
     public void onBackKeyPressed() {
-        leaveScene = true;
-        sceneService.loadLevelChoiceSceneFromGameScene();
+        if(!leaveScene) {
+            sceneService.loadLevelChoiceSceneFromGameScene();
+        }
     }
 
     public void onSolvedGame() {
@@ -48,13 +49,12 @@ public class LevelModeGameScene extends GameScene {
         levelService.persistLevelResult(levelResult);
         int nextLevelId = level.getId() + 1;
         levelService.unlockLevel(nextLevelId);
-        engine.registerUpdateHandler(new TimerHandler(1.5f, new ITimerCallback() {
+        this.leaveScene = true;
+        engine.registerUpdateHandler(new TimerHandler(1.5f,new ITimerCallback() {
             @Override
             public void onTimePassed(TimerHandler pTimerHandler) {
-                if (!leaveScene) {
-                    engine.unregisterUpdateHandler(pTimerHandler);
-                    sceneService.loadScoreScreen(levelResult);
-                }
+                engine.unregisterUpdateHandler(pTimerHandler);
+                sceneService.loadScoreScreen(levelResult);
             }
         }));
 
