@@ -52,9 +52,7 @@ public abstract class GameScene extends BaseScene implements Observer {
         updateTiles();
         scoreText.setText(String.valueOf(gameService.getLevel().getMovesCount()));
         if (gameService.solvedPuzzle()) {
-            gameService.detach(this);
-            this.clearTouchAreas();
-            this.clearUpdateHandlers();
+            setOnSceneTouchListener(null);
             baseScene.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
                 public void onTimePassed(final TimerHandler pTimerHandler) {
                     baseScene.unregisterUpdateHandler(pTimerHandler);
@@ -117,7 +115,6 @@ public abstract class GameScene extends BaseScene implements Observer {
     private void registerTouchHandler() {
         GameSceneSingleMoveDetector gameSceneSingleMoveDetector = new GameSceneSingleMoveDetector(0, getTileSceneStartY() + spacePerTile ,spacePerTile, gameFieldView);
         continuousHoldDetector = new ContinuousHoldDetector(0, 100, 0.01f, gameSceneSingleMoveDetector);
-        registerUpdateHandler(continuousHoldDetector);
         setOnSceneTouchListener(continuousHoldDetector);
     }
 
