@@ -16,6 +16,7 @@ import de.sopa.model.game.LevelResult;
  */
 public class LevelModeGameScene extends GameScene {
     private boolean leaveScene;
+    private ButtonSprite restartButton;
 
     public LevelModeGameScene(Object o) {
         super(o);
@@ -24,7 +25,7 @@ public class LevelModeGameScene extends GameScene {
 
     @Override
     protected void addButtons() {
-        ButtonSprite restartButton = new ButtonSprite(camera.getWidth() - 300, (camera.getHeight() - 300), resourcesManager.restartRegion, vbom, new ButtonSprite.OnClickListener() {
+        restartButton = new ButtonSprite(camera.getWidth() - 300, (camera.getHeight() - 300), resourcesManager.restartRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 sceneService.loadGameSceneFromGameScene(levelBackup);
@@ -44,6 +45,7 @@ public class LevelModeGameScene extends GameScene {
     }
 
     public void onSolvedGame() {
+        restartButton.setVisible(false);
         Level level = gameService.getLevel();
         final LevelResult levelResult = levelService.calculateLevelResult(level);
         levelService.persistLevelResult(levelResult);
