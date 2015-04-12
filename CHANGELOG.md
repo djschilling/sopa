@@ -1,5 +1,9 @@
 # Changelog
 
+# 1.2.1
+
+* remove restart button on solved game.
+
 # 1.2.0
 
 * add swipe to level-choice-scene #1
