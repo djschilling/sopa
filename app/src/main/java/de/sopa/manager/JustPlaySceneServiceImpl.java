@@ -44,20 +44,8 @@ public class JustPlaySceneServiceImpl implements JustPlaySceneService {
     }
 
     @Override
-    public void loadJustPlaySceneSceneFromJustPlaySceneScene(final Level level) {
-        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
-            @Override
-            public void onTimePassed(final TimerHandler pTimerHandler) {
-                engine.unregisterUpdateHandler(pTimerHandler);
-                justPlayGameScene = new JustPlayGameScene(level);
-                setScene(justPlayGameScene);
-            }
-        }));
-
-    }
-
-    @Override
     public void loadJustPlayScoreSceneSceneFromJustPlaySceneScene(final Level level) {
+        justPlayGameScene.disposeScene();
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             @Override
             public void onTimePassed(TimerHandler pTimerHandler) {
@@ -71,10 +59,16 @@ public class JustPlaySceneServiceImpl implements JustPlaySceneService {
     @Override
     public void end() {
         ResourcesManager.getInstance().unloadGameSceneResources();
+        if (justPlayGameScene != null) {
+            justPlayGameScene.disposeScene();
+            justPlayGameScene = null;
+        }
+
         ResourcesManager.getInstance().unloadJustPlayScoreResources();
-        justPlayGameScene.disposeScene();
-        justPlayGameScene = null;
-        this.currentScene = null;
+        if (scoreScene != null) {
+            scoreScene.disposeScene();
+            scoreScene = null;
+        }
     }
 
     @Override
