@@ -1,7 +1,6 @@
 package de.sopa.scene.justplay;
 
 import de.sopa.manager.BaseSceneService;
-import de.sopa.model.game.Level;
 import de.sopa.model.justplay.JustPlayLevelResult;
 
 /**
@@ -9,7 +8,7 @@ import de.sopa.model.justplay.JustPlayLevelResult;
  **/
 public interface JustPlaySceneService extends BaseSceneService {
 
-    void loadJustPlayScoreSceneSceneFromJustPlaySceneScene(JustPlayLevelResult justPlayLevelResult);
+    void loadJustPlayScoreSceneFromJustPlayScene(JustPlayLevelResult justPlayLevelResult);
 
     void loadJustPlaySceneFromJustPlayScoreScene();
 }

@@ -39,7 +39,7 @@ public class JustPlayGameScene extends GameScene {
             @Override
             public void onTimePassed(TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
-                storyService.loadJustPlayScoreSceneSceneFromJustPlaySceneScene(new JustPlayLevelResult(level.getLeftTime() - 12 , gameService.getLevel().getMovesCount()));
+                storyService.loadJustPlayScoreSceneFromJustPlayScene(new JustPlayLevelResult(level.getLeftTime() - 12, gameService.getLevel().getMovesCount()));
             }
         }));
     }

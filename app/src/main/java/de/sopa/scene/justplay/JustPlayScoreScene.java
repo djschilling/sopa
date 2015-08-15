@@ -1,7 +1,7 @@
 package de.sopa.scene.justplay;
 
 import de.sopa.scene.BaseScene;
-import de.sopa.scene.score.JustPlayResult;
+import de.sopa.model.justplay.JustPlayResult;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.primitive.Rectangle;

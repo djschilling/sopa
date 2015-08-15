@@ -41,7 +41,7 @@ public class JustPlaySceneServiceImpl implements JustPlaySceneService {
     }
 
     @Override
-    public void loadJustPlayScoreSceneSceneFromJustPlaySceneScene(final JustPlayLevelResult justPlayLevelResult) {
+    public void loadJustPlayScoreSceneFromJustPlayScene(final JustPlayLevelResult justPlayLevelResult) {
         justPlayGameScene.disposeScene();
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             @Override

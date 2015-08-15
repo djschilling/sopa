@@ -2,7 +2,6 @@ package de.sopa.model.justplay;
 
 import de.sopa.helper.LevelCreator;
 import de.sopa.model.game.LevelDestroyer;
-import de.sopa.scene.score.JustPlayResult;
 
 /**
  * @author Raphael Schilling - raphaelschiling@gmail.com

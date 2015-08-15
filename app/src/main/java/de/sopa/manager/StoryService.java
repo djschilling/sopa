@@ -23,9 +23,9 @@ public interface StoryService {
     void loadLevelChoiceSceneFromMenuScene();
     void loadLevelChoiceSceneFromGameScene();
 
-    void loadJustPlaySceneSceneFromMenuScene();
+    void loadJustPlaySceneFromMenuScene();
 
-    void loadJustPlayScoreSceneSceneFromJustPlaySceneScene(JustPlayLevelResult justPlayLevelResult);
+    void loadJustPlayScoreSceneFromJustPlayScene(JustPlayLevelResult justPlayLevelResult);
 
     void loadScoreScreen(final LevelResult level);
     void loadGameSceneFromLevelChoiceScene(final Level level);

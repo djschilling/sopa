@@ -1,4 +1,4 @@
-package de.sopa.scene.score;
+package de.sopa.model.justplay;
 
 /**
  * @author Raphael Schilling - raphaelschiling@gmail.com

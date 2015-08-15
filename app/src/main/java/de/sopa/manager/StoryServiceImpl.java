@@ -161,7 +161,7 @@ public class StoryServiceImpl implements StoryService {
     }
 
     @Override
-    public void loadJustPlaySceneSceneFromMenuScene() {
+    public void loadJustPlaySceneFromMenuScene() {
         startSceneService(loadingSceneService);
         endSceneService(menuSceneService);
         startSceneService(justPlaySceneService);
@@ -188,8 +188,8 @@ public class StoryServiceImpl implements StoryService {
     }
 
     @Override
-    public void loadJustPlayScoreSceneSceneFromJustPlaySceneScene(JustPlayLevelResult justPlayLevelResult) {
-        justPlaySceneService.loadJustPlayScoreSceneSceneFromJustPlaySceneScene(justPlayLevelResult);
+    public void loadJustPlayScoreSceneFromJustPlayScene(JustPlayLevelResult justPlayLevelResult) {
+        justPlaySceneService.loadJustPlayScoreSceneFromJustPlayScene(justPlayLevelResult);
     }
 
     private void startSceneService(BaseSceneService sceneService) {
