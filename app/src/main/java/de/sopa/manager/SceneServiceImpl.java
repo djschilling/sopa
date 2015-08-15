@@ -19,13 +19,12 @@ public class SceneServiceImpl implements SceneService {
     private final JustPlaySceneService justPlaySceneService;
     private final LevelModeSceneService levelModeSceneService;
     private final MenuSceneService menuSceneService;
+    private final CreditsSceneServiceImpl creditsSceneService;
     private BaseScene loadingScene;
     private BaseScene settingsScene;
 
     private BaseScene currentScene;
-
     private Engine engine;
-    private CreditsScene creditsScene;
     private BaseSceneService currentSceneService;
 
     public SceneServiceImpl(Engine engine) {
@@ -33,6 +32,7 @@ public class SceneServiceImpl implements SceneService {
         this.justPlaySceneService = new JustPlaySceneServiceImpl(engine);
         this.levelModeSceneService = new LevelModeSceneServiceImpl(engine);
         this.menuSceneService = new MenuSceneServiceImpl(engine);
+        this.creditsSceneService = new CreditsSceneServiceImpl(engine);
     }
 
     private void setScene(BaseScene scene) {
@@ -40,8 +40,10 @@ public class SceneServiceImpl implements SceneService {
         currentScene = scene;
     }
 
-    private void setSceneService(BaseSceneService sceneService) {
-        this.currentSceneService = sceneService;
+    private void startSceneService(BaseSceneService sceneService) {
+        sceneService.start();
+        currentSceneService = sceneService;
+        currentScene = null;
     }
 
 
@@ -62,13 +64,14 @@ public class SceneServiceImpl implements SceneService {
     public void createMenuScene() {
         ResourcesManager.getInstance().loadLoadingSceneResources();
         menuSceneService.startSynchron();
+        this.currentSceneService = menuSceneService;
     }
 
     @Override
     public void loadMenuSceneFromLevelChoiceScene() {
         setScene(loadingScene);
         endSceneService(levelModeSceneService);
-        menuSceneService.start();
+        startSceneService(menuSceneService);
     }
 
     public void loadGameSceneFromLevelChoiceScene(final Level level) {
@@ -82,39 +85,22 @@ public class SceneServiceImpl implements SceneService {
 
     public void loadLevelChoiceSceneFromMenuScene() {
         setScene(loadingScene);
-        menuSceneService.end();
-        levelModeSceneService.start();
-        setSceneService(levelModeSceneService);
-        currentScene = null;
+        endSceneService(menuSceneService);
+        startSceneService(levelModeSceneService);
     }
 
     @Override
     public void loadCreditsFromMenuScene() {
         setScene(loadingScene);
         menuSceneService.end();
-        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
-            @Override
-            public void onTimePassed(TimerHandler pTimerHandler) {
-                engine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().loadLevelCreditsSceneResources();
-                creditsScene = new CreditsScene();
-                setScene(creditsScene);
-            }
-        }));
+        startSceneService(creditsSceneService);
     }
 
     @Override
     public void loadMenuSceneFromCreditsScene() {
         setScene(loadingScene);
-        disposeCreditsScene();
-        ResourcesManager.getInstance().unloadCreditsSceneResources();
-        menuSceneService.start();
-    }
-
-    private void disposeCreditsScene() {
-        ResourcesManager.getInstance().unloadCreditsSceneResources();
-        creditsScene.disposeScene();
-        creditsScene = null;
+        endSceneService(creditsSceneService);
+        startSceneService(menuSceneService);
     }
 
     @Override
@@ -146,14 +132,14 @@ public class SceneServiceImpl implements SceneService {
     public void loadMenuSceneFromSettingsScene() {
         setScene(loadingScene);
         disposeSettingsScene();
-        menuSceneService.start();
+        startSceneService(menuSceneService);
     }
 
     @Override
     public void loadMenuSceneFromScoreScene() {
         setScene(loadingScene);
         endSceneService(levelModeSceneService);
-        menuSceneService.start();
+        startSceneService(menuSceneService);
     }
 
     @Override
@@ -188,10 +174,8 @@ public class SceneServiceImpl implements SceneService {
     @Override
     public void loadJustPlaySceneSceneFromMenuScene() {
         setScene(loadingScene);
-        menuSceneService.end();
-        justPlaySceneService.start();
-        setSceneService(justPlaySceneService);
-        this.currentScene = null;
+        endSceneService(menuSceneService);
+        startSceneService(justPlaySceneService);
     }
 
 
