@@ -14,9 +14,9 @@ public class SettingsScene extends BaseScene {
     private ButtonSprite muteButton;
     private ButtonSprite unmuteButton;
 
-    @Override
-    public void createScene(Object o) {
-        muteButton =  new ButtonSprite(camera.getWidth() * 0.37f,(camera.getHeight() * 0.8f), resourcesManager.muteRegion,vbom, new ButtonSprite.OnClickListener() {
+    public SettingsScene() {
+        super();
+        muteButton = new ButtonSprite(camera.getWidth() * 0.37f, (camera.getHeight() * 0.8f), resourcesManager.muteRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 settingsService.switchMute();
@@ -25,7 +25,7 @@ public class SettingsScene extends BaseScene {
                 resourcesManager.musicService.unmuteMusic();
             }
         });
-        unmuteButton =  new ButtonSprite(camera.getWidth() * 0.37f,(camera.getHeight() * 0.8f), resourcesManager.unMuteRegion,vbom, new ButtonSprite.OnClickListener() {
+        unmuteButton = new ButtonSprite(camera.getWidth() * 0.37f, (camera.getHeight() * 0.8f), resourcesManager.unMuteRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 settingsService.switchMute();
@@ -34,7 +34,7 @@ public class SettingsScene extends BaseScene {
                 resourcesManager.musicService.muteMusic();
             }
         });
-        if(settingsService.isMute()){
+        if (settingsService.isMute()) {
             unmuteButton.setVisible(false);
         } else {
             muteButton.setVisible(false);

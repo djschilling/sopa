@@ -1,6 +1,7 @@
 package de.sopa.scene.game;
 
 import de.sopa.helper.LevelCreator;
+import de.sopa.model.game.Level;
 import de.sopa.model.game.LevelDestroyer;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -13,8 +14,8 @@ public class JustPlayGameScene extends GameScene {
     private final LevelCreator levelCreator;
     private final LevelDestroyer levelDestroyer;
 
-    public JustPlayGameScene(Object o) {
-        super(o);
+    public JustPlayGameScene(Level level) {
+        super(level);
         this.levelCreator = new LevelCreator();
         this.levelDestroyer = new LevelDestroyer();
     }

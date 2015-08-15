@@ -27,13 +27,9 @@ public abstract class GameScene extends BaseScene implements Observer {
     private Level level;
     protected Level levelBackup;
 
-    public GameScene(Object o) {
-        super(o);
-    }
-
-    @Override
-    public void createScene(Object o) {
-        initializeLogic(o);
+    public GameScene(Level level) {
+        super();
+        initializeLogic(level);
         calculateSpacePerTile(gameService.getLevel().getField().length - 2);
         levelBackup = new Level(gameService.getLevel());
         addBackground();
@@ -44,6 +40,7 @@ public abstract class GameScene extends BaseScene implements Observer {
         registerTouchHandler();
         gameService.attach(this);
         resourcesManager.musicService.stopMusic();
+
     }
 
     protected abstract void addCustomLabels();
@@ -122,12 +119,12 @@ public abstract class GameScene extends BaseScene implements Observer {
         setBackground(new Background(Color.BLACK));
     }
 
-    private void initializeLogic(Object o) {
-        if (o != null && o instanceof Level) {
-            level = (Level) o;
+    private void initializeLogic(Level level) {
+        if (level != null) {
+            this.level = level;
         }
         gameService = new GameServiceImpl();
-        gameService.startGame(level);
+        gameService.startGame(this.level);
     }
 
     @Override

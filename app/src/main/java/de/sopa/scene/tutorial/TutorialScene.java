@@ -22,8 +22,7 @@ public class TutorialScene extends BaseScene implements IOnSceneTouchListener {
     private Sprite secondScreenB;
     private boolean leaveScene = false;
 
-    @Override
-    public void createScene(Object o) {
+    public TutorialScene() {
         firstScreenA = new Sprite(0, 0, 1080, 960, resourcesManager.tutorialFirstRegionA, vbom);
         firstScreenB = new Sprite(0, 960, 1080, 960, resourcesManager.tutorialFirstRegionB, vbom);
         letsGo = new Sprite(146, 843, resourcesManager.tutorialLetsGoRegion, vbom);

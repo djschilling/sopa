@@ -16,13 +16,8 @@ import org.andengine.entity.text.Text;
  */
 public class ScoreScreen extends BaseScene {
 
-    public ScoreScreen(LevelResult level) {
-        super(level);
-    }
-
-    @Override
-    public void createScene(final Object o) {
-        final LevelResult levelResult = (LevelResult) o;
+    public ScoreScreen(final LevelResult levelResult) {
+        super();
         final Level level = levelService.getLevelById(levelResult.getLevelId());
         String levelCompleteString = levelResult.getLevelId() + ". Level\nComplete";
         Text levelCompleteTextShape = new Text((float) (camera.getWidth() * 0.05), (float) (camera.getHeight() * 0.05), resourcesManager.movesScoreFont, levelCompleteString, vbom);

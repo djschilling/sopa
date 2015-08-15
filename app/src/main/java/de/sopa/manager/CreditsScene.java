@@ -7,8 +7,9 @@ import org.andengine.entity.text.Text;
  * @author David Schilling - davejs92@gmail.com
  */
 public class CreditsScene extends BaseScene{
-    @Override
-    public void createScene(Object o) {
+
+    public CreditsScene() {
+        super();
         Text headingText = new Text(camera.getWidth() * 0.01f, camera.getHeight() * 0.01f, resourcesManager.creditsHeading, "Credits", vbom);
         attachChild(headingText);
 

@@ -29,7 +29,7 @@ public abstract class BaseScene extends Scene {
     protected Camera camera;
     protected BaseScene baseScene;
 
-    public BaseScene(Object o) {
+    public BaseScene() {
         this.resourcesManager = ResourcesManager.getInstance();
         this.engine = resourcesManager.engine;
         this.activity = resourcesManager.activity;
@@ -39,18 +39,9 @@ public abstract class BaseScene extends Scene {
         this.levelService = resourcesManager.levelService;
         this.baseScene = this;
         this.settingsService = resourcesManager.settingsService;
-        createScene(o);
-    }
-    public BaseScene() {
-        this(null);
     }
 
 
-    /**
-     * Called when scene is created.
-     * @param o
-     */
-    public abstract void createScene(Object o);
 
     /**
      * Called when Android Back Button is pressed.

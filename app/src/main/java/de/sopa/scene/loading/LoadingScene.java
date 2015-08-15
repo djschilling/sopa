@@ -15,8 +15,8 @@ import org.andengine.util.color.Color;
  * @author Raphael Schilling
  */
 public class LoadingScene extends BaseScene {
-    @Override
-    public void createScene(Object o) {
+    public LoadingScene() {
+        super();
         float spriteSTartY = (camera.getHeight() - camera.getWidth()) / 2;
         setBackground(new Background(Color.BLACK));
         this.attachChild(new Sprite(0, spriteSTartY, camera.getWidth(), camera.getWidth(), ResourcesManager.getInstance().loadingScreenBackgroundRegion, vbom){

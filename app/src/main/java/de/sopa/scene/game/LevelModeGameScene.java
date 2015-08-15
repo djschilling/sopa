@@ -16,8 +16,8 @@ public class LevelModeGameScene extends GameScene {
     private boolean leaveScene;
     private ButtonSprite restartButton;
 
-    public LevelModeGameScene(Object o) {
-        super(o);
+    public LevelModeGameScene(Level level) {
+        super(level);
         leaveScene = false;
     }
 

@@ -16,7 +16,6 @@ import org.andengine.entity.modifier.MoveXModifier;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
-import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.util.modifier.ease.EaseQuartInOut;
@@ -36,8 +35,9 @@ public class LevelChoiceScene extends BaseScene implements Observer {
     private HUD arrowHud;
     private LevelChoiceService levelChoiceService;
 
-    @Override
-    public void createScene(Object o) {
+
+    public LevelChoiceScene() {
+        super();
         levelInfos = levelService.getLevelInfos();
         levelChoiceService = new LevelChoiceServiceImpl(levelInfos.size(), 12);
         levelChoiceService.attach(this);
