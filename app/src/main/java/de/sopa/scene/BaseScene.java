@@ -42,7 +42,6 @@ public abstract class BaseScene extends Scene {
     }
 
 
-
     /**
      * Called when Android Back Button is pressed.
      */

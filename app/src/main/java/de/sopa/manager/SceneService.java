@@ -51,4 +51,6 @@ public interface SceneService {
     void loadCreditsFromMenuScene();
 
     void loadMenuSceneFromCreditsScene();
+
+    void loadMenuSceneFromJustPlayGameScene();
 }
