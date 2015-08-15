@@ -16,7 +16,6 @@ public interface SceneService {
 
     void createMenuScene();
 
-    void loadMenuSceneFromGameScene();
 
     void loadMenuSceneFromLevelChoiceScene();
 

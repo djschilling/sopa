@@ -4,14 +4,9 @@ package de.sopa.manager;
 import de.sopa.model.game.Level;
 import de.sopa.model.game.LevelResult;
 import de.sopa.scene.BaseScene;
-import de.sopa.scene.choicelevel.LevelChoiceScene;
-import de.sopa.scene.game.LevelModeGameScene;
 import de.sopa.scene.loading.LoadingScene;
 import de.sopa.scene.menu.MainMenuScene;
-import de.sopa.scene.score.JustPlayScoreScene;
-import de.sopa.scene.score.ScoreScreen;
 import de.sopa.scene.settings.SettingsScene;
-import de.sopa.scene.tutorial.TutorialScene;
 import org.andengine.engine.Engine;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -22,25 +17,22 @@ import org.andengine.engine.handler.timer.TimerHandler;
  */
 public class SceneServiceImpl implements SceneService {
 
-    private final JustPlaySceneServiceImpl justPlaySceneService;
+    private final JustPlaySceneService justPlaySceneService;
+    private final LevelModeSceneService levelModeSceneService;
     private BaseScene menuScene;
-    private BaseScene gameScene;
     private BaseScene loadingScene;
-    private BaseScene choiceScene;
-    private BaseScene scoreScene;
     private BaseScene settingsScene;
 
     private BaseScene currentScene;
 
     private Engine engine;
-    private BaseScene tutorialScene;
     private CreditsScene creditsScene;
     private BaseSceneService currentSceneService;
-    private JustPlayScoreScene justPlayScoreScene;
 
     public SceneServiceImpl(Engine engine) {
         this.engine = engine;
         this.justPlaySceneService = new JustPlaySceneServiceImpl(engine);
+        this.levelModeSceneService = new LevelModeSceneServiceImpl(engine);
     }
 
     private void setScene(BaseScene scene) {
@@ -75,24 +67,9 @@ public class SceneServiceImpl implements SceneService {
     }
 
     @Override
-    public void loadMenuSceneFromGameScene() {
-        setScene(loadingScene);
-        disposeGameScene();
-        ResourcesManager.getInstance().unloadJustPlayScoreResources();
-        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
-            @Override
-            public void onTimePassed(final TimerHandler pTimerHandler) {
-                engine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().loadMenuSceneResources();
-                menuScene = new MainMenuScene();
-                setScene(menuScene);
-            }
-        }));
-    }
-    @Override
     public void loadMenuSceneFromLevelChoiceScene() {
         setScene(loadingScene);
-        disposeLevelChoiceScene();
+        endSceneService(levelModeSceneService);
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             @Override
             public void onTimePassed(final TimerHandler pTimerHandler) {
@@ -102,38 +79,14 @@ public class SceneServiceImpl implements SceneService {
                 setScene(menuScene);
             }
         }));
-    }
-
-    private void disposeGameScene() {
-        ResourcesManager.getInstance().unloadGameSceneResources();
-        gameScene.disposeScene();
-        gameScene = null;
     }
 
     public void loadGameSceneFromLevelChoiceScene(final Level level) {
-        disposeLevelChoiceScene();
-        setScene(loadingScene);
-        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
-            public void onTimePassed(final TimerHandler pTimerHandler) {
-                engine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().loadGameSceneResources();
-                gameScene = new LevelModeGameScene(level);
-                setScene(gameScene);
-            }
-        }));
+        levelModeSceneService.loadGameSceneFromLevelChoiceScene(level);
     }
 
     public void loadScoreScreen(final LevelResult level) {
-        disposeGameScene();
-        setScene(loadingScene);
-        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
-            public void onTimePassed(final TimerHandler pTimerHandler) {
-                engine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().loadScoreSceneResources();
-                scoreScene = new ScoreScreen(level);
-                setScene(scoreScene);
-            }
-        }));
+        levelModeSceneService.loadScoreScreen(level);
     }
 
 
@@ -146,16 +99,11 @@ public class SceneServiceImpl implements SceneService {
     public void loadLevelChoiceSceneFromMenuScene() {
         setScene(loadingScene);
         disposeMenuScene();
-        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
-            @Override
-            public void onTimePassed(final TimerHandler pTimerHandler) {
-                engine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().loadLevelChoiceSceneResources();
-                choiceScene = new LevelChoiceScene();
-                setScene(choiceScene);
-            }
-        }));
+        levelModeSceneService.start();
+        setSceneService(levelModeSceneService);
+        currentScene = null;
     }
+
     @Override
     public void loadCreditsFromMenuScene() {
         setScene(loadingScene);
@@ -196,32 +144,13 @@ public class SceneServiceImpl implements SceneService {
 
     @Override
     public void loadLevelChoiceSceneFromScoreScene() {
-        setScene(loadingScene);
-        disposeScoreScreen();
-        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
-            @Override
-            public void onTimePassed(final TimerHandler pTimerHandler) {
-                engine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().loadLevelChoiceSceneResources();
-                choiceScene = new LevelChoiceScene();
-                setScene(choiceScene);
-            }
-        }));
+        levelModeSceneService.loadLevelChoiceSceneFromScoreScene();
     }
 
 
     @Override
     public void loadGameSceneFromScoreScene(final Level level) {
-        disposeScoreScreen();
-        setScene(loadingScene);
-        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
-            public void onTimePassed(final TimerHandler pTimerHandler) {
-                engine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().loadGameSceneResources();
-                gameScene = new LevelModeGameScene(level);
-                setScene(gameScene);
-            }
-        }));
+        levelModeSceneService.loadGameSceneFromScoreScene(level);
     }
 
     @Override
@@ -256,7 +185,7 @@ public class SceneServiceImpl implements SceneService {
     @Override
     public void loadMenuSceneFromScoreScene() {
         setScene(loadingScene);
-        disposeScoreScreen();
+        endSceneService(levelModeSceneService);
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             @Override
             public void onTimePassed(final TimerHandler pTimerHandler) {
@@ -270,93 +199,31 @@ public class SceneServiceImpl implements SceneService {
 
     @Override
     public void loadGameSceneFromGameScene(final Level level) {
-        setScene(loadingScene);
-        disposeGameScene();
-        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
-            public void onTimePassed(final TimerHandler pTimerHandler) {
-                engine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().loadGameSceneResources();
-                gameScene = new LevelModeGameScene(level);
-                setScene(gameScene);
-            }
-        }));
+        levelModeSceneService.loadGameSceneFromGameScene(level);
     }
 
     @Override
     public void loadTutorialSceneFromLevelChoiceScene() {
-        setScene(loadingScene);
-        disposeLevelChoiceScene();
-        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
-            @Override
-            public void onTimePassed(TimerHandler pTimerHandler) {
-                engine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().loadTutorialSceneResources();
-                tutorialScene = new TutorialScene();
-                setScene(tutorialScene);
-            }
-        }));
+        levelModeSceneService.loadTutorialSceneFromLevelChoiceScene();
     }
 
     @Override
     public void loadFirstLevelFromTutorial() {
-        setScene(loadingScene);
-        disposeTutorialScene();
-        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
-            @Override
-            public void onTimePassed(TimerHandler pTimerHandler) {
-                engine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().loadGameSceneResources();
-                gameScene = new LevelModeGameScene(ResourcesManager.getInstance().levelService.getLevelById(1));
-                setScene(gameScene);
-            }
-        }));
-
+        levelModeSceneService.loadFirstLevelFromTutorial();
     }
 
     @Override
     public void loadLevelChoiceFromTutorial() {
-        setScene(loadingScene);
-        disposeTutorialScene();
-        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
-            @Override
-            public void onTimePassed(TimerHandler pTimerHandler) {
-                engine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().loadLevelChoiceSceneResources();
-                choiceScene = new LevelChoiceScene();
-                setScene(choiceScene);
-            }
-        }));
-
-    }
-
-    private void disposeTutorialScene() {
-        ResourcesManager.getInstance().unloadTutorialScene();
-        tutorialScene.disposeScene();
-        tutorialScene = null;
-
+        levelModeSceneService.loadLevelChoiceFromTutorial();
     }
 
     private void disposeSettingsScene() {
         ResourcesManager.getInstance().unloadSettingsScene();
     }
 
-    private void disposeLevelChoiceScene() {
-        ResourcesManager.getInstance().unloadLevelChoiceSceneTextures();
-        choiceScene.disposeScene();
-        choiceScene = null;
-    }
 
     public void loadLevelChoiceSceneFromGameScene() {
-        setScene(loadingScene);
-        disposeGameScene();
-        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
-            public void onTimePassed(final TimerHandler pTimerHandler) {
-                engine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().loadLevelChoiceSceneResources();
-                choiceScene = new LevelChoiceScene();
-                setScene(choiceScene);
-            }
-        }));
+        levelModeSceneService.loadLevelChoiceSceneFromGameScene();
     }
 
     @Override
@@ -372,8 +239,7 @@ public class SceneServiceImpl implements SceneService {
     @Override
     public void loadMenuSceneFromJustPlayGameScene() {
         setScene(loadingScene);
-        justPlaySceneService.end();
-        setSceneService(null);
+        endSceneService(justPlaySceneService);
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             @Override
             public void onTimePassed(final TimerHandler pTimerHandler) {
@@ -390,9 +256,9 @@ public class SceneServiceImpl implements SceneService {
         justPlaySceneService.loadJustPlayScoreSceneSceneFromJustPlaySceneScene(level);
     }
 
-    private void disposeScoreScreen() {
-        ResourcesManager.getInstance().unloadScoreSceneResources();
 
-    //TODO:Dispose Score Screen
+    private void endSceneService(BaseSceneService sceneService) {
+        sceneService.end();
+        this.currentSceneService = null;
     }
 }
