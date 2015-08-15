@@ -5,6 +5,7 @@ import de.sopa.model.game.Level;
 import de.sopa.model.game.LevelDestroyer;
 import de.sopa.scene.BaseScene;
 import de.sopa.scene.game.JustPlayGameScene;
+import de.sopa.scene.score.JustPlayScoreScene;
 import org.andengine.engine.Engine;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -19,6 +20,7 @@ public class JustPlaySceneServiceImpl implements JustPlaySceneService {
     private JustPlayGameScene justPlayGameScene;
     private final LevelCreator levelCreator;
     private final LevelDestroyer levelDestroyer;
+    private JustPlayScoreScene scoreScene;
 
 
     public JustPlaySceneServiceImpl(Engine engine) {
@@ -34,6 +36,7 @@ public class JustPlaySceneServiceImpl implements JustPlaySceneService {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().loadGameSceneResources();
+                ResourcesManager.getInstance().loadJustPlayScoreResources();
                 justPlayGameScene = new JustPlayGameScene(levelDestroyer.destroyField(levelCreator.generateSolvedField(6, 6), 2, 4));
                 setScene(justPlayGameScene);
             }
@@ -54,8 +57,21 @@ public class JustPlaySceneServiceImpl implements JustPlaySceneService {
     }
 
     @Override
+    public void loadJustPlayScoreSceneSceneFromJustPlaySceneScene(final Level level) {
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            @Override
+            public void onTimePassed(TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                scoreScene = new JustPlayScoreScene(level);
+                setScene(scoreScene);
+            }
+        }));
+    }
+
+    @Override
     public void end() {
         ResourcesManager.getInstance().unloadGameSceneResources();
+        ResourcesManager.getInstance().unloadJustPlayScoreResources();
         justPlayGameScene.disposeScene();
         justPlayGameScene = null;
         this.currentScene = null;

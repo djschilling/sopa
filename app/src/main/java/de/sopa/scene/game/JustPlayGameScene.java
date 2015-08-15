@@ -41,7 +41,7 @@ public class JustPlayGameScene extends GameScene {
             @Override
             public void onTimePassed(TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
-                sceneService.loadJustPlaySceneSceneFromJustPlaySceneScene(levelDestroyer.destroyField(levelCreator.generateSolvedField(6, 6), 2, 4));
+                sceneService.loadJustPlayScoreSceneSceneFromJustPlaySceneScene(levelDestroyer.destroyField(levelCreator.generateSolvedField(6, 6), 2, 4));
             }
         }));
     }

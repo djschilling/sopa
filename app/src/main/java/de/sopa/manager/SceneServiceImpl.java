@@ -8,6 +8,7 @@ import de.sopa.scene.choicelevel.LevelChoiceScene;
 import de.sopa.scene.game.LevelModeGameScene;
 import de.sopa.scene.loading.LoadingScene;
 import de.sopa.scene.menu.MainMenuScene;
+import de.sopa.scene.score.JustPlayScoreScene;
 import de.sopa.scene.score.ScoreScreen;
 import de.sopa.scene.settings.SettingsScene;
 import de.sopa.scene.tutorial.TutorialScene;
@@ -35,6 +36,7 @@ public class SceneServiceImpl implements SceneService {
     private BaseScene tutorialScene;
     private CreditsScene creditsScene;
     private BaseSceneService currentSceneService;
+    private JustPlayScoreScene justPlayScoreScene;
 
     public SceneServiceImpl(Engine engine) {
         this.engine = engine;
@@ -76,6 +78,7 @@ public class SceneServiceImpl implements SceneService {
     public void loadMenuSceneFromGameScene() {
         setScene(loadingScene);
         disposeGameScene();
+        ResourcesManager.getInstance().unloadJustPlayScoreResources();
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             @Override
             public void onTimePassed(final TimerHandler pTimerHandler) {
@@ -365,10 +368,6 @@ public class SceneServiceImpl implements SceneService {
         this.currentScene = null;
     }
 
-    @Override
-    public void loadJustPlaySceneSceneFromJustPlaySceneScene(final Level level) {
-        justPlaySceneService.loadJustPlaySceneSceneFromJustPlaySceneScene(level);
-    }
 
     @Override
     public void loadMenuSceneFromJustPlayGameScene() {
@@ -384,6 +383,11 @@ public class SceneServiceImpl implements SceneService {
                 setScene(menuScene);
             }
         }));
+    }
+
+    @Override
+    public void loadJustPlayScoreSceneSceneFromJustPlaySceneScene(final Level level) {
+        justPlaySceneService.loadJustPlayScoreSceneSceneFromJustPlaySceneScene(level);
     }
 
     private void disposeScoreScreen() {

@@ -73,7 +73,7 @@ public class ResourceLoader {
 
     public IFont getFont(final String name, float size, int color, float strokeWidth, int strokeColor) {
         FontFactory.setAssetBasePath("fonts/");
-        final ITexture mainFontTexture = new BitmapTextureAtlas(textureManager, 512, 512, TextureOptions.BILINEAR);
+        final ITexture mainFontTexture = new BitmapTextureAtlas(textureManager, 1024, 1024, TextureOptions.BILINEAR);
         IFont font = FontFactory.createStrokeFromAsset(fontManager,
         mainFontTexture, assetManager, name, size , true, color, strokeWidth, strokeColor);
         font.load();
