@@ -40,11 +40,13 @@ public abstract class GameScene extends BaseScene implements Observer {
         addTiles();
         addButtons();
         addScoreText();
+        addCustomLabels();
         registerTouchHandler();
         gameService.attach(this);
         resourcesManager.musicService.stopMusic();
     }
 
+    protected abstract void addCustomLabels();
 
 
     @Override
@@ -104,13 +106,6 @@ public abstract class GameScene extends BaseScene implements Observer {
         attachChild(minimumMovesScoreText);
         Text minimumMovesScore = new Text(0, camera.getHeight() * 0.03f, resourcesManager.minMovesFont, String.valueOf(gameService.getLevel().getMinimumMovesToSolve()), vbom);
         attachChild(minimumMovesScore);
-
-        Text levelText = new Text(0, camera.getHeight() * 0.96f, resourcesManager.levelFont, "Level", vbom);
-        levelText.setScaleCenter(0, 0);
-        levelText.setScale(0.3f);
-        attachChild(levelText);
-        Text level = new Text(0, camera.getHeight() * 0.85f, resourcesManager.levelFont, String.valueOf(gameService.getLevel().getId()), vbom);
-        attachChild(level);
     }
 
     private void registerTouchHandler() {
@@ -133,7 +128,6 @@ public abstract class GameScene extends BaseScene implements Observer {
         }
         gameService = new GameServiceImpl();
         gameService.startGame(level);
-
     }
 
     @Override

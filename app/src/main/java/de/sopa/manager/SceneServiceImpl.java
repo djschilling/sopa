@@ -1,10 +1,13 @@
 package de.sopa.manager;
 
 
+import de.sopa.helper.LevelCreator;
 import de.sopa.model.game.Level;
+import de.sopa.model.game.LevelDestroyer;
 import de.sopa.model.game.LevelResult;
 import de.sopa.scene.BaseScene;
 import de.sopa.scene.choicelevel.LevelChoiceScene;
+import de.sopa.scene.game.JustPlayGameScene;
 import de.sopa.scene.game.LevelModeGameScene;
 import de.sopa.scene.loading.LoadingScene;
 import de.sopa.scene.menu.MainMenuScene;
@@ -33,9 +36,13 @@ public class SceneServiceImpl implements SceneService {
     private Engine engine;
     private BaseScene tutorialScene;
     private CreditsScene creditsScene;
+    private final LevelCreator levelCreator;
+    private final LevelDestroyer levelDestroyer;
 
     public SceneServiceImpl(Engine engine) {
         this.engine = engine;
+        this.levelCreator = new LevelCreator();
+        this.levelDestroyer = new LevelDestroyer();
     }
 
     private void setScene(BaseScene scene) {
@@ -348,6 +355,35 @@ public class SceneServiceImpl implements SceneService {
                 setScene(choiceScene);
             }
         }));
+    }
+
+    @Override
+    public void loadJustPlaySceneSceneFromMenuScene() {
+        setScene(loadingScene);
+        disposeMenuScene();
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            @Override
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                ResourcesManager.getInstance().loadGameSceneResources();
+                gameScene = new JustPlayGameScene(levelDestroyer.destroyField(levelCreator.generateSolvedField(6, 6), 2, 4));
+                setScene(gameScene);
+            }
+        }));
+    }
+
+    @Override
+    public void loadJustPlaySceneSceneFromJustPlaySceneScene(final Level level) {
+        setScene(loadingScene);
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            @Override
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                gameScene = new JustPlayGameScene(level);
+                setScene(gameScene);
+            }
+        }));
+
     }
 
     private void disposeScoreScreen() {

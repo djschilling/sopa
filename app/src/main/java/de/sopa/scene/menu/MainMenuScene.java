@@ -67,7 +67,7 @@ public class MainMenuScene extends BaseScene {
         final ButtonSprite justPlaySprite = new ButtonSprite(camera.getWidth(), 0, resourcesManager.just_play_region, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                sceneService.loadLevelChoiceSceneFromMenuScene();
+                sceneService.loadJustPlaySceneSceneFromMenuScene();
             }
         });
 

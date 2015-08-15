@@ -1,14 +1,12 @@
 package de.sopa.scene.game;
 
 
-import android.view.animation.Animation;
-
+import de.sopa.model.game.Level;
+import de.sopa.model.game.LevelResult;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.sprite.ButtonSprite;
-
-import de.sopa.model.game.Level;
-import de.sopa.model.game.LevelResult;
+import org.andengine.entity.text.Text;
 
 /**
  * @author David Schilling - davejs92@gmail.com
@@ -21,6 +19,16 @@ public class LevelModeGameScene extends GameScene {
     public LevelModeGameScene(Object o) {
         super(o);
         leaveScene = false;
+    }
+
+    @Override
+    protected void addCustomLabels() {
+        Text levelText = new Text(0, camera.getHeight() * 0.96f, resourcesManager.levelFont, "Level", vbom);
+        levelText.setScaleCenter(0, 0);
+        levelText.setScale(0.3f);
+        attachChild(levelText);
+        Text level = new Text(0, camera.getHeight() * 0.85f, resourcesManager.levelFont, String.valueOf(gameService.getLevel().getId()), vbom);
+        attachChild(level);
     }
 
     @Override
