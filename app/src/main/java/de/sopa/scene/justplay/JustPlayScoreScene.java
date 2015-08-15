@@ -17,15 +17,19 @@ import static org.andengine.util.color.Color.*;
 public class JustPlayScoreScene extends BaseScene {
 
 
+    private boolean leaveScene;
+
     public JustPlayScoreScene(final JustPlayResult justPlayResult) {
         super();
+
+        this.leaveScene = false;
 
         Rectangle rectangleScore = new Rectangle(0, (float) (camera.getHeight() * 0.45), camera.getWidth(), camera.getHeight() / 10, vbom);
         rectangleScore.setColor(0, 102/255f, 255/255f);
         attachChild(rectangleScore);
 
         Rectangle rectangleTime = new Rectangle(0, (float) (camera.getHeight() * 0.6), camera.getWidth(), (float) (camera.getHeight() * 0.2), vbom);
-        rectangleTime.setColor(153/255f,0 , 0);
+        rectangleTime.setColor(153 / 255f, 0, 0);
         attachChild(rectangleTime);
 
 
@@ -50,22 +54,26 @@ public class JustPlayScoreScene extends BaseScene {
         ButtonSprite nextLevelButton = new ButtonSprite((camera.getWidth() / 2 - 200), (camera.getHeight() - 400), resourcesManager.nextJustPlayLevel, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+
                 storyService.loadJustPlaySceneFromJustPlayScoreScene();
             }
         });
 
         attachChild(nextLevelButton);
         registerTouchArea(nextLevelButton);
-
         engine.registerUpdateHandler(new TimerHandler(0.0005f, true, new ITimerCallback() {
             @Override
             public void onTimePassed(TimerHandler pTimerHandler) {
-                if(currentScore[0] >= justPlayResult.getScore()) {
-                    score.setText(String.valueOf(justPlayResult.getScore()));
-                    engine.unregisterUpdateHandler(pTimerHandler);
+                if(!leaveScene) {
+                    if(currentScore[0] >= justPlayResult.getScore()) {
+                        score.setText(String.valueOf(justPlayResult.getScore()));
+                        engine.unregisterUpdateHandler(pTimerHandler);
+                    } else {
+                        currentScore[0]++;
+                        score.setText(String.valueOf(currentScore[0]));
+                    }
                 } else {
-                    currentScore[0]++;
-                    score.setText(String.valueOf(currentScore[0]));
+                    engine.unregisterUpdateHandler(pTimerHandler);
                 }
             }
         }));
@@ -73,7 +81,8 @@ public class JustPlayScoreScene extends BaseScene {
 
     @Override
     public void onBackKeyPressed() {
-        storyService.loadMenuSceneFromJustPlayScoreScene();
+            leaveScene = true;
+            storyService.loadMenuSceneFromJustPlayScoreScene();
     }
 
     @Override
