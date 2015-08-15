@@ -52,4 +52,6 @@ public interface SceneService {
     void loadMenuSceneFromCreditsScene();
 
     void loadMenuSceneFromJustPlayGameScene();
+
+    void loadJustPlaySceneFromJustPlayScoreScene();
 }

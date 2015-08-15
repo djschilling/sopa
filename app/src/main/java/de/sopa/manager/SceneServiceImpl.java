@@ -252,6 +252,11 @@ public class SceneServiceImpl implements SceneService {
     }
 
     @Override
+    public void loadJustPlaySceneFromJustPlayScoreScene() {
+        justPlaySceneService.loadJustPlaySceneFromJustPlayScoreScene();
+    }
+
+    @Override
     public void loadJustPlayScoreSceneSceneFromJustPlaySceneScene(final Level level) {
         justPlaySceneService.loadJustPlayScoreSceneSceneFromJustPlaySceneScene(level);
     }

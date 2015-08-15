@@ -82,6 +82,7 @@ public class ResourcesManager {
     public ITextureRegion twitterLogoRegion;
     public ITextureRegion shareLogoTexture;
     public IFont justPlayScoreFont;
+    public ITextureRegion nextJustPlayLevel;
 
 
     public void loadMenuSceneResources() {
@@ -104,7 +105,8 @@ public class ResourcesManager {
 
     public void loadJustPlayScoreResources() {
         levelCompleteFont = resourceLoader.getFont("Impact.ttf", 200, WHITE,0, TRANSPARENT);
-        justPlayScoreFont = resourceLoader.getFont("Impact.ttf", 150, WHITE,0,TRANSPARENT);
+        justPlayScoreFont = resourceLoader.getFont("Impact.ttf", 145, WHITE,0,TRANSPARENT);
+        nextJustPlayLevel.getTexture().load();
     }
 
     public void loadLevelChoiceSceneResources() {
@@ -291,6 +293,7 @@ public class ResourcesManager {
             tutorialSecondRegionA = resourceLoader.getTexture("scenes/tutorial/secondTutorialScreenA.png");
             tutorialSecondRegionB = resourceLoader.getTexture("scenes/tutorial/secondTutorialScreenB.png");
 
+            nextJustPlayLevel = resourceLoader.getTexture("scenes/score/NextLevel.png");
 
         }
         preparedTextures = true;
@@ -315,5 +318,6 @@ public class ResourcesManager {
     public void unloadJustPlayScoreResources() {
         levelCompleteFont.getTexture().unload();
         justPlayScoreFont.getTexture().unload();
+        nextJustPlayLevel.getTexture().unload();
     }
 }

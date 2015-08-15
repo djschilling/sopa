@@ -5,6 +5,7 @@ import de.sopa.model.game.Level;
 import de.sopa.model.game.LevelDestroyer;
 import de.sopa.scene.BaseScene;
 import de.sopa.scene.game.JustPlayGameScene;
+import de.sopa.scene.score.JustPlayResult;
 import de.sopa.scene.score.JustPlayScoreScene;
 import org.andengine.engine.Engine;
 import org.andengine.engine.handler.timer.ITimerCallback;
@@ -50,8 +51,20 @@ public class JustPlaySceneServiceImpl implements JustPlaySceneService {
             @Override
             public void onTimePassed(TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
-                scoreScene = new JustPlayScoreScene(level);
+                scoreScene = new JustPlayScoreScene(new JustPlayResult(3,12, 4, 2000, 4246));
                 setScene(scoreScene);
+            }
+        }));
+    }
+
+    @Override
+    public void loadJustPlaySceneFromJustPlayScoreScene() {
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            @Override
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                justPlayGameScene = new JustPlayGameScene(levelDestroyer.destroyField(levelCreator.generateSolvedField(6, 6), 2, 4));
+                setScene(justPlayGameScene);
             }
         }));
     }

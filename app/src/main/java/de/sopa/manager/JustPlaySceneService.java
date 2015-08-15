@@ -8,4 +8,6 @@ import de.sopa.model.game.Level;
 public interface JustPlaySceneService extends BaseSceneService{
 
     void loadJustPlayScoreSceneSceneFromJustPlaySceneScene(Level level);
+
+    void loadJustPlaySceneFromJustPlayScoreScene();
 }
