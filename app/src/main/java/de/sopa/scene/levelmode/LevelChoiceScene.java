@@ -1,4 +1,4 @@
-package de.sopa.scene.choicelevel;
+package de.sopa.scene.levelmode;
 
 
 
@@ -91,9 +91,9 @@ public class LevelChoiceScene extends BaseScene implements Observer {
                 public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                     if (!levelInfo.isLocked()) {
                         if (finalLevelIndex != 0) {
-                            sceneService.loadGameSceneFromLevelChoiceScene(levelService.getLevelById(levelInfo.getLevelId()));
+                            storyService.loadGameSceneFromLevelChoiceScene(levelService.getLevelById(levelInfo.getLevelId()));
                         } else {
-                            sceneService.loadTutorialSceneFromLevelChoiceScene();
+                            storyService.loadTutorialSceneFromLevelChoiceScene();
                         }
 
                     }
@@ -191,7 +191,7 @@ public class LevelChoiceScene extends BaseScene implements Observer {
 
     @Override
     public void onBackKeyPressed() {
-        sceneService.loadMenuSceneFromLevelChoiceScene();
+        storyService.loadMenuSceneFromLevelChoiceScene();
     }
 
 

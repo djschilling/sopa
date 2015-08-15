@@ -1,5 +1,6 @@
-package de.sopa.manager;
+package de.sopa.scene.levelmode;
 
+import de.sopa.manager.BaseSceneService;
 import de.sopa.model.game.Level;
 import de.sopa.model.game.LevelResult;
 

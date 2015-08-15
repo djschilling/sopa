@@ -1,9 +1,10 @@
 package de.sopa.model.levelchoice;
 
 import de.sopa.observer.Observer;
+import de.sopa.scene.levelmode.LevelChoiceScene;
 
 /**
- * Service for calculating screen to show for {@link de.sopa.scene.choicelevel.LevelChoiceScene}
+ * Service for calculating screen to show for {@link LevelChoiceScene}
  *
  * @author David Schilling - davejs92@gmail.com
  */

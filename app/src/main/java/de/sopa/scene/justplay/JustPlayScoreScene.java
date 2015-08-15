@@ -1,13 +1,12 @@
-package de.sopa.scene.score;
+package de.sopa.scene.justplay;
 
-import de.sopa.model.game.Level;
 import de.sopa.scene.BaseScene;
+import de.sopa.scene.score.JustPlayResult;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.text.Text;
-import org.andengine.util.color.Color;
 
 import static org.andengine.util.color.Color.*;
 
@@ -52,7 +51,7 @@ public class JustPlayScoreScene extends BaseScene {
         ButtonSprite nextLevelButton = new ButtonSprite((camera.getWidth() / 2 - 200), (camera.getHeight() - 400), resourcesManager.nextJustPlayLevel, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                sceneService.loadJustPlaySceneFromJustPlayScoreScene();
+                storyService.loadJustPlaySceneFromJustPlayScoreScene();
             }
         });
 

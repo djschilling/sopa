@@ -36,7 +36,7 @@ public class LevelModeGameScene extends GameScene {
         restartButton = new ButtonSprite(camera.getWidth() - 300, (camera.getHeight() - 300), resourcesManager.restartRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                sceneService.loadGameSceneFromGameScene(levelBackup);
+                storyService.loadGameSceneFromGameScene(levelBackup);
             }
         });
         restartButton.setWidth(300);
@@ -48,7 +48,7 @@ public class LevelModeGameScene extends GameScene {
     @Override
     public void onBackKeyPressed() {
         if(!leaveScene) {
-            sceneService.loadLevelChoiceSceneFromGameScene();
+            storyService.loadLevelChoiceSceneFromGameScene();
         }
     }
 
@@ -64,7 +64,7 @@ public class LevelModeGameScene extends GameScene {
             @Override
             public void onTimePassed(TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
-                sceneService.loadScoreScreen(levelResult);
+                storyService.loadScoreScreen(levelResult);
             }
         }));
 

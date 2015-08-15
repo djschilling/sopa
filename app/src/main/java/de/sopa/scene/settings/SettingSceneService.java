@@ -1,4 +1,6 @@
-package de.sopa.manager;
+package de.sopa.scene.settings;
+
+import de.sopa.manager.BaseSceneService;
 
 /**
  * David Schilling - davejs92@gmail.com

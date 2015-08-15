@@ -60,28 +60,28 @@ public class MainMenuScene extends BaseScene {
         final ButtonSprite levelModeSprite = new ButtonSprite(camera.getWidth(), 0, resourcesManager.level_mode_region, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                sceneService.loadLevelChoiceSceneFromMenuScene();
+                storyService.loadLevelChoiceSceneFromMenuScene();
             }
         });
 
         final ButtonSprite justPlaySprite = new ButtonSprite(camera.getWidth(), 0, resourcesManager.just_play_region, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                sceneService.loadJustPlaySceneSceneFromMenuScene();
+                storyService.loadJustPlaySceneSceneFromMenuScene();
             }
         });
 
         final ButtonSprite settingsSprite = new ButtonSprite(camera.getWidth(), 0, resourcesManager.settingsRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                sceneService.loadSettingsFromMenuScene();
+                storyService.loadSettingsFromMenuScene();
             }
         });
 
         final ButtonSprite creditsButton = new ButtonSprite(0 , camera.getHeight(), resourcesManager.creditsRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                sceneService.loadCreditsFromMenuScene();
+                storyService.loadCreditsFromMenuScene();
             }
         });
 

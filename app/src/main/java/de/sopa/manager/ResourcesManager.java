@@ -1,6 +1,5 @@
 package de.sopa.manager;
 
-import android.graphics.Color;
 import android.media.MediaPlayer;
 
 import org.andengine.engine.Engine;
@@ -24,7 +23,7 @@ import static android.graphics.Color.*;
  */
 public class ResourcesManager {
     private static final ResourcesManager INSTANCE = new ResourcesManager();
-    public SceneService sceneService;
+    public StoryService storyService;
 
     public Engine engine;
     public GameActivity activity;
@@ -105,7 +104,7 @@ public class ResourcesManager {
 
     public void loadJustPlayScoreResources() {
         levelCompleteFont = resourceLoader.getFont("Impact.ttf", 200, WHITE,0, TRANSPARENT);
-        justPlayScoreFont = resourceLoader.getFont("Impact.ttf", 145, WHITE,0,TRANSPARENT);
+        justPlayScoreFont = resourceLoader.getFont("Impact.ttf", 145, WHITE, 0, TRANSPARENT);
         nextJustPlayLevel.getTexture().load();
     }
 
@@ -206,13 +205,13 @@ public class ResourcesManager {
         levelFont = null;
     }
 
-    public static void prepareManager(Engine engine, GameActivity activity, Camera camera, VertexBufferObjectManager vbom, ResourceLoader resourceLoader, SceneService sceneService, LevelService levelService, SettingsService settingsService) {
+    public static void prepareManager(Engine engine, GameActivity activity, Camera camera, VertexBufferObjectManager vbom, ResourceLoader resourceLoader, StoryService storyService, LevelService levelService, SettingsService settingsService) {
         getInstance().engine = engine;
         getInstance().activity = activity;
         getInstance().camera = camera;
         getInstance().vbom = vbom;
         getInstance().resourceLoader = resourceLoader;
-        getInstance().sceneService = sceneService;
+        getInstance().storyService = storyService;
         getInstance().levelService = levelService;
         getInstance().musicService = new MusicService(MediaPlayer.create(activity.getApplicationContext(), R.raw.theme), true);
         getInstance().settingsService = settingsService;

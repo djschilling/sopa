@@ -1,12 +1,10 @@
-package de.sopa.manager;
+package de.sopa.scene.levelmode;
 
+import de.sopa.manager.ResourcesManager;
 import de.sopa.model.game.Level;
 import de.sopa.model.game.LevelResult;
 import de.sopa.scene.BaseScene;
-import de.sopa.scene.choicelevel.LevelChoiceScene;
 import de.sopa.scene.game.LevelModeGameScene;
-import de.sopa.scene.score.ScoreScreen;
-import de.sopa.scene.tutorial.TutorialScene;
 import org.andengine.engine.Engine;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;

@@ -1,4 +1,4 @@
-package de.sopa.scene.tutorial;
+package de.sopa.scene.levelmode;
 
 import de.sopa.scene.BaseScene;
 import org.andengine.engine.handler.timer.ITimerCallback;
@@ -42,7 +42,7 @@ public class TutorialScene extends BaseScene implements IOnSceneTouchListener {
     @Override
     public void onBackKeyPressed() {
         leaveScene = true;
-        sceneService.loadLevelChoiceFromTutorial();
+        storyService.loadLevelChoiceFromTutorial();
     }
 
     @Override
@@ -73,7 +73,7 @@ public class TutorialScene extends BaseScene implements IOnSceneTouchListener {
                     public void onTimePassed(TimerHandler pTimerHandler) {
                         engine.unregisterUpdateHandler(pTimerHandler);
                         if(!leaveScene){
-                            sceneService.loadFirstLevelFromTutorial();
+                            storyService.loadFirstLevelFromTutorial();
                         }
                     }
                 }));

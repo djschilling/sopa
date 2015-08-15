@@ -1,7 +1,7 @@
-package de.sopa.manager;
+package de.sopa.scene.loading;
 
+import de.sopa.manager.ResourcesManager;
 import de.sopa.scene.BaseScene;
-import de.sopa.scene.loading.LoadingScene;
 import org.andengine.engine.Engine;
 
 /**

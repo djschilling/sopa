@@ -8,7 +8,7 @@ import de.sopa.scene.BaseScene;
  * @author David Schilling - davejs92@gmail.com
  * @author Raphael Schilling
  */
-public interface SceneService {
+public interface StoryService {
 
     BaseScene getCurrentScene();
 

@@ -1,7 +1,7 @@
-package de.sopa.manager;
+package de.sopa.scene.settings;
 
+import de.sopa.manager.ResourcesManager;
 import de.sopa.scene.BaseScene;
-import de.sopa.scene.settings.SettingsScene;
 import org.andengine.engine.Engine;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;

@@ -7,11 +7,11 @@ import de.sopa.helper.LevelService;
 import de.sopa.helper.LevelServiceImpl;
 import de.sopa.manager.ResourceLoader;
 import de.sopa.manager.ResourcesManager;
-import de.sopa.manager.SceneService;
-import de.sopa.manager.SceneServiceImpl;
+import de.sopa.manager.StoryService;
+import de.sopa.manager.StoryServiceImpl;
 import de.sopa.manager.SettingsService;
 import de.sopa.scene.game.GameScene;
-import de.sopa.scene.score.ScoreScreen;
+import de.sopa.scene.levelmode.ScoreScreen;
 
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.timer.ITimerCallback;
@@ -51,7 +51,7 @@ public class GameActivity extends BaseGameActivity {
         LevelService levelService = new LevelServiceImpl(new LevelFileService(this), levelInfoDataSource);
         SettingsService settingsService = new SettingsService(getApplicationContext());
         ResourcesManager.prepareManager(mEngine, this, camera, getVertexBufferObjectManager(),
-                new ResourceLoader(getTextureManager(), getAssets(), getFontManager()), new SceneServiceImpl(mEngine),
+                new ResourceLoader(getTextureManager(), getAssets(), getFontManager()), new StoryServiceImpl(mEngine),
                 levelService, settingsService);
         levelService.updateLevelInfos();
         if (settingsService.isFirstTime() ) {
@@ -63,9 +63,9 @@ public class GameActivity extends BaseGameActivity {
 
     @Override
     public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) throws Exception {
-        SceneService sceneService = ResourcesManager.getInstance().sceneService;
-        sceneService.createLoadingScene();
-        pOnCreateSceneCallback.onCreateSceneFinished(sceneService.getCurrentScene());
+        StoryService storyService = ResourcesManager.getInstance().storyService;
+        storyService.createLoadingScene();
+        pOnCreateSceneCallback.onCreateSceneFinished(storyService.getCurrentScene());
     }
 
     @Override
@@ -73,7 +73,7 @@ public class GameActivity extends BaseGameActivity {
         mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().sceneService.createMenuScene();
+                ResourcesManager.getInstance().storyService.createMenuScene();
             }
         }));
         pOnPopulateSceneCallback.onPopulateSceneFinished();
@@ -82,7 +82,7 @@ public class GameActivity extends BaseGameActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            ResourcesManager.getInstance().sceneService.getCurrentScene().onBackKeyPressed();
+            ResourcesManager.getInstance().storyService.getCurrentScene().onBackKeyPressed();
         }
         return false;
     }

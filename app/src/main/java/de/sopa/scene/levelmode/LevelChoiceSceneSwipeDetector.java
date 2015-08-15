@@ -1,4 +1,4 @@
-package de.sopa.scene.choicelevel;
+package de.sopa.scene.levelmode;
 
 import android.util.Log;
 

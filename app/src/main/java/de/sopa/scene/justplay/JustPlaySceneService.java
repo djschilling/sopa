@@ -1,11 +1,12 @@
-package de.sopa.manager;
+package de.sopa.scene.justplay;
 
+import de.sopa.manager.BaseSceneService;
 import de.sopa.model.game.Level;
 
 /**
  * David Schilling - davejs92@gmail.com
  **/
-public interface JustPlaySceneService extends BaseSceneService{
+public interface JustPlaySceneService extends BaseSceneService {
 
     void loadJustPlayScoreSceneSceneFromJustPlaySceneScene(Level level);
 

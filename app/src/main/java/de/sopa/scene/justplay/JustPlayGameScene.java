@@ -1,8 +1,9 @@
-package de.sopa.scene.game;
+package de.sopa.scene.justplay;
 
 import de.sopa.helper.LevelCreator;
 import de.sopa.model.game.Level;
 import de.sopa.model.game.LevelDestroyer;
+import de.sopa.scene.game.GameScene;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 
@@ -32,7 +33,7 @@ public class JustPlayGameScene extends GameScene {
 
     @Override
     public void onBackKeyPressed() {
-        sceneService.loadMenuSceneFromJustPlayGameScene();
+        storyService.loadMenuSceneFromJustPlayGameScene();
     }
 
     @Override
@@ -41,7 +42,7 @@ public class JustPlayGameScene extends GameScene {
             @Override
             public void onTimePassed(TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
-                sceneService.loadJustPlayScoreSceneSceneFromJustPlaySceneScene(levelDestroyer.destroyField(levelCreator.generateSolvedField(6, 6), 2, 4));
+                storyService.loadJustPlayScoreSceneSceneFromJustPlaySceneScene(levelDestroyer.destroyField(levelCreator.generateSolvedField(6, 6), 2, 4));
             }
         }));
     }

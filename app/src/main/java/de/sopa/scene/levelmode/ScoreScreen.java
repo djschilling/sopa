@@ -1,4 +1,4 @@
-package de.sopa.scene.score;
+package de.sopa.scene.levelmode;
 
 import de.sopa.model.game.Level;
 import de.sopa.model.game.LevelResult;
@@ -31,7 +31,7 @@ public class ScoreScreen extends BaseScene {
         ButtonSprite choiceLevelButton = new ButtonSprite(0, (camera.getHeight() - 400), resourcesManager.backToChoiceRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                sceneService.loadLevelChoiceSceneFromScoreScene();
+                storyService.loadLevelChoiceSceneFromScoreScene();
             }
         });
         ButtonSprite nextLevelButton = new ButtonSprite((float) (camera.getWidth() * 0.64), (camera.getHeight() - 400), resourcesManager.nextLevelRegion, vbom, new ButtonSprite.OnClickListener() {
@@ -39,9 +39,9 @@ public class ScoreScreen extends BaseScene {
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 int nextLevelId = levelResult.getLevelId() + 1;
                 if (nextLevelId > levelService.getLevelCount()) {
-                    sceneService.loadLevelChoiceSceneFromScoreScene();
+                    storyService.loadLevelChoiceSceneFromScoreScene();
                 } else {
-                    sceneService.loadGameSceneFromScoreScene(levelService.getLevelById(nextLevelId));
+                    storyService.loadGameSceneFromScoreScene(levelService.getLevelById(nextLevelId));
                 }
             }
         });
@@ -49,7 +49,7 @@ public class ScoreScreen extends BaseScene {
         ButtonSprite levelAgainButton = new ButtonSprite((camera.getWidth() / 2 - 200), (camera.getHeight() - 400), resourcesManager.backToMenuRegionA, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                sceneService.loadGameSceneFromScoreScene(level);
+                storyService.loadGameSceneFromScoreScene(level);
             }
         });
         registerTouchArea(choiceLevelButton);
@@ -62,7 +62,7 @@ public class ScoreScreen extends BaseScene {
 
     @Override
     public void onBackKeyPressed() {
-        sceneService.loadMenuSceneFromScoreScene();
+        storyService.loadMenuSceneFromScoreScene();
     }
 
     @Override

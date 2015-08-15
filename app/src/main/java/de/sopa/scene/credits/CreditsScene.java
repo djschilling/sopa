@@ -1,4 +1,4 @@
-package de.sopa.manager;
+package de.sopa.scene.credits;
 
 import de.sopa.scene.BaseScene;
 import org.andengine.entity.text.Text;
@@ -53,7 +53,7 @@ public class CreditsScene extends BaseScene{
 
     @Override
     public void onBackKeyPressed() {
-        sceneService.loadMenuSceneFromCreditsScene();
+        storyService.loadMenuSceneFromCreditsScene();
     }
 
     @Override

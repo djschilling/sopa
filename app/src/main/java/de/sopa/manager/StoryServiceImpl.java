@@ -4,24 +4,36 @@ package de.sopa.manager;
 import de.sopa.model.game.Level;
 import de.sopa.model.game.LevelResult;
 import de.sopa.scene.BaseScene;
+import de.sopa.scene.credits.CreditsSceneService;
+import de.sopa.scene.credits.CreditsSceneServiceImpl;
+import de.sopa.scene.justplay.JustPlaySceneService;
+import de.sopa.scene.justplay.JustPlaySceneServiceImpl;
+import de.sopa.scene.levelmode.LevelModeSceneService;
+import de.sopa.scene.levelmode.LevelModeSceneServiceImpl;
+import de.sopa.scene.loading.LoadingSceneService;
+import de.sopa.scene.loading.LoadingSceneServiceImpl;
+import de.sopa.scene.menu.MenuSceneService;
+import de.sopa.scene.menu.MenuSceneServiceImpl;
+import de.sopa.scene.settings.SettingSceneService;
+import de.sopa.scene.settings.SettingSceneServiceImpl;
 import org.andengine.engine.Engine;
 
 /**
  * @author David Schilling - davejs92@gmail.com
  * @author Raphael Schilling
  */
-public class SceneServiceImpl implements SceneService {
+public class StoryServiceImpl implements StoryService {
 
     private final JustPlaySceneService justPlaySceneService;
     private final LevelModeSceneService levelModeSceneService;
     private final MenuSceneService menuSceneService;
-    private final CreditsSceneServiceImpl creditsSceneService;
+    private final CreditsSceneService creditsSceneService;
     private SettingSceneService settingsSceneService;
     private LoadingSceneService loadingSceneService;
 
     private BaseSceneService currentSceneService;
 
-    public SceneServiceImpl(Engine engine) {
+    public StoryServiceImpl(Engine engine) {
         this.justPlaySceneService = new JustPlaySceneServiceImpl(engine);
         this.levelModeSceneService = new LevelModeSceneServiceImpl(engine);
         this.menuSceneService = new MenuSceneServiceImpl(engine);
@@ -158,7 +170,7 @@ public class SceneServiceImpl implements SceneService {
     public void loadMenuSceneFromJustPlayGameScene() {
         startSceneService(loadingSceneService);
         endSceneService(justPlaySceneService);
-        menuSceneService.start();
+        startSceneService(menuSceneService);
     }
 
 
