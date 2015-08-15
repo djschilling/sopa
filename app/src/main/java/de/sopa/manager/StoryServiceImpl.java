@@ -3,6 +3,8 @@ package de.sopa.manager;
 
 import de.sopa.model.game.Level;
 import de.sopa.model.game.LevelResult;
+import de.sopa.model.justplay.JustPlayLevel;
+import de.sopa.model.justplay.JustPlayLevelResult;
 import de.sopa.scene.BaseScene;
 import de.sopa.scene.credits.CreditsSceneService;
 import de.sopa.scene.credits.CreditsSceneServiceImpl;
@@ -180,8 +182,8 @@ public class StoryServiceImpl implements StoryService {
     }
 
     @Override
-    public void loadJustPlayScoreSceneSceneFromJustPlaySceneScene(final Level level) {
-        justPlaySceneService.loadJustPlayScoreSceneSceneFromJustPlaySceneScene(level);
+    public void loadJustPlayScoreSceneSceneFromJustPlaySceneScene(JustPlayLevelResult justPlayLevelResult) {
+        justPlaySceneService.loadJustPlayScoreSceneSceneFromJustPlaySceneScene(justPlayLevelResult);
     }
 
     private void startSceneService(BaseSceneService sceneService) {

@@ -1,8 +1,7 @@
 package de.sopa.scene.justplay;
 
-import de.sopa.helper.LevelCreator;
-import de.sopa.model.game.Level;
-import de.sopa.model.game.LevelDestroyer;
+import de.sopa.model.justplay.JustPlayLevel;
+import de.sopa.model.justplay.JustPlayLevelResult;
 import de.sopa.scene.game.GameScene;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -12,13 +11,11 @@ import org.andengine.engine.handler.timer.TimerHandler;
  **/
 public class JustPlayGameScene extends GameScene {
 
-    private final LevelCreator levelCreator;
-    private final LevelDestroyer levelDestroyer;
+    private final JustPlayLevel level;
 
-    public JustPlayGameScene(Level level) {
-        super(level);
-        this.levelCreator = new LevelCreator();
-        this.levelDestroyer = new LevelDestroyer();
+    public JustPlayGameScene(JustPlayLevel level) {
+        super(level.getLevel());
+        this.level = level;
     }
 
     @Override
@@ -42,7 +39,7 @@ public class JustPlayGameScene extends GameScene {
             @Override
             public void onTimePassed(TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
-                storyService.loadJustPlayScoreSceneSceneFromJustPlaySceneScene(levelDestroyer.destroyField(levelCreator.generateSolvedField(6, 6), 2, 4));
+                storyService.loadJustPlayScoreSceneSceneFromJustPlaySceneScene(new JustPlayLevelResult(level.getLeftTime() - 12 , gameService.getLevel().getMovesCount()));
             }
         }));
     }

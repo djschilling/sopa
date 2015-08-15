@@ -1,11 +1,10 @@
 package de.sopa.scene.justplay;
 
-import de.sopa.helper.LevelCreator;
+
 import de.sopa.manager.ResourcesManager;
-import de.sopa.model.game.Level;
-import de.sopa.model.game.LevelDestroyer;
+import de.sopa.model.justplay.JustPlayLevelResult;
+import de.sopa.model.justplay.JustPlayServiceImpl;
 import de.sopa.scene.BaseScene;
-import de.sopa.scene.score.JustPlayResult;
 import org.andengine.engine.Engine;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -16,17 +15,15 @@ import org.andengine.engine.handler.timer.TimerHandler;
 public class JustPlaySceneServiceImpl implements JustPlaySceneService {
 
     private final Engine engine;
+    private final JustPlayServiceImpl justPlayService;
     private BaseScene currentScene;
     private JustPlayGameScene justPlayGameScene;
-    private final LevelCreator levelCreator;
-    private final LevelDestroyer levelDestroyer;
     private JustPlayScoreScene scoreScene;
 
 
     public JustPlaySceneServiceImpl(Engine engine) {
         this.engine = engine;
-        this.levelCreator = new LevelCreator();
-        this.levelDestroyer = new LevelDestroyer();
+        this.justPlayService = new JustPlayServiceImpl();
     }
 
     @Override
@@ -37,20 +34,20 @@ public class JustPlaySceneServiceImpl implements JustPlaySceneService {
                 engine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().loadGameSceneResources();
                 ResourcesManager.getInstance().loadJustPlayScoreResources();
-                justPlayGameScene = new JustPlayGameScene(levelDestroyer.destroyField(levelCreator.generateSolvedField(6, 6), 2, 4));
+                justPlayGameScene = new JustPlayGameScene(justPlayService.getNextLevel());
                 setScene(justPlayGameScene);
             }
         }));
     }
 
     @Override
-    public void loadJustPlayScoreSceneSceneFromJustPlaySceneScene(final Level level) {
+    public void loadJustPlayScoreSceneSceneFromJustPlaySceneScene(final JustPlayLevelResult justPlayLevelResult) {
         justPlayGameScene.disposeScene();
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             @Override
             public void onTimePassed(TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
-                scoreScene = new JustPlayScoreScene(new JustPlayResult(3,12, 4, 2000, 4246));
+                scoreScene = new JustPlayScoreScene(justPlayService.calculateResult(justPlayLevelResult));
                 setScene(scoreScene);
             }
         }));
@@ -62,7 +59,7 @@ public class JustPlaySceneServiceImpl implements JustPlaySceneService {
             @Override
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
-                justPlayGameScene = new JustPlayGameScene(levelDestroyer.destroyField(levelCreator.generateSolvedField(6, 6), 2, 4));
+                justPlayGameScene = new JustPlayGameScene(justPlayService.getNextLevel());
                 setScene(justPlayGameScene);
             }
         }));

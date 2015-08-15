@@ -2,6 +2,7 @@ package de.sopa.manager;
 
 import de.sopa.model.game.Level;
 import de.sopa.model.game.LevelResult;
+import de.sopa.model.justplay.JustPlayLevelResult;
 import de.sopa.scene.BaseScene;
 
 /**
@@ -24,7 +25,7 @@ public interface StoryService {
 
     void loadJustPlaySceneSceneFromMenuScene();
 
-    void loadJustPlayScoreSceneSceneFromJustPlaySceneScene(Level level);
+    void loadJustPlayScoreSceneSceneFromJustPlaySceneScene(JustPlayLevelResult justPlayLevelResult);
 
     void loadScoreScreen(final LevelResult level);
     void loadGameSceneFromLevelChoiceScene(final Level level);

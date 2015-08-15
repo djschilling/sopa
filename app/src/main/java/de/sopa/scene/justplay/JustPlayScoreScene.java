@@ -37,9 +37,7 @@ public class JustPlayScoreScene extends BaseScene {
                 "Score:      ", vbom);
         scoreText.setColor(BLACK);
         attachChild(scoreText);
-
-        final int[] currentScore = {justPlayResult.getLastScore()};
-        final Text score = new Text((float) (camera.getWidth() * 0.6), (float) (camera.getHeight() * 0.45), resourcesManager.justPlayScoreFont, "" + currentScore[0], 8, vbom);
+        final Text score = new Text((float) (camera.getWidth() * 0.6), (float) (camera.getHeight() * 0.45), resourcesManager.justPlayScoreFont, "" + justPlayResult.getScore(), 8, vbom);
         score.setColor(BLACK);
         attachChild(score);
 
@@ -57,18 +55,6 @@ public class JustPlayScoreScene extends BaseScene {
 
         attachChild(nextLevelButton);
         registerTouchArea(nextLevelButton);
-        engine.registerUpdateHandler(new TimerHandler(0.0001f, true, new ITimerCallback() {
-            public void onTimePassed(final TimerHandler pTimerHandler) {
-                currentScore[0]++;
-                if(currentScore[0] >= justPlayResult.getScore()) {
-                    engine.unregisterUpdateHandler(pTimerHandler);
-                }
-                score.setText(String.valueOf(currentScore[0]));
-            }
-        }));
-
-
-
     }
 
     @Override
