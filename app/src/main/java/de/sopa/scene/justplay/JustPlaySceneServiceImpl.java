@@ -15,7 +15,7 @@ import org.andengine.engine.handler.timer.TimerHandler;
 public class JustPlaySceneServiceImpl implements JustPlaySceneService {
 
     private final Engine engine;
-    private final JustPlayServiceImpl justPlayService;
+    private JustPlayServiceImpl justPlayService;
     private BaseScene currentScene;
     private JustPlayGameScene justPlayGameScene;
     private JustPlayScoreScene scoreScene;
@@ -23,11 +23,11 @@ public class JustPlaySceneServiceImpl implements JustPlaySceneService {
 
     public JustPlaySceneServiceImpl(Engine engine) {
         this.engine = engine;
-        this.justPlayService = new JustPlayServiceImpl();
     }
 
     @Override
     public void start() {
+        this.justPlayService = new JustPlayServiceImpl();
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             @Override
             public void onTimePassed(final TimerHandler pTimerHandler) {
