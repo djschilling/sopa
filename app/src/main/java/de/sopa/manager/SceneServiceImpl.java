@@ -5,10 +5,7 @@ import de.sopa.model.game.Level;
 import de.sopa.model.game.LevelResult;
 import de.sopa.scene.BaseScene;
 import de.sopa.scene.loading.LoadingScene;
-import de.sopa.scene.settings.SettingsScene;
 import org.andengine.engine.Engine;
-import org.andengine.engine.handler.timer.ITimerCallback;
-import org.andengine.engine.handler.timer.TimerHandler;
 
 /**
  * @author David Schilling - davejs92@gmail.com
@@ -20,8 +17,8 @@ public class SceneServiceImpl implements SceneService {
     private final LevelModeSceneService levelModeSceneService;
     private final MenuSceneService menuSceneService;
     private final CreditsSceneServiceImpl creditsSceneService;
+    private SettingSceneService settingsSceneService;
     private BaseScene loadingScene;
-    private BaseScene settingsScene;
 
     private BaseScene currentScene;
     private Engine engine;
@@ -33,6 +30,7 @@ public class SceneServiceImpl implements SceneService {
         this.levelModeSceneService = new LevelModeSceneServiceImpl(engine);
         this.menuSceneService = new MenuSceneServiceImpl(engine);
         this.creditsSceneService = new CreditsSceneServiceImpl(engine);
+        this.settingsSceneService = new SettingSceneServiceImpl(engine);
     }
 
     private void setScene(BaseScene scene) {
@@ -117,21 +115,14 @@ public class SceneServiceImpl implements SceneService {
     @Override
     public void loadSettingsFromMenuScene() {
         setScene(loadingScene);
-        menuSceneService.end();
-        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
-            public void onTimePassed(final TimerHandler pTimerHandler) {
-                engine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().loadSettingsScene();
-                settingsScene = new SettingsScene();
-                setScene(settingsScene);
-            }
-        }));
+        endSceneService(menuSceneService);
+        startSceneService(settingsSceneService);
     }
 
     @Override
     public void loadMenuSceneFromSettingsScene() {
         setScene(loadingScene);
-        disposeSettingsScene();
+        endSceneService(settingsSceneService);
         startSceneService(menuSceneService);
     }
 
@@ -160,10 +151,6 @@ public class SceneServiceImpl implements SceneService {
     @Override
     public void loadLevelChoiceFromTutorial() {
         levelModeSceneService.loadLevelChoiceFromTutorial();
-    }
-
-    private void disposeSettingsScene() {
-        ResourcesManager.getInstance().unloadSettingsScene();
     }
 
 
