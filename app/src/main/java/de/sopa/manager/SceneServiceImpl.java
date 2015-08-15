@@ -5,7 +5,6 @@ import de.sopa.model.game.Level;
 import de.sopa.model.game.LevelResult;
 import de.sopa.scene.BaseScene;
 import de.sopa.scene.loading.LoadingScene;
-import de.sopa.scene.menu.MainMenuScene;
 import de.sopa.scene.settings.SettingsScene;
 import org.andengine.engine.Engine;
 import org.andengine.engine.handler.timer.ITimerCallback;
@@ -19,7 +18,7 @@ public class SceneServiceImpl implements SceneService {
 
     private final JustPlaySceneService justPlaySceneService;
     private final LevelModeSceneService levelModeSceneService;
-    private BaseScene menuScene;
+    private final MenuSceneService menuSceneService;
     private BaseScene loadingScene;
     private BaseScene settingsScene;
 
@@ -33,6 +32,7 @@ public class SceneServiceImpl implements SceneService {
         this.engine = engine;
         this.justPlaySceneService = new JustPlaySceneServiceImpl(engine);
         this.levelModeSceneService = new LevelModeSceneServiceImpl(engine);
+        this.menuSceneService = new MenuSceneServiceImpl(engine);
     }
 
     private void setScene(BaseScene scene) {
@@ -60,25 +60,15 @@ public class SceneServiceImpl implements SceneService {
 
     @Override
     public void createMenuScene() {
-        ResourcesManager.getInstance().loadMenuSceneResources();
-        menuScene = new MainMenuScene();
         ResourcesManager.getInstance().loadLoadingSceneResources();
-        setScene(menuScene);
+        menuSceneService.startSynchron();
     }
 
     @Override
     public void loadMenuSceneFromLevelChoiceScene() {
         setScene(loadingScene);
         endSceneService(levelModeSceneService);
-        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
-            @Override
-            public void onTimePassed(final TimerHandler pTimerHandler) {
-                engine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().loadMenuSceneResources();
-                menuScene = new MainMenuScene();
-                setScene(menuScene);
-            }
-        }));
+        menuSceneService.start();
     }
 
     public void loadGameSceneFromLevelChoiceScene(final Level level) {
@@ -90,15 +80,9 @@ public class SceneServiceImpl implements SceneService {
     }
 
 
-    private void disposeMenuScene() {
-        ResourcesManager.getInstance().unloadMenuSceneResources();
-        menuScene.disposeScene();
-        menuScene = null;
-    }
-
     public void loadLevelChoiceSceneFromMenuScene() {
         setScene(loadingScene);
-        disposeMenuScene();
+        menuSceneService.end();
         levelModeSceneService.start();
         setSceneService(levelModeSceneService);
         currentScene = null;
@@ -107,7 +91,7 @@ public class SceneServiceImpl implements SceneService {
     @Override
     public void loadCreditsFromMenuScene() {
         setScene(loadingScene);
-        disposeMenuScene();
+        menuSceneService.end();
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             @Override
             public void onTimePassed(TimerHandler pTimerHandler) {
@@ -124,16 +108,7 @@ public class SceneServiceImpl implements SceneService {
         setScene(loadingScene);
         disposeCreditsScene();
         ResourcesManager.getInstance().unloadCreditsSceneResources();
-        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
-            @Override
-            public void onTimePassed(final TimerHandler pTimerHandler) {
-                engine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().loadMenuSceneResources();
-                menuScene = new MainMenuScene();
-                setScene(menuScene);
-            }
-        }));
-
+        menuSceneService.start();
     }
 
     private void disposeCreditsScene() {
@@ -155,8 +130,8 @@ public class SceneServiceImpl implements SceneService {
 
     @Override
     public void loadSettingsFromMenuScene() {
-        disposeMenuScene();
         setScene(loadingScene);
+        menuSceneService.end();
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
@@ -171,30 +146,14 @@ public class SceneServiceImpl implements SceneService {
     public void loadMenuSceneFromSettingsScene() {
         setScene(loadingScene);
         disposeSettingsScene();
-        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
-            @Override
-            public void onTimePassed(final TimerHandler pTimerHandler) {
-                engine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().loadMenuSceneResources();
-                menuScene = new MainMenuScene();
-                setScene(menuScene);
-            }
-        }));
+        menuSceneService.start();
     }
 
     @Override
     public void loadMenuSceneFromScoreScene() {
         setScene(loadingScene);
         endSceneService(levelModeSceneService);
-        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
-            @Override
-            public void onTimePassed(final TimerHandler pTimerHandler) {
-                engine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().loadMenuSceneResources();
-                menuScene = new MainMenuScene();
-                setScene(menuScene);
-            }
-        }));
+        menuSceneService.start();
     }
 
     @Override
@@ -229,7 +188,7 @@ public class SceneServiceImpl implements SceneService {
     @Override
     public void loadJustPlaySceneSceneFromMenuScene() {
         setScene(loadingScene);
-        disposeMenuScene();
+        menuSceneService.end();
         justPlaySceneService.start();
         setSceneService(justPlaySceneService);
         this.currentScene = null;
@@ -240,15 +199,7 @@ public class SceneServiceImpl implements SceneService {
     public void loadMenuSceneFromJustPlayGameScene() {
         setScene(loadingScene);
         endSceneService(justPlaySceneService);
-        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
-            @Override
-            public void onTimePassed(final TimerHandler pTimerHandler) {
-                engine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().loadMenuSceneResources();
-                menuScene = new MainMenuScene();
-                setScene(menuScene);
-            }
-        }));
+        menuSceneService.start();
     }
 
     @Override
