@@ -59,6 +59,7 @@ public class JustPlayScoreScene extends BaseScene {
 
     @Override
     public void onBackKeyPressed() {
+        storyService.loadMenuSceneFromJustPlayScoreScene();
     }
 
     @Override

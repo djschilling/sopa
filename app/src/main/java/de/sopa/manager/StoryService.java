@@ -55,4 +55,6 @@ public interface StoryService {
     void loadMenuSceneFromJustPlayGameScene();
 
     void loadJustPlaySceneFromJustPlayScoreScene();
+
+    void loadMenuSceneFromJustPlayScoreScene();
 }
