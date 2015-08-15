@@ -31,7 +31,7 @@ public class JustPlayGameScene extends GameScene {
 
     @Override
     public void onBackKeyPressed() {
-
+        sceneService.loadMenuSceneFromGameScene();
     }
 
     @Override
