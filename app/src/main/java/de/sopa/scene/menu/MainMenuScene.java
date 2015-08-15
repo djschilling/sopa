@@ -57,7 +57,14 @@ public class MainMenuScene extends BaseScene {
 
     private void createMenuChildScene() {
 
-        final ButtonSprite playItemSprite = new ButtonSprite(camera.getWidth(), 0, resourcesManager.level_mode_region, vbom, new ButtonSprite.OnClickListener() {
+        final ButtonSprite levelModeSprite = new ButtonSprite(camera.getWidth(), 0, resourcesManager.level_mode_region, vbom, new ButtonSprite.OnClickListener() {
+            @Override
+            public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                sceneService.loadLevelChoiceSceneFromMenuScene();
+            }
+        });
+
+        final ButtonSprite justPlaySprite = new ButtonSprite(camera.getWidth(), 0, resourcesManager.just_play_region, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 sceneService.loadLevelChoiceSceneFromMenuScene();
@@ -101,9 +108,10 @@ public class MainMenuScene extends BaseScene {
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
-                playItemSprite.registerEntityModifier(new MoveXModifier(1f, -camera.getWidth(), 0));
-                settingsSprite.registerEntityModifier(new MoveXModifier(1f, camera.getWidth(), 0));
-                creditsButton.registerEntityModifier(new MoveYModifier(1f, camera.getHeight(), camera.getHeight() * 0.4f + creditsButton.getHeight()));
+                levelModeSprite.registerEntityModifier(new MoveXModifier(1f, -camera.getWidth(), 0));
+                justPlaySprite.registerEntityModifier(new MoveXModifier(1f, camera.getWidth(), 0));
+                settingsSprite.registerEntityModifier(new MoveXModifier(1f, -camera.getWidth(), 0));
+                creditsButton.registerEntityModifier(new MoveYModifier(1f, camera.getHeight(), camera.getHeight() * 0.4f + 2 * creditsButton.getHeight()));
                 shareLogo.registerEntityModifier(new AlphaModifier(1f, 0f, 1f ));
                 twitterLogo.registerEntityModifier(new AlphaModifier(1f, 0f, 1f ));
                 shareLogo.registerEntityModifier(new MoveXModifier(1f, -shareLogo.getWidth(), camera.getWidth() * 0.05f));
@@ -112,11 +120,15 @@ public class MainMenuScene extends BaseScene {
             }
         }));
 
-        playItemSprite.setPosition(1080, camera.getHeight() * 0.4f - playItemSprite.getHeightScaled());
-        attachChild(playItemSprite);
-        registerTouchArea(playItemSprite);
+        levelModeSprite.setPosition(1080, camera.getHeight() * 0.4f - levelModeSprite.getHeightScaled());
+        attachChild(levelModeSprite);
+        registerTouchArea(levelModeSprite);
 
-        settingsSprite.setPosition(1080, camera.getHeight() * 0.4f);
+        justPlaySprite.setPosition(1080, camera.getHeight() * 0.4f);
+        attachChild(justPlaySprite);
+        registerTouchArea(justPlaySprite);
+
+        settingsSprite.setPosition(1080, camera.getHeight() * 0.4f + justPlaySprite.getHeightScaled());
         attachChild(settingsSprite);
         registerTouchArea(settingsSprite);
 

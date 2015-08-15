@@ -33,6 +33,7 @@ public class ResourcesManager {
 
 
     public ITextureRegion level_mode_region;
+    public ITextureRegion just_play_region;
     public ITextureRegion settingsRegion;
     public ITextureRegion creditsRegion;
     public ITextureRegion loadingScreenBackgroundRegion;
@@ -125,6 +126,7 @@ public class ResourcesManager {
     private void loadMenuSceneGraphics() {
         prepareTextures();
         level_mode_region.getTexture().load();
+        just_play_region.getTexture().load();
         settingsRegion.getTexture().load();
         creditsRegion.getTexture().load();
         twitterLogoRegion.getTexture().load();
@@ -169,6 +171,7 @@ public class ResourcesManager {
 
     private void unloadMenuSceneTextures() {
         level_mode_region.getTexture().unload();
+        just_play_region.getTexture().unload();
         settingsRegion.getTexture().unload();
         creditsRegion.getTexture().unload();
         twitterLogoRegion.getTexture().unload();
@@ -260,6 +263,7 @@ public class ResourcesManager {
             backToMenuRegionP = resourceLoader.getTexture("scenes/score/BackP.png");
 
             level_mode_region = resourceLoader.getTexture("scenes/menu/LevelMode.png");
+            just_play_region = resourceLoader.getTexture("scenes/menu/JustPlay.png");
             settingsRegion = resourceLoader.getTexture("scenes/menu/Settings.png");
             creditsRegion = resourceLoader.getTexture("scenes/menu/credits.png");
             twitterLogoRegion = resourceLoader.getTexture("scenes/menu/Twitter_logo_blue.png");
