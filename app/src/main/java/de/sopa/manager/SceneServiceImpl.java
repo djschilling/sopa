@@ -4,7 +4,6 @@ package de.sopa.manager;
 import de.sopa.model.game.Level;
 import de.sopa.model.game.LevelResult;
 import de.sopa.scene.BaseScene;
-import de.sopa.scene.loading.LoadingScene;
 import org.andengine.engine.Engine;
 
 /**
@@ -18,45 +17,31 @@ public class SceneServiceImpl implements SceneService {
     private final MenuSceneService menuSceneService;
     private final CreditsSceneServiceImpl creditsSceneService;
     private SettingSceneService settingsSceneService;
-    private BaseScene loadingScene;
+    private LoadingSceneService loadingSceneService;
 
-    private BaseScene currentScene;
-    private Engine engine;
     private BaseSceneService currentSceneService;
 
     public SceneServiceImpl(Engine engine) {
-        this.engine = engine;
         this.justPlaySceneService = new JustPlaySceneServiceImpl(engine);
         this.levelModeSceneService = new LevelModeSceneServiceImpl(engine);
         this.menuSceneService = new MenuSceneServiceImpl(engine);
         this.creditsSceneService = new CreditsSceneServiceImpl(engine);
         this.settingsSceneService = new SettingSceneServiceImpl(engine);
-    }
-
-    private void setScene(BaseScene scene) {
-        engine.setScene(scene);
-        currentScene = scene;
-    }
-
-    private void startSceneService(BaseSceneService sceneService) {
-        sceneService.start();
-        currentSceneService = sceneService;
-        currentScene = null;
+        this.loadingSceneService = new LoadingSceneServiceImpl(engine);
     }
 
 
     @Override
     public BaseScene getCurrentScene() {
-        return currentScene != null? currentScene: currentSceneService.getCurrentScene();
+        return currentSceneService.getCurrentScene();
     }
+
 
     @Override
     public void createLoadingScene() {
-        ResourcesManager.getInstance().loadLoadingSceneResources();
-        loadingScene = new LoadingScene();
-        currentScene = loadingScene;
+        loadingSceneService.initialStart();
+        currentSceneService = loadingSceneService;
     }
-
 
     @Override
     public void createMenuScene() {
@@ -65,38 +50,42 @@ public class SceneServiceImpl implements SceneService {
         this.currentSceneService = menuSceneService;
     }
 
+
     @Override
     public void loadMenuSceneFromLevelChoiceScene() {
-        setScene(loadingScene);
+        startSceneService(loadingSceneService);
         endSceneService(levelModeSceneService);
         startSceneService(menuSceneService);
     }
 
+    @Override
     public void loadGameSceneFromLevelChoiceScene(final Level level) {
         levelModeSceneService.loadGameSceneFromLevelChoiceScene(level);
     }
 
+    @Override
     public void loadScoreScreen(final LevelResult level) {
         levelModeSceneService.loadScoreScreen(level);
     }
 
-
+    @Override
     public void loadLevelChoiceSceneFromMenuScene() {
-        setScene(loadingScene);
+        startSceneService(loadingSceneService);
         endSceneService(menuSceneService);
         startSceneService(levelModeSceneService);
     }
 
+
     @Override
     public void loadCreditsFromMenuScene() {
-        setScene(loadingScene);
+        startSceneService(loadingSceneService);
         menuSceneService.end();
         startSceneService(creditsSceneService);
     }
 
     @Override
     public void loadMenuSceneFromCreditsScene() {
-        setScene(loadingScene);
+        startSceneService(loadingSceneService);
         endSceneService(creditsSceneService);
         startSceneService(menuSceneService);
     }
@@ -106,29 +95,29 @@ public class SceneServiceImpl implements SceneService {
         levelModeSceneService.loadLevelChoiceSceneFromScoreScene();
     }
 
-
     @Override
     public void loadGameSceneFromScoreScene(final Level level) {
         levelModeSceneService.loadGameSceneFromScoreScene(level);
     }
 
+
     @Override
     public void loadSettingsFromMenuScene() {
-        setScene(loadingScene);
+        startSceneService(loadingSceneService);
         endSceneService(menuSceneService);
         startSceneService(settingsSceneService);
     }
 
     @Override
     public void loadMenuSceneFromSettingsScene() {
-        setScene(loadingScene);
+        startSceneService(loadingSceneService);
         endSceneService(settingsSceneService);
         startSceneService(menuSceneService);
     }
 
     @Override
     public void loadMenuSceneFromScoreScene() {
-        setScene(loadingScene);
+        startSceneService(loadingSceneService);
         endSceneService(levelModeSceneService);
         startSceneService(menuSceneService);
     }
@@ -153,25 +142,25 @@ public class SceneServiceImpl implements SceneService {
         levelModeSceneService.loadLevelChoiceFromTutorial();
     }
 
-
+    @Override
     public void loadLevelChoiceSceneFromGameScene() {
         levelModeSceneService.loadLevelChoiceSceneFromGameScene();
     }
 
     @Override
     public void loadJustPlaySceneSceneFromMenuScene() {
-        setScene(loadingScene);
+        startSceneService(loadingSceneService);
         endSceneService(menuSceneService);
         startSceneService(justPlaySceneService);
     }
 
-
     @Override
     public void loadMenuSceneFromJustPlayGameScene() {
-        setScene(loadingScene);
+        startSceneService(loadingSceneService);
         endSceneService(justPlaySceneService);
         menuSceneService.start();
     }
+
 
     @Override
     public void loadJustPlaySceneFromJustPlayScoreScene() {
@@ -181,6 +170,11 @@ public class SceneServiceImpl implements SceneService {
     @Override
     public void loadJustPlayScoreSceneSceneFromJustPlaySceneScene(final Level level) {
         justPlaySceneService.loadJustPlayScoreSceneSceneFromJustPlaySceneScene(level);
+    }
+
+    private void startSceneService(BaseSceneService sceneService) {
+        sceneService.start();
+        currentSceneService = sceneService;
     }
 
 
