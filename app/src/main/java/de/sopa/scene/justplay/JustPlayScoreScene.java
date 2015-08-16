@@ -20,49 +20,24 @@ public class JustPlayScoreScene extends BaseScene {
 
 
     private boolean leaveScene;
+    private JustPlayResult justPlayResult;
+    private Text score;
 
     public JustPlayScoreScene(final JustPlayResult justPlayResult) {
         super();
 
         this.leaveScene = false;
+        this.justPlayResult = justPlayResult;
 
-        Rectangle rectangleScore = new Rectangle(0, (float) (camera.getHeight() * 0.45), camera.getWidth(), camera.getHeight() / 10, vbom);
-        rectangleScore.setColor(0, 102/255f, 255/255f);
-        attachChild(rectangleScore);
-
-        Rectangle rectangleTime = new Rectangle(0, (float) (camera.getHeight() * 0.6), camera.getWidth(), (float) (camera.getHeight() * 0.2), vbom);
-        rectangleTime.setColor(153 / 255f, 0, 0);
-        attachChild(rectangleTime);
-
-
-        String levelCompleteString = justPlayResult.getLevelAnzahl() +
-                ".  Level\nComplete";
-        Text levelCompleteTextShape = new Text((float) (camera.getWidth() * 0.12), (float) (camera.getHeight() * 0.1), resourcesManager.levelCompleteFont, levelCompleteString, 20, vbom);
-        attachChild(levelCompleteTextShape);
-        Text scoreText = new Text((float) (camera.getWidth() * 0.05), (float) (camera.getHeight() * 0.45), resourcesManager.justPlayScoreFont,
-                "Score:      ", vbom);
-        scoreText.setColor(BLACK);
-        attachChild(scoreText);
         final int[] currentScore = {justPlayResult.getLastScore()};
-        final Text score = new Text((float) (camera.getWidth() * 0.6), (float) (camera.getHeight() * 0.45), resourcesManager.justPlayScoreFont, "" + currentScore[0], 8, vbom);
-        score.setColor(BLACK);
-        attachChild(score);
 
-        Text timeText = new Text((float) (camera.getWidth() * 0.05), (float) (camera.getHeight() * 0.605), resourcesManager.justPlayScoreFont,
-                "Left Time:  \t" + justPlayResult.getLeftTime() + "\n" +
-                "Extra Time:\t+" + justPlayResult.getExtraTime(), vbom);
-        attachChild(timeText);
-        timeText.setColor(WHITE);
-        ButtonSprite nextLevelButton = new ButtonSprite((camera.getWidth() / 2 - 200), (camera.getHeight() - 400), resourcesManager.nextJustPlayLevel, vbom, new ButtonSprite.OnClickListener() {
-            @Override
-            public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+        addRectangles();
+        addTexts(currentScore);
+        addNextLevelButton();
+        addAnimation(currentScore);
+    }
 
-                storyService.loadJustPlaySceneFromJustPlayScoreScene();
-            }
-        });
-
-        attachChild(nextLevelButton);
-        registerTouchArea(nextLevelButton);
+    private void addAnimation(final int[] currentScore) {
         engine.registerUpdateHandler(new TimerHandler(0.0005f, true, new ITimerCallback() {
             @Override
             public void onTimePassed(TimerHandler pTimerHandler) {
@@ -79,7 +54,66 @@ public class JustPlayScoreScene extends BaseScene {
                 }
             }
         }));
-        registerEntityModifier(new MoveYModifier(0.15f, - camera.getHeight(), 0, EaseQuadInOut.getInstance()));
+        registerEntityModifier(new MoveYModifier(0.15f, -camera.getHeight(), 0, EaseQuadInOut.getInstance()));
+    }
+
+    private void addNextLevelButton() {
+        ButtonSprite nextLevelButton = new ButtonSprite((camera.getWidth() / 2 - 200), (camera.getHeight() - 400), resourcesManager.nextJustPlayLevel, vbom, new ButtonSprite.OnClickListener() {
+            @Override
+            public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+
+                storyService.loadJustPlaySceneFromJustPlayScoreScene();
+            }
+        });
+        attachChild(nextLevelButton);
+        registerTouchArea(nextLevelButton);
+    }
+
+    private void addTexts(int[] currentScore) {
+        Text levelCompleteTextShape = new Text((float) (camera.getWidth() * 0.12), (float) (camera.getHeight() * 0.1), resourcesManager.levelCompleteFont, getHeadText(), 20, vbom);
+        attachChild(levelCompleteTextShape);
+
+        Text scoreText = new Text((float) (camera.getWidth() * 0.05), (float) (camera.getHeight() * 0.45), resourcesManager.justPlayScoreFont,
+                "Score:      ", vbom);
+        scoreText.setColor(BLACK);
+        attachChild(scoreText);
+
+
+        score = new Text((float) (camera.getWidth() * 0.6), (float) (camera.getHeight() * 0.45), resourcesManager.justPlayScoreFont, "" + currentScore[0], 8, vbom);
+        score.setColor(BLACK);
+        attachChild(score);
+
+        Text timeText = new Text((float) (camera.getWidth() * 0.05), (float) (camera.getHeight() * 0.605), resourcesManager.justPlayScoreFont,
+                        "Left Time:  \t" + justPlayResult.getLeftTime() + "\n" +
+                        "Extra Time:\t+" + justPlayResult.getExtraTime(), vbom);
+        timeText.setColor(WHITE);
+        if(!justPlayResult.lost())  {
+            attachChild(timeText);
+        }
+    }
+
+    private String getHeadText() {
+        if(!justPlayResult.lost()) {
+            return justPlayResult.getLevelAnzahl() +
+                    ".  Level\nComplete";
+        } else {
+            return  "    GAME\n" +
+                    "    OVER";
+        }
+    }
+
+    private void addRectangles() {
+        Rectangle rectangleScore = new Rectangle(0, (float) (camera.getHeight() * 0.45), camera.getWidth(), camera.getHeight() / 10, vbom);
+        rectangleScore.setColor(0, 102/255f, 255/255f);
+        attachChild(rectangleScore);
+
+        Rectangle rectangleTime = new Rectangle(0, (float) (camera.getHeight() * 0.6), camera.getWidth(), (float) (camera.getHeight() * 0.2), vbom);
+        rectangleTime.setColor(153 / 255f, 0, 0);
+        attachChild(rectangleTime);
+
+        if(justPlayResult.lost()) {
+            rectangleTime.setVisible(false);
+        }
     }
 
     @Override

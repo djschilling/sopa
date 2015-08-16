@@ -18,11 +18,13 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
     private final JustPlayLevel justPlayLevel;
     private TimeBasedGameServiceImpl timeBasedGameService;
     private Text leftTime;
+    private boolean leaveScene;
 
 
     public JustPlayGameScene(JustPlayLevel justPlayLevel) {
         super(justPlayLevel.getLevel());
         this.justPlayLevel = justPlayLevel;
+        leaveScene = false;
     }
 
     @Override
@@ -45,7 +47,6 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
     protected void initializeLogic() {
         gameService = new GameServiceImpl(this.level);
         gameService.attach(this);
-
         timeBasedGameService = new TimeBasedGameServiceImpl(10);
         timeBasedGameService.start();
         timeBasedGameService.attach(this);
@@ -53,32 +54,46 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
 
     @Override
     public void onBackKeyPressed() {
-        engine.registerUpdateHandler(new TimerHandler(1.5f, new ITimerCallback() {
-            @Override
-            public void onTimePassed(TimerHandler pTimerHandler) {
-                engine.unregisterUpdateHandler(pTimerHandler);
-                storyService.loadMenuSceneFromJustPlayGameScene();
-            }
-        }));
+        if(!leaveScene) {
+            leaveScene = true;
+            engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+                @Override
+                public void onTimePassed(TimerHandler pTimerHandler) {
+                    engine.unregisterUpdateHandler(pTimerHandler);
+                    storyService.loadMenuSceneFromJustPlayGameScene();
+                }
+            }));
+        }
 
 
     }
 
     @Override
     public void onSolvedGame() {
-
-        engine.registerUpdateHandler(new TimerHandler(1f, new ITimerCallback() {
-            @Override
-            public void onTimePassed(TimerHandler pTimerHandler) {
-                engine.unregisterUpdateHandler(pTimerHandler);
-                storyService.loadJustPlayScoreSceneFromJustPlayScene(new JustPlayLevelResult(justPlayLevel.getLeftTime() - 12, gameService.getLevel().getMovesCount()));
-            }
-        }));
+        if(!leaveScene) {
+            leaveScene = true;
+            engine.registerUpdateHandler(new TimerHandler(1f, new ITimerCallback() {
+                @Override
+                public void onTimePassed(TimerHandler pTimerHandler) {
+                    engine.unregisterUpdateHandler(pTimerHandler);
+                    storyService.loadJustPlayScoreSceneFromJustPlayScene(new JustPlayLevelResult(justPlayLevel.getLeftTime() - 12, gameService.getLevel().getMovesCount()));
+                }
+            }));
+        }
 
     }
     @Override
     public void onLostGame() {
-        onBackKeyPressed();
+        if(!leaveScene) {
+            leaveScene = true;
+            engine.registerUpdateHandler(new TimerHandler(1f, new ITimerCallback() {
+                @Override
+                public void onTimePassed(TimerHandler pTimerHandler) {
+                    engine.unregisterUpdateHandler(pTimerHandler);
+                    storyService.loadJustPlayScoreSceneFromJustPlayScene(new JustPlayLevelResult(-1, gameService.getLevel().getMovesCount()));
+                }
+            }));
+        }
     }
 
     @Override
@@ -89,6 +104,5 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
                 leftTime.setText(String.valueOf(timeBasedGameService.getRemainingTime()));
             }
         }));
-
     }
 }

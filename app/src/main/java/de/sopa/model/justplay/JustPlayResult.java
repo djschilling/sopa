@@ -38,4 +38,8 @@ public class JustPlayResult {
     public int getLastScore() {
         return lastScore;
     }
+
+    public boolean lost() {
+        return (getLeftTime() == -1);
+    }
 }
