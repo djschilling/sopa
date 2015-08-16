@@ -4,9 +4,11 @@ import de.sopa.scene.BaseScene;
 import de.sopa.model.justplay.JustPlayResult;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
+import org.andengine.entity.modifier.MoveYModifier;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.text.Text;
+import org.andengine.util.modifier.ease.EaseQuadInOut;
 
 import static org.andengine.util.color.Color.*;
 
@@ -64,8 +66,8 @@ public class JustPlayScoreScene extends BaseScene {
         engine.registerUpdateHandler(new TimerHandler(0.0005f, true, new ITimerCallback() {
             @Override
             public void onTimePassed(TimerHandler pTimerHandler) {
-                if(!leaveScene) {
-                    if(currentScore[0] >= justPlayResult.getScore()) {
+                if (!leaveScene) {
+                    if (currentScore[0] >= justPlayResult.getScore()) {
                         score.setText(String.valueOf(justPlayResult.getScore()));
                         engine.unregisterUpdateHandler(pTimerHandler);
                     } else {
@@ -77,6 +79,7 @@ public class JustPlayScoreScene extends BaseScene {
                 }
             }
         }));
+        registerEntityModifier(new MoveYModifier(0.15f, - camera.getHeight(), 0, EaseQuadInOut.getInstance()));
     }
 
     @Override

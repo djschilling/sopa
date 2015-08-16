@@ -61,15 +61,16 @@ public class JustPlayGameScene extends GameScene {
 
     @Override
     public void onSolvedGame() {
-        engine.registerUpdateHandler(new TimerHandler(1.5f,new ITimerCallback() {
+
+        engine.registerUpdateHandler(new TimerHandler(1f, new ITimerCallback() {
             @Override
             public void onTimePassed(TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
                 storyService.loadJustPlayScoreSceneFromJustPlayScene(new JustPlayLevelResult(justPlayLevel.getLeftTime() - 12, gameService.getLevel().getMovesCount()));
             }
         }));
-    }
 
+    }
     @Override
     public void onLostGame() {
         onBackKeyPressed();
