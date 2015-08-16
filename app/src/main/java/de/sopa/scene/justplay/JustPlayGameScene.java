@@ -1,5 +1,6 @@
 package de.sopa.scene.justplay;
 
+import de.sopa.model.game.TimeBasedGameServiceImpl;
 import de.sopa.model.justplay.JustPlayLevel;
 import de.sopa.model.justplay.JustPlayLevelResult;
 import de.sopa.scene.game.GameScene;
@@ -12,17 +13,19 @@ import org.andengine.entity.text.Text;
  **/
 public class JustPlayGameScene extends GameScene {
 
-    private final JustPlayLevel level;
+    private final JustPlayLevel justPlayLevel;
+    private TimeBasedGameServiceImpl timeBasedGameService;
     private Text leftTime;
 
-    public JustPlayGameScene(JustPlayLevel level) {
-        super(level.getLevel());
-        this.level = level;
+
+    public JustPlayGameScene(JustPlayLevel justPlayLevel) {
+        super(justPlayLevel.getLevel());
+        this.justPlayLevel = justPlayLevel;
     }
 
     @Override
     protected void addCustomLabels() {
-        leftTime = new Text(camera.getWidth() * 0.67f, camera.getHeight() * 0.83f, resourcesManager.scoreFont, String.valueOf(12), 6, vbom);
+        leftTime = new Text(camera.getWidth() * 0.67f, camera.getHeight() * 0.83f, resourcesManager.scoreFont, String.valueOf(timeBasedGameService.getRemainingTime()), 6, vbom);
         attachChild(leftTime);
         Text leftTimeText= new Text(camera.getWidth() * 0.67f, camera.getHeight() * 0.81f, resourcesManager.levelFont, "Left Time", vbom);
         leftTimeText.setScaleCenter(0, 0);
@@ -37,8 +40,23 @@ public class JustPlayGameScene extends GameScene {
     }
 
     @Override
+    protected void initializeLogic() {
+        timeBasedGameService = new TimeBasedGameServiceImpl(level, 10);
+        gameService = timeBasedGameService;
+        timeBasedGameService.start();
+    }
+
+    @Override
     public void onBackKeyPressed() {
-        storyService.loadMenuSceneFromJustPlayGameScene();
+        engine.registerUpdateHandler(new TimerHandler(1.5f, new ITimerCallback() {
+            @Override
+            public void onTimePassed(TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                storyService.loadMenuSceneFromJustPlayGameScene();
+            }
+        }));
+
+
     }
 
     @Override
@@ -47,8 +65,19 @@ public class JustPlayGameScene extends GameScene {
             @Override
             public void onTimePassed(TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
-                storyService.loadJustPlayScoreSceneFromJustPlayScene(new JustPlayLevelResult(level.getLeftTime() - 12, gameService.getLevel().getMovesCount()));
+                storyService.loadJustPlayScoreSceneFromJustPlayScene(new JustPlayLevelResult(justPlayLevel.getLeftTime() - 12, gameService.getLevel().getMovesCount()));
             }
         }));
+    }
+
+    @Override
+    public void onLostGame() {
+        onBackKeyPressed();
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        leftTime.setText(String.valueOf(timeBasedGameService.getRemainingTime()));
     }
 }

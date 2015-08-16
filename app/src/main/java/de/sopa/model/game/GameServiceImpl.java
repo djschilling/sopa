@@ -15,15 +15,24 @@ public class GameServiceImpl implements GameService {
     private List<Observer> observers;
     private boolean solvedPuzzle;
 
-    public GameServiceImpl() {
+    public GameServiceImpl(Level level) {
         observers = new ArrayList<>();
         gameFieldService = new GameFieldService();
         solvedPuzzle = false;
+        this.level = level;
+        solvedPuzzle = gameFieldService.solvedPuzzle(level);
+        level.resetMovesCounter();
+
     }
 
     @Override
     public boolean solvedPuzzle() {
         return solvedPuzzle;
+    }
+
+    @Override
+    public boolean lostLevel() {
+        return false;
     }
 
     @Override
@@ -39,20 +48,8 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public void startGame(Level level) {
-        this.level = level;
-        solvedPuzzle = gameFieldService.solvedPuzzle(level);
-        level.resetMovesCounter();
-    }
-
-    @Override
     public void attach(Observer observer) {
         observers.add(observer);
-    }
-
-    @Override
-    public void detach(Observer observer) {
-        observers.remove(observer);
     }
 
     private void notifyAllObserver() {

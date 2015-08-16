@@ -10,13 +10,11 @@ public interface GameService {
 
     boolean solvedPuzzle();
 
+    boolean lostLevel();
+
     void shiftLine(boolean horizontal, int row, int steps);
 
     Level getLevel();
 
-    void startGame(Level level);
-
     void attach(Observer observer);
-
-    void detach(Observer observer);
 }

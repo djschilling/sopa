@@ -1,6 +1,7 @@
 package de.sopa.scene.game;
 
 
+import de.sopa.model.game.GameServiceImpl;
 import de.sopa.model.game.Level;
 import de.sopa.model.game.LevelResult;
 import org.andengine.engine.handler.timer.ITimerCallback;
@@ -46,6 +47,12 @@ public class LevelModeGameScene extends GameScene {
     }
 
     @Override
+    protected void initializeLogic() {
+        gameService = new GameServiceImpl(this.level);
+
+    }
+
+    @Override
     public void onBackKeyPressed() {
         if(!leaveScene) {
             storyService.loadLevelChoiceSceneFromGameScene();
@@ -67,6 +74,11 @@ public class LevelModeGameScene extends GameScene {
                 storyService.loadScoreScreen(levelResult);
             }
         }));
+
+    }
+
+    @Override
+    public void onLostGame() {
 
     }
 }

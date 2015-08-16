@@ -2,7 +2,6 @@ package de.sopa.scene.game;
 
 
 import de.sopa.model.game.GameService;
-import de.sopa.model.game.GameServiceImpl;
 import de.sopa.model.game.Level;
 import de.sopa.observer.Observer;
 import de.sopa.scene.BaseScene;
@@ -24,12 +23,13 @@ public abstract class GameScene extends BaseScene implements Observer {
     private float spacePerTile;
     private Text scoreText;
     private GameFieldView gameFieldView;
-    private Level level;
+    protected final Level level;
     protected Level levelBackup;
 
     public GameScene(Level level) {
         super();
-        initializeLogic(level);
+        this.level = level;
+        initializeLogic();
         calculateSpacePerTile(gameService.getLevel().getField().length - 2);
         levelBackup = new Level(gameService.getLevel());
         addBackground();
@@ -60,6 +60,9 @@ public abstract class GameScene extends BaseScene implements Observer {
                 }
             }));
 
+        }
+        if(gameService.lostLevel()) {
+            onLostGame();
         }
     }
 
@@ -106,7 +109,7 @@ public abstract class GameScene extends BaseScene implements Observer {
     }
 
     private void registerTouchHandler() {
-        GameSceneSingleMoveDetector gameSceneSingleMoveDetector = new GameSceneSingleMoveDetector(0, getTileSceneStartY() + spacePerTile ,spacePerTile, gameFieldView);
+        GameSceneSingleMoveDetector gameSceneSingleMoveDetector = new GameSceneSingleMoveDetector(0, getTileSceneStartY() + spacePerTile, spacePerTile, gameFieldView);
         continuousHoldDetector = new ContinuousHoldDetector(0, 100, 0.01f, gameSceneSingleMoveDetector);
         setOnSceneTouchListener(continuousHoldDetector);
     }
@@ -119,13 +122,7 @@ public abstract class GameScene extends BaseScene implements Observer {
         setBackground(new Background(Color.BLACK));
     }
 
-    private void initializeLogic(Level level) {
-        if (level != null) {
-            this.level = level;
-        }
-        gameService = new GameServiceImpl();
-        gameService.startGame(this.level);
-    }
+    protected abstract void initializeLogic();
 
     @Override
     public abstract void onBackKeyPressed();
@@ -145,4 +142,9 @@ public abstract class GameScene extends BaseScene implements Observer {
      * is called when the game is solved
      */
     public abstract void onSolvedGame();
+
+    /**
+     * is called when the game is lost
+     */
+    public abstract void onLostGame();
 }
