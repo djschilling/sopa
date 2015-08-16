@@ -17,7 +17,6 @@ public class TimeBasedGameServiceImpl implements TimeBasedGameService {
 
     public TimeBasedGameServiceImpl(Level level, int remainingTime) {
         gameService = new GameServiceImpl(level);
-        gameService.attach(this);
         this.remainingTime = remainingTime;
         observers = new ArrayList<>();
     }
@@ -69,6 +68,12 @@ public class TimeBasedGameServiceImpl implements TimeBasedGameService {
     public void attach(Observer observer) {
         observers.add(observer);
         gameService.attach(observer);
+    }
+
+    @Override
+    public void detatch(Observer observer) {
+        observers.remove(observer);
+        gameService.detatch(observer);
     }
 
     @Override

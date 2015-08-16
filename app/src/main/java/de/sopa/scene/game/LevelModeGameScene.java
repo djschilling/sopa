@@ -49,6 +49,7 @@ public class LevelModeGameScene extends GameScene {
     @Override
     protected void initializeLogic() {
         gameService = new GameServiceImpl(this.level);
+        gameService.attach(this);
 
     }
 

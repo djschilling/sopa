@@ -17,4 +17,6 @@ public interface GameService {
     Level getLevel();
 
     void attach(Observer observer);
+
+    void detatch(Observer observer);
 }

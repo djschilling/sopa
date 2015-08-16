@@ -38,7 +38,6 @@ public abstract class GameScene extends BaseScene implements Observer {
         addScoreText();
         addCustomLabels();
         registerTouchHandler();
-        gameService.attach(this);
         resourcesManager.musicService.stopMusic();
 
     }
@@ -48,11 +47,13 @@ public abstract class GameScene extends BaseScene implements Observer {
 
     @Override
     public void update() {
+
         updateTiles();
         scoreText.setText(String.valueOf(gameService.getLevel().getMovesCount()));
         if (gameService.solvedPuzzle()) {
             setOnSceneTouchListener(null);
             gameFieldView.setTubesState(1);
+            gameService.detatch(this);
             baseScene.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
                 public void onTimePassed(final TimerHandler pTimerHandler) {
                     baseScene.unregisterUpdateHandler(pTimerHandler);
@@ -61,7 +62,7 @@ public abstract class GameScene extends BaseScene implements Observer {
             }));
 
         }
-        if(gameService.lostLevel()) {
+        if (gameService.lostLevel()) {
             onLostGame();
         }
     }
@@ -77,9 +78,13 @@ public abstract class GameScene extends BaseScene implements Observer {
     }
 
     private void updateTiles() {
-        detachChild(gameFieldView);
-        gameFieldView.addTiles();
-        attachChild(gameFieldView);
+        baseScene.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                detachChild(gameFieldView);
+                gameFieldView.addTiles();
+                attachChild(gameFieldView);
+            }
+        }));
     }
 
 

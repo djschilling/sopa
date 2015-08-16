@@ -44,6 +44,7 @@ public class JustPlayGameScene extends GameScene {
         timeBasedGameService = new TimeBasedGameServiceImpl(level, 10);
         gameService = timeBasedGameService;
         timeBasedGameService.start();
+        gameService.attach(this);
     }
 
     @Override

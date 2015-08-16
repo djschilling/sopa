@@ -52,6 +52,11 @@ public class GameServiceImpl implements GameService {
         observers.add(observer);
     }
 
+    @Override
+    public void detatch(Observer observer) {
+        observers.remove(observer);
+    }
+
     private void notifyAllObserver() {
         for (Observer observer : observers) {
             observer.update();
