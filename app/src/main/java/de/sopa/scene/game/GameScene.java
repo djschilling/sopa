@@ -64,9 +64,6 @@ public abstract class GameScene extends BaseScene implements GameSceneObserver {
             }));
 
         }
-        if (gameService.lostLevel()) {
-            onLostGame();
-        }
     }
 
 

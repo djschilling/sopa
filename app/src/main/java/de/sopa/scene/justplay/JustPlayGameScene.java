@@ -104,5 +104,8 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
                 leftTime.setText(String.valueOf(timeBasedGameService.getRemainingTime()));
             }
         }));
+        if(timeBasedGameService.getRemainingTime() == 0 && !gameService.solvedPuzzle()){
+            onLostGame();
+        }
     }
 }
