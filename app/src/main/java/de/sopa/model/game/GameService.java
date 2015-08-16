@@ -1,6 +1,6 @@
 package de.sopa.model.game;
 
-import de.sopa.observer.Observer;
+import de.sopa.observer.GameSceneObserver;
 
 /**
  * @author David Schilling - davejs92@gmail.com
@@ -16,7 +16,7 @@ public interface GameService {
 
     Level getLevel();
 
-    void attach(Observer observer);
+    void attach(GameSceneObserver observer);
 
-    void detatch(Observer observer);
+    void detatch(GameSceneObserver observer);
 }

@@ -3,7 +3,7 @@ package de.sopa.scene.game;
 
 import de.sopa.model.game.GameService;
 import de.sopa.model.game.Level;
-import de.sopa.observer.Observer;
+import de.sopa.observer.GameSceneObserver;
 import de.sopa.scene.BaseScene;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -16,7 +16,7 @@ import org.andengine.util.color.Color;
  * @author David Schilling - davejs92@gmail.com
  * @author Raphael Schilling
  */
-public abstract class GameScene extends BaseScene implements Observer {
+public abstract class GameScene extends BaseScene implements GameSceneObserver {
 
     protected GameService gameService;
     private ContinuousHoldDetector continuousHoldDetector;
@@ -46,9 +46,11 @@ public abstract class GameScene extends BaseScene implements Observer {
 
 
     @Override
-    public void update() {
+    public void updateGameScene() {
 
-        updateTiles();
+        if (!gameFieldView.isActive()) {
+            updateTiles();
+        }
         scoreText.setText(String.valueOf(gameService.getLevel().getMovesCount()));
         if (gameService.solvedPuzzle()) {
             setOnSceneTouchListener(null);

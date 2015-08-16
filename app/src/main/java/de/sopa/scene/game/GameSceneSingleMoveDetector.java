@@ -39,6 +39,7 @@ public class GameSceneSingleMoveDetector implements HoldDetector.IHoldDetectorLi
             if (pHoldX - firstX > widthPerTile) {
                 row = (int) ((firstY - fieldStartY) / widthPerTile);
                 gameFieldView.oneStep(true, row, 1);
+
                 isMoved = true;
             } else if (firstX - pHoldX > widthPerTile) {
                 row = (int) ((firstY - fieldStartY) / widthPerTile);

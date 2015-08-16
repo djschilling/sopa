@@ -1,8 +1,10 @@
 package de.sopa.scene.justplay;
 
+import de.sopa.model.game.GameServiceImpl;
 import de.sopa.model.game.TimeBasedGameServiceImpl;
 import de.sopa.model.justplay.JustPlayLevel;
 import de.sopa.model.justplay.JustPlayLevelResult;
+import de.sopa.observer.JustPlaySceneObserver;
 import de.sopa.scene.game.GameScene;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -11,7 +13,7 @@ import org.andengine.entity.text.Text;
 /**
  * David Schilling - davejs92@gmail.com
  **/
-public class JustPlayGameScene extends GameScene {
+public class JustPlayGameScene extends GameScene implements JustPlaySceneObserver {
 
     private final JustPlayLevel justPlayLevel;
     private TimeBasedGameServiceImpl timeBasedGameService;
@@ -41,10 +43,12 @@ public class JustPlayGameScene extends GameScene {
 
     @Override
     protected void initializeLogic() {
-        timeBasedGameService = new TimeBasedGameServiceImpl(level, 10);
-        gameService = timeBasedGameService;
-        timeBasedGameService.start();
+        gameService = new GameServiceImpl(this.level);
         gameService.attach(this);
+
+        timeBasedGameService = new TimeBasedGameServiceImpl(10);
+        timeBasedGameService.start();
+        timeBasedGameService.attach(this);
     }
 
     @Override
@@ -78,13 +82,13 @@ public class JustPlayGameScene extends GameScene {
     }
 
     @Override
-    public void update() {
-        super.update();
+    public void updateJustPlayScene() {
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             @Override
             public void onTimePassed(TimerHandler pTimerHandler) {
                 leftTime.setText(String.valueOf(timeBasedGameService.getRemainingTime()));
             }
         }));
+
     }
 }

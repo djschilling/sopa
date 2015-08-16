@@ -1,5 +1,10 @@
 package de.sopa.scene.game;
 
+import de.sopa.model.game.GameService;
+import de.sopa.model.game.Tile;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import org.andengine.entity.Entity;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.MoveXModifier;
@@ -9,14 +14,6 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.modifier.ease.EaseQuadInOut;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
-import de.sopa.model.game.GameService;
-import de.sopa.model.game.Tile;
 
 /**
  * @author David Schilling - davejs92@gmail.com
@@ -31,6 +28,12 @@ public class GameFieldView extends Entity {
     private TileSprite[][] tileSprites;
     private TileSprite start;
     private TileSprite finish;
+    private boolean active = true;
+    private boolean horizontal;
+    private int row;
+    private int direction;
+    private int countModifier;
+    private int modifierFinished;
 
     public GameFieldView(float pX, float pY, float spacePerTile, GameService gameService, Map<Character, TextureRegion> regionMap, VertexBufferObjectManager vbom, ITextureRegion tilesBorderRegion) {
         super(pX, pY);
@@ -85,19 +88,24 @@ public class GameFieldView extends Entity {
         if (row < 0) {
             return;
         }
-        final int finalRow = row;
+        this.horizontal = horizontal;
+        this.row = row;
+        this.direction = direction;
+
 
         row++;
         if (horizontal) {
             if (row > tileSprites.length - 2) {
                 return;
             }
+            this.countModifier = tileSprites.length - 2;
+            this.modifierFinished = 0;
             for (int x = 1; x < tileSprites.length - 1; x++) {
                 TileSprite tileSprite = tileSprites[x][row];
                 tileSprite.registerEntityModifier(new MoveXModifier(0.3f, tileSprite.getX(), tileSprite.getX() + tileSprite.getWidth() * direction, EaseQuadInOut.getInstance()) {
                     @Override
                     protected void onModifierFinished(IEntity pItem) {
-                        gameService.shiftLine(horizontal, finalRow, direction);
+                        oneModifierFinished();
                         super.onModifierFinished(pItem);
                     }
                 });
@@ -107,12 +115,14 @@ public class GameFieldView extends Entity {
             if (row > tileSprites[0].length - 2) {
                 return;
             }
+            this.countModifier = tileSprites[row].length - 2;
+            this.modifierFinished = 0;
             for (int y = 1; y < tileSprites[row].length - 1; y++) {
                 TileSprite tileSprite = tileSprites[row][y];
                 tileSprite.registerEntityModifier(new MoveYModifier(0.3f, tileSprite.getY(), tileSprite.getY() + tileSprite.getWidth() * direction, EaseQuadInOut.getInstance()) {
                     @Override
                     protected void onModifierFinished(IEntity pItem) {
-                        gameService.shiftLine(horizontal, finalRow, direction);
+                        oneModifierFinished();
                         super.onModifierFinished(pItem);
                     }
                 });
@@ -163,5 +173,16 @@ public class GameFieldView extends Entity {
         start.setITextureRegionIndex(1);
         finish.setITextureRegionIndex(1);
 
+    }
+
+    private void oneModifierFinished() {
+        modifierFinished++;
+        if(modifierFinished == countModifier) {
+            active = false;
+            gameService.shiftLine(horizontal, row, direction);
+        }
+    }
+    public boolean isActive() {
+        return active;
     }
 }

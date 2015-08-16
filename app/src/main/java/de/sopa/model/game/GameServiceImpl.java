@@ -1,6 +1,6 @@
 package de.sopa.model.game;
 
-import de.sopa.observer.Observer;
+import de.sopa.observer.GameSceneObserver;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +12,7 @@ public class GameServiceImpl implements GameService {
 
     private final GameFieldService gameFieldService;
     private Level level;
-    private List<Observer> observers;
+    private List<GameSceneObserver> observers;
     private boolean solvedPuzzle;
 
     public GameServiceImpl(Level level) {
@@ -48,18 +48,18 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public void attach(Observer observer) {
+    public void attach(GameSceneObserver observer) {
         observers.add(observer);
     }
 
     @Override
-    public void detatch(Observer observer) {
+    public void detatch(GameSceneObserver observer) {
         observers.remove(observer);
     }
 
     private void notifyAllObserver() {
-        for (Observer observer : observers) {
-            observer.update();
+        for (GameSceneObserver observer : observers) {
+            observer.updateGameScene();
         }
     }
 }

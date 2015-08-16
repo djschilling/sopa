@@ -1,6 +1,6 @@
 package de.sopa.model.game;
 
-import de.sopa.observer.Observer;
+import de.sopa.observer.JustPlaySceneObserver;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -11,12 +11,10 @@ import java.util.TimerTask;
  **/
 public class TimeBasedGameServiceImpl implements TimeBasedGameService {
 
-    private final GameServiceImpl gameService;
     private int remainingTime;
-    private List<Observer> observers;
+    private List<JustPlaySceneObserver> observers;
 
-    public TimeBasedGameServiceImpl(Level level, int remainingTime) {
-        gameService = new GameServiceImpl(level);
+    public TimeBasedGameServiceImpl(int remainingTime) {
         this.remainingTime = remainingTime;
         observers = new ArrayList<>();
     }
@@ -34,7 +32,7 @@ public class TimeBasedGameServiceImpl implements TimeBasedGameService {
             @Override
             public void run() {
                 remainingTime--;
-                if(remainingTime == 0 || solvedPuzzle()) {
+                if(remainingTime == 0) {
                     timer.cancel();
                 }
                 update();
@@ -45,41 +43,18 @@ public class TimeBasedGameServiceImpl implements TimeBasedGameService {
     }
 
     @Override
-    public boolean solvedPuzzle() {
-        return remainingTime > 0 && gameService.solvedPuzzle();
-    }
-
-    @Override
-    public boolean lostLevel() {
-        return remainingTime == 0 && !solvedPuzzle();
-    }
-
-    @Override
-    public void shiftLine(boolean horizontal, int row, int steps) {
-        gameService.shiftLine(horizontal, row, steps);
-    }
-
-    @Override
-    public Level getLevel() {
-        return gameService.getLevel();
-    }
-
-    @Override
-    public void attach(Observer observer) {
+    public void attach(JustPlaySceneObserver observer) {
         observers.add(observer);
-        gameService.attach(observer);
     }
 
     @Override
-    public void detatch(Observer observer) {
+    public void detatch(JustPlaySceneObserver observer) {
         observers.remove(observer);
-        gameService.detatch(observer);
     }
 
-    @Override
     public void update() {
-        for (Observer observer : observers) {
-            observer.update();
+        for (JustPlaySceneObserver observer : observers) {
+            observer.updateJustPlayScene();
         }
     }
 }
