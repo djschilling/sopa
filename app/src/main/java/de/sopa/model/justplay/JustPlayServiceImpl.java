@@ -23,15 +23,19 @@ public class JustPlayServiceImpl implements JustPlayService {
 
     @Override
     public JustPlayResult calculateResult(JustPlayLevelResult justPlayLevelResult) {
-        int currentScore = calculateNewScore();
+        int currentScore = calculateNewScore(justPlayLevelResult);
         JustPlayResult justPlayResult = new JustPlayResult(levelCount, justPlayLevelResult.getLeftTime(), calculateExtraTime(),lastScore, currentScore);
         lastScore = currentScore;
         leftTime = calculateExtraTime() + justPlayLevelResult.getLeftTime();
         return justPlayResult;
     }
 
-    private int calculateNewScore() {
-        return lastScore + 1000;
+    private int calculateNewScore(JustPlayLevelResult justPlayLevelResult) {
+        if(justPlayLevelResult.getLeftTime() == -1) {
+            return lastScore;
+        } else {
+            return lastScore + 1000;
+        }
     }
 
     private int calculateExtraTime() {
