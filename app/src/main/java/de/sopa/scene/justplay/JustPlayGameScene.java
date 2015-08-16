@@ -5,6 +5,7 @@ import de.sopa.model.justplay.JustPlayLevelResult;
 import de.sopa.scene.game.GameScene;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
+import org.andengine.entity.text.Text;
 
 /**
  * David Schilling - davejs92@gmail.com
@@ -12,6 +13,7 @@ import org.andengine.engine.handler.timer.TimerHandler;
 public class JustPlayGameScene extends GameScene {
 
     private final JustPlayLevel level;
+    private Text leftTime;
 
     public JustPlayGameScene(JustPlayLevel level) {
         super(level.getLevel());
@@ -20,6 +22,12 @@ public class JustPlayGameScene extends GameScene {
 
     @Override
     protected void addCustomLabels() {
+        leftTime = new Text(camera.getWidth() * 0.67f, camera.getHeight() * 0.83f, resourcesManager.scoreFont, String.valueOf(12), 6, vbom);
+        attachChild(leftTime);
+        Text leftTimeText= new Text(camera.getWidth() * 0.67f, camera.getHeight() * 0.81f, resourcesManager.levelFont, "Left Time", vbom);
+        leftTimeText.setScaleCenter(0, 0);
+        leftTimeText.setScale(0.3f);
+        attachChild(leftTimeText);
 
     }
 
