@@ -79,6 +79,11 @@ public class JustPlayGameScene extends GameScene {
     @Override
     public void update() {
         super.update();
-        leftTime.setText(String.valueOf(timeBasedGameService.getRemainingTime()));
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            @Override
+            public void onTimePassed(TimerHandler pTimerHandler) {
+                leftTime.setText(String.valueOf(timeBasedGameService.getRemainingTime()));
+            }
+        }));
     }
 }
