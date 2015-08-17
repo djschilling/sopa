@@ -82,6 +82,7 @@ public class ResourcesManager {
     public ITextureRegion shareLogoTexture;
     public IFont justPlayScoreFont;
     public ITextureRegion nextJustPlayLevel;
+    public ITextureRegion shareScoreTexture;
 
 
     public void loadMenuSceneResources() {
@@ -104,9 +105,10 @@ public class ResourcesManager {
 
     public void loadJustPlayScoreResources() {
         levelCompleteFont = resourceLoader.getFont("Impact.ttf", 200, WHITE,0, TRANSPARENT);
-        justPlayScoreFont = resourceLoader.getFont("Impact.ttf", 145, WHITE, 0, TRANSPARENT);
+        justPlayScoreFont = resourceLoader.getFont("Impact.ttf", 140, WHITE, 0, TRANSPARENT);
         nextJustPlayLevel.getTexture().load();
         backToMenuRegionP.getTexture().load();
+        shareScoreTexture.getTexture().load();
     }
 
     public void loadLevelChoiceSceneResources() {
@@ -279,6 +281,7 @@ public class ResourcesManager {
             creditsRegion = resourceLoader.getTexture("scenes/menu/credits.png");
             twitterLogoRegion = resourceLoader.getTexture("scenes/menu/Twitter_logo_blue.png");
             shareLogoTexture = resourceLoader.getTexture("scenes/menu/ShareThis.png");
+            shareScoreTexture = resourceLoader.getTexture("scenes/justplay/shareScore.png");
 
             regionTileMap = this.resourceLoader.getTileTextures();
             tilesBorderRegion = resourceLoader.getTexture("scenes/game/borders.png");
@@ -320,6 +323,7 @@ public class ResourcesManager {
         justPlayScoreFont.getTexture().unload();
         nextJustPlayLevel.getTexture().unload();
         backToMenuRegionP.getTexture().unload();
+        shareScoreTexture.getTexture().load();
 
     }
 }

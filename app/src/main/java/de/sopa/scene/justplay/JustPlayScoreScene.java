@@ -1,5 +1,6 @@
 package de.sopa.scene.justplay;
 
+import android.content.Intent;
 import de.sopa.scene.BaseScene;
 import de.sopa.model.justplay.JustPlayResult;
 import org.andengine.engine.handler.timer.ITimerCallback;
@@ -22,6 +23,7 @@ public class JustPlayScoreScene extends BaseScene {
     private boolean leaveScene;
     private JustPlayResult justPlayResult;
     private Text score;
+    private static final String LINK_TO_STORE = "https://play.google.com/store/apps/details?id=de.sopa";
 
     public JustPlayScoreScene(final JustPlayResult justPlayResult) {
         super();
@@ -35,14 +37,30 @@ public class JustPlayScoreScene extends BaseScene {
         addTexts(currentScore);
         if(justPlayResult.lost()) {
             addBackToMenuButton();
+            addShareButton();
         } else {
             addNextLevelButton();
         }
         addAnimation(currentScore);
     }
 
+    private void addShareButton() {
+        final ButtonSprite shareLogo = new ButtonSprite((camera.getWidth()* 0.5f),  (camera.getHeight() - 400), resourcesManager.shareScoreTexture, vbom, new ButtonSprite.OnClickListener() {
+            @Override
+            public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, "Just gained " + justPlayResult.getScore() + " in SOPA. "  + LINK_TO_STORE);
+                activity.startActivity(Intent.createChooser(shareIntent, "Share your thoughts"));
+            }
+        });
+        registerTouchArea(shareLogo);
+        attachChild(shareLogo);
+    }
+
     private void addBackToMenuButton() {
-        ButtonSprite backToMenuButton = new ButtonSprite((camera.getWidth() / 2 - 200), (camera.getHeight() - 400),
+        ButtonSprite backToMenuButton = new ButtonSprite((camera.getWidth() / 2 - 400), (camera.getHeight() - 400),
                 resourcesManager.backToMenuRegionP, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
@@ -96,16 +114,22 @@ public class JustPlayScoreScene extends BaseScene {
         attachChild(scoreText);
 
 
-        score = new Text((float) (camera.getWidth() * 0.6), (float) (camera.getHeight() * 0.45), resourcesManager.justPlayScoreFont, "" + currentScore[0], 8, vbom);
+        score = new Text((float) (camera.getWidth() * 0.65), (float) (camera.getHeight() * 0.45), resourcesManager.justPlayScoreFont, "" + currentScore[0], 8, vbom);
         score.setColor(BLACK);
         attachChild(score);
 
-        Text timeText = new Text((float) (camera.getWidth() * 0.05), (float) (camera.getHeight() * 0.605), resourcesManager.justPlayScoreFont,
-                        "Left Time:  \t" + justPlayResult.getLeftTime() + "\n" +
-                        "Extra Time:\t+" + justPlayResult.getExtraTime(), vbom);
-        timeText.setColor(WHITE);
+
         if(!justPlayResult.lost())  {
+            Text timeText = new Text((float) (camera.getWidth() * 0.05), (float) (camera.getHeight() * 0.605), resourcesManager.justPlayScoreFont,
+                            "Left Time:      \t" + justPlayResult.getLeftTime() + "\n" +
+                            "Extra Time:\t+" + justPlayResult.getExtraTime(), vbom);
+            timeText.setColor(WHITE);
             attachChild(timeText);
+        } else {
+            Text highScore = new Text((float) (camera.getWidth() * 0.05), (float) (camera.getHeight() * 0.605), resourcesManager.justPlayScoreFont,
+                    "Highscore:\t" + 4242, vbom);
+            highScore.setColor(BLACK);
+            attachChild(highScore);
         }
     }
 
@@ -121,15 +145,17 @@ public class JustPlayScoreScene extends BaseScene {
 
     private void addRectangles() {
         Rectangle rectangleScore = new Rectangle(0, (float) (camera.getHeight() * 0.45), camera.getWidth(), camera.getHeight() / 10, vbom);
-        rectangleScore.setColor(0, 102/255f, 255/255f);
+        rectangleScore.setColor(0, 102 / 255f, 255 / 255f);
         attachChild(rectangleScore);
 
-        Rectangle rectangleTime = new Rectangle(0, (float) (camera.getHeight() * 0.6), camera.getWidth(), (float) (camera.getHeight() * 0.2), vbom);
-        rectangleTime.setColor(153 / 255f, 0, 0);
-        attachChild(rectangleTime);
-
         if(justPlayResult.lost()) {
-            rectangleTime.setVisible(false);
+            Rectangle rectangleHighscore = new Rectangle(0, (float) (camera.getHeight() * 0.6), camera.getWidth(), (float) (camera.getHeight() / 10), vbom);
+            rectangleHighscore.setColor(153 / 255f, 102 / 255f, 0);
+            attachChild(rectangleHighscore);
+        } else {
+            Rectangle rectangleTime = new Rectangle(0, (float) (camera.getHeight() * 0.6), camera.getWidth(), (float) (camera.getHeight() / 5), vbom);
+            rectangleTime.setColor(153 / 255f, 0, 0);
+            attachChild(rectangleTime);
         }
     }
 
