@@ -49,12 +49,11 @@ public abstract class GameScene extends BaseScene implements GameSceneObserver {
     public void updateGameScene() {
 
         if (!gameFieldView.isActive()) {
-            updateTiles();
+            updateTiles(gameService.solvedPuzzle());
         }
         scoreText.setText(String.valueOf(gameService.getLevel().getMovesCount()));
         if (gameService.solvedPuzzle()) {
             setOnSceneTouchListener(null);
-            gameFieldView.setTubesState(1);
             gameService.detatch(this);
             baseScene.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
                 public void onTimePassed(final TimerHandler pTimerHandler) {
@@ -71,16 +70,16 @@ public abstract class GameScene extends BaseScene implements GameSceneObserver {
         float tilesSceneStartY = getTileSceneStartY();
         gameFieldView = new GameFieldView(0 - spacePerTile, tilesSceneStartY, spacePerTile,
                 gameService, resourcesManager.regionTileMap, vbom, resourcesManager.tilesBorderRegion);
-        gameFieldView.addTiles();
+        gameFieldView.addTiles(false);
         attachChild(gameFieldView);
 
     }
 
-    private void updateTiles() {
+    private void updateTiles(final boolean finished) {
         baseScene.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 detachChild(gameFieldView);
-                gameFieldView.addTiles();
+                gameFieldView.addTiles(finished);
                 attachChild(gameFieldView);
             }
         }));

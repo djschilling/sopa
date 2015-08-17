@@ -44,7 +44,13 @@ public class GameFieldView extends Entity {
         this.tilesBorderRegion = tilesBorderRegion;
     }
 
-    public void addTiles() {
+    public void addTiles(boolean finished) {
+        int tileIndex;
+        if (finished) {
+            tileIndex = 1;
+        } else {
+            tileIndex = 0;
+        }
         detachChildren();
         Tile[][] field = gameService.getLevel().getField();
         int width = field.length;
@@ -61,14 +67,17 @@ public class GameFieldView extends Entity {
                     switch (field[x][y].getTileType()) {
                         case PUZZLE:
                             TileSprite tileSprite = new TileSprite(tilePositionX, tilePositionY, spacePerTile, spacePerTile, textureRegions, vbom);
+                            tileSprite.setITextureRegionIndex(tileIndex);
                             attachChild(tileSprite);
                             tileSprites[x][y] = tileSprite;
                             break;
                         case FINISH:
                             finish = createFinishAnsStart(x, y, tilePositionX, tilePositionY, textureRegions, field);
+                            finish.setITextureRegionIndex(tileIndex);
                             break;
                         case START:
                             start = createFinishAnsStart(x, y, tilePositionX, tilePositionY, textureRegions, field);
+                            start.setITextureRegionIndex(tileIndex);
                             break;
                         default:
                             break;
@@ -170,8 +179,8 @@ public class GameFieldView extends Entity {
                 }
             }
         }
-        start.setITextureRegionIndex(1);
-        finish.setITextureRegionIndex(1);
+        start.setITextureRegionIndex(state);
+        finish.setITextureRegionIndex(state);
 
     }
 
