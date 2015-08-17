@@ -22,6 +22,7 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
     private TimeBasedGameService timeBasedGameService;
     private Text leftTime;
     private boolean leaveScene;
+    private ButtonSprite restartButton;
 
 
     public JustPlayGameScene(JustPlayLevel justPlayLevel) {
@@ -56,7 +57,7 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
 
     @Override
     protected void addButtons() {
-        ButtonSprite restartButton = new ButtonSprite(camera.getWidth() - 300, (camera.getHeight() - 300), resourcesManager.restartRegion, vbom, new ButtonSprite.OnClickListener() {
+        restartButton = new ButtonSprite(camera.getWidth() - 300, (camera.getHeight() - 300), resourcesManager.restartRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 storyService.loadJustPlaySceneFromJustPlayScene(timeBasedGameService, new JustPlayLevel(timeBasedGameService.getRemainingTime(), levelBackup));
@@ -94,6 +95,7 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
     @Override
     public void onSolvedGame() {
         timeBasedGameService.stop();
+        restartButton.setVisible(false);
         if(!leaveScene) {
             leaveScene = true;
             engine.registerUpdateHandler(new TimerHandler(1f, new ITimerCallback() {
