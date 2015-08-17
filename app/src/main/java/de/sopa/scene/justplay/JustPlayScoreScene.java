@@ -33,8 +33,24 @@ public class JustPlayScoreScene extends BaseScene {
 
         addRectangles();
         addTexts(currentScore);
-        addNextLevelButton();
+        if(justPlayResult.lost()) {
+            addBackToMenuButton();
+        } else {
+            addNextLevelButton();
+        }
         addAnimation(currentScore);
+    }
+
+    private void addBackToMenuButton() {
+        ButtonSprite backToMenuButton = new ButtonSprite((camera.getWidth() / 2 - 200), (camera.getHeight() - 400),
+                resourcesManager.backToMenuRegionP, vbom, new ButtonSprite.OnClickListener() {
+            @Override
+            public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                onBackKeyPressed();
+            }
+        });
+        attachChild(backToMenuButton);
+        registerTouchArea(backToMenuButton);
     }
 
     private void addAnimation(final int[] currentScore) {
@@ -58,7 +74,8 @@ public class JustPlayScoreScene extends BaseScene {
     }
 
     private void addNextLevelButton() {
-        ButtonSprite nextLevelButton = new ButtonSprite((camera.getWidth() / 2 - 200), (camera.getHeight() - 400), resourcesManager.nextJustPlayLevel, vbom, new ButtonSprite.OnClickListener() {
+        ButtonSprite nextLevelButton = new ButtonSprite((camera.getWidth() / 2 - 200), (camera.getHeight() - 400),
+                resourcesManager.nextJustPlayLevel, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 

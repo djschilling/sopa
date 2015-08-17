@@ -106,6 +106,7 @@ public class ResourcesManager {
         levelCompleteFont = resourceLoader.getFont("Impact.ttf", 200, WHITE,0, TRANSPARENT);
         justPlayScoreFont = resourceLoader.getFont("Impact.ttf", 145, WHITE, 0, TRANSPARENT);
         nextJustPlayLevel.getTexture().load();
+        backToMenuRegionP.getTexture().load();
     }
 
     public void loadLevelChoiceSceneResources() {
@@ -318,5 +319,7 @@ public class ResourcesManager {
         levelCompleteFont.getTexture().unload();
         justPlayScoreFont.getTexture().unload();
         nextJustPlayLevel.getTexture().unload();
+        backToMenuRegionP.getTexture().unload();
+
     }
 }
