@@ -45,9 +45,9 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
 
     @Override
     protected void addCustomLabels() {
-        leftTime = new Text(camera.getWidth() * 0.67f, camera.getHeight() * 0.83f, resourcesManager.scoreFont, "", 6, vbom);
+        leftTime = new Text(0, camera.getHeight() * 0.83f, resourcesManager.scoreFont, "", 6, vbom);
         attachChild(leftTime);
-        Text leftTimeText= new Text(camera.getWidth() * 0.67f, camera.getHeight() * 0.81f, resourcesManager.levelFont, "Left Time", vbom);
+        Text leftTimeText= new Text(0, camera.getHeight() * 0.81f, resourcesManager.levelFont, "Left Time", vbom);
         leftTimeText.setScaleCenter(0, 0);
         leftTimeText.setScale(0.3f);
         attachChild(leftTimeText);
