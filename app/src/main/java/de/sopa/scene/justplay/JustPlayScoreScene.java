@@ -107,6 +107,10 @@ public class JustPlayScoreScene extends BaseScene {
     private void addTexts(int[] currentScore) {
         Text levelCompleteTextShape = new Text((float) (camera.getWidth() * 0.12), (float) (camera.getHeight() * 0.1), resourcesManager.levelCompleteFont, getHeadText(), 20, vbom);
         attachChild(levelCompleteTextShape);
+        if(justPlayResult.lost()) {
+            levelCompleteTextShape.setScaleCenter(levelCompleteTextShape.getWidth() / 2, levelCompleteTextShape.getHeight() / 2);
+            levelCompleteTextShape.setScale(1.3f);
+        }
 
         Text scoreText = new Text((float) (camera.getWidth() * 0.05), (float) (camera.getHeight() * 0.45), resourcesManager.justPlayScoreFont,
                 "Score:      ", vbom);
