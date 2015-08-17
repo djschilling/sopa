@@ -71,6 +71,7 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
 
     @Override
     public void onSolvedGame() {
+        timeBasedGameService.stop();
         if(!leaveScene) {
             leaveScene = true;
             engine.registerUpdateHandler(new TimerHandler(1f, new ITimerCallback() {

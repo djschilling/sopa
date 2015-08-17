@@ -14,4 +14,6 @@ public interface TimeBasedGameService {
     void attach(JustPlaySceneObserver observer);
 
     void detatch(JustPlaySceneObserver observer);
+
+    void stop();
 }

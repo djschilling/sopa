@@ -13,6 +13,7 @@ public class TimeBasedGameServiceImpl implements TimeBasedGameService {
 
     private int remainingTime;
     private List<JustPlaySceneObserver> observers;
+    private Timer timer;
 
     public TimeBasedGameServiceImpl(int remainingTime) {
         this.remainingTime = remainingTime;
@@ -26,7 +27,7 @@ public class TimeBasedGameServiceImpl implements TimeBasedGameService {
 
     @Override
     public void start() {
-        final Timer timer = new Timer();
+        timer = new Timer();
         TimerTask timerTask = new TimerTask() {
 
             @Override
@@ -50,6 +51,11 @@ public class TimeBasedGameServiceImpl implements TimeBasedGameService {
     @Override
     public void detatch(JustPlaySceneObserver observer) {
         observers.remove(observer);
+    }
+
+    @Override
+    public void stop() {
+        timer.cancel();
     }
 
     public void update() {
