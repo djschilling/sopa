@@ -36,16 +36,14 @@ public class JustPlayServiceImpl implements JustPlayService {
 
     private LevelSetting getCurrentLevelSetting() {
         if(levelCount <= 3) {
-            return new LevelSetting(difficultyGameSize[0], difficultyMoves[0], difficultyTime[0], difficultyScore[0]);
-        } else if(levelCount <= 6) {
             return new LevelSetting(difficultyGameSize[1], difficultyMoves[1], difficultyTime[1], difficultyScore[1]);
-        } else if(levelCount <= 14) {
+        } else if(levelCount <= 11) {
             return new LevelSetting(difficultyGameSize[2], difficultyMoves[2], difficultyTime[2], difficultyScore[2]);
-        } else if(levelCount <= 17) {
+        } else if(levelCount <= 14) {
             return new LevelSetting(difficultyGameSize[3], difficultyMoves[3], difficultyTime[3], difficultyScore[3]);
-        } else if(levelCount <= 23) {
+        } else if(levelCount <= 20) {
             return new LevelSetting(difficultyGameSize[4], difficultyMoves[4], difficultyTime[4], difficultyScore[4]);
-        } else if(levelCount <= 33) {
+        } else if(levelCount <= 30) {
             return new LevelSetting(difficultyGameSize[5], difficultyMoves[5], difficultyTime[5], difficultyScore[5]);
         } else {
             return new LevelSetting(difficultyGameSize[6], difficultyMoves[6], difficultyTime[6], difficultyScore[6]);
