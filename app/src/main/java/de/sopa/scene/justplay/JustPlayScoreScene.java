@@ -38,7 +38,7 @@ public class JustPlayScoreScene extends BaseScene {
     }
 
     private void addAnimation(final int[] currentScore) {
-        engine.registerUpdateHandler(new TimerHandler(0.0005f, true, new ITimerCallback() {
+        engine.registerUpdateHandler(new TimerHandler(0.01f, true, new ITimerCallback() {
             @Override
             public void onTimePassed(TimerHandler pTimerHandler) {
                 if (!leaveScene) {
