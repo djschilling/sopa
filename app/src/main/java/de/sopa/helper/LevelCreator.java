@@ -1,8 +1,6 @@
 package de.sopa.helper;
 
-import de.sopa.model.game.Level;
-import de.sopa.model.game.Tile;
-import de.sopa.model.game.TileType;
+import de.sopa.model.game.*;
 
 import java.lang.IllegalArgumentException;import java.lang.IllegalStateException;import java.lang.Math;import java.lang.String;
 import java.util.ArrayList;
@@ -19,9 +17,16 @@ import static de.sopa.model.game.TileType.UNDEFINED;
 
 public class LevelCreator {
 
+    private final LevelDestroyer levelDestroyer;
+    private final LevelSolver levelSolver;
     private int[] directionsX = new int[]{0, 1, 0, -1};
     private int[] directionsY = new int[]{1, 0, -1, 0};
     private Tile[][] tiles;
+
+    public LevelCreator() {
+        levelDestroyer = new LevelDestroyer();
+        levelSolver = new LevelSolver(new GameFieldService());
+    }
 
     public Level generateSolvedField(int width, int height) {
         int number = 0;
@@ -146,6 +151,14 @@ public class LevelCreator {
             return generateSolvedField(width, height);
         }
 
+    }
+
+    public Level generateLevel(int size, int moves) {
+        Level level = null;
+        do{
+            level = levelDestroyer.destroyField(generateSolvedField(size, size), moves, moves);
+        } while (levelSolver.solve(level, moves).getMinimumMovesToSolve() != moves);
+        return level;
     }
 }
 

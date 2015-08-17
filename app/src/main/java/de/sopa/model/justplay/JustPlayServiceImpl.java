@@ -9,18 +9,16 @@ import de.sopa.model.game.LevelDestroyer;
 public class JustPlayServiceImpl implements JustPlayService {
     private int levelCount;
     private final LevelCreator levelCreator;
-    private final LevelDestroyer levelDestroyer;
     private int leftTime;
     private int lastScore;
     private int[] difficultyGameSize =  {4,     5,      5,      6,      6,      6,      6};
     private int[] difficultyMoves =     {1,     2,      3,      2,      3,      4,      4};
-    private int[] difficultyTime =      {3,     5,      7,      7,      10,     15,     12};
+    private int[] difficultyTime =      {3,     5,      7,      7,      8,      14,     12};
     private int[] difficultyScore =     {50,    70,    100,    100,    150,     250,    350};
 
     public JustPlayServiceImpl() {
         levelCreator = new LevelCreator();
-        levelDestroyer = new LevelDestroyer();
-        this.levelCount = 0;
+        this.levelCount = 1;
         leftTime = 10;
         lastScore = 0;
     }
@@ -37,17 +35,17 @@ public class JustPlayServiceImpl implements JustPlayService {
     }
 
     private LevelSetting getCurrentLevelSetting() {
-        if(levelCount <= 2) {
+        if(levelCount <= 3) {
             return new LevelSetting(difficultyGameSize[0], difficultyMoves[0], difficultyTime[0], difficultyScore[0]);
-        } else if(levelCount <= 5) {
+        } else if(levelCount <= 6) {
             return new LevelSetting(difficultyGameSize[1], difficultyMoves[1], difficultyTime[1], difficultyScore[1]);
-        } else if(levelCount <= 13) {
+        } else if(levelCount <= 14) {
             return new LevelSetting(difficultyGameSize[2], difficultyMoves[2], difficultyTime[2], difficultyScore[2]);
-        } else if(levelCount <= 16) {
+        } else if(levelCount <= 17) {
             return new LevelSetting(difficultyGameSize[3], difficultyMoves[3], difficultyTime[3], difficultyScore[3]);
-        } else if(levelCount <= 22) {
+        } else if(levelCount <= 23) {
             return new LevelSetting(difficultyGameSize[4], difficultyMoves[4], difficultyTime[4], difficultyScore[4]);
-        } else if(levelCount <= 32) {
+        } else if(levelCount <= 33) {
             return new LevelSetting(difficultyGameSize[5], difficultyMoves[5], difficultyTime[5], difficultyScore[5]);
         } else {
             return new LevelSetting(difficultyGameSize[6], difficultyMoves[6], difficultyTime[6], difficultyScore[6]);
@@ -67,8 +65,7 @@ public class JustPlayServiceImpl implements JustPlayService {
     @Override
     public JustPlayLevel getNextLevel() {
         LevelSetting currentLevelSetting = getCurrentLevelSetting();
-        return new JustPlayLevel(leftTime, levelDestroyer.destroyField(levelCreator.generateSolvedField(currentLevelSetting.getSize(),
-                currentLevelSetting.getSize()), currentLevelSetting.getMoves(), currentLevelSetting.getMoves()));
+        return new JustPlayLevel(leftTime, levelCreator.generateLevel(currentLevelSetting.getSize(), currentLevelSetting.getMoves()));
     }
 
 }
