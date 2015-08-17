@@ -25,11 +25,15 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
         super(justPlayLevel.getLevel());
         this.justPlayLevel = justPlayLevel;
         leaveScene = false;
+        timeBasedGameService = new TimeBasedGameServiceImpl(justPlayLevel.getLeftTime());
+        timeBasedGameService.start();
+        timeBasedGameService.attach(this);
+        leftTime.setText(String.valueOf(justPlayLevel.getLeftTime()));
     }
 
     @Override
     protected void addCustomLabels() {
-        leftTime = new Text(camera.getWidth() * 0.67f, camera.getHeight() * 0.83f, resourcesManager.scoreFont, String.valueOf(timeBasedGameService.getRemainingTime()), 6, vbom);
+        leftTime = new Text(camera.getWidth() * 0.67f, camera.getHeight() * 0.83f, resourcesManager.scoreFont, "", 6, vbom);
         attachChild(leftTime);
         Text leftTimeText= new Text(camera.getWidth() * 0.67f, camera.getHeight() * 0.81f, resourcesManager.levelFont, "Left Time", vbom);
         leftTimeText.setScaleCenter(0, 0);
@@ -47,9 +51,6 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
     protected void initializeLogic() {
         gameService = new GameServiceImpl(this.level);
         gameService.attach(this);
-        timeBasedGameService = new TimeBasedGameServiceImpl(10);
-        timeBasedGameService.start();
-        timeBasedGameService.attach(this);
     }
 
     @Override
@@ -76,7 +77,7 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
                 @Override
                 public void onTimePassed(TimerHandler pTimerHandler) {
                     engine.unregisterUpdateHandler(pTimerHandler);
-                    storyService.loadJustPlayScoreSceneFromJustPlayScene(new JustPlayLevelResult(justPlayLevel.getLeftTime() - 12, gameService.getLevel().getMovesCount()));
+                    storyService.loadJustPlayScoreSceneFromJustPlayScene(new JustPlayLevelResult(timeBasedGameService.getRemainingTime(), gameService.getLevel().getMovesCount()));
                 }
             }));
         }

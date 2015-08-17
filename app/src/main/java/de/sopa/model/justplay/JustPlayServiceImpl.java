@@ -17,7 +17,7 @@ public class JustPlayServiceImpl implements JustPlayService {
         levelCreator = new LevelCreator();
         levelDestroyer = new LevelDestroyer();
         this.levelCount = 0;
-        leftTime = 25;
+        leftTime = 10;
         lastScore = 0;
     }
 
@@ -39,7 +39,7 @@ public class JustPlayServiceImpl implements JustPlayService {
     }
 
     private int calculateExtraTime() {
-        return 10;
+        return 5;
     }
 
     @Override
