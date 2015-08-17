@@ -1,6 +1,8 @@
 package de.sopa.scene.justplay;
 
 import de.sopa.model.game.GameServiceImpl;
+import de.sopa.model.game.Level;
+import de.sopa.model.game.TimeBasedGameService;
 import de.sopa.model.game.TimeBasedGameServiceImpl;
 import de.sopa.model.justplay.JustPlayLevel;
 import de.sopa.model.justplay.JustPlayLevelResult;
@@ -8,6 +10,7 @@ import de.sopa.observer.JustPlaySceneObserver;
 import de.sopa.scene.game.GameScene;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
+import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.text.Text;
 
 /**
@@ -16,7 +19,7 @@ import org.andengine.entity.text.Text;
 public class JustPlayGameScene extends GameScene implements JustPlaySceneObserver {
 
     private final JustPlayLevel justPlayLevel;
-    private TimeBasedGameServiceImpl timeBasedGameService;
+    private TimeBasedGameService timeBasedGameService;
     private Text leftTime;
     private boolean leaveScene;
 
@@ -27,6 +30,15 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
         leaveScene = false;
         timeBasedGameService = new TimeBasedGameServiceImpl(justPlayLevel.getLeftTime());
         timeBasedGameService.start();
+        timeBasedGameService.attach(this);
+        leftTime.setText(String.valueOf(justPlayLevel.getLeftTime()));
+    }
+
+    public JustPlayGameScene(TimeBasedGameService timeBasedGameService, JustPlayLevel justPlayLevel) {
+        super(justPlayLevel.getLevel());
+        this.justPlayLevel = justPlayLevel;
+        leaveScene = false;
+        this.timeBasedGameService = timeBasedGameService;
         timeBasedGameService.attach(this);
         leftTime.setText(String.valueOf(justPlayLevel.getLeftTime()));
     }
@@ -44,6 +56,16 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
 
     @Override
     protected void addButtons() {
+        ButtonSprite restartButton = new ButtonSprite(camera.getWidth() - 300, (camera.getHeight() - 300), resourcesManager.restartRegion, vbom, new ButtonSprite.OnClickListener() {
+            @Override
+            public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                storyService.loadJustPlaySceneFromJustPlayScene(timeBasedGameService, new JustPlayLevel(timeBasedGameService.getRemainingTime(), levelBackup));
+            }
+        });
+        restartButton.setWidth(300);
+        restartButton.setHeight(300);
+        registerTouchArea(restartButton);
+        attachChild(restartButton);
 
     }
 
@@ -96,6 +118,12 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
                 }
             }));
         }
+    }
+
+    @Override
+    public void disposeScene() {
+        super.disposeScene();
+        timeBasedGameService.detatch(this);
     }
 
     @Override

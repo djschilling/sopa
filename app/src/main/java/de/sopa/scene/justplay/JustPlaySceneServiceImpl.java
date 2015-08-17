@@ -2,6 +2,8 @@ package de.sopa.scene.justplay;
 
 
 import de.sopa.manager.ResourcesManager;
+import de.sopa.model.game.TimeBasedGameService;
+import de.sopa.model.justplay.JustPlayLevel;
 import de.sopa.model.justplay.JustPlayLevelResult;
 import de.sopa.model.justplay.JustPlayServiceImpl;
 import de.sopa.scene.BaseScene;
@@ -60,6 +62,19 @@ public class JustPlaySceneServiceImpl implements JustPlaySceneService {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
                 justPlayGameScene = new JustPlayGameScene(justPlayService.getNextLevel());
+                setScene(justPlayGameScene);
+            }
+        }));
+    }
+
+    @Override
+    public void loadJustPlaySceneFromJustPlayScene(final TimeBasedGameService timeBasedGameService, final JustPlayLevel justPlayLevel) {
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            @Override
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                justPlayGameScene.disposeScene();
+                justPlayGameScene = new JustPlayGameScene(timeBasedGameService, justPlayLevel);
                 setScene(justPlayGameScene);
             }
         }));

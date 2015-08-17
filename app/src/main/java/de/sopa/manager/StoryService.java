@@ -2,6 +2,8 @@ package de.sopa.manager;
 
 import de.sopa.model.game.Level;
 import de.sopa.model.game.LevelResult;
+import de.sopa.model.game.TimeBasedGameService;
+import de.sopa.model.justplay.JustPlayLevel;
 import de.sopa.model.justplay.JustPlayLevelResult;
 import de.sopa.scene.BaseScene;
 
@@ -57,4 +59,6 @@ public interface StoryService {
     void loadJustPlaySceneFromJustPlayScoreScene();
 
     void loadMenuSceneFromJustPlayScoreScene();
+
+    void loadJustPlaySceneFromJustPlayScene(TimeBasedGameService timeBasedGameService, JustPlayLevel justPlayLevel);
 }
