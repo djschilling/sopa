@@ -2,8 +2,9 @@ package de.sopa.database;
 
 import android.database.sqlite.SQLiteDatabase;
 
+
 /**
- * @author David Schilling - davejs92@gmail.com
+ * @author  David Schilling - davejs92@gmail.com
  */
 public class LevelInfoTable {
 
@@ -14,14 +15,12 @@ public class LevelInfoTable {
     public static final String COLUMN_STARS = "stars";
 
     private static final String DATABASE_CREATE = "create table "
-            + TABLE_LEVEL_INFO + "(" + COLUMN_ID
-            + " integer primary key autoincrement, " + COLUMN_LOCKED
-            + " integer not null," + COLUMN_FEWEST_MOVES + " integer, "
-            + COLUMN_STARS + " integer not null);";
-
+        + TABLE_LEVEL_INFO + "(" + COLUMN_ID
+        + " integer primary key autoincrement, " + COLUMN_LOCKED
+        + " integer not null," + COLUMN_FEWEST_MOVES + " integer, " + COLUMN_STARS + " integer not null);";
 
     public static void onCreate(SQLiteDatabase database) {
+
         database.execSQL(DATABASE_CREATE);
     }
-
 }

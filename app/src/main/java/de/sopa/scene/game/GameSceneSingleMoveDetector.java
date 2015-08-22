@@ -2,11 +2,13 @@ package de.sopa.scene.game;
 
 import org.andengine.input.touch.detector.HoldDetector;
 
+
 /**
- * @author Raphael Schilling
- * @author David Schilling - davejs92@gmail.com
+ * @author  Raphael Schilling
+ * @author  David Schilling - davejs92@gmail.com
  */
 public class GameSceneSingleMoveDetector implements HoldDetector.IHoldDetectorListener {
+
     private final float SWIPE_SENSITIVITY;
     private final float fieldStartX;
     private float firstX;
@@ -17,6 +19,7 @@ public class GameSceneSingleMoveDetector implements HoldDetector.IHoldDetectorLi
     private boolean isMoved;
 
     public GameSceneSingleMoveDetector(float startX, float startY, float widthPerTile, GameFieldView gameFieldView) {
+
         this.fieldStartX = startX;
         this.fieldStartY = startY;
         this.widthPerTile = widthPerTile;
@@ -27,14 +30,19 @@ public class GameSceneSingleMoveDetector implements HoldDetector.IHoldDetectorLi
 
     @Override
     public void onHoldStarted(HoldDetector pHoldDetector, int pPointerID, float pHoldX, float pHoldY) {
+
         firstX = pHoldX;
         firstY = pHoldY;
         isMoved = false;
     }
 
+
     @Override
-    public void onHold(HoldDetector pHoldDetector, long pHoldTimeMilliseconds, int pPointerID, float pHoldX, float pHoldY) {
+    public void onHold(HoldDetector pHoldDetector, long pHoldTimeMilliseconds, int pPointerID, float pHoldX,
+        float pHoldY) {
+
         int row;
+
         if (!isMoved) {
             if (pHoldX - firstX > widthPerTile) {
                 row = (int) ((firstY - fieldStartY) / widthPerTile);
@@ -57,9 +65,13 @@ public class GameSceneSingleMoveDetector implements HoldDetector.IHoldDetectorLi
         }
     }
 
+
     @Override
-    public void onHoldFinished(HoldDetector pHoldDetector, long pHoldTimeMilliseconds, int pPointerID, float pHoldX, float pHoldY) {
+    public void onHoldFinished(HoldDetector pHoldDetector, long pHoldTimeMilliseconds, int pPointerID, float pHoldX,
+        float pHoldY) {
+
         int row;
+
         if (!isMoved) {
             if (Math.abs(pHoldX - firstX) > Math.abs(pHoldY - firstY)) {
                 if (pHoldX - firstX > SWIPE_SENSITIVITY) {
@@ -71,9 +83,7 @@ public class GameSceneSingleMoveDetector implements HoldDetector.IHoldDetectorLi
                     gameFieldView.oneStep(true, row, -1);
                     isMoved = true;
                 }
-
-            }
-            else if (pHoldY - firstY > SWIPE_SENSITIVITY) {
+            } else if (pHoldY - firstY > SWIPE_SENSITIVITY) {
                 row = (int) ((firstX - fieldStartX) / widthPerTile);
                 gameFieldView.oneStep(false, row, 1);
                 isMoved = true;
@@ -85,4 +95,3 @@ public class GameSceneSingleMoveDetector implements HoldDetector.IHoldDetectorLi
         }
     }
 }
-

@@ -1,8 +1,13 @@
 package de.sopa.model.game;
 
 /**
- * @author David Schilling - davejs92@gmail.com
+ * @author  David Schilling - davejs92@gmail.com
  */
 public enum TileType {
-    START, FINISH, PUZZLE, NONE, UNDEFINED
+
+    START,
+    FINISH,
+    PUZZLE,
+    NONE,
+    UNDEFINED
 }

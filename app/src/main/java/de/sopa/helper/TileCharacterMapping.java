@@ -1,13 +1,14 @@
 package de.sopa.helper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import de.sopa.model.game.Tile;
 import de.sopa.model.game.TileType;
 
+import java.util.HashMap;
+import java.util.Map;
+
+
 /**
- * @author David Schilling -davejs92@gmail.com
+ * @author  David Schilling -davejs92@gmail.com
  */
 public final class TileCharacterMapping {
 
@@ -57,6 +58,5 @@ public final class TileCharacterMapping {
     }
 
     private TileCharacterMapping() {
-
     }
 }

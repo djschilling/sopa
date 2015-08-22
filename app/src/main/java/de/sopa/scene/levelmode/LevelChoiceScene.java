@@ -1,13 +1,11 @@
 package de.sopa.scene.levelmode;
 
 
-
 import de.sopa.model.game.LevelInfo;
 import de.sopa.model.levelchoice.LevelChoiceService;
 import de.sopa.model.levelchoice.LevelChoiceServiceImpl;
 import de.sopa.observer.Observer;
 import de.sopa.scene.BaseScene;
-import java.util.List;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -19,6 +17,8 @@ import org.andengine.entity.text.Text;
 import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.util.modifier.ease.EaseQuartInOut;
+
+import java.util.List;
 
 /**
  * @author Raphael Schilling
@@ -44,6 +44,7 @@ public class LevelChoiceScene extends BaseScene implements Observer {
         float widthPerLevel = (camera.getWidth() / COLUMNS);
         addChangeLevelButtons();
         addSwipeDetector();
+
         addLevelChooseTiles(levelInfos, widthPerLevel);
         moveToLastUnlocked();
         resourcesManager.musicService.playMusic();
@@ -65,9 +66,10 @@ public class LevelChoiceScene extends BaseScene implements Observer {
 
     private void moveToLastUnlocked() {
         LevelInfo lastUnlocked = levelService.getLastUnlocked();
-        int screenToJumpTo = (int)(lastUnlocked.getLevelId() - 0.1) / 12;
+        int screenToJumpTo = (int) (lastUnlocked.getLevelId() - 0.1) / 12;
         levelChoiceService.moveTo(screenToJumpTo);
     }
+
 
     private void addLevelChooseTiles(final List<LevelInfo> levelInfos, float widthPerLevel) {
         for (int levelIndex = 0; levelIndex < levelInfos.size(); levelIndex++) {

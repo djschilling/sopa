@@ -35,6 +35,7 @@ public class GameFieldView extends Entity {
     private TileSprite start;
     private TileSprite finish;
     private boolean active = true;
+
     private int countModifier;
     private int modifierFinished;
 

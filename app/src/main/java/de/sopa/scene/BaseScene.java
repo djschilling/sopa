@@ -1,21 +1,27 @@
 package de.sopa.scene;
 
 import android.app.Activity;
+
 import de.sopa.helper.LevelService;
+
 import de.sopa.manager.ResourcesManager;
-import de.sopa.manager.StoryService;
 import de.sopa.manager.SettingsService;
+import de.sopa.manager.StoryService;
+
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
+
 import org.andengine.entity.scene.Scene;
+
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+
 
 /**
  * This abstract scene should always be used when creating new scenes.
  *
- * It holds resources which are often needed in scenes.
+ * <p>It holds resources which are often needed in scenes.</p>
  *
- * @author David Schilling - davejs92@gmail.com
+ * @author  David Schilling - davejs92@gmail.com
  */
 public abstract class BaseScene extends Scene {
 
@@ -30,6 +36,7 @@ public abstract class BaseScene extends Scene {
     protected BaseScene baseScene;
 
     public BaseScene() {
+
         this.resourcesManager = ResourcesManager.getInstance();
         this.engine = resourcesManager.engine;
         this.activity = resourcesManager.activity;
@@ -40,7 +47,6 @@ public abstract class BaseScene extends Scene {
         this.baseScene = this;
         this.settingsService = resourcesManager.settingsService;
     }
-
 
     /**
      * Called when Android Back Button is pressed.

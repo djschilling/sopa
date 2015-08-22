@@ -2,8 +2,14 @@ package de.sopa.manager;
 
 import android.media.MediaPlayer;
 
+import de.sopa.GameActivity;
+import de.sopa.R;
+
+import de.sopa.helper.LevelService;
+
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
+
 import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TextureRegion;
@@ -11,17 +17,16 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import java.util.Map;
 
-import de.sopa.GameActivity;
-import de.sopa.R;
-import de.sopa.helper.LevelService;
+import static android.graphics.Color.TRANSPARENT;
+import static android.graphics.Color.WHITE;
 
-import static android.graphics.Color.*;
 
 /**
- * @author David Schilling - davejs92@gmail.com
- * @author Raphael Schilling
+ * @author  David Schilling - davejs92@gmail.com
+ * @author  Raphael Schilling
  */
 public class ResourcesManager {
+
     private static final ResourcesManager INSTANCE = new ResourcesManager();
     public StoryService storyService;
 
@@ -32,7 +37,6 @@ public class ResourcesManager {
 
     private ResourceLoader resourceLoader;
 
-
     public ITextureRegion level_mode_region;
     public ITextureRegion just_play_region;
     public ITextureRegion settingsRegion;
@@ -41,6 +45,7 @@ public class ResourcesManager {
 
     public IFont levelCompleteFont;
     public Map<Character, TextureRegion> regionTileMap;
+
     public ITextureRegion tilesBorderRegion;
     public ITextureRegion levelChoiceRegion;
     public ITextureRegion levelChoiceArrowRightRegion;
@@ -84,34 +89,40 @@ public class ResourcesManager {
     public ITextureRegion nextJustPlayLevel;
     public ITextureRegion shareScoreTexture;
 
-
     public void loadMenuSceneResources() {
+
         loadMenuSceneGraphics();
     }
 
 
     public void loadLoadingSceneResources() {
+
         loadingScreenBackgroundRegion = resourceLoader.getTexture("scenes/loading/LoadingScreen2.png");
         loadingScreenBackgroundRegion.getTexture().load();
     }
 
+
     public void loadGameSceneResources() {
+
         loadGameSceneGraphics();
         scoreFont = resourceLoader.getFont("Impact.ttf", 200, WHITE, 2, TRANSPARENT);
         minMovesFont = resourceLoader.getFont("Impact.ttf", 200, WHITE, 2, TRANSPARENT);
         levelFont = resourceLoader.getFont("Impact.ttf", 200, WHITE, 2, TRANSPARENT);
-
     }
 
+
     public void loadJustPlayScoreResources() {
-        levelCompleteFont = resourceLoader.getFont("Impact.ttf", 200, WHITE,0, TRANSPARENT);
+
+        levelCompleteFont = resourceLoader.getFont("Impact.ttf", 200, WHITE, 0, TRANSPARENT);
         justPlayScoreFont = resourceLoader.getFont("Impact.ttf", 140, WHITE, 0, TRANSPARENT);
         nextJustPlayLevel.getTexture().load();
         backToMenuRegionP.getTexture().load();
         shareScoreTexture.getTexture().load();
     }
 
+
     public void loadLevelChoiceSceneResources() {
+
         prepareTextures();
         levelChoiceRegion.getTexture().load();
         levelChoiceRegionSW.getTexture().load();
@@ -125,7 +136,9 @@ public class ResourcesManager {
         levelChoiceSWFont = resourceLoader.getFont("Impact.ttf", 110, 0xFF808080, 0, 0xFF808080);
     }
 
+
     public void loadScoreSceneResources() {
+
         prepareTextures();
         movesScoreFont = resourceLoader.getFont("DroidSans-Bold.ttf", 100, WHITE, 0, 0x00000000);
         starRegion.getTexture().load();
@@ -134,10 +147,11 @@ public class ResourcesManager {
         backToChoiceRegion.getTexture().load();
         backToMenuRegionA.getTexture().load();
         backToMenuRegionP.getTexture().load();
-
     }
 
+
     private void loadMenuSceneGraphics() {
+
         prepareTextures();
         level_mode_region.getTexture().load();
         just_play_region.getTexture().load();
@@ -150,20 +164,27 @@ public class ResourcesManager {
 
 
     private void loadGameSceneGraphics() {
+
         prepareTextures();
         regionTileMap = this.resourceLoader.getTileTextures();
+
         for (TextureRegion textureRegion : regionTileMap.values()) {
             textureRegion.getTexture().load();
         }
+
         tilesBorderRegion.getTexture().load();
         restartRegion.getTexture().load();
     }
 
+
     public void unloadGameSceneResources() {
+
         unloadGameSceneTextures();
     }
 
+
     public void unloadLevelChoiceSceneTextures() {
+
         levelChoiceRegion.getTexture().unload();
         levelChoiceRegionSW.getTexture().unload();
         levelChoiceRegionLocked.getTexture().unload();
@@ -180,10 +201,13 @@ public class ResourcesManager {
 
 
     public void unloadMenuSceneResources() {
+
         unloadMenuSceneTextures();
     }
 
+
     private void unloadMenuSceneTextures() {
+
         level_mode_region.getTexture().unload();
         just_play_region.getTexture().unload();
         settingsRegion.getTexture().unload();
@@ -194,10 +218,13 @@ public class ResourcesManager {
         sopaFont = null;
     }
 
+
     private void unloadGameSceneTextures() {
+
         for (TextureRegion textureRegion : regionTileMap.values()) {
             textureRegion.getTexture().unload();
         }
+
         restartRegion.getTexture().unload();
         tilesBorderRegion.getTexture().unload();
         scoreFont.getTexture().unload();
@@ -208,7 +235,11 @@ public class ResourcesManager {
         levelFont = null;
     }
 
-    public static void prepareManager(Engine engine, GameActivity activity, Camera camera, VertexBufferObjectManager vbom, ResourceLoader resourceLoader, StoryService storyService, LevelService levelService, SettingsService settingsService) {
+
+    public static void prepareManager(Engine engine, GameActivity activity, Camera camera,
+        VertexBufferObjectManager vbom, ResourceLoader resourceLoader, StoryService storyService,
+        LevelService levelService, SettingsService settingsService) {
+
         getInstance().engine = engine;
         getInstance().activity = activity;
         getInstance().camera = camera;
@@ -216,15 +247,20 @@ public class ResourcesManager {
         getInstance().resourceLoader = resourceLoader;
         getInstance().storyService = storyService;
         getInstance().levelService = levelService;
-        getInstance().musicService = new MusicService(MediaPlayer.create(activity.getApplicationContext(), R.raw.theme), true);
+        getInstance().musicService = new MusicService(MediaPlayer.create(activity.getApplicationContext(), R.raw.theme),
+                true);
         getInstance().settingsService = settingsService;
     }
 
+
     public static ResourcesManager getInstance() {
+
         return INSTANCE;
     }
 
+
     public void unloadScoreSceneResources() {
+
         movesScoreFont.getTexture().unload();
         starRegion.getTexture().unload();
         starSWRegion.getTexture().unload();
@@ -234,24 +270,32 @@ public class ResourcesManager {
         backToMenuRegionP.getTexture().unload();
     }
 
+
     public void loadSettingsScene() {
+
         prepareTextures();
         muteRegion.getTexture().load();
         unMuteRegion.getTexture().load();
     }
 
+
     public void unloadSettingsScene() {
+
         muteRegion.getTexture().unload();
         unMuteRegion.getTexture().unload();
     }
 
+
     public void loadLevelCreditsSceneResources() {
+
         creditsHeading = resourceLoader.getFont("Impact.ttf", 200, WHITE, 2, TRANSPARENT);
         creditsSubHeading = resourceLoader.getFont("Impact.ttf", 100, WHITE, 2, TRANSPARENT);
         creditsText = resourceLoader.getFont("Impact.ttf", 50, WHITE, 2, TRANSPARENT);
     }
 
+
     public void unloadCreditsSceneResources() {
+
         creditsHeading.unload();
         creditsSubHeading.unload();
         creditsText.unload();
@@ -259,6 +303,7 @@ public class ResourcesManager {
 
 
     public void prepareTextures() {
+
         if (!preparedTextures) {
             levelChoiceRegion = resourceLoader.getTexture("scenes/levelChoice/Level.png");
             levelChoiceRegionSW = resourceLoader.getTexture("scenes/levelChoice/LevelSW.png");
@@ -297,12 +342,14 @@ public class ResourcesManager {
             tutorialSecondRegionB = resourceLoader.getTexture("scenes/tutorial/secondTutorialScreenB.png");
 
             nextJustPlayLevel = resourceLoader.getTexture("scenes/score/NextLevel.png");
-
         }
+
         preparedTextures = true;
     }
 
+
     public void loadTutorialSceneResources() {
+
         prepareTextures();
         tutorialFirstRegionB.getTexture().load();
         tutorialFirstRegionA.getTexture().load();
@@ -311,19 +358,23 @@ public class ResourcesManager {
         tutorialLetsGoRegion.getTexture().load();
     }
 
+
     public void unloadTutorialScene() {
+
         tutorialLetsGoRegion.getTexture().unload();
         tutorialSecondRegionA.getTexture().unload();
         tutorialSecondRegionB.getTexture().unload();
         tutorialFirstRegionA.getTexture().unload();
         tutorialFirstRegionB.getTexture().unload();
     }
+
+
     public void unloadJustPlayScoreResources() {
+
         levelCompleteFont.getTexture().unload();
         justPlayScoreFont.getTexture().unload();
         nextJustPlayLevel.getTexture().unload();
         backToMenuRegionP.getTexture().unload();
         shareScoreTexture.getTexture().load();
-
     }
 }
