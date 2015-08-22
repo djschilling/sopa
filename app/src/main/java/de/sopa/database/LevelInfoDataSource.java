@@ -7,6 +7,8 @@ import android.database.Cursor;
 
 import android.database.sqlite.SQLiteDatabase;
 
+import de.sopa.highscore.JustPlayScore;
+
 import de.sopa.model.game.LevelInfo;
 
 import java.util.ArrayList;
@@ -15,8 +17,11 @@ import java.util.List;
 import static de.sopa.database.LevelInfoTable.COLUMN_FEWEST_MOVES;
 import static de.sopa.database.LevelInfoTable.COLUMN_ID;
 import static de.sopa.database.LevelInfoTable.COLUMN_LOCKED;
+import static de.sopa.database.LevelInfoTable.COLUMN_SCORE_POINTS;
+import static de.sopa.database.LevelInfoTable.COLUMN_SCORE_SOLVED_LEVELS;
 import static de.sopa.database.LevelInfoTable.COLUMN_STARS;
 import static de.sopa.database.LevelInfoTable.TABLE_LEVEL_INFO;
+import static de.sopa.database.LevelInfoTable.TABLE_SCORE;
 
 
 /**
@@ -137,6 +142,40 @@ public class LevelInfoDataSource {
         cursor.close();
 
         return levelInfo;
+    }
+
+
+    public void saveJustPlayScore(JustPlayScore justPlayScore) {
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_SCORE_POINTS, justPlayScore.getPoints());
+        values.put(COLUMN_SCORE_SOLVED_LEVELS, justPlayScore.getSolvedLevels());
+
+        database.insert(TABLE_SCORE, null, values);
+    }
+
+
+    public JustPlayScore getBestJustPlayScore() {
+
+        Cursor cursor = database.query(TABLE_SCORE, new String[] { COLUMN_SCORE_POINTS, COLUMN_SCORE_SOLVED_LEVELS },
+                null, null, null, null, COLUMN_SCORE_POINTS + " desc", "1");
+
+        if (cursor.getCount() == 0) {
+            return null;
+        }
+
+        cursor.moveToFirst();
+
+        return cursorToJustPlayScore(cursor);
+    }
+
+
+    private JustPlayScore cursorToJustPlayScore(Cursor cursor) {
+
+        int points = cursor.getInt(0);
+        int solvedLevels = cursor.getInt(1);
+
+        return new JustPlayScore(points, solvedLevels);
     }
 
 

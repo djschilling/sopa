@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MySQLiteHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "sopa";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public MySQLiteHelper(Context context) {
 
@@ -29,6 +29,10 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        throw new UnsupportedOperationException();
+        if (oldVersion == 1 && newVersion == 2) {
+            LevelInfoTable.createScoreTable(db);
+        } else {
+            throw new UnsupportedOperationException();
+        }
     }
 }

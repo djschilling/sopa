@@ -4,6 +4,8 @@ import android.app.Activity;
 
 import de.sopa.helper.LevelService;
 
+import de.sopa.highscore.JustPlayScoreService;
+
 import de.sopa.manager.ResourcesManager;
 import de.sopa.manager.SettingsService;
 import de.sopa.manager.StoryService;
@@ -28,6 +30,7 @@ public abstract class BaseScene extends Scene {
     protected final StoryService storyService;
     protected final LevelService levelService;
     protected final SettingsService settingsService;
+    protected final JustPlayScoreService justPlayScoreService;
     protected Engine engine;
     protected Activity activity;
     protected ResourcesManager resourcesManager;
@@ -46,6 +49,7 @@ public abstract class BaseScene extends Scene {
         this.levelService = resourcesManager.levelService;
         this.baseScene = this;
         this.settingsService = resourcesManager.settingsService;
+        this.justPlayScoreService = resourcesManager.justPlayScoreService;
     }
 
     /**

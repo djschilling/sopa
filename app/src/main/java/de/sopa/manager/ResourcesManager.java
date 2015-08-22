@@ -7,6 +7,8 @@ import de.sopa.R;
 
 import de.sopa.helper.LevelService;
 
+import de.sopa.highscore.JustPlayScoreService;
+
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
 
@@ -88,6 +90,7 @@ public class ResourcesManager {
     public IFont justPlayScoreFont;
     public ITextureRegion nextJustPlayLevel;
     public ITextureRegion shareScoreTexture;
+    public JustPlayScoreService justPlayScoreService;
 
     public void loadMenuSceneResources() {
 
@@ -238,7 +241,7 @@ public class ResourcesManager {
 
     public static void prepareManager(Engine engine, GameActivity activity, Camera camera,
         VertexBufferObjectManager vbom, ResourceLoader resourceLoader, StoryService storyService,
-        LevelService levelService, SettingsService settingsService) {
+        LevelService levelService, SettingsService settingsService, JustPlayScoreService justPlayScoreService) {
 
         getInstance().engine = engine;
         getInstance().activity = activity;
@@ -250,6 +253,7 @@ public class ResourcesManager {
         getInstance().musicService = new MusicService(MediaPlayer.create(activity.getApplicationContext(), R.raw.theme),
                 true);
         getInstance().settingsService = settingsService;
+        getInstance().justPlayScoreService = justPlayScoreService;
     }
 
 

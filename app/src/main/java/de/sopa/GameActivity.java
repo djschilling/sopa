@@ -8,6 +8,8 @@ import de.sopa.helper.LevelFileService;
 import de.sopa.helper.LevelService;
 import de.sopa.helper.LevelServiceImpl;
 
+import de.sopa.highscore.JustPlayScoreServiceImpl;
+
 import de.sopa.manager.ResourceLoader;
 import de.sopa.manager.ResourcesManager;
 import de.sopa.manager.SettingsService;
@@ -63,7 +65,7 @@ public class GameActivity extends BaseGameActivity {
         SettingsService settingsService = new SettingsService(getApplicationContext());
         ResourcesManager.prepareManager(mEngine, this, camera, getVertexBufferObjectManager(),
             new ResourceLoader(getTextureManager(), getAssets(), getFontManager()), new StoryServiceImpl(mEngine),
-            levelService, settingsService);
+            levelService, settingsService, new JustPlayScoreServiceImpl(levelInfoDataSource));
         levelService.updateLevelInfos();
 
         if (settingsService.isFirstTime()) {

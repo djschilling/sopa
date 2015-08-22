@@ -1,6 +1,7 @@
 package de.sopa.scene.justplay;
 
 import android.content.Intent;
+import de.sopa.highscore.JustPlayScore;
 import de.sopa.model.justplay.JustPlayResult;
 import de.sopa.scene.BaseScene;
 import org.andengine.engine.handler.timer.ITimerCallback;
@@ -36,6 +37,7 @@ public class JustPlayScoreScene extends BaseScene {
         addRectangles();
         addTexts(currentScore);
         if (justPlayResult.lost()) {
+            justPlayScoreService.submitScore(new JustPlayScore(justPlayResult.getScore(), justPlayResult.getLevelAnzahl()));
             addBackToMenuButton();
             addShareButton();
         } else {
@@ -130,10 +132,14 @@ public class JustPlayScoreScene extends BaseScene {
             timeText.setColor(WHITE);
             attachChild(timeText);
         } else {
-            Text highScore = new Text((float) (camera.getWidth() * 0.05), (float) (camera.getHeight() * 0.605), resourcesManager.justPlayScoreFont,
-                    "Highscore:\t" + 4242, vbom);
-            highScore.setColor(BLACK);
-            attachChild(highScore);
+
+            JustPlayScore justPlayHighscore = justPlayScoreService.getHighscore();
+            if(justPlayHighscore != null){
+                Text highScore = new Text((float) (camera.getWidth() * 0.05), (float) (camera.getHeight() * 0.605), resourcesManager.justPlayScoreFont,
+                        "Highscore:\t" + justPlayHighscore.getPoints(), vbom);
+                highScore.setColor(BLACK);
+                attachChild(highScore);
+            }
         }
     }
 
