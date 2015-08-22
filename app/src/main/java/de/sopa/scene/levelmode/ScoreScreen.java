@@ -39,7 +39,7 @@ public class ScoreScreen extends BaseScene {
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 int nextLevelId = levelResult.getLevelId() + 1;
                 if (nextLevelId > levelService.getLevelCount()) {
-                    storyService.loadLevelChoiceSceneFromScoreScene();
+                    storyService.loadLevelModeCompleteSceneFromScoreScene();
                 } else {
                     storyService.loadGameSceneFromScoreScene(levelService.getLevelById(nextLevelId));
                 }

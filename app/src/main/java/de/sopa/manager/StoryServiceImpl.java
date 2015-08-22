@@ -96,13 +96,19 @@ public class StoryServiceImpl implements StoryService {
 
 
     @Override
+    public void loadLevelModeCompleteSceneFromScoreScene() {
+        levelModeSceneService.loadLevelModeCompleteSceneFromScoreScene();
+
+    }
+
+
+    @Override
     public void loadLevelChoiceSceneFromMenuScene() {
 
         startSceneService(loadingSceneService);
         endSceneService(menuSceneService);
         startSceneService(levelModeSceneService);
     }
-
 
     @Override
     public void loadCreditsFromMenuScene() {
@@ -134,7 +140,6 @@ public class StoryServiceImpl implements StoryService {
 
         levelModeSceneService.loadGameSceneFromScoreScene(level);
     }
-
 
     @Override
     public void loadSettingsFromMenuScene() {
@@ -214,7 +219,6 @@ public class StoryServiceImpl implements StoryService {
         endSceneService(justPlaySceneService);
         startSceneService(menuSceneService);
     }
-
 
     @Override
     public void loadJustPlaySceneFromJustPlayScoreScene() {

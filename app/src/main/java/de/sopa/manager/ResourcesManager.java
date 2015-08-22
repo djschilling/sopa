@@ -91,6 +91,8 @@ public class ResourcesManager {
     public ITextureRegion nextJustPlayLevel;
     public ITextureRegion shareScoreTexture;
     public JustPlayScoreService justPlayScoreService;
+    public IFont levelModeCompleteFont;
+    public ITextureRegion levelModeCup;
 
     public void loadMenuSceneResources() {
 
@@ -323,6 +325,7 @@ public class ResourcesManager {
             backToChoiceRegion = resourceLoader.getTexture("scenes/score/LevelChoice.png");
             backToMenuRegionA = resourceLoader.getTexture("scenes/score/Restart.png");
             backToMenuRegionP = resourceLoader.getTexture("scenes/score/BackP.png");
+            levelModeCup = resourceLoader.getTexture("scenes/score/cup.png");
 
             level_mode_region = resourceLoader.getTexture("scenes/menu/LevelMode.png");
             just_play_region = resourceLoader.getTexture("scenes/menu/JustPlay.png");
@@ -379,6 +382,16 @@ public class ResourcesManager {
         justPlayScoreFont.getTexture().unload();
         nextJustPlayLevel.getTexture().unload();
         backToMenuRegionP.getTexture().unload();
-        shareScoreTexture.getTexture().load();
+        shareScoreTexture.getTexture().unload();
+    }
+
+    public void loadLevelModeCompleteResources() {
+        levelModeCup.getTexture().load();
+        levelModeCompleteFont = resourceLoader.getFont("Impact.ttf", 200, WHITE,0, TRANSPARENT);
+    }
+
+    public void unLoadLevelModeCompleteResources() {
+        levelModeCup.getTexture().unload();
+        levelModeCompleteFont.getTexture().unload();
     }
 }

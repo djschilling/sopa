@@ -24,6 +24,7 @@ public class LevelModeSceneServiceImpl implements LevelModeSceneService {
     private BaseScene scoreScene;
     private BaseScene choiceScene;
     private BaseScene tutorialScene;
+    private BaseScene levelCompleteScene;
 
     public LevelModeSceneServiceImpl(Engine engine) {
 
@@ -64,6 +65,20 @@ public class LevelModeSceneServiceImpl implements LevelModeSceneService {
                 }));
     }
 
+
+    @Override
+    public void loadLevelModeCompleteSceneFromScoreScene() {
+        scoreScene.disposeScene();
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            @Override
+            public void onTimePassed(TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                levelCompleteScene = new LevelModeCompleteScene();
+                setScene(levelCompleteScene);
+            }
+        }));
+
+    }
 
     @Override
     public void loadLevelChoiceSceneFromScoreScene() {
@@ -172,14 +187,14 @@ public class LevelModeSceneServiceImpl implements LevelModeSceneService {
         gameScene.disposeScene();
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
 
-                    @Override
-                    public void onTimePassed(final TimerHandler pTimerHandler) {
+            @Override
+            public void onTimePassed(final TimerHandler pTimerHandler) {
 
-                        engine.unregisterUpdateHandler(pTimerHandler);
-                        choiceScene = new LevelChoiceScene();
-                        setScene(choiceScene);
-                    }
-                }));
+                engine.unregisterUpdateHandler(pTimerHandler);
+                choiceScene = new LevelChoiceScene();
+                setScene(choiceScene);
+            }
+        }));
     }
 
 
@@ -187,20 +202,30 @@ public class LevelModeSceneServiceImpl implements LevelModeSceneService {
     public void start() {
 
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            @Override
+            public void onTimePassed(final TimerHandler pTimerHandler) {
 
-                    @Override
-                    public void onTimePassed(final TimerHandler pTimerHandler) {
-
-                        engine.unregisterUpdateHandler(pTimerHandler);
-                        ResourcesManager.getInstance().loadLevelChoiceSceneResources();
-                        ResourcesManager.getInstance().loadScoreSceneResources();
-                        ResourcesManager.getInstance().loadTutorialSceneResources();
-                        ResourcesManager.getInstance().loadGameSceneResources();
-                        choiceScene = new LevelChoiceScene();
-                        setScene(choiceScene);
-                    }
-                }));
+                engine.unregisterUpdateHandler(pTimerHandler);
+                ResourcesManager.getInstance().loadLevelChoiceSceneResources();
+                ResourcesManager.getInstance().loadScoreSceneResources();
+                ResourcesManager.getInstance().loadTutorialSceneResources();
+                ResourcesManager.getInstance().loadGameSceneResources();
+                choiceScene = new LevelChoiceScene();
+                setScene(choiceScene);
+            }
+        }));
     }
+
+    public void onTimePassed(final TimerHandler pTimerHandler) {
+            engine.unregisterUpdateHandler(pTimerHandler);
+            ResourcesManager.getInstance().loadLevelChoiceSceneResources();
+            ResourcesManager.getInstance().loadScoreSceneResources();
+            ResourcesManager.getInstance().loadTutorialSceneResources();
+            ResourcesManager.getInstance().loadGameSceneResources();
+            ResourcesManager.getInstance().loadLevelModeCompleteResources();
+            choiceScene = new LevelChoiceScene();
+            setScene(choiceScene);
+            }
 
 
     @Override
@@ -227,6 +252,12 @@ public class LevelModeSceneServiceImpl implements LevelModeSceneService {
         if (gameScene != null) {
             gameScene.disposeScene();
             gameScene = null;
+        }
+
+        ResourcesManager.getInstance().unLoadLevelModeCompleteResources();
+        if(levelCompleteScene != null) {
+            levelCompleteScene.disposeScene();
+            levelCompleteScene = null;
         }
     }
 

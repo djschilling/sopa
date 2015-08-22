@@ -36,4 +36,6 @@ public interface LevelModeSceneService extends BaseSceneService {
 
 
     void loadLevelChoiceSceneFromGameScene();
+
+    void loadLevelModeCompleteSceneFromScoreScene();
 }
