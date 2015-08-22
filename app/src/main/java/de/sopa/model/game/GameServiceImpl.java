@@ -1,12 +1,14 @@
 package de.sopa.model.game;
 
 import de.sopa.observer.GameSceneObserver;
+
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
- * @author David Schilling - davejs92@gmail.com
- * @author Raphael Schilling
+ * @author  David Schilling - davejs92@gmail.com
+ * @author  Raphael Schilling
  */
 public class GameServiceImpl implements GameService {
 
@@ -16,48 +18,65 @@ public class GameServiceImpl implements GameService {
     private boolean solvedPuzzle;
 
     public GameServiceImpl(Level level) {
+
         observers = new ArrayList<>();
         gameFieldService = new GameFieldService();
         solvedPuzzle = false;
         this.level = level;
         solvedPuzzle = gameFieldService.solvedPuzzle(level);
         level.resetMovesCounter();
-
     }
 
     @Override
     public boolean solvedPuzzle() {
+
         return solvedPuzzle;
     }
 
+
     @Override
     public boolean lostLevel() {
+
         return false;
     }
 
+
     @Override
-    public void shiftLine(boolean horizontal, int row, int steps) {
+    public void shiftLine(boolean horizontal, int row, int steps, boolean silent) {
+
         gameFieldService.shiftLine(level, horizontal, row, steps);
         solvedPuzzle = gameFieldService.solvedPuzzle(level);
-        notifyAllObserver();
+
+        if (!silent) {
+            notifyAllObserver();
+        }
     }
+
 
     @Override
     public Level getLevel() {
+
         return level;
     }
 
+
     @Override
     public void attach(GameSceneObserver observer) {
+
         observers.add(observer);
     }
 
+
     @Override
     public void detatch(GameSceneObserver observer) {
+
         observers.remove(observer);
     }
 
-    private void notifyAllObserver() {
+
+    @Override
+    public void notifyAllObserver() {
+
         for (GameSceneObserver observer : observers) {
             observer.updateGameScene();
         }
