@@ -35,9 +35,6 @@ public class GameFieldView extends Entity {
     private TileSprite start;
     private TileSprite finish;
     private boolean active = true;
-    private boolean horizontal;
-    private int row;
-    private int direction;
     private int countModifier;
     private int modifierFinished;
 
@@ -123,10 +120,6 @@ public class GameFieldView extends Entity {
         if (row < 0) {
             return;
         }
-
-        this.horizontal = horizontal;
-        this.row = row;
-        this.direction = direction;
 
         row++;
 
