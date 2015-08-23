@@ -210,6 +210,7 @@ public class LevelModeSceneServiceImpl implements LevelModeSceneService {
                 ResourcesManager.getInstance().loadScoreSceneResources();
                 ResourcesManager.getInstance().loadTutorialSceneResources();
                 ResourcesManager.getInstance().loadGameSceneResources();
+                ResourcesManager.getInstance().loadLevelModeCompleteResources();
                 choiceScene = new LevelChoiceScene();
                 setScene(choiceScene);
             }
