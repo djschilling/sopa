@@ -101,6 +101,11 @@ public class StoryServiceImpl implements StoryService {
 
     }
 
+    @Override
+    public void loadLevelChoiceFromLevelModeCompleteScene() {
+        levelModeSceneService.loadLevelChoiceFromLevelModeCompleteScene();
+    }
+
 
     @Override
     public void loadLevelChoiceSceneFromMenuScene() {

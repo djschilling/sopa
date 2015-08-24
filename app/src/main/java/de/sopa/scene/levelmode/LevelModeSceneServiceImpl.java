@@ -81,6 +81,19 @@ public class LevelModeSceneServiceImpl implements LevelModeSceneService {
     }
 
     @Override
+    public void loadLevelChoiceFromLevelModeCompleteScene() {
+        levelCompleteScene.disposeScene();
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            @Override
+            public void onTimePassed(TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                choiceScene = new LevelChoiceScene();
+                setScene(choiceScene);
+            }
+        }));
+    }
+
+    @Override
     public void loadLevelChoiceSceneFromScoreScene() {
 
         scoreScene.disposeScene();

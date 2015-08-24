@@ -1,6 +1,5 @@
 package de.sopa.scene.levelmode;
 
-import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
@@ -31,7 +30,7 @@ public class LevelModeCompleteScene extends de.sopa.scene.BaseScene {
 
     @Override
     public void onBackKeyPressed() {
-
+        storyService.loadLevelChoiceFromLevelModeCompleteScene();
     }
 
     @Override

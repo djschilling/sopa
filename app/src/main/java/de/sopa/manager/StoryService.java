@@ -90,4 +90,6 @@ public interface StoryService {
     void loadJustPlaySceneFromJustPlayScene(TimeBasedGameService timeBasedGameService, JustPlayLevel justPlayLevel);
 
     void loadLevelModeCompleteSceneFromScoreScene();
+
+    void loadLevelChoiceFromLevelModeCompleteScene();
 }
