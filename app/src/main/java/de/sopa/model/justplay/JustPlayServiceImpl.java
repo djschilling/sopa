@@ -63,7 +63,12 @@ public class JustPlayServiceImpl implements JustPlayService {
         if (justPlayLevelResult.getLeftTime() == -1) {
             return lastScore;
         } else {
-            return lastScore + levelSetting.getMaxScore() - justPlayLevelResult.getMoves() * 10;
+            double movesToMinMovesratio = (double) justPlayLevelResult.getMinLevelMoves()
+                / justPlayLevelResult.getMoves();
+
+            double additionalScore = levelSetting.getMaxScore() * movesToMinMovesratio;
+
+            return lastScore + (int) additionalScore;
         }
     }
 

@@ -125,7 +125,8 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
                             engine.unregisterUpdateHandler(pTimerHandler);
                             storyService.loadJustPlayScoreSceneFromJustPlayScene(
                                 new JustPlayLevelResult(timeBasedGameService.getRemainingTime(),
-                                    gameService.getLevel().getMovesCount()));
+                                    gameService.getLevel().getMovesCount(),
+                                    gameService.getLevel().getMinimumMovesToSolve()));
                         }
                     }));
         }
@@ -144,7 +145,8 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
 
                             engine.unregisterUpdateHandler(pTimerHandler);
                             storyService.loadJustPlayScoreSceneFromJustPlayScene(
-                                new JustPlayLevelResult(-1, gameService.getLevel().getMovesCount()));
+                                new JustPlayLevelResult(-1, gameService.getLevel().getMovesCount(),
+                                    gameService.getLevel().getMinimumMovesToSolve()));
                         }
                     }));
         }
