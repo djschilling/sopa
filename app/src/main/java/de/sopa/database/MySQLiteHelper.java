@@ -23,6 +23,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         LevelInfoTable.onCreate(db);
+        LevelInfoTable.createScoreTable(db);
     }
 
 
