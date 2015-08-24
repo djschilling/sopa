@@ -21,8 +21,8 @@ import java.util.Map;
 
 
 /**
- * @author  David Schilling - davejs92@gmail.com
- * @author  Raphael Schilling
+ * @author David Schilling - davejs92@gmail.com
+ * @author Raphael Schilling
  */
 public class GameFieldView extends Entity {
 
@@ -32,15 +32,13 @@ public class GameFieldView extends Entity {
     private final VertexBufferObjectManager vbom;
     private final ITextureRegion tilesBorderRegion;
     private TileSprite[][] tileSprites;
-    private TileSprite start;
-    private TileSprite finish;
-    private boolean active = true;
+    private boolean active = false;
 
     private int countModifier;
     private int modifierFinished;
 
     public GameFieldView(float pX, float pY, float spacePerTile, GameService gameService,
-        Map<Character, TextureRegion> regionMap, VertexBufferObjectManager vbom, ITextureRegion tilesBorderRegion) {
+                         Map<Character, TextureRegion> regionMap, VertexBufferObjectManager vbom, ITextureRegion tilesBorderRegion) {
 
         super(pX, pY);
         this.gameService = gameService;
@@ -60,7 +58,11 @@ public class GameFieldView extends Entity {
             tileIndex = 0;
         }
 
+
         detachChildren();
+        if (active){
+            oneModifierFinished(true);
+        }
 
         Tile[][] field = gameService.getLevel().getField();
         int width = field.length;
@@ -76,7 +78,7 @@ public class GameFieldView extends Entity {
                 if (field[x][y].getShortcut() != 'n') {
                     TextureRegion pTextureRegion = tileRegionMap.get(field[x][y].getShortcut());
                     TextureRegion pTextureRegionFilled = tileRegionMap.get(Character.toUpperCase(
-                                field[x][y].getShortcut()));
+                            field[x][y].getShortcut()));
                     List<ITextureRegion> textureRegions = Arrays.<ITextureRegion>asList(pTextureRegion,
                             pTextureRegionFilled);
 
@@ -91,12 +93,12 @@ public class GameFieldView extends Entity {
                             break;
 
                         case FINISH:
-                            finish = createFinishAnsStart(x, y, tilePositionX, tilePositionY, textureRegions, field);
+                            TileSprite finish = createFinishAnsStart(x, y, tilePositionX, tilePositionY, textureRegions, field);
                             finish.setITextureRegionIndex(tileIndex);
                             break;
 
                         case START:
-                            start = createFinishAnsStart(x, y, tilePositionX, tilePositionY, textureRegions, field);
+                            TileSprite start = createFinishAnsStart(x, y, tilePositionX, tilePositionY, textureRegions, field);
                             start.setITextureRegionIndex(tileIndex);
                             break;
 
@@ -130,6 +132,7 @@ public class GameFieldView extends Entity {
             }
 
             gameService.shiftLine(true, row - 1, direction, true);
+            active = true;
             this.countModifier = tileSprites.length - 2;
             this.modifierFinished = 0;
 
@@ -138,13 +141,13 @@ public class GameFieldView extends Entity {
                 tileSprite.registerEntityModifier(new MoveXModifier(0.3f, tileSprite.getX(),
                         tileSprite.getX() + tileSprite.getWidth() * direction, EaseQuadInOut.getInstance()) {
 
-                        @Override
-                        protected void onModifierFinished(IEntity pItem) {
+                    @Override
+                    protected void onModifierFinished(IEntity pItem) {
 
-                            oneModifierFinished();
-                            super.onModifierFinished(pItem);
-                        }
-                    });
+                        oneModifierFinished(false);
+                        super.onModifierFinished(pItem);
+                    }
+                });
             }
         } else {
             if (row > tileSprites[0].length - 2) {
@@ -152,6 +155,7 @@ public class GameFieldView extends Entity {
             }
 
             gameService.shiftLine(false, row - 1, direction, true);
+            active = true;
             this.countModifier = tileSprites[row].length - 2;
             this.modifierFinished = 0;
 
@@ -160,20 +164,20 @@ public class GameFieldView extends Entity {
                 tileSprite.registerEntityModifier(new MoveYModifier(0.3f, tileSprite.getY(),
                         tileSprite.getY() + tileSprite.getWidth() * direction, EaseQuadInOut.getInstance()) {
 
-                        @Override
-                        protected void onModifierFinished(IEntity pItem) {
+                    @Override
+                    protected void onModifierFinished(IEntity pItem) {
 
-                            oneModifierFinished();
-                            super.onModifierFinished(pItem);
-                        }
-                    });
+                        oneModifierFinished(false);
+                        super.onModifierFinished(pItem);
+                    }
+                });
             }
         }
     }
 
 
     private TileSprite createFinishAnsStart(int x, int y, float tilePositionX, float tilePositionY,
-        List<ITextureRegion> pTextureRegion, Tile[][] field) {
+                                            List<ITextureRegion> pTextureRegion, Tile[][] field) {
 
         TileSprite tileSprite;
 
@@ -213,26 +217,11 @@ public class GameFieldView extends Entity {
     }
 
 
-    public void setTubesState(int state) {
-
-        for (TileSprite[] tileSprite : tileSprites) {
-            for (TileSprite currentSprite : tileSprite) {
-                if (currentSprite != null) {
-                    currentSprite.setITextureRegionIndex(state);
-                }
-            }
-        }
-
-        start.setITextureRegionIndex(state);
-        finish.setITextureRegionIndex(state);
-    }
-
-
-    private void oneModifierFinished() {
+    private void oneModifierFinished(boolean now) {
 
         modifierFinished++;
 
-        if (modifierFinished == countModifier) {
+        if (modifierFinished == countModifier | now) {
             active = false;
             gameService.notifyAllObserver();
         }

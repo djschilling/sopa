@@ -12,10 +12,10 @@ public class JustPlayServiceImpl implements JustPlayService {
     private final LevelCreator levelCreator;
     private int leftTime;
     private int lastScore;
-    private int[] difficultyGameSize = { 4, 5, 5, 6, 6, 6, 6 };
-    private int[] difficultyMoves = { 1, 2, 3, 2, 3, 4, 4 };
-    private int[] difficultyTime = { 3, 4, 5, 6, 8, 14, 12 };
-    private int[] difficultyScore = { 50, 70, 100, 100, 150, 250, 350 };
+    private int[] difficultyGameSize =  { 4, 5, 5, 6, 6, 6, 6 };
+    private int[] difficultyMoves =     { 1, 2, 3, 2, 3, 4, 4 };
+    private int[] difficultyTime =      { 3, 4, 5, 6, 8, 14, 12 };
+    private int[] difficultyScore =     { 50, 70, 100, 100, 150, 250, 350 };
 
     public JustPlayServiceImpl() {
 
