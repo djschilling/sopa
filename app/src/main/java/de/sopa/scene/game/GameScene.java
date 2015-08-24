@@ -54,12 +54,6 @@ public abstract class GameScene extends BaseScene implements GameSceneObserver {
     @Override
     public void updateGameScene() {
 
-        if (!gameFieldView.isActive()) {
-            updateTiles(gameService.solvedPuzzle());
-        }
-
-        scoreText.setText(String.valueOf(gameService.getLevel().getMovesCount()));
-
         if (gameService.solvedPuzzle()) {
             setOnSceneTouchListener(null);
             gameService.detatch(this);
@@ -72,7 +66,11 @@ public abstract class GameScene extends BaseScene implements GameSceneObserver {
                             onSolvedGame();
                         }
                     }));
+        } else {
+            scoreText.setText(String.valueOf(gameService.getLevel().getMovesCount()));
         }
+
+        updateTiles(gameService.solvedPuzzle());
     }
 
 

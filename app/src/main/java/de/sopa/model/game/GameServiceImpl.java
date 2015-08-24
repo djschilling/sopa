@@ -44,11 +44,13 @@ public class GameServiceImpl implements GameService {
     @Override
     public void shiftLine(boolean horizontal, int row, int steps, boolean silent) {
 
-        gameFieldService.shiftLine(level, horizontal, row, steps);
-        solvedPuzzle = gameFieldService.solvedPuzzle(level);
+        if (!solvedPuzzle) {
+            gameFieldService.shiftLine(level, horizontal, row, steps);
+            solvedPuzzle = gameFieldService.solvedPuzzle(level);
 
-        if (!silent) {
-            notifyAllObserver();
+            if (!silent) {
+                notifyAllObserver();
+            }
         }
     }
 
