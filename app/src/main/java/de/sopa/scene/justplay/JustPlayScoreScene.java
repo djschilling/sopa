@@ -54,6 +54,7 @@ public class JustPlayScoreScene extends BaseScene {
                 shareIntent.setAction(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
                 shareIntent.putExtra(Intent.EXTRA_TEXT, "Just gained " + justPlayResult.getScore() + " in SOPA. " + LINK_TO_STORE);
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My SOPA score.");
                 activity.startActivity(Intent.createChooser(shareIntent, "Share your thoughts"));
             }
         });
