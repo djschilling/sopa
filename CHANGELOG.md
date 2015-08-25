@@ -1,5 +1,12 @@
 # Changelog
 
+# 2.0.0
+
+* introduce new modus: Just play modus #46
+* add end scene for level mode #52
+* fix bug in gamescene when swiping fast
+
+
 # 1.2.1
 
 * remove restart button on solved game.
