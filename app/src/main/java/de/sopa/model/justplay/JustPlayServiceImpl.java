@@ -12,10 +12,10 @@ public class JustPlayServiceImpl implements JustPlayService {
     private final LevelCreator levelCreator;
     private int leftTime;
     private int lastScore;
-    private int[] difficultyGameSize =  { 4, 5, 5, 6, 6, 6, 6 };
-    private int[] difficultyMoves =     { 1, 2, 3, 2, 3, 4, 4 };
-    private int[] difficultyTime =      { 3, 4, 5, 6, 8, 14, 12 };
-    private int[] difficultyScore =     { 50, 70, 100, 100, 150, 250, 350 };
+    private int[] difficultyGameSize =  {5, 6, 5, 6, 6, 6 };
+    private int[] difficultyMoves =     {2, 2, 3, 3, 4, 4 };
+    private int[] difficultyTime =      {5, 7, 8, 9, 15, 13 };
+    private int[] difficultyScore =     {70, 100, 100, 150, 250, 350 };
 
     public JustPlayServiceImpl() {
 
@@ -42,18 +42,18 @@ public class JustPlayServiceImpl implements JustPlayService {
 
     private LevelSetting getCurrentLevelSetting() {
 
-        if (levelCount <= 3) {
-            return new LevelSetting(difficultyGameSize[1], difficultyMoves[1], difficultyTime[1], difficultyScore[1]);
-        } else if (levelCount <= 11) {
-            return new LevelSetting(difficultyGameSize[2], difficultyMoves[2], difficultyTime[2], difficultyScore[2]);
-        } else if (levelCount <= 14) {
-            return new LevelSetting(difficultyGameSize[3], difficultyMoves[3], difficultyTime[3], difficultyScore[3]);
+        if (levelCount <= 10) {
+            return new LevelSetting(difficultyGameSize[0], difficultyMoves[0], difficultyTime[0], difficultyScore[0]);
         } else if (levelCount <= 20) {
-            return new LevelSetting(difficultyGameSize[4], difficultyMoves[4], difficultyTime[4], difficultyScore[4]);
+            return new LevelSetting(difficultyGameSize[1], difficultyMoves[1], difficultyTime[1], difficultyScore[1]);
         } else if (levelCount <= 30) {
-            return new LevelSetting(difficultyGameSize[5], difficultyMoves[5], difficultyTime[5], difficultyScore[5]);
+            return new LevelSetting(difficultyGameSize[2], difficultyMoves[2], difficultyTime[2], difficultyScore[2]);
+        } else if (levelCount <= 40) {
+            return new LevelSetting(difficultyGameSize[3], difficultyMoves[3], difficultyTime[3], difficultyScore[3]);
+        } else if (levelCount <= 50) {
+            return new LevelSetting(difficultyGameSize[4], difficultyMoves[4], difficultyTime[4], difficultyScore[4]);
         } else {
-            return new LevelSetting(difficultyGameSize[6], difficultyMoves[6], difficultyTime[6], difficultyScore[6]);
+            return new LevelSetting(difficultyGameSize[5], difficultyMoves[5], difficultyTime[5], difficultyScore[5]);
         }
     }
 
@@ -63,10 +63,10 @@ public class JustPlayServiceImpl implements JustPlayService {
         if (justPlayLevelResult.getLeftTime() == -1) {
             return lastScore;
         } else {
-            double movesToMinMovesratio = (double) justPlayLevelResult.getMinLevelMoves()
+            double movesToMinMovesRatio = (double) justPlayLevelResult.getMinLevelMoves()
                 / justPlayLevelResult.getMoves();
 
-            double additionalScore = levelSetting.getMaxScore() * movesToMinMovesratio;
+            double additionalScore = levelSetting.getMaxScore() * movesToMinMovesRatio;
 
             return lastScore + (int) additionalScore;
         }
