@@ -46,8 +46,20 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
         this.justPlayLevel = justPlayLevel;
         leaveScene = false;
         this.timeBasedGameService = timeBasedGameService;
+
         timeBasedGameService.attach(this);
         leftTime.setText(String.valueOf(justPlayLevel.getLeftTime()));
+        checkRestartedLevel(timeBasedGameService);
+    }
+
+    private void checkRestartedLevel(TimeBasedGameService timeBasedGameService) {
+        if(timeBasedGameService.getRemainingTime() == 0) {
+            if(gameService.solvedPuzzle()) {
+                onSolvedGame();
+            } else {
+                onLostGame();
+            }
+        }
     }
 
     @Override
@@ -116,6 +128,7 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
         restartButton.setVisible(false);
 
         if (!leaveScene) {
+            restartButton.setEnabled(false);
             leaveScene = true;
             engine.registerUpdateHandler(new TimerHandler(1f, new ITimerCallback() {
 
@@ -137,6 +150,7 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
     public void onLostGame() {
 
         if (!leaveScene) {
+            restartButton.setEnabled(false);
             leaveScene = true;
             engine.registerUpdateHandler(new TimerHandler(1f, new ITimerCallback() {
 
