@@ -66,9 +66,8 @@ public abstract class GameScene extends BaseScene implements GameSceneObserver {
                             onSolvedGame();
                         }
                     }));
-        } else {
-            scoreText.setText(String.valueOf(gameService.getLevel().getMovesCount()));
         }
+        scoreText.setText(String.valueOf(gameService.getLevel().getMovesCount()));
 
         updateTiles(gameService.solvedPuzzle());
     }
