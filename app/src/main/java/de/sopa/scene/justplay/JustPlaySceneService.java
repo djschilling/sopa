@@ -19,4 +19,6 @@ public interface JustPlaySceneService extends BaseSceneService {
     void loadJustPlaySceneFromJustPlayScoreScene();
 
     void loadJustPlaySceneFromJustPlayScene(TimeBasedGameService timeBasedGameService, JustPlayLevel justPlayLevel);
+
+    void loadJustPlaySceneFromJustPlayLostScene();
 }

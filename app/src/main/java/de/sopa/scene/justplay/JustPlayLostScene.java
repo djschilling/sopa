@@ -47,7 +47,20 @@ public class JustPlayLostScene extends BaseScene {
     }
 
     private void addShareButton() {
-        final ButtonSprite shareLogo = new ButtonSprite((camera.getWidth() * 0.5f), (camera.getHeight() - 400), resourcesManager.shareScoreTexture, vbom, new ButtonSprite.OnClickListener() {
+
+
+        final ButtonSprite restartButton = new ButtonSprite((camera.getWidth() / 2 - 200), (camera.getHeight() - 400), resourcesManager.restartRegion, vbom, new ButtonSprite.OnClickListener() {
+            @Override
+            public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                storyService.loadJustPlaySceneFromJustPlayLostScene();
+            }
+        });
+        attachChild(restartButton);
+        registerTouchArea(restartButton);
+
+
+
+        final ButtonSprite shareLogo = new ButtonSprite((float) (camera.getWidth() * 0.64), (camera.getHeight() - 400), resourcesManager.shareScoreTexture, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 Intent shareIntent = new Intent();
@@ -68,7 +81,7 @@ public class JustPlayLostScene extends BaseScene {
     }
 
     private void addBackToMenuButton() {
-        ButtonSprite backToMenuButton = new ButtonSprite((camera.getWidth() / 2 - 400), (camera.getHeight() - 400),
+        ButtonSprite backToMenuButton = new ButtonSprite(0, (camera.getHeight() - 400),
                 resourcesManager.backToMenuRegionP, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {

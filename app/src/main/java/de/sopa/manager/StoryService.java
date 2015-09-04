@@ -94,4 +94,6 @@ public interface StoryService {
     void loadLevelModeCompleteSceneFromScoreScene();
 
     void loadLevelChoiceFromLevelModeCompleteScene();
+
+    void loadJustPlaySceneFromJustPlayLostScene();
 }

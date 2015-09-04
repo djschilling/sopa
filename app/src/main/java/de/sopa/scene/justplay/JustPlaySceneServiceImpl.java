@@ -104,15 +104,31 @@ public class JustPlaySceneServiceImpl implements JustPlaySceneService {
 
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
 
-                    @Override
-                    public void onTimePassed(final TimerHandler pTimerHandler) {
+            @Override
+            public void onTimePassed(final TimerHandler pTimerHandler) {
 
-                        engine.unregisterUpdateHandler(pTimerHandler);
-                        justPlayGameScene.disposeScene();
-                        justPlayGameScene = new JustPlayGameScene(timeBasedGameService, justPlayLevel);
-                        setScene(justPlayGameScene);
-                    }
-                }));
+                engine.unregisterUpdateHandler(pTimerHandler);
+                justPlayGameScene.disposeScene();
+                justPlayGameScene = new JustPlayGameScene(timeBasedGameService, justPlayLevel);
+                setScene(justPlayGameScene);
+            }
+        }));
+    }
+
+    @Override
+    public void loadJustPlaySceneFromJustPlayLostScene() {
+
+            this.justPlayService = new JustPlayServiceImpl();
+            engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+
+                @Override
+                public void onTimePassed(final TimerHandler pTimerHandler) {
+
+                    engine.unregisterUpdateHandler(pTimerHandler);
+                    justPlayGameScene = new JustPlayGameScene(justPlayService.getNextLevel());
+                    setScene(justPlayGameScene);
+                }
+            }));
     }
 
 
