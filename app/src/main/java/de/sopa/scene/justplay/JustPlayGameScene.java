@@ -158,7 +158,7 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
                         public void onTimePassed(TimerHandler pTimerHandler) {
 
                             engine.unregisterUpdateHandler(pTimerHandler);
-                            storyService.loadJustPlayScoreSceneFromJustPlayScene(
+                            storyService.loadJustPlayLostSceneFromJustPlayScene(
                                 new JustPlayLevelResult(-1, gameService.getLevel().getMovesCount(),
                                     gameService.getLevel().getMinimumMovesToSolve()));
                         }

@@ -38,6 +38,8 @@ public interface StoryService {
 
     void loadJustPlayScoreSceneFromJustPlayScene(JustPlayLevelResult justPlayLevelResult);
 
+    void loadJustPlayLostSceneFromJustPlayScene(JustPlayLevelResult justPlayLevelResult);
+
 
     void loadScoreScreen(final LevelResult level);
 

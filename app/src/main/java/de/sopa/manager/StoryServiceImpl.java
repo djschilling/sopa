@@ -255,6 +255,13 @@ public class StoryServiceImpl implements StoryService {
         justPlaySceneService.loadJustPlayScoreSceneFromJustPlayScene(justPlayLevelResult);
     }
 
+    @Override
+    public void loadJustPlayLostSceneFromJustPlayScene(JustPlayLevelResult justPlayLevelResult) {
+
+        justPlaySceneService.loadJustPlayLostSceneFromJustPlayScene(justPlayLevelResult);
+
+    }
+
 
     private void startSceneService(BaseSceneService sceneService) {
 

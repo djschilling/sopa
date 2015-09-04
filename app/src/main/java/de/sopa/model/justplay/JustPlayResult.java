@@ -21,7 +21,7 @@ public class JustPlayResult {
         this.score = score;
     }
 
-    public int getLevelAnzahl() {
+    public int getLevelCount() {
 
         return levelAnzahl;
     }
