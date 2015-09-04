@@ -1,6 +1,6 @@
 package de.sopa.scene.levelmode;
 
-import de.sopa.scene.justplay.ConfettiParticleSystem;
+import de.sopa.drawing.ConfettiParticleSystem;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;

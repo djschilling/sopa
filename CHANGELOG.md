@@ -1,5 +1,11 @@
 # Changelog
 
+# 2.1.0
+
+* bugfixes in gameScene #62, #61
+* show confetti when is new highscore #64
+* add reload button in just play score scene #63
+
 # 2.0.0
 
 * introduce new modus: Just play modus #46

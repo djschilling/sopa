@@ -1,6 +1,7 @@
 package de.sopa.scene.justplay;
 
 import android.content.Intent;
+import de.sopa.drawing.ConfettiParticleSystem;
 import de.sopa.highscore.JustPlayScore;
 import de.sopa.model.justplay.JustPlayResult;
 import de.sopa.scene.BaseScene;
