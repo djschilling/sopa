@@ -36,6 +36,9 @@ public class JustPlayScoreScene extends BaseScene {
 
         addRectangles();
         addTexts(currentScore);
+        if ((justPlayScoreService.getHighscore().getPoints() < justPlayResult.getScore()) && justPlayResult.lost()) {
+            addParticleSystem();
+        }
         if (justPlayResult.lost()) {
             justPlayScoreService.submitScore(new JustPlayScore(justPlayResult.getScore(), justPlayResult.getLevelAnzahl()));
             addBackToMenuButton();
@@ -44,6 +47,7 @@ public class JustPlayScoreScene extends BaseScene {
             addNextLevelButton();
         }
         addAnimation(currentScore);
+        //attachChild(new Sprite(200, 200, resourcesManager.shareScoreTexture, vbom));
     }
 
     private void addShareButton() {
@@ -60,6 +64,11 @@ public class JustPlayScoreScene extends BaseScene {
         });
         registerTouchArea(shareLogo);
         attachChild(shareLogo);
+    }
+
+    private void addParticleSystem() {
+
+        attachChild(new ConfettiParticleSystem(vbom, camera.getWidth()));
     }
 
     private void addBackToMenuButton() {
