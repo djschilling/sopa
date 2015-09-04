@@ -1,5 +1,6 @@
 package de.sopa.scene.levelmode;
 
+import de.sopa.scene.justplay.ConfettiParticleSystem;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
@@ -18,6 +19,7 @@ public class LevelModeCompleteScene extends de.sopa.scene.BaseScene {
         Sprite cup = new Sprite(0, 0, resourcesManager.levelModeCup, vbom);
         cup.setPosition(camera.getWidth() / 2 - cup.getWidth() /2, camera.getHeight() * 0.4f);
         attachChild(cup);
+        attachChild(new ConfettiParticleSystem(vbom, camera.getWidth()));
         setOnSceneTouchListener(new IOnSceneTouchListener() {
             @Override
             public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
