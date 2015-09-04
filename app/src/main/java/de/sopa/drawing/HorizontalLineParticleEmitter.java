@@ -1,4 +1,4 @@
-package de.sopa.scene.justplay;
+package de.sopa.drawing;
 
 import org.andengine.entity.particle.emitter.BaseParticleEmitter;
 import org.andengine.entity.particle.emitter.IParticleEmitter;

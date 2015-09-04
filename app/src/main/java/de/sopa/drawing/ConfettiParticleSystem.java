@@ -1,4 +1,4 @@
-package de.sopa.scene.justplay;
+package de.sopa.drawing;
 
 import org.andengine.entity.IEntityFactory;
 import org.andengine.entity.modifier.AlphaModifier;
