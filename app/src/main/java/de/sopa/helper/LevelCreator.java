@@ -30,7 +30,7 @@ public class LevelCreator {
         levelSolver = new LevelSolver(new GameFieldService());
     }
 
-    public Level generateSolvedField(int width, int height) {
+    public Level generateSolvedField(int width, int height, int minTubes, int maxTubes) {
 
         int number = 0;
         Level level = new Level();
@@ -116,7 +116,7 @@ public class LevelCreator {
 
             while (tiles[xNew][yNew].getTileType() != UNDEFINED && tiles[xNew][yNew].getShortcut() != 'n') {
                 if (directions[0] && directions[1] && directions[2] && directions[3]) {
-                    return generateSolvedField(width, height);
+                    return generateSolvedField(width, height, minTubes, maxTubes);
                 }
 
                 directions[direction] = true;
@@ -169,20 +169,20 @@ public class LevelCreator {
         level.setField(tiles);
         level.setTilesCount(number - 1);
 
-        if (number > (width - 2) * (height - 2) / 3) {
+        if (number - 1 >= minTubes && maxTubes >= number - 1) {
             return level;
         } else {
-            return generateSolvedField(width, height);
+            return generateSolvedField(width, height, minTubes, maxTubes);
         }
     }
 
 
-    public Level generateLevel(int size, int moves) {
+    public Level generateLevel(int size, int moves, int minTubes, int maxTubes) {
 
         Level level = null;
 
         do {
-            level = levelDestroyer.destroyField(generateSolvedField(size, size), moves, moves);
+            level = levelDestroyer.destroyField(generateSolvedField(size, size, minTubes, maxTubes), moves, moves);
         } while (levelSolver.solve(level, moves).getMinimumMovesToSolve() != moves);
 
         return level;
