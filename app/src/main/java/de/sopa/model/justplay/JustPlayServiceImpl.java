@@ -14,9 +14,9 @@ public class JustPlayServiceImpl implements JustPlayService {
     private int lastScore;
     private int[] difficultyGameSize =      {5,     5,     5,      5,      5,      6,      6,      6 };
     private int[] difficultyMoves =         {2,     2,     2,      3,      3,      3,      3,      3 };
-    private int[] difficultyTime =          {5,     5,     7,      8,      8,      10,     10,     10 };
+    private int[] difficultyTime =          {5,     5,     7,      8,      8,      10,     8,      8 };
     private int[] difficultyScore =         {5,     10,    20,     50,     200,    1000,   2000,   2000};
-    private int[] difficultyTubesMin =      {3,     3,     4,      3,      5,      6,      8,      8};
+    private int[] difficultyTubesMin =      {3,     3,     4,      3,      5,      6,      8,      10};
     private int[] difficultyTubesMax =      {3,     4,     9,      5,      9,      10,     12,     16};
 
     public JustPlayServiceImpl() {

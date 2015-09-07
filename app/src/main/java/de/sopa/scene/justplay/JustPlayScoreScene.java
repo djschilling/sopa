@@ -39,24 +39,25 @@ public class JustPlayScoreScene extends BaseScene {
     }
 
        private void addAnimation(final int[] currentScore) {
-        engine.registerUpdateHandler(new TimerHandler(0.01f, true, new ITimerCallback() {
-            @Override
-            public void onTimePassed(TimerHandler pTimerHandler) {
-                if (!leaveScene) {
-                    if (currentScore[0] >= justPlayResult.getScore()) {
-                        score.setText(String.valueOf(justPlayResult.getScore()));
-                        engine.unregisterUpdateHandler(pTimerHandler);
-                    } else {
-                        currentScore[0]++;
-                        score.setText(String.valueOf(currentScore[0]));
-                    }
-                } else {
-                    engine.unregisterUpdateHandler(pTimerHandler);
-                }
-            }
-        }));
-        registerEntityModifier(new MoveYModifier(0.15f, -camera.getHeight(), 0, EaseQuadInOut.getInstance()));
-    }
+           float stepRange = 0.5f / (justPlayResult.getScore() - justPlayResult.getLastScore());
+           engine.registerUpdateHandler(new TimerHandler(stepRange, true, new ITimerCallback() {
+               @Override
+               public void onTimePassed(TimerHandler pTimerHandler) {
+                   if (!leaveScene) {
+                       if (currentScore[0] >= justPlayResult.getScore()) {
+                           score.setText(String.valueOf(justPlayResult.getScore()));
+                           engine.unregisterUpdateHandler(pTimerHandler);
+                       } else {
+                           currentScore[0]++;
+                           score.setText(String.valueOf(currentScore[0]));
+                       }
+                   } else {
+                       engine.unregisterUpdateHandler(pTimerHandler);
+                   }
+               }
+           }));
+           registerEntityModifier(new MoveYModifier(0.15f, -camera.getHeight(), 0, EaseQuadInOut.getInstance()));
+       }
 
     private void addNextLevelButton() {
         ButtonSprite nextLevelButton = new ButtonSprite((camera.getWidth() / 2 - 200), (camera.getHeight() - 400),
