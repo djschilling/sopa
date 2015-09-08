@@ -18,12 +18,12 @@ jacoco {
 }
 
 android {
-    compileSdkVersion 21
+    compileSdkVersion 22
     buildToolsVersion "21.1.2"
 
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 21
+        targetSdkVersion 22
         versionCode 10
         versionName "2.1.0"
     }
@@ -46,7 +46,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     // You must install or update the Support Repository through the SDK manager to use this dependency.
-    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'com.android.support:appcompat-v7:22.2.1'
     compile project(':andengine')
     compile 'org.apache.commons:commons-lang3:3.3.2'
     testCompile 'junit:junit:4.12'
