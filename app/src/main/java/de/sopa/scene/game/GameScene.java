@@ -46,7 +46,6 @@ public abstract class GameScene extends BaseScene implements GameSceneObserver {
         addCustomLabels();
         registerTouchHandler();
         resourcesManager.musicService.stopMusic();
-        registerEntityModifier(c);
     }
 
     protected abstract void addCustomLabels();
