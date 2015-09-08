@@ -1,5 +1,10 @@
 # Changelog
 
+# 2.2.0
+
+* adjust difficulty in just play modus
+* ui improvements in just play modus
+
 # 2.1.0
 
 * bugfixes in gameScene #62, #61
