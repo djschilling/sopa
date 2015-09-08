@@ -49,6 +49,13 @@ Build ausführen:
 
 Die erstellten HTML-Reports sind anschließend unter ```app/build/reports/jacoco/jacocoTestReport/html/index.html``` zu finden.
 
+### Release erstellen ###
+
+```./gradlew clean```
+```./gradlew :app:assembleRelease```
+
+Danach in Android Studio "Generate signed APK"
+
 ## Lizenz ##
 
 [Sopa](https://github.com/pongo710/sopa) is licensed under the Apache License, Version 2.0. See [LICENSE](https://github.com/pongo710/sopa/blob/master/LICENSE.txt) for the full license text.
