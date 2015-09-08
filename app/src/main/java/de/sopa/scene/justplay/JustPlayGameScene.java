@@ -13,8 +13,13 @@ import de.sopa.scene.game.GameScene;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 
+import org.andengine.entity.IEntity;
+import org.andengine.entity.modifier.AlphaModifier;
+import org.andengine.entity.modifier.IEntityModifier;
+import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.text.Text;
+import org.andengine.util.modifier.IModifier;
 
 
 /**
@@ -22,16 +27,18 @@ import org.andengine.entity.text.Text;
  */
 public class JustPlayGameScene extends GameScene implements JustPlaySceneObserver {
 
-    private final JustPlayLevel justPlayLevel;
     private TimeBasedGameService timeBasedGameService;
     private Text leftTime;
     private boolean leaveScene;
     private ButtonSprite restartButton;
+    private Rectangle gameViewBackground;
 
     public JustPlayGameScene(JustPlayLevel justPlayLevel) {
 
         super(justPlayLevel.getLevel());
-        this.justPlayLevel = justPlayLevel;
+        gameViewBackground = new Rectangle(0f, getTileSceneStartY() + spacePerTile, camera.getWidth(), camera.getWidth(), vbom);
+        gameViewBackground.setColor(1f,1f,1f,0f);
+        attachChild(gameViewBackground);
         leaveScene = false;
         timeBasedGameService = new TimeBasedGameServiceImpl(justPlayLevel.getLeftTime());
         timeBasedGameService.start();
@@ -43,7 +50,6 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
     public JustPlayGameScene(TimeBasedGameService timeBasedGameService, JustPlayLevel justPlayLevel) {
 
         super(justPlayLevel.getLevel());
-        this.justPlayLevel = justPlayLevel;
         leaveScene = false;
         this.timeBasedGameService = timeBasedGameService;
 
@@ -137,9 +143,9 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
 
                             engine.unregisterUpdateHandler(pTimerHandler);
                             storyService.loadJustPlayScoreSceneFromJustPlayScene(
-                                new JustPlayLevelResult(timeBasedGameService.getRemainingTime(),
-                                    gameService.getLevel().getMovesCount(),
-                                    gameService.getLevel().getMinimumMovesToSolve()));
+                                    new JustPlayLevelResult(timeBasedGameService.getRemainingTime(),
+                                            gameService.getLevel().getMovesCount(),
+                                            gameService.getLevel().getMinimumMovesToSolve()));
                         }
                     }));
         }
@@ -152,18 +158,9 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
         if (!leaveScene) {
             restartButton.setEnabled(false);
             leaveScene = true;
-            engine.registerUpdateHandler(new TimerHandler(1f, new ITimerCallback() {
-
-                        @Override
-                        public void onTimePassed(TimerHandler pTimerHandler) {
-
-                            engine.unregisterUpdateHandler(pTimerHandler);
-                            storyService.loadJustPlayLostSceneFromJustPlayScene(
-                                new JustPlayLevelResult(-1, gameService.getLevel().getMovesCount(),
-                                    gameService.getLevel().getMinimumMovesToSolve()));
-                        }
-                    }));
-        }
+            storyService.loadJustPlayLostSceneFromJustPlayScene(new JustPlayLevelResult(-1,
+                    gameService.getLevel().getMovesCount(), gameService.getLevel().getMinimumMovesToSolve()));
+            }
     }
 
 
@@ -180,15 +177,36 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
 
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
 
-                    @Override
-                    public void onTimePassed(TimerHandler pTimerHandler) {
+            @Override
+            public void onTimePassed(TimerHandler pTimerHandler) {
 
-                        leftTime.setText(String.valueOf(timeBasedGameService.getRemainingTime()));
-                    }
-                }));
+                leftTime.setText(String.valueOf(timeBasedGameService.getRemainingTime()));
+                if (timeBasedGameService.getRemainingTime() <= 5) {
+                    backgroundFlash();
+                }
+            }
+        }));
 
         if (timeBasedGameService.getRemainingTime() == 0 && !gameService.solvedPuzzle()) {
             onLostGame();
         }
+    }
+
+    private void backgroundFlash() {
+        final AlphaModifier alphaModifier1 = new AlphaModifier(0.1f, 0f, 1f);
+        final AlphaModifier alphaModifier2 = new AlphaModifier(0.1f, 1f, 0f);
+        alphaModifier1.addModifierListener(new IEntityModifier.IEntityModifierListener() {
+            @Override
+            public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
+
+            }
+
+            @Override
+            public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
+                alphaModifier2.reset();
+                gameViewBackground.registerEntityModifier(alphaModifier2);
+            }
+        });
+        gameViewBackground.registerEntityModifier(alphaModifier1);
     }
 }

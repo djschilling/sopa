@@ -11,11 +11,18 @@ import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.scene.background.IBackground;
+import org.andengine.entity.scene.background.modifier.ColorBackgroundModifier;
+import org.andengine.entity.scene.background.modifier.IBackgroundModifier;
 import org.andengine.entity.text.Text;
 
 import org.andengine.input.touch.detector.ContinuousHoldDetector;
 
 import org.andengine.util.color.Color;
+import org.andengine.util.modifier.IModifier;
+import org.andengine.util.modifier.ease.EaseExponentialIn;
+import org.andengine.util.modifier.ease.EaseQuadIn;
+import org.andengine.util.modifier.ease.EaseQuadInOut;
 
 
 /**
@@ -26,11 +33,12 @@ public abstract class GameScene extends BaseScene implements GameSceneObserver {
 
     protected GameService gameService;
     private ContinuousHoldDetector continuousHoldDetector;
-    private float spacePerTile;
+    protected float spacePerTile;
     private Text scoreText;
-    private GameFieldView gameFieldView;
+    protected GameFieldView gameFieldView;
     protected final Level level;
     protected Level levelBackup;
+    protected Background background;
 
     public GameScene(Level level) {
 
@@ -104,7 +112,7 @@ public abstract class GameScene extends BaseScene implements GameSceneObserver {
     }
 
 
-    private float getTileSceneStartY() {
+    protected float getTileSceneStartY() {
 
         return (camera.getHeight() - (spacePerTile * gameService.getLevel().getField().length)) / 2;
     }
@@ -148,7 +156,8 @@ public abstract class GameScene extends BaseScene implements GameSceneObserver {
 
     private void addBackground() {
 
-        setBackground(new Background(Color.BLACK));
+        background = new Background(Color.BLACK);
+        setBackground(background);
     }
 
 
