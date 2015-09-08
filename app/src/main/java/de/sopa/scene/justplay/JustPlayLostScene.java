@@ -145,11 +145,11 @@ public class JustPlayLostScene extends BaseScene {
     }
 
     private void addRectangles() {
-        Rectangle rectangleScore = new Rectangle(0, (float) (camera.getHeight() * 0.45), camera.getWidth(), camera.getHeight() / 10, vbom);
+        Rectangle rectangleScore = new Rectangle(0, (float) (camera.getHeight() * 0.45), camera.getWidth(), camera.getHeight() * 0.085f, vbom);
         rectangleScore.setColor(0, 102 / 255f, 255 / 255f);
         attachChild(rectangleScore);
         if(justPlayScoreService.getHighscore() != null) {
-            Rectangle rectangleHighscore = new Rectangle(0, (float) (camera.getHeight() * 0.6), camera.getWidth(), (float) (camera.getHeight() / 10), vbom);
+            Rectangle rectangleHighscore = new Rectangle(0, (float) (camera.getHeight() * 0.6), camera.getWidth(), (float) (camera.getHeight() * 0.085f), vbom);
             rectangleHighscore.setColor(153 / 255f, 102 / 255f, 0);
             attachChild(rectangleHighscore);
         }

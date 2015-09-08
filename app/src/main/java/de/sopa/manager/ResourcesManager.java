@@ -119,7 +119,7 @@ public class ResourcesManager {
     public void loadJustPlayScoreResources() {
 
         levelCompleteFont = resourceLoader.getFont("Impact.ttf", 200, WHITE, 0, TRANSPARENT);
-        justPlayScoreFont = resourceLoader.getFont("Impact.ttf", 140, WHITE, 0, TRANSPARENT);
+        justPlayScoreFont = resourceLoader.getFont("Impact.ttf", 125, WHITE, 0, TRANSPARENT);
         nextJustPlayLevel.getTexture().load();
         backToMenuRegionP.getTexture().load();
         shareScoreTexture.getTexture().load();

@@ -100,10 +100,10 @@ public class JustPlayScoreScene extends BaseScene {
     }
 
     private void addRectangles() {
-        Rectangle rectangleScore = new Rectangle(0, (float) (camera.getHeight() * 0.45), camera.getWidth(), camera.getHeight() / 10, vbom);
+        Rectangle rectangleScore = new Rectangle(0, (float) (camera.getHeight() * 0.45), camera.getWidth(), camera.getHeight() * 0.085f, vbom);
         rectangleScore.setColor(0, 102 / 255f, 255 / 255f);
         attachChild(rectangleScore);
-        Rectangle rectangleTime = new Rectangle(0, (float) (camera.getHeight() * 0.6), camera.getWidth(), (float) (camera.getHeight() / 5), vbom);
+        Rectangle rectangleTime = new Rectangle(0, (float) (camera.getHeight() * 0.6), camera.getWidth(), (float) (camera.getHeight() * 0.17f), vbom);
         rectangleTime.setColor(153 / 255f, 0, 0);
         attachChild(rectangleTime);
     }
