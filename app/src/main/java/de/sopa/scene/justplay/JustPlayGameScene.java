@@ -36,14 +36,18 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
     public JustPlayGameScene(JustPlayLevel justPlayLevel) {
 
         super(justPlayLevel.getLevel());
-        gameViewBackground = new Rectangle(0f, getTileSceneStartY() + spacePerTile, camera.getWidth(), camera.getWidth(), vbom);
-        gameViewBackground.setColor(1f,1f,1f,0f);
-        attachChild(gameViewBackground);
         leaveScene = false;
+        initializeWarningFlash();
         timeBasedGameService = new TimeBasedGameServiceImpl(justPlayLevel.getLeftTime());
         timeBasedGameService.start();
         timeBasedGameService.attach(this);
         leftTime.setText(String.valueOf(justPlayLevel.getLeftTime()));
+    }
+
+    private void initializeWarningFlash() {
+        gameViewBackground = new Rectangle(0f, getTileSceneStartY() + spacePerTile, camera.getWidth(), camera.getWidth(), vbom);
+        gameViewBackground.setColor(1f,1f,1f,0f);
+        attachChild(gameViewBackground);
     }
 
 
@@ -51,6 +55,7 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
 
         super(justPlayLevel.getLevel());
         leaveScene = false;
+        initializeWarningFlash();
         this.timeBasedGameService = timeBasedGameService;
 
         timeBasedGameService.attach(this);
