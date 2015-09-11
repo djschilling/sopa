@@ -14,6 +14,7 @@ import org.andengine.entity.text.Text;
 import org.andengine.util.modifier.ease.EaseQuadInOut;
 
 import static org.andengine.util.color.Color.BLACK;
+import static org.andengine.util.color.Color.YELLOW;
 
 /**
  * @author Raphael Schilling
@@ -21,6 +22,7 @@ import static org.andengine.util.color.Color.BLACK;
  */
 public class JustPlayLostScene extends BaseScene {
 
+    private final float textFieldHeight;
     private final boolean isNewHighscore;
     private boolean leaveScene;
     private JustPlayResult justPlayResult;
@@ -35,6 +37,7 @@ public class JustPlayLostScene extends BaseScene {
         isNewHighscore = (justPlayScoreService.getHighscore() != null && justPlayScoreService.getHighscore().getPoints() < justPlayResult.getScore()) ||
                 justPlayScoreService.getHighscore() == null;
         final int[] currentScore = {justPlayResult.getLastScore()};
+        textFieldHeight = camera.getHeight() * 0.085f;
 
         addRectangles();
         addTexts(currentScore);
@@ -134,10 +137,12 @@ public class JustPlayLostScene extends BaseScene {
         score = new Text((float) (camera.getWidth() * 0.65), (float) (camera.getHeight() * 0.45), resourcesManager.justPlayScoreFont, "" + currentScore[0], 8, vbom);
         score.setColor(BLACK);
         attachChild(score);
-
+        Text level = new Text(scoreText.getX(), scoreText.getY() + textFieldHeight, resourcesManager.justPlayScoreFont, "Last Level:      " + justPlayResult.getLevelCount(), vbom);
+        level.setColor(BLACK);
+        attachChild(level);
         JustPlayScore justPlayHighscore = justPlayScoreService.getHighscore();
         if(justPlayHighscore != null) {
-            Text highScore = new Text((float) (camera.getWidth() * 0.05), (float) (camera.getHeight() * 0.605), resourcesManager.justPlayScoreFont,
+            Text highScore = new Text(scoreText.getX(), score.getY() + textFieldHeight * 2, resourcesManager.justPlayScoreFont,
                     "Highscore:\t" + justPlayHighscore.getPoints(), vbom);
             highScore.setColor(BLACK);
             attachChild(highScore);
@@ -145,11 +150,14 @@ public class JustPlayLostScene extends BaseScene {
     }
 
     private void addRectangles() {
-        Rectangle rectangleScore = new Rectangle(0, (float) (camera.getHeight() * 0.45), camera.getWidth(), camera.getHeight() * 0.085f, vbom);
+        Rectangle rectangleScore = new Rectangle(0, (float) (camera.getHeight() * 0.45), camera.getWidth(), textFieldHeight, vbom);
         rectangleScore.setColor(0, 102 / 255f, 255 / 255f);
         attachChild(rectangleScore);
+        Rectangle rectangleLevel = new Rectangle(0, rectangleScore.getY() + textFieldHeight, camera.getWidth(), rectangleScore.getHeight(), vbom);
+        rectangleLevel.setColor(YELLOW);
+        attachChild(rectangleLevel);
         if(justPlayScoreService.getHighscore() != null) {
-            Rectangle rectangleHighscore = new Rectangle(0, (float) (camera.getHeight() * 0.6), camera.getWidth(), (float) (camera.getHeight() * 0.085f), vbom);
+            Rectangle rectangleHighscore = new Rectangle(0, rectangleLevel.getY() + textFieldHeight, camera.getWidth(), textFieldHeight, vbom);
             rectangleHighscore.setColor(153 / 255f, 102 / 255f, 0);
             attachChild(rectangleHighscore);
         }
