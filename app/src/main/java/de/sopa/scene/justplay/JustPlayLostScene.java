@@ -134,10 +134,10 @@ public class JustPlayLostScene extends BaseScene {
         attachChild(scoreText);
 
 
-        score = new Text((float) (camera.getWidth() * 0.65), (float) (camera.getHeight() * 0.45), resourcesManager.justPlayScoreFont, "" + currentScore[0], 8, vbom);
+        score = new Text((float) (camera.getWidth() * 0.6), (float) (camera.getHeight() * 0.45), resourcesManager.justPlayScoreFont, "" + currentScore[0], 8, vbom);
         score.setColor(BLACK);
         attachChild(score);
-        Text level = new Text(scoreText.getX(), scoreText.getY() + textFieldHeight, resourcesManager.justPlayScoreFont, "Last Level:      " + justPlayResult.getLevelCount(), vbom);
+        Text level = new Text(scoreText.getX(), scoreText.getY() + textFieldHeight, resourcesManager.justPlayScoreFont, "Level:              " + justPlayResult.getLevelCount(), vbom);
         level.setColor(BLACK);
         attachChild(level);
         JustPlayScore justPlayHighscore = justPlayScoreService.getHighscore();
