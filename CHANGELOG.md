@@ -2,6 +2,10 @@
 
 # 2.2.0
 
+* add level count to game over screen in just play modus #66
+
+# 2.2.0
+
 * adjust difficulty in just play modus
 * ui improvements in just play modus
 
