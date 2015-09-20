@@ -17,8 +17,11 @@ import de.sopa.manager.StoryService;
 import de.sopa.manager.StoryServiceImpl;
 
 import de.sopa.scene.game.GameScene;
+import de.sopa.scene.levelmode.LevelChoiceScene;
 import de.sopa.scene.levelmode.ScoreScreen;
 
+import de.sopa.scene.menu.MainMenuScene;
+import de.sopa.scene.settings.SettingsScene;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -127,7 +130,7 @@ public class GameActivity extends BaseGameActivity {
             ResourcesManager.getInstance().musicService.muteMusic();
         }
 
-        if (!(mEngine.getScene() instanceof GameScene) && !(mEngine.getScene() instanceof ScoreScreen)) {
+        if ((mEngine.getScene() instanceof MainMenuScene) || (mEngine.getScene() instanceof SettingsScene) || (mEngine.getScene() instanceof LevelChoiceScene)) {
             ResourcesManager.getInstance().musicService.playMusic();
         }
 
