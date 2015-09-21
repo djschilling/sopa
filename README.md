@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/Contargo/iris.svg?branch=1.7)](https://travis-ci.org/Contargo/iris)
 
+[Download](https://play.google.com/store/apps/details?id=de.sopa) in play store.
+
 * [Overview](https://github.com/pongo710/sopa/#overview)
 * [Gamemodes](https://github.com/pongo710/sopa/#gamemodes)
 * [Development](https://github.com/pongo710/sopa/#development)
