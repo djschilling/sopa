@@ -12,6 +12,7 @@ public class HorizontalLineParticleEmitter extends BaseParticleEmitter {
     private final float x;
     private final float y;
     private final float cameraWidth;
+
     public HorizontalLineParticleEmitter(float x, float y, float cameraWidth) {
         super(x + cameraWidth, y);
         this.x = x;

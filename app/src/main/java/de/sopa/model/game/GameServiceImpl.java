@@ -34,12 +34,6 @@ public class GameServiceImpl implements GameService {
     }
 
 
-    @Override
-    public boolean lostLevel() {
-
-        return false;
-    }
-
 
     @Override
     public void shiftLine(boolean horizontal, int row, int steps, boolean silent) {

@@ -179,7 +179,7 @@ public class LevelCreator {
 
     public Level generateLevel(int size, int moves, int minTubes, int maxTubes) {
 
-        Level level = null;
+        Level level;
 
         do {
             level = levelDestroyer.destroyField(generateSolvedField(size, size, minTubes, maxTubes), moves, moves);

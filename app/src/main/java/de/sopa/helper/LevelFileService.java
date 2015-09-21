@@ -21,8 +21,6 @@ import java.io.IOException;
 public class LevelFileService {
 
     private static final String LEVEL_BASE_PATH = "levels/";
-    private static final String LEVEL_SAVE_PATH = Environment.getExternalStorageDirectory().getPath() + "/sopa/levels/";
-    private static final String LEVEL_COUNT = "LEVEL_COUNT";
     private final FileHandler fileHandler;
     private LevelTranslator levelTranslator;
 
@@ -43,25 +41,6 @@ public class LevelFileService {
         } catch (IOException e) {
             throw new LevelServiceException("Not possible to read GameFiled from " + levelFilename, e);
         }
-    }
-
-
-    public Integer saveGameField(Level level) throws IOException {
-
-        SharedPreferences settings = ResourcesManager.getInstance().activity.getPreferences(0);
-        Integer count = settings.getInt(LEVEL_COUNT, 0);
-        count++;
-        level.setId(count);
-
-        String levelFilename = LEVEL_SAVE_PATH + count + ".lv";
-        fileHandler.writeToFile(levelFilename, levelTranslator.fromGameField(level));
-        Log.i("Level saved as ", levelFilename);
-
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(LEVEL_COUNT, count);
-        editor.apply();
-
-        return count;
     }
 
 

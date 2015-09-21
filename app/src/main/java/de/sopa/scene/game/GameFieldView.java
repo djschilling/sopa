@@ -226,10 +226,4 @@ public class GameFieldView extends Entity {
             gameService.notifyAllObserver();
         }
     }
-
-
-    public boolean isActive() {
-
-        return active;
-    }
 }

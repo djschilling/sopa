@@ -12,9 +12,6 @@ public interface GameService {
     boolean solvedPuzzle();
 
 
-    boolean lostLevel();
-
-
     void shiftLine(boolean horizontal, int row, int steps, boolean silent);
 
 

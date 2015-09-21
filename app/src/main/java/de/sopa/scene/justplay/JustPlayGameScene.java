@@ -1,5 +1,6 @@
 package de.sopa.scene.justplay;
 
+import de.sopa.drawing.FlashEntityModifier;
 import de.sopa.model.game.GameServiceImpl;
 import de.sopa.model.game.TimeBasedGameService;
 import de.sopa.model.game.TimeBasedGameServiceImpl;
@@ -198,20 +199,6 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
     }
 
     private void backgroundFlash() {
-        final AlphaModifier alphaModifier1 = new AlphaModifier(0.1f, 0f, 1f);
-        final AlphaModifier alphaModifier2 = new AlphaModifier(0.1f, 1f, 0f);
-        alphaModifier1.addModifierListener(new IEntityModifier.IEntityModifierListener() {
-            @Override
-            public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
-
-            }
-
-            @Override
-            public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
-                alphaModifier2.reset();
-                gameViewBackground.registerEntityModifier(alphaModifier2);
-            }
-        });
-        gameViewBackground.registerEntityModifier(alphaModifier1);
+        gameViewBackground.registerEntityModifier(new FlashEntityModifier());
     }
 }

@@ -57,10 +57,10 @@ public abstract class LevelChoiceSceneSwipeDetector implements ITouchArea {
     public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 
         if (pSceneTouchEvent.getMotionEvent().getAction() == 2) {
-            if (pTouchAreaLocalX - startX > SWIPE_DISTACE && finished == false) {
+            if (pTouchAreaLocalX - startX > SWIPE_DISTACE && !finished) {
                 swipeLeft();
                 finished = true;
-            } else if (pTouchAreaLocalX - startX < -200 && finished == false) {
+            } else if (pTouchAreaLocalX - startX < -200 && !finished) {
                 swipeRight();
                 finished = true;
             }
@@ -70,9 +70,6 @@ public abstract class LevelChoiceSceneSwipeDetector implements ITouchArea {
         } else {
             finished = true;
         }
-
-        Log.i("asdf", String.valueOf(pSceneTouchEvent.getMotionEvent().getAction()));
-        Log.i(String.valueOf(pSceneTouchEvent.getX()), String.valueOf(pTouchAreaLocalX));
 
         return false;
     }

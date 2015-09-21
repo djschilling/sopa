@@ -76,8 +76,8 @@ public class LevelServiceImpl implements LevelService {
         for (Integer availableLevelId : availableLevelIds) {
             boolean foundId = false;
 
-            for (int levelInfoIndex = 0; levelInfoIndex < allLevelInfos.size(); levelInfoIndex++) {
-                if (allLevelInfos.get(levelInfoIndex).getLevelId().equals(availableLevelId)) {
+            for (LevelInfo allLevelInfo : allLevelInfos) {
+                if (allLevelInfo.getLevelId().equals(availableLevelId)) {
                     foundId = true;
 
                     break;

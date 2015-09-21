@@ -26,7 +26,6 @@ import java.util.List;
  */
 public class LevelChoiceScene extends BaseScene implements Observer {
     private static final int COLUMNS = 3;
-    private int screenCount;
     private Sprite leftArrow;
     private Sprite rightArrow;
     private Entity entityToFollow;
@@ -154,7 +153,7 @@ public class LevelChoiceScene extends BaseScene implements Observer {
 
 
     private void addChangeLevelButtons() {
-        screenCount = (((int) (levelInfos.size() - 0.1) / 12)) + 1;
+        int screenCount = (((int) (levelInfos.size() - 0.1) / 12)) + 1;
         rightArrow = new ButtonSprite(camera.getWidth() * 0.93f - LEVEL_SELECT_ICON_WIDTH, camera.getHeight() * 0.8f, resourcesManager.levelChoiceArrowRightRegion, vbom, new ButtonSprite.OnClickListener() {
             @Override
             public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
