@@ -1,5 +1,6 @@
 package de.sopa;
 
+import android.content.Intent;
 import android.view.KeyEvent;
 
 import de.sopa.database.LevelInfoDataSource;
@@ -10,15 +11,9 @@ import de.sopa.helper.LevelServiceImpl;
 
 import de.sopa.highscore.JustPlayScoreServiceImpl;
 
-import de.sopa.manager.ResourceLoader;
-import de.sopa.manager.ResourcesManager;
-import de.sopa.manager.SettingsService;
-import de.sopa.manager.StoryService;
-import de.sopa.manager.StoryServiceImpl;
+import de.sopa.manager.*;
 
-import de.sopa.scene.game.GameScene;
 import de.sopa.scene.levelmode.LevelChoiceScene;
-import de.sopa.scene.levelmode.ScoreScreen;
 
 import de.sopa.scene.menu.MainMenuScene;
 import de.sopa.scene.settings.SettingsScene;
@@ -42,8 +37,10 @@ public class GameActivity extends BaseGameActivity {
 
     private static final float CAMERA_WIDTH = 1080;
     private static final float CAMERA_HEIGHT = 1920;
+    public static final int RC_SIGN_IN = 9001;
     private Camera camera;
     private LevelInfoDataSource levelInfoDataSource;
+    private GoogleService googleService;
 
     @Override
     public EngineOptions onCreateEngineOptions() {
@@ -57,18 +54,19 @@ public class GameActivity extends BaseGameActivity {
         return engineOptions;
     }
 
-
     @Override
     public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws Exception {
 
         levelInfoDataSource = new LevelInfoDataSource(this);
         levelInfoDataSource.open();
 
+
+
         LevelService levelService = new LevelServiceImpl(new LevelFileService(this), levelInfoDataSource);
         SettingsService settingsService = new SettingsService(getApplicationContext());
         ResourcesManager.prepareManager(mEngine, this, camera, getVertexBufferObjectManager(),
-            new ResourceLoader(getTextureManager(), getAssets(), getFontManager()), new StoryServiceImpl(mEngine),
-            levelService, settingsService, new JustPlayScoreServiceImpl(levelInfoDataSource));
+                new ResourceLoader(getTextureManager(), getAssets(), getFontManager()), new StoryServiceImpl(mEngine),
+                levelService, settingsService, new JustPlayScoreServiceImpl(levelInfoDataSource));
         levelService.updateLevelInfos();
 
         if (settingsService.isFirstTime()) {
@@ -77,7 +75,6 @@ public class GameActivity extends BaseGameActivity {
 
         pOnCreateResourcesCallback.onCreateResourcesFinished();
     }
-
 
     @Override
     public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) throws Exception {
@@ -90,16 +87,18 @@ public class GameActivity extends BaseGameActivity {
 
     @Override
     public void onPopulateScene(Scene pScene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws Exception {
+        googleService = new GoogleService(this);
 
         mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
 
-                    @Override
-                    public void onTimePassed(final TimerHandler pTimerHandler) {
+            @Override
+            public void onTimePassed(final TimerHandler pTimerHandler) {
 
-                        mEngine.unregisterUpdateHandler(pTimerHandler);
-                        ResourcesManager.getInstance().storyService.createMenuScene();
-                    }
-                }));
+                mEngine.unregisterUpdateHandler(pTimerHandler);
+                ResourcesManager.getInstance().storyService.createMenuScene();
+                googleService.connect();
+            }
+        }));
         pOnPopulateSceneCallback.onPopulateSceneFinished();
     }
 
@@ -145,5 +144,13 @@ public class GameActivity extends BaseGameActivity {
         ResourcesManager.getInstance().musicService.stopMusic();
         levelInfoDataSource.close();
         super.onPauseGame();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == RC_SIGN_IN){
+            this.googleService.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

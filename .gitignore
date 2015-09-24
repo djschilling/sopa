@@ -1,6 +1,6 @@
 .gradle
 local.properties
 .DS_Store
-sopa.iml
+*.iml
 .idea
 build

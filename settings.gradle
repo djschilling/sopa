@@ -2,4 +2,6 @@ include ':app'
 
 include 'andengine'
 
+include ':libraries:BaseGameUtils'
+
 project(':andengine').projectDir = new File(settingsDir, 'AndEngine')
