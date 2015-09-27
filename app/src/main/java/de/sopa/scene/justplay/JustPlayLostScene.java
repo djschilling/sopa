@@ -46,6 +46,8 @@ public class JustPlayLostScene extends BaseScene {
         }
         addAnimation(currentScore);
         justPlayScoreService.submitScore(new JustPlayScore(justPlayResult.getScore(), justPlayResult.getLevelCount()));
+        googleService.submitScore(justPlayResult.getScore());
+
         addBackToMenuButton();
         addShareButton();
     }

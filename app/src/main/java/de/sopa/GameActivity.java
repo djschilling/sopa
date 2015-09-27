@@ -59,6 +59,7 @@ public class GameActivity extends BaseGameActivity {
 
         levelInfoDataSource = new LevelInfoDataSource(this);
         levelInfoDataSource.open();
+        googleService = new GoogleService(this);
 
 
 
@@ -66,7 +67,7 @@ public class GameActivity extends BaseGameActivity {
         SettingsService settingsService = new SettingsService(getApplicationContext());
         ResourcesManager.prepareManager(mEngine, this, camera, getVertexBufferObjectManager(),
                 new ResourceLoader(getTextureManager(), getAssets(), getFontManager()), new StoryServiceImpl(mEngine),
-                levelService, settingsService, new JustPlayScoreServiceImpl(levelInfoDataSource));
+                levelService, settingsService, new JustPlayScoreServiceImpl(levelInfoDataSource),googleService);
         levelService.updateLevelInfos();
 
         if (settingsService.isFirstTime()) {
@@ -87,7 +88,7 @@ public class GameActivity extends BaseGameActivity {
 
     @Override
     public void onPopulateScene(Scene pScene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws Exception {
-        googleService = new GoogleService(this);
+
 
         mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
 

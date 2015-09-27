@@ -1,9 +1,11 @@
 package de.sopa.scene.menu;
 
+import android.app.Activity;
 import android.content.Intent;
 
 import android.net.Uri;
 
+import android.widget.Toast;
 import de.sopa.scene.BaseScene;
 
 import org.andengine.engine.handler.timer.ITimerCallback;
@@ -105,7 +107,8 @@ public class MainMenuScene extends BaseScene {
                     @Override
                     public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 
-                        storyService.loadCreditsFromMenuScene();
+//                        storyService.loadCreditsFromMenuScene();
+                        googleService.showLeaderboard();
                     }
                 });
 

@@ -9,6 +9,7 @@ import de.sopa.helper.LevelService;
 
 import de.sopa.highscore.JustPlayScoreService;
 
+import de.sopa.highscore.JustPlayScoreServiceImpl;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
 
@@ -93,6 +94,7 @@ public class ResourcesManager {
     public JustPlayScoreService justPlayScoreService;
     public IFont levelModeCompleteFont;
     public ITextureRegion levelModeCup;
+    public GoogleService googleService;
 
     public void loadMenuSceneResources() {
 
@@ -242,8 +244,8 @@ public class ResourcesManager {
 
 
     public static void prepareManager(Engine engine, GameActivity activity, Camera camera,
-        VertexBufferObjectManager vbom, ResourceLoader resourceLoader, StoryService storyService,
-        LevelService levelService, SettingsService settingsService, JustPlayScoreService justPlayScoreService) {
+                                      VertexBufferObjectManager vbom, ResourceLoader resourceLoader, StoryService storyService,
+                                      LevelService levelService, SettingsService settingsService, JustPlayScoreService justPlayScoreService, GoogleService googleService) {
 
         getInstance().engine = engine;
         getInstance().activity = activity;
@@ -256,6 +258,7 @@ public class ResourcesManager {
                 true);
         getInstance().settingsService = settingsService;
         getInstance().justPlayScoreService = justPlayScoreService;
+        getInstance().googleService = googleService;
     }
 
 
@@ -394,4 +397,6 @@ public class ResourcesManager {
         levelModeCup.getTexture().unload();
         levelModeCompleteFont.getTexture().unload();
     }
+
+
 }

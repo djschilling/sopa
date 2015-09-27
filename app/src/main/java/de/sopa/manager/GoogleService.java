@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
@@ -48,7 +49,20 @@ public class GoogleService implements GoogleApiClient.ConnectionCallbacks, Googl
     }
 
     public void showLeaderboard(){
-        activity.startActivityForResult(Games.Leaderboards.getAllLeaderboardsIntent(mGoogleApiClient), RC_UNUSED);
+        if (this.isConnected()) {
+            activity.startActivityForResult(Games.Leaderboards.getAllLeaderboardsIntent(mGoogleApiClient), RC_UNUSED);
+        } else {
+
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast toast = Toast.makeText(activity, "You have to be logged in. Go to settings to login", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            });
+        }
+
+
     }
 
     @Override

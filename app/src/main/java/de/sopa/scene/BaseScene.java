@@ -6,6 +6,7 @@ import de.sopa.helper.LevelService;
 
 import de.sopa.highscore.JustPlayScoreService;
 
+import de.sopa.manager.GoogleService;
 import de.sopa.manager.ResourcesManager;
 import de.sopa.manager.SettingsService;
 import de.sopa.manager.StoryService;
@@ -31,6 +32,7 @@ public abstract class BaseScene extends Scene {
     protected final LevelService levelService;
     protected final SettingsService settingsService;
     protected final JustPlayScoreService justPlayScoreService;
+    protected final GoogleService googleService;
     protected Engine engine;
     protected Activity activity;
     protected ResourcesManager resourcesManager;
@@ -50,6 +52,7 @@ public abstract class BaseScene extends Scene {
         this.baseScene = this;
         this.settingsService = resourcesManager.settingsService;
         this.justPlayScoreService = resourcesManager.justPlayScoreService;
+        this.googleService = resourcesManager.googleService;
     }
 
     /**
