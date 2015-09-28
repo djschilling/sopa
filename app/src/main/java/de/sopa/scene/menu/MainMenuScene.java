@@ -95,6 +95,7 @@ public class MainMenuScene extends BaseScene {
 
                     @Override
                     public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                        googleService.showLeaderboard();
                     }
                 });
 
@@ -105,8 +106,7 @@ public class MainMenuScene extends BaseScene {
                     @Override
                     public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 
-//                        storyService.loadCreditsFromMenuScene();
-                        googleService.showLeaderboard();
+                        storyService.loadCreditsFromMenuScene();
                     }
                 });
 
