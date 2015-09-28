@@ -1,6 +1,6 @@
 # Sopa #
 
-[![Build Status](https://travis-ci.org/Contargo/iris.svg?branch=1.7)](https://travis-ci.org/Contargo/iris)
+[![Build Status](https://travis-ci.org/Contargo/iris.svg?branch=1.7)](https://travis-ci.org/pongo710/sopa)
 
 [Download](https://play.google.com/store/apps/details?id=de.sopa) in play store.
 
