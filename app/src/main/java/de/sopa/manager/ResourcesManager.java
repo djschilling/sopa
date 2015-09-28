@@ -42,13 +42,14 @@ public class ResourcesManager {
 
     public ITextureRegion level_mode_region;
     public ITextureRegion just_play_region;
+    public ITextureRegion highscoreRegion;
     public ITextureRegion settingsRegion;
     public ITextureRegion creditsRegion;
+
     public ITextureRegion loadingScreenBackgroundRegion;
-
     public IFont levelCompleteFont;
-    public Map<Character, TextureRegion> regionTileMap;
 
+    public Map<Character, TextureRegion> regionTileMap;
     public ITextureRegion tilesBorderRegion;
     public ITextureRegion levelChoiceRegion;
     public ITextureRegion levelChoiceArrowRightRegion;
@@ -67,8 +68,8 @@ public class ResourcesManager {
     public ITextureRegion tutorialSecondRegionA;
     public ITextureRegion tutorialSecondRegionB;
     public ITextureRegion tutorialLetsGoRegion;
-    public ITextureRegion tutorialFirstRegionA;
 
+    public ITextureRegion tutorialFirstRegionA;
     public ITextureRegion tutorialFirstRegionB;
     public IFont scoreFont;
     public IFont levelChoiceFont;
@@ -162,6 +163,7 @@ public class ResourcesManager {
         prepareTextures();
         level_mode_region.getTexture().load();
         just_play_region.getTexture().load();
+        highscoreRegion.getTexture().load();
         settingsRegion.getTexture().load();
         creditsRegion.getTexture().load();
         twitterLogoRegion.getTexture().load();
@@ -217,6 +219,7 @@ public class ResourcesManager {
 
         level_mode_region.getTexture().unload();
         just_play_region.getTexture().unload();
+        highscoreRegion.getTexture().unload();
         settingsRegion.getTexture().unload();
         creditsRegion.getTexture().unload();
         twitterLogoRegion.getTexture().unload();
@@ -332,10 +335,11 @@ public class ResourcesManager {
 
             level_mode_region = resourceLoader.getTexture("scenes/menu/LevelMode.png");
             just_play_region = resourceLoader.getTexture("scenes/menu/JustPlay.png");
-            settingsRegion = resourceLoader.getTexture("scenes/menu/Settings.png");
+            highscoreRegion = resourceLoader.getTexture("scenes/menu/highscore.png");
+            settingsRegion = resourceLoader.getTexture("scenes/menu/Settingsicon2.png");
             creditsRegion = resourceLoader.getTexture("scenes/menu/credits.png");
             twitterLogoRegion = resourceLoader.getTexture("scenes/menu/Twitter_logo_blue.png");
-            shareLogoTexture = resourceLoader.getTexture("scenes/menu/ShareThis.png");
+            shareLogoTexture = resourceLoader.getTexture("scenes/menu/ShareThis2.png");
             shareScoreTexture = resourceLoader.getTexture("scenes/justplay/shareScore.png");
 
             regionTileMap = this.resourceLoader.getTileTextures();

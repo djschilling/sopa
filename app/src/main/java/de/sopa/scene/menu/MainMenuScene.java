@@ -90,16 +90,14 @@ public class MainMenuScene extends BaseScene {
                         storyService.loadJustPlaySceneFromMenuScene();
                     }
                 });
-
-        final ButtonSprite settingsSprite = new ButtonSprite(camera.getWidth(), 0, resourcesManager.settingsRegion,
+        final ButtonSprite highscoreButton = new ButtonSprite(-camera.getWidth(), 0, resourcesManager.highscoreRegion,
                 vbom, new ButtonSprite.OnClickListener() {
 
                     @Override
                     public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-
-                        storyService.loadSettingsFromMenuScene();
                     }
                 });
+
 
         final ButtonSprite creditsButton = new ButtonSprite(0, camera.getHeight(), resourcesManager.creditsRegion, vbom,
                 new ButtonSprite.OnClickListener() {
@@ -111,6 +109,16 @@ public class MainMenuScene extends BaseScene {
                         googleService.showLeaderboard();
                     }
                 });
+
+        final ButtonSprite settingsSprite = new ButtonSprite(0, 0, resourcesManager.settingsRegion,
+                vbom, new ButtonSprite.OnClickListener() {
+
+            @Override
+            public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+
+                storyService.loadSettingsFromMenuScene();
+            }
+        });
 
         final ButtonSprite twitterLogo = new ButtonSprite(camera.getWidth(), 0, resourcesManager.twitterLogoRegion,
                 vbom, new ButtonSprite.OnClickListener() {
@@ -147,16 +155,19 @@ public class MainMenuScene extends BaseScene {
                         engine.unregisterUpdateHandler(pTimerHandler);
                         levelModeSprite.registerEntityModifier(new MoveXModifier(1f, -camera.getWidth(), 0));
                         justPlaySprite.registerEntityModifier(new MoveXModifier(1f, camera.getWidth(), 0));
-                        settingsSprite.registerEntityModifier(new MoveXModifier(1f, -camera.getWidth(), 0));
+                        highscoreButton.registerEntityModifier(new MoveXModifier(1f, -camera.getWidth(), 0));
                         creditsButton.registerEntityModifier(
                             new MoveYModifier(1f, camera.getHeight(),
                                 camera.getHeight() * 0.4f + 2 * creditsButton.getHeight()));
+                        settingsSprite.registerEntityModifier(new AlphaModifier(1f, 0f, 1f));
                         shareLogo.registerEntityModifier(new AlphaModifier(1f, 0f, 1f));
                         twitterLogo.registerEntityModifier(new AlphaModifier(1f, 0f, 1f));
                         shareLogo.registerEntityModifier(
-                            new MoveXModifier(1f, -shareLogo.getWidth(), camera.getWidth() * 0.05f));
+                            new MoveXModifier(1f, -shareLogo.getWidth(), 0));
+                        settingsSprite.registerEntityModifier(new MoveYModifier(1f, camera.getHeight(),
+                                camera.getHeight() * 0.8f));
                         twitterLogo.registerEntityModifier(
-                            new MoveXModifier(1f, camera.getWidth(), camera.getWidth() * 0.65f));
+                            new MoveXModifier(1f, camera.getWidth(), camera.getWidth() - twitterLogo.getWidth()));
                         sopaText.registerEntityModifier(new ScaleModifier(1f, 0f, 1f));
                     }
                 }));
@@ -169,12 +180,17 @@ public class MainMenuScene extends BaseScene {
         attachChild(justPlaySprite);
         registerTouchArea(justPlaySprite);
 
-        settingsSprite.setPosition(1080, camera.getHeight() * 0.4f + justPlaySprite.getHeightScaled());
-        attachChild(settingsSprite);
-        registerTouchArea(settingsSprite);
+        highscoreButton.setPosition(-camera.getWidth(), camera.getHeight() * 0.4f + highscoreButton.getHeightScaled());
+        attachChild(highscoreButton);
+        registerTouchArea(highscoreButton);
 
         attachChild(creditsButton);
         registerTouchArea(creditsButton);
+
+
+        settingsSprite.setPosition(camera.getWidth() / 2 - settingsSprite.getWidth() / 2, camera.getHeight());
+        attachChild(settingsSprite);
+        registerTouchArea(settingsSprite);
 
         twitterLogo.setPosition(1080, camera.getHeight() * 0.8f);
         attachChild(twitterLogo);
