@@ -16,6 +16,8 @@ public class SettingsScene extends BaseScene {
 
     private ButtonSprite muteButton;
     private ButtonSprite unmuteButton;
+    private ButtonSprite playLoggedIn;
+    private ButtonSprite playLoggedNotIn;
 
     public SettingsScene() {
 
@@ -55,6 +57,40 @@ public class SettingsScene extends BaseScene {
         attachChild(unmuteButton);
         registerTouchArea(muteButton);
         registerTouchArea(unmuteButton);
+
+        playLoggedIn = new ButtonSprite(camera.getWidth() * 0.37f, (camera.getHeight() * 0.6f),
+                resourcesManager.unMuteRegion, vbom, new ButtonSprite.OnClickListener() {
+
+                    @Override
+                    public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+
+                        googleService.disconnect();
+                        settingsService.switchGameServiceAllowed();
+                        storyService.loadMenuSceneFromSettingsScene();
+                    }
+                });
+        playLoggedNotIn = new ButtonSprite(camera.getWidth() * 0.37f, (camera.getHeight() * 0.6f),
+                resourcesManager.muteRegion, vbom, new ButtonSprite.OnClickListener() {
+
+                    @Override
+                    public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+
+                        googleService.connect();
+                        settingsService.switchGameServiceAllowed();
+                        storyService.loadMenuSceneFromSettingsScene();
+                    }
+                });
+
+        if (googleService.isConnected()) {
+            playLoggedNotIn.setVisible(false);
+        } else {
+            playLoggedIn.setVisible(false);
+        }
+
+        attachChild(playLoggedIn);
+        attachChild(playLoggedNotIn);
+        registerTouchArea(playLoggedIn);
+        registerTouchArea(playLoggedNotIn);
     }
 
     @Override

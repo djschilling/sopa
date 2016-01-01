@@ -13,6 +13,7 @@ public class SettingsService {
     private static final String PREFS_NAME = "MyPrefsFile";
     private static final String MUTE = "mute";
     private static final String MY_FIRST_TIME = "MY_FIRST_TIME";
+    private static final String GAME_SERVICE_ALLOWED = "GAME_SERVICE_ALLOWED";
 
     SharedPreferences sharedPreferences;
 
@@ -42,5 +43,17 @@ public class SettingsService {
     public void switchMute() {
 
         sharedPreferences.edit().putBoolean(MUTE, !isMute()).apply();
+    }
+
+
+    public boolean isGameServiceAllowed() {
+
+        return sharedPreferences.getBoolean(GAME_SERVICE_ALLOWED, true);
+    }
+
+
+    public void switchGameServiceAllowed() {
+
+        sharedPreferences.edit().putBoolean(GAME_SERVICE_ALLOWED, !isGameServiceAllowed()).apply();
     }
 }

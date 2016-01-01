@@ -1,6 +1,9 @@
 package de.sopa;
 
 import android.content.Intent;
+
+import android.util.Log;
+
 import android.view.KeyEvent;
 
 import de.sopa.database.LevelInfoDataSource;
@@ -11,12 +14,17 @@ import de.sopa.helper.LevelServiceImpl;
 
 import de.sopa.highscore.JustPlayScoreServiceImpl;
 
-import de.sopa.manager.*;
+import de.sopa.manager.GoogleService;
+import de.sopa.manager.ResourceLoader;
+import de.sopa.manager.ResourcesManager;
+import de.sopa.manager.SettingsService;
+import de.sopa.manager.StoryService;
+import de.sopa.manager.StoryServiceImpl;
 
 import de.sopa.scene.levelmode.LevelChoiceScene;
-
 import de.sopa.scene.menu.MainMenuScene;
 import de.sopa.scene.settings.SettingsScene;
+
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -54,6 +62,7 @@ public class GameActivity extends BaseGameActivity {
         return engineOptions;
     }
 
+
     @Override
     public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws Exception {
 
@@ -61,13 +70,11 @@ public class GameActivity extends BaseGameActivity {
         levelInfoDataSource.open();
         googleService = new GoogleService(this);
 
-
-
         LevelService levelService = new LevelServiceImpl(new LevelFileService(this), levelInfoDataSource);
         SettingsService settingsService = new SettingsService(getApplicationContext());
         ResourcesManager.prepareManager(mEngine, this, camera, getVertexBufferObjectManager(),
-                new ResourceLoader(getTextureManager(), getAssets(), getFontManager()), new StoryServiceImpl(mEngine),
-                levelService, settingsService, new JustPlayScoreServiceImpl(levelInfoDataSource),googleService);
+            new ResourceLoader(getTextureManager(), getAssets(), getFontManager()), new StoryServiceImpl(mEngine),
+            levelService, settingsService, new JustPlayScoreServiceImpl(levelInfoDataSource), googleService);
         levelService.updateLevelInfos();
 
         if (settingsService.isFirstTime()) {
@@ -76,6 +83,7 @@ public class GameActivity extends BaseGameActivity {
 
         pOnCreateResourcesCallback.onCreateResourcesFinished();
     }
+
 
     @Override
     public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) throws Exception {
@@ -89,17 +97,20 @@ public class GameActivity extends BaseGameActivity {
     @Override
     public void onPopulateScene(Scene pScene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws Exception {
 
-
         mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
 
-            @Override
-            public void onTimePassed(final TimerHandler pTimerHandler) {
+                    @Override
+                    public void onTimePassed(final TimerHandler pTimerHandler) {
 
-                mEngine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().storyService.createMenuScene();
-                googleService.connect();
-            }
-        }));
+                        mEngine.unregisterUpdateHandler(pTimerHandler);
+                        ResourcesManager.getInstance().storyService.createMenuScene();
+
+                        if (ResourcesManager.getInstance().settingsService.isGameServiceAllowed()) {
+                            Log.i("Game activity", "starting to connect to google play.");
+                            googleService.connect();
+                        }
+                    }
+                }));
         pOnPopulateSceneCallback.onPopulateSceneFinished();
     }
 
@@ -130,7 +141,8 @@ public class GameActivity extends BaseGameActivity {
             ResourcesManager.getInstance().musicService.muteMusic();
         }
 
-        if ((mEngine.getScene() instanceof MainMenuScene) || (mEngine.getScene() instanceof SettingsScene) || (mEngine.getScene() instanceof LevelChoiceScene)) {
+        if ((mEngine.getScene() instanceof MainMenuScene) || (mEngine.getScene() instanceof SettingsScene)
+                || (mEngine.getScene() instanceof LevelChoiceScene)) {
             ResourcesManager.getInstance().musicService.playMusic();
         }
 
@@ -147,11 +159,20 @@ public class GameActivity extends BaseGameActivity {
         super.onPauseGame();
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == RC_SIGN_IN){
-            this.googleService.onActivityResult(requestCode, resultCode, data);
+
+        Log.i("Game Activity", String.format("on activity Result. Result Code: %s", resultCode));
+
+        if (requestCode == RC_SIGN_IN) {
+            if (resultCode == RESULT_OK) {
+                this.googleService.connect();
+            } else if (resultCode == RESULT_CANCELED) {
+                ResourcesManager.getInstance().settingsService.switchGameServiceAllowed();
+            }
         }
     }
 }
