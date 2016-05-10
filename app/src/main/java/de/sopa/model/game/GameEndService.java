@@ -4,7 +4,7 @@ package de.sopa.model.game;
  * @author  David Schilling - davejs92@gmail.com
  * @author  Raphael Schilling
  */
-public class GameEndService {
+class GameEndService {
 
     private PathState[][] pathStates;
     private int[] directionsX = new int[] { 0, 1, 0, -1 };
@@ -23,7 +23,7 @@ public class GameEndService {
     }
 
 
-    public boolean solvedPuzzle(int startX, int startY, int width, int heigth, Tile[][] field, int tilesCountForLevel) {
+    boolean solvedPuzzle(int startX, int startY, int width, int heigth, Tile[][] field, int tilesCountForLevel) {
 
         this.field = field;
         initializePathStates(width, heigth);
@@ -32,7 +32,7 @@ public class GameEndService {
     }
 
 
-    public boolean searchFinish(int x, int y, int numberMissingTiles) {
+    private boolean searchFinish(int x, int y, int numberMissingTiles) {
 
         for (int direction = 0; direction < 4; direction++) {
             int xNew = x + directionsX[direction];
@@ -48,11 +48,7 @@ public class GameEndService {
                         markAsImpossible(xNew, yNew);
                     }
                 } else {
-                    if (numberMissingTiles > 0) {
-                        return false;
-                    }
-
-                    return true;
+                    return numberMissingTiles <= 0;
                 }
             }
         }
@@ -100,11 +96,7 @@ public class GameEndService {
 
     private boolean foundFinish(int xNew, int yNew) {
 
-        if (field[xNew][yNew].getTileType() == TileType.FINISH) {
-            return true;
-        }
-
-        return false;
+        return field[xNew][yNew].getTileType() == TileType.FINISH;
     }
 
 

@@ -30,7 +30,7 @@ public class LevelCreator {
         levelSolver = new LevelSolver(new GameFieldService());
     }
 
-    public Level generateSolvedField(int width, int height, int minTubes, int maxTubes) {
+    private Level generateSolvedField(int width, int height, int minTubes, int maxTubes) {
 
         int number = 0;
         Level level = new Level();

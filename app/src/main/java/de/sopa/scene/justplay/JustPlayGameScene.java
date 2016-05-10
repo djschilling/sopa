@@ -1,6 +1,7 @@
 package de.sopa.scene.justplay;
 
 import de.sopa.drawing.FlashEntityModifier;
+
 import de.sopa.model.game.GameServiceImpl;
 import de.sopa.model.game.TimeBasedGameService;
 import de.sopa.model.game.TimeBasedGameServiceImpl;
@@ -14,19 +15,15 @@ import de.sopa.scene.game.GameScene;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 
-import org.andengine.entity.IEntity;
-import org.andengine.entity.modifier.AlphaModifier;
-import org.andengine.entity.modifier.IEntityModifier;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.text.Text;
-import org.andengine.util.modifier.IModifier;
 
 
 /**
  * David Schilling - davejs92@gmail.com.
  */
-public class JustPlayGameScene extends GameScene implements JustPlaySceneObserver {
+class JustPlayGameScene extends GameScene implements JustPlaySceneObserver {
 
     private TimeBasedGameService timeBasedGameService;
     private Text leftTime;
@@ -34,7 +31,7 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
     private ButtonSprite restartButton;
     private Rectangle gameViewBackground;
 
-    public JustPlayGameScene(JustPlayLevel justPlayLevel) {
+    JustPlayGameScene(JustPlayLevel justPlayLevel) {
 
         super(justPlayLevel.getLevel());
         leaveScene = false;
@@ -45,14 +42,8 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
         leftTime.setText(String.valueOf(justPlayLevel.getLeftTime()));
     }
 
-    private void initializeWarningFlash() {
-        gameViewBackground = new Rectangle(0f, getTileSceneStartY() + spacePerTile, camera.getWidth(), camera.getWidth(), vbom);
-        gameViewBackground.setColor(1f,1f,1f,0f);
-        attachChild(gameViewBackground);
-    }
 
-
-    public JustPlayGameScene(TimeBasedGameService timeBasedGameService, JustPlayLevel justPlayLevel) {
+    JustPlayGameScene(TimeBasedGameService timeBasedGameService, JustPlayLevel justPlayLevel) {
 
         super(justPlayLevel.getLevel());
         leaveScene = false;
@@ -64,15 +55,26 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
         checkRestartedLevel(timeBasedGameService);
     }
 
+    private void initializeWarningFlash() {
+
+        gameViewBackground = new Rectangle(0f, getTileSceneStartY() + spacePerTile, camera.getWidth(),
+                camera.getWidth(), vbom);
+        gameViewBackground.setColor(1f, 1f, 1f, 0f);
+        attachChild(gameViewBackground);
+    }
+
+
     private void checkRestartedLevel(TimeBasedGameService timeBasedGameService) {
-        if(timeBasedGameService.getRemainingTime() == 0) {
-            if(gameService.solvedPuzzle()) {
+
+        if (timeBasedGameService.getRemainingTime() == 0) {
+            if (gameService.solvedPuzzle()) {
                 onSolvedGame();
             } else {
                 onLostGame();
             }
         }
     }
+
 
     @Override
     protected void addCustomLabels() {
@@ -149,9 +151,9 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
 
                             engine.unregisterUpdateHandler(pTimerHandler);
                             storyService.loadJustPlayScoreSceneFromJustPlayScene(
-                                    new JustPlayLevelResult(timeBasedGameService.getRemainingTime(),
-                                            gameService.getLevel().getMovesCount(),
-                                            gameService.getLevel().getMinimumMovesToSolve()));
+                                new JustPlayLevelResult(timeBasedGameService.getRemainingTime(),
+                                    gameService.getLevel().getMovesCount(),
+                                    gameService.getLevel().getMinimumMovesToSolve()));
                         }
                     }));
         }
@@ -166,7 +168,7 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
             leaveScene = true;
             storyService.loadJustPlayLostSceneFromJustPlayScene(new JustPlayLevelResult(-1,
                     gameService.getLevel().getMovesCount(), gameService.getLevel().getMinimumMovesToSolve()));
-            }
+        }
     }
 
 
@@ -183,22 +185,25 @@ public class JustPlayGameScene extends GameScene implements JustPlaySceneObserve
 
         engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
 
-            @Override
-            public void onTimePassed(TimerHandler pTimerHandler) {
+                    @Override
+                    public void onTimePassed(TimerHandler pTimerHandler) {
 
-                leftTime.setText(String.valueOf(timeBasedGameService.getRemainingTime()));
-                if (timeBasedGameService.getRemainingTime() <= 5) {
-                    backgroundFlash();
-                }
-            }
-        }));
+                        leftTime.setText(String.valueOf(timeBasedGameService.getRemainingTime()));
+
+                        if (timeBasedGameService.getRemainingTime() <= 5) {
+                            backgroundFlash();
+                        }
+                    }
+                }));
 
         if (timeBasedGameService.getRemainingTime() == 0 && !gameService.solvedPuzzle()) {
             onLostGame();
         }
     }
 
+
     private void backgroundFlash() {
+
         gameViewBackground.registerEntityModifier(new FlashEntityModifier());
     }
 }

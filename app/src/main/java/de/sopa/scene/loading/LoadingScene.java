@@ -20,9 +20,9 @@ import org.andengine.util.color.Color;
  * @author  David Schilling - davejs92@gmail.com
  * @author  Raphael Schilling
  */
-public class LoadingScene extends BaseScene {
+class LoadingScene extends BaseScene {
 
-    public LoadingScene() {
+    LoadingScene() {
 
         super();
 

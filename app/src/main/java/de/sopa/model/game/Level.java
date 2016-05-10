@@ -77,19 +77,19 @@ public class Level {
     }
 
 
-    public int getStartX() {
+    int getStartX() {
 
         return startX;
     }
 
 
-    public int getStartY() {
+    int getStartY() {
 
         return startY;
     }
 
 
-    public void increaseMovesCounter() {
+    void increaseMovesCounter() {
 
         movesCounter++;
     }
@@ -101,7 +101,7 @@ public class Level {
     }
 
 
-    public void resetMovesCounter() {
+    void resetMovesCounter() {
 
         movesCounter = 0;
     }
@@ -137,7 +137,7 @@ public class Level {
     }
 
 
-    public int getTilesCount() {
+    int getTilesCount() {
 
         return tilesCount;
     }

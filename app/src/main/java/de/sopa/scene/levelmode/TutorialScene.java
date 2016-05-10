@@ -16,7 +16,7 @@ import org.andengine.input.touch.TouchEvent;
  * @author  Raphael Schilling
  * @author  David Schilling - davejs92@gmail.com
  */
-public class TutorialScene extends BaseScene implements IOnSceneTouchListener {
+class TutorialScene extends BaseScene implements IOnSceneTouchListener {
 
     private Sprite secondScreenA;
     private int alreadySwitched = 0;
@@ -26,7 +26,7 @@ public class TutorialScene extends BaseScene implements IOnSceneTouchListener {
     private Sprite secondScreenB;
     private boolean leaveScene = false;
 
-    public TutorialScene() {
+    TutorialScene() {
 
         firstScreenA = new Sprite(0, 0, 1080, 960, resourcesManager.tutorialFirstRegionA, vbom);
         firstScreenB = new Sprite(0, 960, 1080, 960, resourcesManager.tutorialFirstRegionB, vbom);

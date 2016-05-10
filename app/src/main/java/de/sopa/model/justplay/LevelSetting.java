@@ -3,7 +3,7 @@ package de.sopa.model.justplay;
 /**
  * @author  Raphael Schilling - raphaelschiling@gmail.com
  */
-public class LevelSetting {
+class LevelSetting {
 
     private final int size;
     private final int moves;
@@ -12,7 +12,7 @@ public class LevelSetting {
     private final int minTubes;
     private final int maxTubes;
 
-    public LevelSetting(int size, int moves, int extraTime, int maxScore, int minTubes, int maxTubes) {
+    LevelSetting(int size, int moves, int extraTime, int maxScore, int minTubes, int maxTubes) {
 
         this.size = size;
         this.moves = moves;
@@ -22,19 +22,19 @@ public class LevelSetting {
         this.maxTubes = maxTubes;
     }
 
-    public int getExtraTime() {
+    int getExtraTime() {
 
         return extraTime;
     }
 
 
-    public int getMaxScore() {
+    int getMaxScore() {
 
         return maxScore;
     }
 
 
-    public int getMoves() {
+    int getMoves() {
 
         return moves;
     }
@@ -45,11 +45,15 @@ public class LevelSetting {
         return size;
     }
 
-    public int getMinTubes() {
+
+    int getMinTubes() {
+
         return minTubes;
     }
 
-    public int getMaxTubes() {
+
+    int getMaxTubes() {
+
         return maxTubes;
     }
 }

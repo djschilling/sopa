@@ -8,9 +8,9 @@ import org.andengine.entity.text.Text;
 /**
  * @author  David Schilling - davejs92@gmail.com
  */
-public class CreditsScene extends BaseScene {
+class CreditsScene extends BaseScene {
 
-    public CreditsScene() {
+    CreditsScene() {
 
         super();
 

@@ -12,50 +12,22 @@ import java.util.UUID;
 /**
  * @author  David Schilling - davejs92@gmail.com
  */
-public class TileSprite extends Sprite {
+class TileSprite extends Sprite {
 
-    private float startX;
-    private float startY;
     private UUID uuid;
     private List<ITextureRegion> pTextureRegions;
     private int index;
 
-    public TileSprite(final float pX, final float pY, final float pWidth, final float pHeight,
+    TileSprite(final float pX, final float pY, final float pWidth, final float pHeight,
         List<ITextureRegion> pTextureRegions, final VertexBufferObjectManager vbo) {
 
         super(pX, pY, pWidth, pHeight, pTextureRegions.get(0), vbo);
-        this.startX = pX;
-        this.startY = pY;
         uuid = UUID.randomUUID();
         this.index = 0;
         this.pTextureRegions = pTextureRegions;
     }
 
-    public float getStartX() {
-
-        return startX;
-    }
-
-
-    public float getStartY() {
-
-        return startY;
-    }
-
-
-    public void setStartX(float startX) {
-
-        this.startX = startX;
-    }
-
-
-    public void setStartY(float startY) {
-
-        this.startY = startY;
-    }
-
-
-    public void setITextureRegionIndex(int index) {
+    void setITextureRegionIndex(int index) {
 
         this.index = index;
     }

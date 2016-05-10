@@ -11,18 +11,11 @@ import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 
 import org.andengine.entity.scene.background.Background;
-import org.andengine.entity.scene.background.IBackground;
-import org.andengine.entity.scene.background.modifier.ColorBackgroundModifier;
-import org.andengine.entity.scene.background.modifier.IBackgroundModifier;
 import org.andengine.entity.text.Text;
 
 import org.andengine.input.touch.detector.ContinuousHoldDetector;
 
 import org.andengine.util.color.Color;
-import org.andengine.util.modifier.IModifier;
-import org.andengine.util.modifier.ease.EaseExponentialIn;
-import org.andengine.util.modifier.ease.EaseQuadIn;
-import org.andengine.util.modifier.ease.EaseQuadInOut;
 
 
 /**
@@ -32,10 +25,9 @@ import org.andengine.util.modifier.ease.EaseQuadInOut;
 public abstract class GameScene extends BaseScene implements GameSceneObserver {
 
     protected GameService gameService;
-    private ContinuousHoldDetector continuousHoldDetector;
     protected float spacePerTile;
     private Text scoreText;
-    protected GameFieldView gameFieldView;
+    private GameFieldView gameFieldView;
     protected final Level level;
     protected Level levelBackup;
     protected Background background;
@@ -75,6 +67,7 @@ public abstract class GameScene extends BaseScene implements GameSceneObserver {
                         }
                     }));
         }
+
         scoreText.setText(String.valueOf(gameService.getLevel().getMovesCount()));
 
         updateTiles(gameService.solvedPuzzle());
@@ -146,7 +139,8 @@ public abstract class GameScene extends BaseScene implements GameSceneObserver {
 
         GameSceneSingleMoveDetector gameSceneSingleMoveDetector = new GameSceneSingleMoveDetector(0,
                 getTileSceneStartY() + spacePerTile, spacePerTile, gameFieldView, gameService);
-        continuousHoldDetector = new ContinuousHoldDetector(0, 100, 0.01f, gameSceneSingleMoveDetector);
+        ContinuousHoldDetector continuousHoldDetector = new ContinuousHoldDetector(0, 100, 0.01f,
+                gameSceneSingleMoveDetector);
         setOnSceneTouchListener(continuousHoldDetector);
     }
 

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author  David Schilling - davejs92@gmail.com
  */
-public class LevelSolver {
+class LevelSolver {
 
     private final GameFieldService gameFieldService;
 
@@ -20,12 +20,12 @@ public class LevelSolver {
     private int columns = -1;
     private int rows = -1;
 
-    public LevelSolver(GameFieldService gameFieldService) {
+    LevelSolver(GameFieldService gameFieldService) {
 
         this.gameFieldService = gameFieldService;
     }
 
-    public Level solve(Level level, int maxDepth) {
+    Level solve(Level level, int maxDepth) {
 
         List<Level> possibleSolutions = new ArrayList<>();
         Level levelToSolve = new Level(level);
@@ -54,7 +54,7 @@ public class LevelSolver {
     }
 
 
-    public boolean solve(Level level, int maxDepth, int currentDepth, List<Level> possibleSolutions) {
+    private boolean solve(Level level, int maxDepth, int currentDepth, List<Level> possibleSolutions) {
 
         if (gameFieldService.solvedPuzzle(level)) {
             addPossibleSolutions(new Level(level), currentDepth, possibleSolutions);

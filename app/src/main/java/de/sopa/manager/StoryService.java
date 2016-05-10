@@ -38,6 +38,7 @@ public interface StoryService {
 
     void loadJustPlayScoreSceneFromJustPlayScene(JustPlayLevelResult justPlayLevelResult);
 
+
     void loadJustPlayLostSceneFromJustPlayScene(JustPlayLevelResult justPlayLevelResult);
 
 
@@ -91,9 +92,12 @@ public interface StoryService {
 
     void loadJustPlaySceneFromJustPlayScene(TimeBasedGameService timeBasedGameService, JustPlayLevel justPlayLevel);
 
+
     void loadLevelModeCompleteSceneFromScoreScene();
 
+
     void loadLevelChoiceFromLevelModeCompleteScene();
+
 
     void loadJustPlaySceneFromJustPlayLostScene();
 }

@@ -106,39 +106,6 @@ public class LevelTranslator {
     }
 
 
-    /**
-     * Translates a {@link de.sopa.model.game.Level} to an sopa level specification conform String array.
-     *
-     * @param  level  to translate.
-     *
-     * @return  translated SOPA level specification conform String array.
-     */
-    public String[] fromGameField(Level level) {
-
-        Tile[][] tiles = level.getField();
-
-        if (level.getId() == null) {
-            level.setId(-1);
-        }
-
-        String[] levelAsStrings = new String[tiles[0].length + 4];
-        levelAsStrings[0] = String.valueOf(level.getId());
-        levelAsStrings[1] = String.valueOf(level.getMinimumMovesToSolve());
-        levelAsStrings[2] = String.valueOf(level.getTilesCount());
-        levelAsStrings[3] = "#";
-
-        for (int y = 0; y < tiles[0].length; y++) {
-            levelAsStrings[y + 4] = "";
-
-            for (Tile[] tile : tiles) {
-                levelAsStrings[y + 4] = levelAsStrings[y + 4] + String.valueOf(tile[y].getShortcut());
-            }
-        }
-
-        return levelAsStrings;
-    }
-
-
     private void checkInvalidTile(Tile currentTile) {
 
         if (currentTile.getTileType() == TileType.PUZZLE) {

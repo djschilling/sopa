@@ -9,7 +9,6 @@ import android.content.Context;
 
 import de.sopa.manager.ResourcesManager;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -17,16 +16,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class FileHandler {
+class FileHandler {
 
     private final Context context;
 
-    public FileHandler(Context context) {
+    FileHandler(Context context) {
 
         this.context = context;
     }
 
-    public String[] readFromFile(String filename) throws IOException {
+    String[] readFromFile(String filename) throws IOException {
 
         List<String> lines = new ArrayList<>();
         InputStream inputStream = ResourcesManager.getInstance().activity.getAssets().open(filename);
@@ -52,7 +51,7 @@ public class FileHandler {
     }
 
 
-    public String[] getFilenamesInFolder(String folderPath) {
+    String[] getFilenamesInFolder(String folderPath) {
 
         String[] fileArray = null;
 

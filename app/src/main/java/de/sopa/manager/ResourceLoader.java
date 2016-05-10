@@ -39,7 +39,7 @@ public class ResourceLoader {
         this.fontManager = fontManager;
     }
 
-    public TextureRegion getTexture(final String path) {
+    TextureRegion getTexture(final String path) {
 
         try {
             ITexture texture = new BitmapTexture(textureManager, new IInputStreamOpener() {
@@ -60,7 +60,7 @@ public class ResourceLoader {
     }
 
 
-    public Map<Character, TextureRegion> getTileTextures() {
+    Map<Character, TextureRegion> getTileTextures() {
 
         Map<Character, TextureRegion> regionMap = new HashMap<>();
         regionMap.put('s', getTexture("scenes/game/bordersStart.png"));
@@ -87,7 +87,7 @@ public class ResourceLoader {
     }
 
 
-    public IFont getFont(final String name, float size, int color, float strokeWidth, int strokeColor) {
+    IFont getFont(final String name, float size, int color, float strokeWidth, int strokeColor) {
 
         FontFactory.setAssetBasePath("fonts/");
 

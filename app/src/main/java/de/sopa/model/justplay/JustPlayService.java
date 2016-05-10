@@ -3,7 +3,7 @@ package de.sopa.model.justplay;
 /**
  * @author  Raphael Schilling - raphaelschiling@gmail.com
  */
-public interface JustPlayService {
+interface JustPlayService {
 
     JustPlayResult calculateResult(JustPlayLevelResult justPlayLevelResult);
 

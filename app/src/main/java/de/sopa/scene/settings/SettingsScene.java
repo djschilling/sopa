@@ -17,7 +17,7 @@ public class SettingsScene extends BaseScene {
     private ButtonSprite muteButton;
     private ButtonSprite unmuteButton;
 
-    public SettingsScene() {
+    SettingsScene() {
 
         super();
         muteButton = new ButtonSprite(camera.getWidth() * 0.37f, (camera.getHeight() * 0.8f),

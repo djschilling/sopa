@@ -14,7 +14,7 @@ public class SettingsService {
     private static final String MUTE = "mute";
     private static final String MY_FIRST_TIME = "MY_FIRST_TIME";
 
-    SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
 
     public SettingsService(Context context) {
 

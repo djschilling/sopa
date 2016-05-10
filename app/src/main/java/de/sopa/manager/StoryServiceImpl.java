@@ -97,17 +97,21 @@ public class StoryServiceImpl implements StoryService {
 
     @Override
     public void loadLevelModeCompleteSceneFromScoreScene() {
-        levelModeSceneService.loadLevelModeCompleteSceneFromScoreScene();
 
+        levelModeSceneService.loadLevelModeCompleteSceneFromScoreScene();
     }
+
 
     @Override
     public void loadLevelChoiceFromLevelModeCompleteScene() {
+
         levelModeSceneService.loadLevelChoiceFromLevelModeCompleteScene();
     }
 
+
     @Override
     public void loadJustPlaySceneFromJustPlayLostScene() {
+
         justPlaySceneService.loadJustPlaySceneFromJustPlayLostScene();
     }
 
@@ -119,6 +123,7 @@ public class StoryServiceImpl implements StoryService {
         endSceneService(menuSceneService);
         startSceneService(levelModeSceneService);
     }
+
 
     @Override
     public void loadCreditsFromMenuScene() {
@@ -150,6 +155,7 @@ public class StoryServiceImpl implements StoryService {
 
         levelModeSceneService.loadGameSceneFromScoreScene(level);
     }
+
 
     @Override
     public void loadSettingsFromMenuScene() {
@@ -230,6 +236,7 @@ public class StoryServiceImpl implements StoryService {
         startSceneService(menuSceneService);
     }
 
+
     @Override
     public void loadJustPlaySceneFromJustPlayScoreScene() {
 
@@ -260,11 +267,11 @@ public class StoryServiceImpl implements StoryService {
         justPlaySceneService.loadJustPlayScoreSceneFromJustPlayScene(justPlayLevelResult);
     }
 
+
     @Override
     public void loadJustPlayLostSceneFromJustPlayScene(JustPlayLevelResult justPlayLevelResult) {
 
         justPlaySceneService.loadJustPlayLostSceneFromJustPlayScene(justPlayLevelResult);
-
     }
 
 

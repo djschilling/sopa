@@ -1,6 +1,7 @@
 package de.sopa.scene.game;
 
 import de.sopa.model.game.GameService;
+
 import org.andengine.input.touch.detector.HoldDetector;
 
 
@@ -8,7 +9,7 @@ import org.andengine.input.touch.detector.HoldDetector;
  * @author  Raphael Schilling
  * @author  David Schilling - davejs92@gmail.com
  */
-public class GameSceneSingleMoveDetector implements HoldDetector.IHoldDetectorListener {
+class GameSceneSingleMoveDetector implements HoldDetector.IHoldDetectorListener {
 
     private final float SWIPE_SENSITIVITY;
     private final float fieldStartX;
@@ -20,7 +21,8 @@ public class GameSceneSingleMoveDetector implements HoldDetector.IHoldDetectorLi
     private float fieldStartY;
     private boolean isMoved;
 
-    public GameSceneSingleMoveDetector(float startX, float startY, float widthPerTile, GameFieldView gameFieldView, GameService gameService) {
+    GameSceneSingleMoveDetector(float startX, float startY, float widthPerTile, GameFieldView gameFieldView,
+        GameService gameService) {
 
         this.fieldStartX = startX;
         this.fieldStartY = startY;
@@ -34,7 +36,7 @@ public class GameSceneSingleMoveDetector implements HoldDetector.IHoldDetectorLi
     @Override
     public void onHoldStarted(HoldDetector pHoldDetector, int pPointerID, float pHoldX, float pHoldY) {
 
-        if(!gameService.solvedPuzzle()){
+        if (!gameService.solvedPuzzle()) {
             firstX = pHoldX;
             firstY = pHoldY;
             isMoved = false;
@@ -45,7 +47,8 @@ public class GameSceneSingleMoveDetector implements HoldDetector.IHoldDetectorLi
     @Override
     public void onHold(HoldDetector pHoldDetector, long pHoldTimeMilliseconds, int pPointerID, float pHoldX,
         float pHoldY) {
-        if(!gameService.solvedPuzzle()) {
+
+        if (!gameService.solvedPuzzle()) {
             int row;
 
             if (!isMoved) {
@@ -76,7 +79,7 @@ public class GameSceneSingleMoveDetector implements HoldDetector.IHoldDetectorLi
     public void onHoldFinished(HoldDetector pHoldDetector, long pHoldTimeMilliseconds, int pPointerID, float pHoldX,
         float pHoldY) {
 
-        if(!gameService.solvedPuzzle()) {
+        if (!gameService.solvedPuzzle()) {
             int row;
 
             if (!isMoved) {

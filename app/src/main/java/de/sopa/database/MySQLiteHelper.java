@@ -9,12 +9,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * @author  David Schilling - davejs92@gmail.com
  */
-public class MySQLiteHelper extends SQLiteOpenHelper {
+class MySQLiteHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "sopa";
     private static final int DATABASE_VERSION = 2;
 
-    public MySQLiteHelper(Context context) {
+    MySQLiteHelper(Context context) {
 
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }

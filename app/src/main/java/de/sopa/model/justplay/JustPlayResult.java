@@ -12,7 +12,7 @@ public class JustPlayResult {
 
     private final int score;
 
-    public JustPlayResult(int levelCount, int leftTime, int extraTime, int lastScore, int score) {
+    JustPlayResult(int levelCount, int leftTime, int extraTime, int lastScore, int score) {
 
         this.levelAnzahl = levelCount;
         this.leftTime = leftTime;
@@ -48,11 +48,5 @@ public class JustPlayResult {
     public int getLastScore() {
 
         return lastScore;
-    }
-
-
-    public boolean lost() {
-
-        return (getLeftTime() == -1);
     }
 }

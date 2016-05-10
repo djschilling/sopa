@@ -16,19 +16,19 @@ public class JustPlayLevelResult {
         this.minLevelMoves = minLevelMoves;
     }
 
-    public int getLeftTime() {
+    int getLeftTime() {
 
         return leftTime;
     }
 
 
-    public int getMoves() {
+    int getMoves() {
 
         return moves;
     }
 
 
-    public int getMinLevelMoves() {
+    int getMinLevelMoves() {
 
         return minLevelMoves;
     }

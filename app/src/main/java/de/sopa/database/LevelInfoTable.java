@@ -6,16 +6,16 @@ import android.database.sqlite.SQLiteDatabase;
 /**
  * @author  David Schilling - davejs92@gmail.com
  */
-public class LevelInfoTable {
+class LevelInfoTable {
 
-    public static final String TABLE_LEVEL_INFO = "level_info";
-    public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_LOCKED = "locked";
-    public static final String COLUMN_FEWEST_MOVES = "fewest_moves";
-    public static final String COLUMN_STARS = "stars";
-    public static final String TABLE_SCORE = "score";
-    public static final String COLUMN_SCORE_POINTS = "points";
-    public static final String COLUMN_SCORE_SOLVED_LEVELS = "solved_levels";
+    static final String TABLE_LEVEL_INFO = "level_info";
+    static final String COLUMN_ID = "_id";
+    static final String COLUMN_LOCKED = "locked";
+    static final String COLUMN_FEWEST_MOVES = "fewest_moves";
+    static final String COLUMN_STARS = "stars";
+    static final String TABLE_SCORE = "score";
+    static final String COLUMN_SCORE_POINTS = "points";
+    static final String COLUMN_SCORE_SOLVED_LEVELS = "solved_levels";
 
     private static final String DATABASE_CREATE = "create table "
         + TABLE_LEVEL_INFO + "(" + COLUMN_ID
@@ -27,13 +27,13 @@ public class LevelInfoTable {
         + " integer primary key autoincrement, " + COLUMN_SCORE_POINTS
         + " integer not null," + COLUMN_SCORE_SOLVED_LEVELS + " integer not null);";
 
-    public static void onCreate(SQLiteDatabase database) {
+    static void onCreate(SQLiteDatabase database) {
 
         database.execSQL(DATABASE_CREATE);
     }
 
 
-    public static void createScoreTable(SQLiteDatabase database) {
+    static void createScoreTable(SQLiteDatabase database) {
 
         database.execSQL(TABLE_SCORE_CREATE);
     }

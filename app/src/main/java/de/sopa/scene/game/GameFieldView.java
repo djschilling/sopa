@@ -21,10 +21,10 @@ import java.util.Map;
 
 
 /**
- * @author David Schilling - davejs92@gmail.com
- * @author Raphael Schilling
+ * @author  David Schilling - davejs92@gmail.com
+ * @author  Raphael Schilling
  */
-public class GameFieldView extends Entity {
+class GameFieldView extends Entity {
 
     private final GameService gameService;
     private final float spacePerTile;
@@ -37,8 +37,8 @@ public class GameFieldView extends Entity {
     private int countModifier;
     private int modifierFinished;
 
-    public GameFieldView(float pX, float pY, float spacePerTile, GameService gameService,
-                         Map<Character, TextureRegion> regionMap, VertexBufferObjectManager vbom, ITextureRegion tilesBorderRegion) {
+    GameFieldView(float pX, float pY, float spacePerTile, GameService gameService,
+        Map<Character, TextureRegion> regionMap, VertexBufferObjectManager vbom, ITextureRegion tilesBorderRegion) {
 
         super(pX, pY);
         this.gameService = gameService;
@@ -48,7 +48,7 @@ public class GameFieldView extends Entity {
         this.tilesBorderRegion = tilesBorderRegion;
     }
 
-    public void addTiles(boolean finished) {
+    void addTiles(boolean finished) {
 
         int tileIndex;
 
@@ -58,9 +58,9 @@ public class GameFieldView extends Entity {
             tileIndex = 0;
         }
 
-
         detachChildren();
-        if (active){
+
+        if (active) {
             oneModifierFinished(true);
         }
 
@@ -78,7 +78,7 @@ public class GameFieldView extends Entity {
                 if (field[x][y].getShortcut() != 'n') {
                     TextureRegion pTextureRegion = tileRegionMap.get(field[x][y].getShortcut());
                     TextureRegion pTextureRegionFilled = tileRegionMap.get(Character.toUpperCase(
-                            field[x][y].getShortcut()));
+                                field[x][y].getShortcut()));
                     List<ITextureRegion> textureRegions = Arrays.<ITextureRegion>asList(pTextureRegion,
                             pTextureRegionFilled);
 
@@ -93,12 +93,16 @@ public class GameFieldView extends Entity {
                             break;
 
                         case FINISH:
-                            TileSprite finish = createFinishAnsStart(x, y, tilePositionX, tilePositionY, textureRegions, field);
+
+                            TileSprite finish = createFinishAnsStart(x, y, tilePositionX, tilePositionY, textureRegions,
+                                    field);
                             finish.setITextureRegionIndex(tileIndex);
                             break;
 
                         case START:
-                            TileSprite start = createFinishAnsStart(x, y, tilePositionX, tilePositionY, textureRegions, field);
+
+                            TileSprite start = createFinishAnsStart(x, y, tilePositionX, tilePositionY, textureRegions,
+                                    field);
                             start.setITextureRegionIndex(tileIndex);
                             break;
 
@@ -118,7 +122,7 @@ public class GameFieldView extends Entity {
     }
 
 
-    public void oneStep(final boolean horizontal, int row, final int direction) {
+    void oneStep(final boolean horizontal, int row, final int direction) {
 
         if (row < 0) {
             return;
@@ -141,13 +145,13 @@ public class GameFieldView extends Entity {
                 tileSprite.registerEntityModifier(new MoveXModifier(0.3f, tileSprite.getX(),
                         tileSprite.getX() + tileSprite.getWidth() * direction, EaseQuadInOut.getInstance()) {
 
-                    @Override
-                    protected void onModifierFinished(IEntity pItem) {
+                        @Override
+                        protected void onModifierFinished(IEntity pItem) {
 
-                        oneModifierFinished(false);
-                        super.onModifierFinished(pItem);
-                    }
-                });
+                            oneModifierFinished(false);
+                            super.onModifierFinished(pItem);
+                        }
+                    });
             }
         } else {
             if (row > tileSprites[0].length - 2) {
@@ -164,20 +168,20 @@ public class GameFieldView extends Entity {
                 tileSprite.registerEntityModifier(new MoveYModifier(0.3f, tileSprite.getY(),
                         tileSprite.getY() + tileSprite.getWidth() * direction, EaseQuadInOut.getInstance()) {
 
-                    @Override
-                    protected void onModifierFinished(IEntity pItem) {
+                        @Override
+                        protected void onModifierFinished(IEntity pItem) {
 
-                        oneModifierFinished(false);
-                        super.onModifierFinished(pItem);
-                    }
-                });
+                            oneModifierFinished(false);
+                            super.onModifierFinished(pItem);
+                        }
+                    });
             }
         }
     }
 
 
     private TileSprite createFinishAnsStart(int x, int y, float tilePositionX, float tilePositionY,
-                                            List<ITextureRegion> pTextureRegion, Tile[][] field) {
+        List<ITextureRegion> pTextureRegion, Tile[][] field) {
 
         TileSprite tileSprite;
 

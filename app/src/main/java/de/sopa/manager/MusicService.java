@@ -13,7 +13,7 @@ public class MusicService {
     private MediaPlayer mediaPlayer;
     private boolean prepared;
 
-    public MusicService(MediaPlayer mediaPlayer, boolean prepared) {
+    MusicService(MediaPlayer mediaPlayer, boolean prepared) {
 
         this.mediaPlayer = mediaPlayer;
         this.prepared = prepared;

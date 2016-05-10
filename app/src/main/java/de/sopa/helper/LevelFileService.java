@@ -1,13 +1,6 @@
 package de.sopa.helper;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-
-import android.os.Environment;
-
-import android.util.Log;
-
-import de.sopa.manager.ResourcesManager;
 
 import de.sopa.model.game.Level;
 
@@ -44,7 +37,7 @@ public class LevelFileService {
     }
 
 
-    public Integer[] getAvailableLevelIds() {
+    Integer[] getAvailableLevelIds() {
 
         String[] filenamesInFolder = fileHandler.getFilenamesInFolder(LEVEL_BASE_PATH);
         Integer[] levelIds = new Integer[filenamesInFolder.length];

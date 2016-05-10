@@ -29,7 +29,7 @@ public class MainMenuScene extends BaseScene {
     private static final String SOPA_TWITTER_URL = "https://twitter.com/sopagame";
     private static final String LINK_TO_STORE = "https://play.google.com/store/apps/details?id=de.sopa";
 
-    public MainMenuScene() {
+    MainMenuScene() {
 
         super();
         createBackground();

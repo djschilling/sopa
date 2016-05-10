@@ -19,7 +19,7 @@ public class LevelInfo {
     }
 
 
-    public LevelInfo(LevelInfo levelInfo) {
+    LevelInfo(LevelInfo levelInfo) {
 
         this.levelId = levelInfo.levelId;
         this.locked = levelInfo.locked;
