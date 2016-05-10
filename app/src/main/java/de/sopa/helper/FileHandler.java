@@ -26,23 +26,6 @@ public class FileHandler {
         this.context = context;
     }
 
-    public void writeToFile(String filename, String[] strings) throws IOException {
-
-        FileOutputStream fileOutputStream = new FileOutputStream(filename);
-
-        for (int i = 0; i < strings.length; i++) {
-            String string = strings[i];
-            fileOutputStream.write((string).getBytes());
-
-            if (i < strings.length) {
-                fileOutputStream.write('\n');
-            }
-        }
-
-        fileOutputStream.close();
-    }
-
-
     public String[] readFromFile(String filename) throws IOException {
 
         List<String> lines = new ArrayList<>();
