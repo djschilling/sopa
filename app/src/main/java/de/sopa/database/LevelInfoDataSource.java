@@ -166,7 +166,9 @@ public class LevelInfoDataSource {
 
         cursor.moveToFirst();
 
-        return cursorToJustPlayScore(cursor);
+        JustPlayScore justPlayScore = cursorToJustPlayScore(cursor);
+        cursor.close();
+        return justPlayScore;
     }
 
 
