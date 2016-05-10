@@ -6,7 +6,7 @@ This is the documentation for the SOPA level format (.lv).
 ### Encoding
 All characters are encoded in UTF-8.
 ### Structure
-The File consists of 2 blocks.   
+The File consists of 2 blocks.
 The blocks are seperated with a line consisting of a '#'.
 The last line has to be empty.
 
@@ -16,13 +16,13 @@ The more lines there are between the first line and the #-line, the more informa
 
 
 1.  ID: This line defines the Level-ID (has to be the same as the file name)
-2.  MinimalMoves: This line defines the minimal moves, needed to solve the level 
+2.  MinimalMoves: This line defines the minimal moves, needed to solve the level
 3.  TubesCount: This line defines the count of the tubes used in the level
 
 #### Field
 
 The field block describes the game field of the level.
-Every character stands for one tile. 
+Every character stands for one tile.
 Every line has to have the same width.
 
 Every character of the first line, the last line, the left and the right corner has to be an 's', 'f' or 'n'.
@@ -34,45 +34,45 @@ Is the finish tile. Use it just once.
 Is the border tile.
 
 ##### i
-Is a tube.   
+Is a tube.
 ```
-oXo   
-oXo   
+oXo
+oXo
 oXo
 ```
 ##### g
-Is a tube.   
+Is a tube.
 ```
-oXo   
-XXo   
+oXo
+XXo
 ooo
 ```
 ##### a
-Is a tube.   
+Is a tube.
 ```
-ooo   
-XXX   
+ooo
+XXX
 ooo
 ```
 ##### c
-Is a tube.   
+Is a tube.
 ```
-ooo   
-XXo   
+ooo
+XXo
 oXo
 ```
 ##### e
-Is a tube.   
+Is a tube.
 ```
-oXo   
-oXX   
+oXo
+oXX
 ooo
 ```
 ##### u
-Is a tube.   
+Is a tube.
 ```
-ooo   
-oXX   
+ooo
+oXX
 oXo
 ```
 
@@ -80,22 +80,22 @@ oXo
 All free places have to be filled with an o.
 #### o
 ```
-ooo   
-ooo   
-ooo   
+ooo
+ooo
+ooo
 ```
 ### Example
-Content of file level.2 (note the blank line at the end):   
+Content of file level.2 (note the blank line at the end):
 ```
-2   
-1   
-5   
-\#   
-nnnnnn   
-noooon   
-naoouf   
-nooion   
-nooeas   
-nnnnnn   
- 
+2
+1
+5
+\#
+nnnnnn
+noooon
+naoouf
+nooion
+nooeas
+nnnnnn
+
 ```
