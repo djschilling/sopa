@@ -60,7 +60,7 @@ Is a tube.
 000
 ##### u
 Is a tube.   
-0=0   
+000   
 0XX   
 0X0
 
