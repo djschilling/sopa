@@ -36,53 +36,53 @@ Is the border tile.
 ##### i
 Is a tube.   
 ```
-0X0   
-0X0   
-0X0
+oXo   
+oXo   
+oXo
 ```
 ##### g
 Is a tube.   
 ```
-0X0   
-XX0   
-000
+oXo   
+XXo   
+ooo
 ```
 ##### a
 Is a tube.   
 ```
-000   
+ooo   
 XXX   
-000
+ooo
 ```
 ##### c
 Is a tube.   
 ```
-000   
-XX0   
-0X0
+ooo   
+XXo   
+oXo
 ```
 ##### e
 Is a tube.   
 ```
-0X0   
-0XX   
-000
+oXo   
+oXX   
+ooo
 ```
 ##### u
 Is a tube.   
 ```
-000   
-0XX   
-0X0
+ooo   
+oXX   
+oXo
 ```
 
 
 All free places have to be filled with an o.
 #### o
 ```
-000   
-000   
-000   
+ooo   
+ooo   
+ooo   
 ```
 ### Example
 Content of file level.2 (note the blank line at the end):   
