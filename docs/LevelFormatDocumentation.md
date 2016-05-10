@@ -35,43 +35,58 @@ Is the border tile.
 
 ##### i
 Is a tube.   
+```
 0X0   
 0X0   
 0X0
+```
 ##### g
 Is a tube.   
+```
 0X0   
 XX0   
 000
+```
 ##### a
 Is a tube.   
+```
 000   
 XXX   
 000
+```
 ##### c
 Is a tube.   
+```
 000   
 XX0   
 0X0
+```
 ##### e
 Is a tube.   
+```
 0X0   
 0XX   
 000
+```
 ##### u
 Is a tube.   
+```
 000   
 0XX   
 0X0
+```
 
 
 All free places have to be filled with an o.
 #### o
+```
 000   
 000   
 000   
+```
 ### Example
-START_OF_FILE "level.2"   
+Content of file level.2 (note the blank line at the end):   
+```
 2   
 1   
 5   
@@ -83,4 +98,4 @@ nooion
 nooeas   
 nnnnnn   
  
-END_OF_FILE
+```
