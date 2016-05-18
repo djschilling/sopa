@@ -96,7 +96,7 @@ class JustPlayScoreScene extends BaseScene {
         attachChild(scoreText);
 
         score = new Text((float) (camera.getWidth() * 0.65), (float) (camera.getHeight() * 0.45),
-                resourcesManager.justPlayScoreFont, "" + currentScore[0], 8, vbom);
+                resourcesManager.justPlayScoreFont, Integer.toString(currentScore[0]), 8, vbom);
         score.setColor(BLACK);
         attachChild(score);
 

@@ -225,7 +225,7 @@ class GameFieldView extends Entity {
 
         modifierFinished++;
 
-        if (modifierFinished == countModifier | now) {
+        if (modifierFinished == countModifier || now) {
             active = false;
             gameService.notifyAllObserver();
         }
