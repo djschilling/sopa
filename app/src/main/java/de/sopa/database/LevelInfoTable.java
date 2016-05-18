@@ -27,6 +27,8 @@ class LevelInfoTable {
         + " integer primary key autoincrement, " + COLUMN_SCORE_POINTS
         + " integer not null," + COLUMN_SCORE_SOLVED_LEVELS + " integer not null);";
 
+    private LevelInfoTable() {}
+
     static void onCreate(SQLiteDatabase database) {
 
         database.execSQL(DATABASE_CREATE);
