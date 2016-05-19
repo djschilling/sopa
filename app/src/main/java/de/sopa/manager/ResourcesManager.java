@@ -17,6 +17,7 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
+import java.lang.String;
 import java.util.Map;
 
 import static android.graphics.Color.TRANSPARENT;
@@ -30,6 +31,7 @@ import static android.graphics.Color.WHITE;
 public class ResourcesManager {
 
     private static final ResourcesManager INSTANCE = new ResourcesManager();
+    public static final String IMPACT_TTF = "Impact.ttf";
     public StoryService storyService;
 
     public Engine engine;
@@ -110,16 +112,16 @@ public class ResourcesManager {
     public void loadGameSceneResources() {
 
         loadGameSceneGraphics();
-        scoreFont = resourceLoader.getFont("Impact.ttf", 200, WHITE, 2, TRANSPARENT);
-        minMovesFont = resourceLoader.getFont("Impact.ttf", 200, WHITE, 2, TRANSPARENT);
-        levelFont = resourceLoader.getFont("Impact.ttf", 200, WHITE, 2, TRANSPARENT);
+        scoreFont = resourceLoader.getFont(IMPACT_TTF, 200, WHITE, 2, TRANSPARENT);
+        minMovesFont = resourceLoader.getFont(IMPACT_TTF, 200, WHITE, 2, TRANSPARENT);
+        levelFont = resourceLoader.getFont(IMPACT_TTF, 200, WHITE, 2, TRANSPARENT);
     }
 
 
     public void loadJustPlayScoreResources() {
 
-        levelCompleteFont = resourceLoader.getFont("Impact.ttf", 200, WHITE, 0, TRANSPARENT);
-        justPlayScoreFont = resourceLoader.getFont("Impact.ttf", 125, WHITE, 0, TRANSPARENT);
+        levelCompleteFont = resourceLoader.getFont(IMPACT_TTF, 200, WHITE, 0, TRANSPARENT);
+        justPlayScoreFont = resourceLoader.getFont(IMPACT_TTF, 125, WHITE, 0, TRANSPARENT);
         nextJustPlayLevel.getTexture().load();
         backToMenuRegionP.getTexture().load();
         shareScoreTexture.getTexture().load();
@@ -137,8 +139,8 @@ public class ResourcesManager {
         levelChoiseStarRegion.getTexture().load();
         levelChoiseStarSWRegion.getTexture().load();
 
-        levelChoiceFont = resourceLoader.getFont("Impact.ttf", 110, 0xFFca540f, 0, 0xFFca540f);
-        levelChoiceSWFont = resourceLoader.getFont("Impact.ttf", 110, 0xFF808080, 0, 0xFF808080);
+        levelChoiceFont = resourceLoader.getFont(IMPACT_TTF, 110, 0xFFca540f, 0, 0xFFca540f);
+        levelChoiceSWFont = resourceLoader.getFont(IMPACT_TTF, 110, 0xFF808080, 0, 0xFF808080);
     }
 
 
@@ -164,7 +166,7 @@ public class ResourcesManager {
         creditsRegion.getTexture().load();
         twitterLogoRegion.getTexture().load();
         shareLogoTexture.getTexture().load();
-        sopaFont = resourceLoader.getFont("Impact.ttf", 290, 0xFFD6D6D6, 0, TRANSPARENT);
+        sopaFont = resourceLoader.getFont(IMPACT_TTF, 290, 0xFFD6D6D6, 0, TRANSPARENT);
     }
 
 
@@ -294,9 +296,9 @@ public class ResourcesManager {
 
     public void loadLevelCreditsSceneResources() {
 
-        creditsHeading = resourceLoader.getFont("Impact.ttf", 200, WHITE, 2, TRANSPARENT);
-        creditsSubHeading = resourceLoader.getFont("Impact.ttf", 100, WHITE, 2, TRANSPARENT);
-        creditsText = resourceLoader.getFont("Impact.ttf", 50, WHITE, 2, TRANSPARENT);
+        creditsHeading = resourceLoader.getFont(IMPACT_TTF, 200, WHITE, 2, TRANSPARENT);
+        creditsSubHeading = resourceLoader.getFont(IMPACT_TTF, 100, WHITE, 2, TRANSPARENT);
+        creditsText = resourceLoader.getFont(IMPACT_TTF, 50, WHITE, 2, TRANSPARENT);
     }
 
 
@@ -387,7 +389,7 @@ public class ResourcesManager {
 
     public void loadLevelModeCompleteResources() {
         levelModeCup.getTexture().load();
-        levelModeCompleteFont = resourceLoader.getFont("Impact.ttf", 200, WHITE,0, TRANSPARENT);
+        levelModeCompleteFont = resourceLoader.getFont(IMPACT_TTF, 200, WHITE,0, TRANSPARENT);
     }
 
     public void unLoadLevelModeCompleteResources() {
