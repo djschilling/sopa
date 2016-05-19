@@ -43,6 +43,7 @@ public class LevelTranslator {
 
                 case 2:
                     level.setTilesCount(Integer.parseInt(string[2]));
+                    break;
 
                 default:
                     break;
