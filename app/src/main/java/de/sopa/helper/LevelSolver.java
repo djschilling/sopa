@@ -70,16 +70,16 @@ class LevelSolver {
             for (int column = 0; column < columns - 2; column++) {
                 gameFieldService.shiftLine(level, false, column, 1);
 
-                if (currentDepth + 1 < highestHit && solve(level, maxDepth, currentDepth + 1, possibleSolutions)) {
-                    if (currentDepth + 1 < highestHit)
-                        return true;
+                if (currentDepth + 1 < highestHit && solve(level, maxDepth, currentDepth + 1, possibleSolutions)
+                        && currentDepth + 1 < highestHit) {
+                    return true;
                 }
 
                 gameFieldService.shiftLine(level, false, column, -2);
 
-                if (currentDepth + 1 < highestHit && solve(level, maxDepth, currentDepth + 1, possibleSolutions)) {
-                    if (currentDepth + 1 < highestHit)
-                        return true;
+                if (currentDepth + 1 < highestHit && solve(level, maxDepth, currentDepth + 1, possibleSolutions)
+                        && currentDepth + 1 < highestHit) {
+                    return true;
                 }
 
                 // restore state
@@ -89,16 +89,16 @@ class LevelSolver {
             for (int row = 0; row < rows - 2; row++) {
                 gameFieldService.shiftLine(level, true, row, 1);
 
-                if (currentDepth + 1 < highestHit && solve(level, maxDepth, currentDepth + 1, possibleSolutions)) {
-                    if (currentDepth + 1 < highestHit)
-                        return true;
+                if (currentDepth + 1 < highestHit && solve(level, maxDepth, currentDepth + 1, possibleSolutions)
+                        && currentDepth + 1 < highestHit) {
+                    return true;
                 }
 
                 gameFieldService.shiftLine(level, true, row, -2);
 
-                if (currentDepth + 1 < highestHit && solve(level, maxDepth, currentDepth + 1, possibleSolutions)) {
-                    if (currentDepth + 1 < highestHit)
-                        return true;
+                if (currentDepth + 1 < highestHit && solve(level, maxDepth, currentDepth + 1, possibleSolutions)
+                        && currentDepth + 1 < highestHit) {
+                    return true;
                 }
 
                 // restore state
