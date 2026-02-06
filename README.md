@@ -1,8 +1,6 @@
 # Sopa #
 
-[![Build Status](https://travis-ci.org/Contargo/iris.svg?branch=1.7)](https://travis-ci.org/pongo710/sopa)
-
-[Download](https://play.google.com/store/apps/details?id=de.sopa) in play store.
+[Download](https://play.google.com/store/apps/details?id=de.sopa) in Play Store.
 
 * [Overview](https://github.com/pongo710/sopa/#overview)
 * [Gamemodes](https://github.com/pongo710/sopa/#gamemodes)
@@ -41,20 +39,26 @@ For each level the player gets points. The number of points is calculated with t
 
 ## Development ##
 
+### Requirements ###
+
+- JDK 21 recommended (JDK 17+ required)
+- Android SDK Platform 34
+- Gradle wrapper (included, version 8.5)
+
 ### Tests ###
 
 
 Execute tests:
 
-```./gradlew test --continue```
+```./gradlew testDebugUnitTest```
 
 Build:
 
-```./gradlew build```
+```./gradlew assembleDebug```
 
 ### Reporting ###
 
-With jacoco there is a possibility to calculate the test coecoverage.
+With JaCoCo there is a possibility to calculate test coverage.
 
 ```./gradlew jacocoTestReport```
 
@@ -66,6 +70,10 @@ The generated test results can be found here: ```app/build/reports/jacoco/jacoco
 ```./gradlew :app:assembleRelease```
 
 After that in Android Studio: "Generate signed APK"
+
+### AndEngine note ###
+
+`AndEngine` is vendored directly in this repository (not a git submodule).
 
 ## License ##
 
