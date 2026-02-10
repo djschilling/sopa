@@ -1,6 +1,6 @@
 # Sopa #
 
-[Download](https://play.google.com/store/apps/details?id=de.sopa) in Play Store.
+[Download](https://play.google.com/store/apps/details?id=com.sopaapp) in Play Store.
 
 * [Overview](https://github.com/pongo710/sopa/#overview)
 * [Gamemodes](https://github.com/pongo710/sopa/#gamemodes)
@@ -42,8 +42,9 @@ For each level the player gets points. The number of points is calculated with t
 ### Requirements ###
 
 - JDK 21 recommended (JDK 17+ required)
-- Android SDK Platform 34
-- Gradle wrapper (included, version 8.5)
+- Android SDK Platform 35
+- Gradle wrapper (included, version 9.1.0)
+- Android Gradle Plugin 9.0.0
 
 ### Tests ###
 
@@ -67,9 +68,32 @@ The generated test results can be found here: ```app/build/reports/jacoco/jacoco
 ### Release the game ###
 
 ```./gradlew clean```
-```./gradlew :app:assembleRelease```
+```./gradlew :app:bundleRelease```
 
-After that in Android Studio: "Generate signed APK"
+The release bundle is generated at:
+`app/build/outputs/bundle/release/app-release.aab`
+
+The release build is configured for signing via `keystore.properties` in the project root:
+
+```properties
+storeFile=/absolute/path/to/your/keystore.jks
+keyAlias=your_alias
+storePassword=...
+keyPassword=...
+```
+
+Notes:
+- `keystore.properties` is local-only and must not be committed.
+- If your keystore is in iCloud (`/Users/<user>/Library/Mobile Documents/...`) and signing fails with
+  "Operation not permitted", copy it to a local path (e.g. `/Users/<user>/keys/...`) and use that path.
+- Increment `versionCode` for every Play upload.
+
+### Android / Play config ###
+
+- Application ID / package: `com.sopaapp`
+- App module `minSdkVersion`: 24
+- App module `targetSdkVersion`: 35
+- App + AndEngine `compileSdkVersion`: 35
 
 ### AndEngine note ###
 

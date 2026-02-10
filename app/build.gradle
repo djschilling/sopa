@@ -1,6 +1,19 @@
 apply plugin: 'com.android.application'
 apply plugin: 'jacoco'
 
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+def rawReleaseStoreFile = keystoreProperties['storeFile'] ?: System.getenv("SOPA_STORE_FILE") ?: "/Users/david/Library/Mobile Documents/com~apple~CloudDocs/keys/sopa.jks"
+def releaseStoreFile = rawReleaseStoreFile.toString().trim().replaceAll('^"(.*)"$', '$1')
+def releaseStorePassword = keystoreProperties['storePassword'] ?: System.getenv("SOPA_STORE_PASSWORD")
+def releaseKeyAlias = keystoreProperties['keyAlias'] ?: System.getenv("SOPA_KEY_ALIAS") ?: "sopareleasekey"
+def releaseKeyPassword = keystoreProperties['keyPassword'] ?: System.getenv("SOPA_KEY_PASSWORD")
+def needsReleaseSigning = gradle.startParameter.taskNames.any { it.toLowerCase().contains("release") }
+
 repositories {
     google()
     mavenCentral()
@@ -11,13 +24,14 @@ jacoco {
 }
 
 android {
-    namespace 'de.sopa'
-    compileSdkVersion 34
+    namespace 'com.sopaapp'
+    compileSdkVersion 35
 
     defaultConfig {
-        minSdkVersion 9
-        targetSdkVersion 34
-        versionCode 13
+        applicationId "com.sopaapp"
+        minSdkVersion 24
+        targetSdkVersion 35
+        versionCode 14
         versionName "3.0.0"
     }
 
@@ -25,15 +39,33 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    signingConfigs {
+        release {
+            storeFile file(releaseStoreFile)
+            storePassword releaseStorePassword
+            keyAlias releaseKeyAlias
+            keyPassword releaseKeyPassword
+        }
+    }
+
     buildTypes {
         debug {
             testCoverageEnabled true
         }
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.txt'
         }
     }
+}
+
+if (needsReleaseSigning && (!releaseStorePassword || !releaseKeyPassword)) {
+    throw new GradleException(
+            "Missing release signing credentials. Set storePassword/keyPassword in keystore.properties " +
+            "or env vars SOPA_STORE_PASSWORD and SOPA_KEY_PASSWORD."
+    )
 }
 
 java {

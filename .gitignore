@@ -5,3 +5,4 @@ sopa.iml
 .idea
 build
 app/release/
+keystore.properties

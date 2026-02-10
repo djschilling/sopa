@@ -5,7 +5,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.3.2'
+        classpath 'com.android.tools.build:gradle:9.0.0'
     }
 }
 
@@ -13,11 +13,11 @@ apply plugin: 'com.android.library'
 
 android {
     namespace 'org.andengine'
-    compileSdkVersion 34
+    compileSdkVersion 35
 
     defaultConfig {
-        minSdkVersion 9
-        targetSdkVersion 34
+        minSdkVersion 24
+        targetSdkVersion 35
         versionCode 1
         versionName "1.0"
     }
