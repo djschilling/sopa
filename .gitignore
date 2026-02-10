@@ -4,3 +4,4 @@ local.properties
 sopa.iml
 .idea
 build
+app/release/
