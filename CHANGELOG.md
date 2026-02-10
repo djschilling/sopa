@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+* migrate build toolchain to modern Android setup (AGP 8.3.2, Gradle 8.5)
+* update project for current Android targets (compile/target SDK 34)
+* vendor `AndEngine` into repository (remove git submodule linkage)
+* fix legacy `AndEngine` compatibility issues for modern Android APIs
+* add project contributor guidance in `AGENTS.md`
+* refresh README build/setup documentation
+
 # 2.2.0
 
 * add level count to game over screen in just play modus #66
