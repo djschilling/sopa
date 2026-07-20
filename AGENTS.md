@@ -8,8 +8,8 @@ Guidelines for contributors and coding agents working in this repository.
 - Build system: Gradle wrapper + Android Gradle Plugin.
 - Current toolchain baseline:
   - JDK: 21 recommended (17+ required by AGP)
-  - Gradle wrapper: 9.1.0
-  - Android Gradle Plugin: 9.0.0
+  - Gradle wrapper: 9.4.1
+  - Android Gradle Plugin: 9.2.1
   - compileSdkVersion: 35 (app + AndEngine)
   - targetSdkVersion: 35 (app + AndEngine)
   - minSdkVersion: 24 (app + AndEngine)

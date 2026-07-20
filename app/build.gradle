@@ -77,7 +77,7 @@ java {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':andengine')
-    implementation 'org.apache.commons:commons-lang3:3.3.2'
+    implementation 'org.apache.commons:commons-lang3:3.17.0'
     testImplementation 'junit:junit:4.13.2'
     testImplementation "org.mockito:mockito-core:5.12.0"
 }
